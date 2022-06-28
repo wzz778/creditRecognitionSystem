@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> {{block 'title'}}{{/block}}</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="public/css/layout.css">
+    {{block 'head'}}{{/block}}
+</head>
+<body>
+    <div id="nav">
+        <div class="column">
+            <a href="#" class="column_a"><i  class="fa fa-user" aria-hidden="true"></i><span class="column_span">个人中心</span></a>
+            <a href="#" class="column_a"><i class="fa  fa-file-word-o" aria-hidden="true"></i><span class="column_span">填写申请表</span></a>
+            <a href="#" class="column_a"><i class="fa fa-users" aria-hidden="true"></i><span class="column_span">操作记录</span></a>
+        </div>
+    </div>
+    <div id="head">
+        <img id="logo" src="/public/img/schoollogo.png" alt="">
+        <!-- <button type="button" id="sidebarCollapse" class="sidebar_toggle" onclick="slow()"><i class="fa fa-bars"></i></button> -->
+        <div id="Projecttitle">创新创业学分认定系统</div>
+            <div id="head-cord" onclick="dropdown()">
+                <i class="fa fa-bars">  更多  </i>
+                <div id="head-cord-fade">
+                    <a class="dropdown-item" href="#">个人中心 <i  class="fa fa-user" aria-hidden="true"></i></a>
+                    <!-- <a class="dropdown-item" href="#">签到中心</a> -->
+                    <a class="dropdown-item" href="#">申请表 <i class="fa fa-file-word-o" aria-hidden="true"></i></a>
+                    <a class="dropdown-item" href="#" onclick="outland()"><span>退出登录</span> <i class="fa fa-sign-out"></i></a>
+                </div>
+            </div>
+    </div>
+    <div id="body" class="body1">
+        {{block 'body'}}
+          <div id="begin-main"></div>
+        {{/block}}
+    </div>
+</body>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+<script src="public/js/layout.js"></script>
+{{block 'bottom'}}{{/block}}
+</html>
