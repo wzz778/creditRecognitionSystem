@@ -18,13 +18,13 @@ app.use(session({
     saveUninitialized: false,
   }))
 app.use('/public', express.static(path.join(__dirname, './static')))
-
+app.use('/node_modules',express.static(path.join(__dirname,'./node_modules/')));
 // 引入路由
 const sAdminRouter=require('./router/sAdminRouter')
-
+const wzzRouter=require('./router/wzzRouter')
 // 配置路由
 app.use(sAdminRouter)
-
+app.use(wzzRouter)
 // 启动服务器
 app.listen(8080,()=>{
     console.log('服务器已启动,端口号:8080')
