@@ -1,12 +1,80 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
-</html>
+{{extend './layout.html'}}
+{{block 'title'}}添加用户{{/block}}
+{{block 'head'}}
+<link rel="stylesheet" href="/public/css/superAdminAddUser.css">
+{{/block}}
+{{block 'body'}}
+<div class="addUserTop clearFloat">
+    <span>添加用户基本信息</span>
+    <div class="bulkAddUser floatRight">
+        <button class="changeBtnStyle">批量添加</button>
+        <input type="file" id="fileBulkUser">
+    </div>
+</div>
+<div class="addUserContent">
+    <div class="addUserItemgroupingTwo">
+        <div class="addUserItem hintItem">
+            姓名:<input type="text" />
+            <div class="hintText">请填入姓名</div>
+        </div>
+        <div class="addUserItem hintItem">
+            学号/教务账号:<input type="text" />
+            <div class="hintText">请填入学号/教务账号</div>
+        </div>
+    </div>
+    <div class="addUserItemgroupingTwo">
+        <div class="addUserItem">
+            用户身份:<select>
+                <option value="">普通用户</option>
+                <option value="">普通管理员</option>
+            </select>
+        </div>
+        <div class="addUserItem">
+            初始密码:123456
+        </div>
+    </div>
+    <div class="addUserItemgroupingTwo">
+        <div class="addUserItem">
+            所在年级:<select>
+                <option value="">请选择年级...</option>
+            </select>
+            <div class="hintText">请选择所在年级</div>
+        </div>
+        <div class="addUserItem">
+            所在学院:<select>
+                <option value="">请选择所在学院...</option>
+            </select>
+            <div class="hintText">请选择所在学院</div>
+        </div>
+    </div>
+    <div class="addUserItemgroupingTwo">
+        <div class="addUserItem">
+            所在专业:<select>
+                <option value="">请选择所在专业...</option>
+            </select>
+            <div class="hintText">请选择所在专业</div>
+        </div>
+        <div class="addUserItem">
+            所在班级:<select>
+                <option value="">请选择所在班级...</option>
+            </select>
+            <div class="hintText">请选择所在班级</div>
+        </div>
+    </div>
+</div>
+<div class="addUserBottom">
+    <div class="addUserTop">其他信息</div>
+    <div class="remarksItem">
+        备注:
+        <div class="remarks">
+            <textarea id="Remarks"></textarea>
+        </div>
+    </div>
+</div>
+<div class="addUserOperator">
+    <button id="save">保存</button>
+    <button id="cancel">取消</button>
+</div>
+{{/block}}
+{{block 'bottom'}}
+{{/block}}

@@ -1,0 +1,134 @@
+/* 清除默认样式 */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+input {
+    outline: none;
+    /* padding-left: 15px; */
+    padding: 5px 0px 5px 15px;
+    border: 1px solid #DDDDDD;
+    margin-left: 10px;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+button {
+    outline: none;
+    border: none;
+    cursor: pointer;
+    background-color: white;
+    padding: 7px;
+}
+
+ul {
+    list-style: none;
+}
+
+li {
+    list-style: none;
+}
+
+select {
+    outline: none;
+    margin-left: 10px;
+    padding: 5px;
+    width: 200px;
+    border: 1px solid #DDDDDD;
+    color: #999999;
+}
+
+/* 公共样式 */
+.clearFloat::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.floatRight {
+    float: right;
+}
+
+.floatLeft {
+    float: left;
+}
+
+#body {
+    background-color: white;
+}
+
+.addUserTop {
+    color: #638ED3;
+    padding: 5px;
+    border-bottom: 1px solid #DDDDDD;
+}
+
+.bulkAddUser {
+    position: relative;
+}
+
+.changeBtnStyle {
+    z-index: 0;
+}
+
+.changeBtnStyle {
+    background-color: #1C84C6;
+    color: white;
+}
+
+#fileBulkUser {
+    position: absolute;
+    display: inline-block;
+    /* background-color: red; */
+    width: 67px;
+    height: 31px;
+    right: 0px;
+    opacity: 0;
+    z-index: 10;
+}
+
+.addUserContent {
+    padding: 5px;
+    padding-left: 110px;
+}
+
+.addUserContent>div{
+    margin-bottom: 10px;
+}
+
+.hintItem {
+    position: relative;
+}
+
+.hintText {
+    color: red;
+}
+
+.addUserItemgroupingTwo {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+.remarksItem{
+    padding: 25px;
+}
+.remarks{
+    margin-left: 50px;
+}
+#Remarks{
+    resize: none;
+    outline: none;
+    padding: 5px 0px 0px 5px;
+    width: 80%;
+    height: 100px;
+}
+.addUserOperator{
+    margin-left: 38%;
+}
+#save{
+    background-color: #18A689;
+    color: white;
+}
