@@ -1,20 +1,32 @@
-var express=require('express');
-var app=express();
-var session=require('express-session');
-var path=require('path');
-var cors=require('cors');
-app.use(cors());
-app.use(express.urlencoded({extended:false}));
-app.use(express.json());
-app.engine('html',require('express-art-template'));
-app.use('/public/',express.static(path.join(__dirname,'./static/')));
-app.use('/static/',express.static(path.join(__dirname,'./static/')));
-app.use('/node_modules/',express.static(path.join(__dirname,'./node_modules/')));
-app.engine('html',require('express-art-template'));
-app.set('views',path.join(__dirname,'./views/'))
-app.listen(80,()=>{
-    console.log("http://127.0.0.1");
+//引入第三方插件
+const express = require('express')
+const app = express()
+const body_parse = require('body-parser')
+const path = require('path')
+const cookieParse = require('cookie-parser')
+const session = require('express-session')
+const axios = require('axios')
+
+// 配置
+app.engine('html', require('express-art-template'))
+app.use(body_parse.urlencoded({ extended: false }))
+app.use(body_parse.json())
+app.use(session({
+    secret: 'hubwizApp',
+    cookie: { maxAge: 60 * 1000 * 30 * 24 },
+    resave: true,
+    saveUninitialized: false,
+  }))
+app.use('/public', express.static(path.join(__dirname, './static')))
+
+// 引入路由
+const sAdminRouter=require('./router/sAdminRouter')
+
+// 配置路由
+app.use(sAdminRouter)
+
+// 启动服务器
+app.listen(8080,()=>{
+    console.log('服务器已启动,端口号:8080')
 })
-app.get('/', function (req, res) {
-    res.render('index.html')
-})
+
