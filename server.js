@@ -6,6 +6,7 @@ const path = require('path')
 const cookieParse = require('cookie-parser')
 const session = require('express-session')
 const axios = require('axios')
+const jwt = require('jsonwebtoken');
 
 
 // 配置
