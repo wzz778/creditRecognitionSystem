@@ -94,8 +94,11 @@
     box-sizing: border-box;
 }
 .header{
-    background-color: rgb(239 243 248);
     height: 43.2px;
+}
+.back-color{
+    background-color: rgb(239 243 248);
+
 }
 .header li{
     display: inline-block;

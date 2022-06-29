@@ -56,7 +56,7 @@
 <!--                </div>-->
 <!--            </div>-->
             <div class="container">
-                <ul class="header">
+                <ul class="header back-color">
                     <li class="checkbox-bs lis"></li>
                     <li class="student-name lis">姓名</li>
                     <li class="student-major lis">学院</li>
@@ -67,6 +67,21 @@
                     <li class="student-apply-credit lis">总学分</li>
                     <li class="student-operator lis">操作</li>
                 </ul>
+                <div class="main-content">
+                    {{each }}
+                    <ul class="header">
+                        <li class="checkbox lis">{{}}</li>
+                        <li class="student-name lis">{{}}</li>
+                        <li class="student-major lis">{{}}</li>
+                        <li class="student-class lis">{{}}</li>
+                        <li class="student-apply lis">{{}}</li>
+                        <li class="student-time lis">{{}}</li>
+                        <li class="student-state lis">{{}}</li>
+                        <li class="student-apply-credit lis">{{}}</li>
+                        <li class="student-operator lis">{{}}</li>
+                    </ul>
+                    {{/each}}
+                </div>
             </div>
         </div>
         <div id="page">
