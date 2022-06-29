@@ -18,17 +18,17 @@
             <div class="login-head">
                 账号登录	
             </div>
-                <form>
+                <form action="/api/1" method="get">
                     <li>
-                        <input type="text" class="text form-control" placeholder="账号"><a href="#" class=" icon user"></a>
+                        <input type="text" class="text form-control" name="userName" placeholder="账号"><a href="#" class=" icon user"></a>
                     </li>
                         <div class="clear"></div>
                     <li>
-                        <input type="password" placeholder="密码" class="text form-control" onfocus="show(this)" onblur="fade(this)"> <a href="#" class="icon lock"></a>
+                        <input type="password" placeholder="密码" name="password" class="text form-control"> <a href="#" class="icon lock"></a>
                     </li>
                     <div class="clear"> </div>
                     <div class="submit">
-                        <input type="submit" onclick="myFunction()" value="登录" >
+                        <input type="submit" value="登录" >
                     </div>
                 </form>
                 </div>					

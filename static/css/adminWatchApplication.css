@@ -1,0 +1,125 @@
+.topText {
+    color: #638ED3;
+    margin-bottom: 15px;
+}
+
+.selectCondition {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-bottom: 1px solid #DDDDDD;
+    padding-bottom: 5px;
+    align-content: center;
+    justify-content: center;
+}
+
+.selectConditionItem {
+    margin-bottom: 10px;
+}
+
+#sureSearch {
+    background-color: #1AB394;
+    color: white;
+}
+
+#exportForm {
+    background-color: #5277ae;
+    margin-left: 10px;
+    color: white;
+}
+
+#importForm {
+    background-color: #638ED3;
+    color: white;
+    margin-left: 20px;
+}
+
+.operator {
+    position: relative;
+}
+
+#reset {
+    position: absolute;
+    background-color: #F8AC59;
+    color: white;
+    right: 55px;
+}
+
+.WatchApplicationContent {
+    margin-top: 10px;
+}
+
+#allNumber {
+    margin-bottom: 10px;
+}
+
+.WatchApplicationContentItem>ul {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+    padding: 5px 0px;
+    border-bottom: 1px solid #F5F5F5;
+}
+
+.WatchApplicationContentTop>ul {
+    background-color: #EFF3F8;
+}
+
+.WatchApplicationContentItem>ul>li>button {
+    padding: 0px;
+    color: #806A84;
+}
+
+.WatchApplicationContentContent {
+    min-height: 200px;
+}
+
+.WatchApplicationContentContent>ul:hover {
+    background-color: #F5F5F5;
+}
+
+.WatchApplicationContentContent>ul:hover>li>button {
+    background-color: #F5F5F5;
+}
+
+.watchDetails:hover {
+    color: red;
+}
+
+.WatchApplicationBottom>button {
+    padding: 5px;
+    background-color: #638ED3;
+    color: white;
+}
+
+#selectPerpage {
+    width: 60px;
+}
+
+#lastPage {
+    margin-left: 40px;
+}
+
+#nowPage {
+    background: #6DD9C3;
+    color: white;
+    padding: 8px 10px;
+}
+
+#jumpPage {
+    width: 40px;
+    padding-left: 5px;
+}
+
+#jump {
+    background-color: #F8AC59;
+}
+
+.WatchApplicationNo {
+    color: red;
+    font-size: 35px;
+    height: 400px;
+    line-height: 400px;
+    text-align: center;
+}

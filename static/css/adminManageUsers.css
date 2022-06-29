@@ -1,0 +1,94 @@
+.topText {
+    color: #638ED3;
+}
+
+.totalNumber{
+    margin-bottom: 10px;
+}
+
+#del {
+    padding: 5px;
+    font-size: 14px;
+    background-color: #F59DA6;
+    color: white;
+}
+
+.adminManageUsersTop {
+    padding-bottom: 10px;
+    border-bottom: 1px solid #DDDDDD;
+}
+
+.adminHistoryContentItem>ul {
+    display: grid;
+    grid-template-columns: 35px repeat(7, 1fr);
+    align-items: center;
+    text-align: center;
+    border-bottom: 1px solid #F5F5F5;
+    padding: 5px 0px;
+}
+
+.adminManageUsersContent {
+    margin-top: 10px;
+    min-height: 200px;
+}
+
+.adminManageUsersContentTop>ul {
+    background-color: #EFF3F8;
+}
+
+.adminManageUsersContentContent>ul:hover {
+    background-color: #F5F5F5;
+}
+
+.adminManageUsersContentContent>ul:hover>li>button {
+    background-color: #F5F5F5;
+}
+
+.adminManageUsersContentContent>ul>li>button {
+    padding: 0px;
+}
+
+.operatorBtnSty {
+    color: #806A84;
+}
+
+.operatorBtnSty:hover {
+    color: red;
+}
+
+.adminHistoryContentBottom>button {
+    padding: 5px;
+    background-color: #638ED3;
+    color: white;
+}
+
+#selectPerpage {
+    width: 60px;
+}
+
+#lastPage {
+    margin-left: 40px;
+}
+
+#nowPage {
+    background: #6DD9C3;
+    color: white;
+    padding: 8px 10px;
+}
+
+#jumpPage {
+    width: 40px;
+    padding-left: 5px;
+}
+
+#jump {
+    background-color: #F8AC59;
+}
+
+.adminHistoryContentNo {
+    color: red;
+    font-size: 35px;
+    height: 400px;
+    line-height: 400px;
+    text-align: center;
+}

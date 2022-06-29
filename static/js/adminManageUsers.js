@@ -1,6 +1,4 @@
-// 提示弹窗
 let popUps = document.getElementsByClassName('popUps')
-
 
 // 点击勾选删除的将所有的勾选框选中
 let checkDelAll = document.getElementById('checkDelAll')
@@ -135,7 +133,7 @@ del.onclick = function () {
         // 选择删除的值
         // 删除多个
         swal({
-            title: "你确定？",
+            title: "你确定?",
             text: "要删除多个历史记录信息吗?",
             type: "warning",
             showCancelButton: true,
