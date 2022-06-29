@@ -1,0 +1,217 @@
+/* 清除默认样式 */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+input {
+    outline: none;
+    /* padding-left: 15px; */
+    padding: 5px 0px 5px 15px;
+    border: 1px solid #DDDDDD;
+    margin-left: 10px;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+button {
+    outline: none;
+    border: none;
+    cursor: pointer;
+    background-color: white;
+    padding: 7px;
+}
+
+ul {
+    list-style: none;
+}
+
+li {
+    list-style: none;
+}
+
+select {
+    outline: none;
+    margin-left: 10px;
+    padding: 5px;
+    width: 200px;
+    border: 1px solid #DDDDDD;
+    color: #999999;
+}
+
+/* 公共样式 */
+.clearFloat::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.floatRight {
+    float: right;
+}
+
+.floatLeft {
+    float: left;
+}
+
+#body {
+    background-color: white;
+    color: #806A84;
+    position: relative;
+}
+
+/* 弹窗 */
+.popUps {
+    position: absolute;
+    right: 50%;
+    top: 70px;
+    background-color: #D4ECDA;
+    /* opacity: .5; */
+    color: #597A4F;
+    padding: 10px;
+    z-index: 10;
+}
+
+.wrong {
+    background-color: #F9D7DB;
+    color: #733E34;
+}
+
+.addUserTop {
+    color: #638ED3;
+    padding: 5px;
+    border-bottom: 1px solid #DDDDDD;
+}
+
+.bulkAddUser {
+    position: relative;
+}
+
+.changeBtnStyle {
+    z-index: 0;
+}
+
+.changeBtnStyle {
+    background-color: #1C84C6;
+    color: white;
+}
+
+#fileBulkUser {
+    position: absolute;
+    display: inline-block;
+    /* background-color: red; */
+    width: 67px;
+    height: 31px;
+    right: 0px;
+    opacity: 0;
+    z-index: 10;
+}
+
+.addUserContent {
+    padding: 5px;
+    padding-left: 110px;
+    /* min-height: 195px; */
+}
+
+.addUserContent>div {
+    margin-bottom: 10px;
+}
+
+.hintItem {
+    position: relative;
+}
+
+.hintText {
+    color: red;
+}
+
+.addUserItemgroupingTwo {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.remarksItem {
+    padding: 25px;
+}
+
+.remarks {
+    margin-left: 50px;
+}
+
+#Remarks {
+    resize: none;
+    outline: none;
+    padding: 5px 0px 0px 5px;
+    width: 80%;
+    height: 100px;
+}
+
+.addUserOperator {
+    margin-left: 37.5%;
+}
+
+.studentInformation>div {
+    margin-bottom: 10px;
+}
+
+#save {
+    background-color: #1ab394;
+    color: white;
+}
+
+#save:hover {
+    background-color: #18A689;
+}
+
+#cancel {
+    background-color: #ed5565;
+    color: white;
+    margin-left: 30px;
+}
+
+#cancel:hover {
+    background-color: #EC4758;
+}
+
+.teacherInformation>div {
+    display: inline-block;
+    margin-left: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.choiceStuTea>span {
+    position: relative;
+    width: 15px;
+    height: 15px;
+    top: 3px;
+    display: inline-block;
+    border-radius: 50%;
+    border: 1px solid #DDDDDD;
+}
+
+.choiceStuTea>span>span {
+    /* position: absolute; */
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    background-color: #EC4758;
+    border-radius: 50%;
+    position: relative;
+    top: -4px;
+}
+
+.choiceStuTea>span>span::before {
+    content: '';
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background-color: white;
+}

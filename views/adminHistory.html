@@ -1,0 +1,190 @@
+{{extend './layout.html'}}
+{{block 'title'}}查看历史记录{{/block}}
+{{block 'head'}}
+<!-- 引入 layui.css -->
+<link rel="stylesheet" href="//unpkg.com/layui@2.6.8/dist/css/layui.css">
+<link rel="stylesheet" href="/public/css/adminHistory.css">
+{{/block}}
+{{block 'body'}}
+<div class="popUps" style="display: none;">
+    <span>
+        <i class="iconfont">对号</i>
+    </span>
+    查询成功
+</div>
+<div class="popUps wrong" style="display: none;">
+    <span>
+        <i class="iconfont">叉号</i>
+    </span>
+    网络错误
+</div>
+<div class="popUps wrong" style="display: none;">
+    <span>
+        <i class="iconfont">叉号</i>
+    </span>
+    请选择查询内容
+</div>
+<div class="popUps wrong" style="display: none;">
+    <span>
+        <i class="iconfont">叉号</i>
+    </span>
+    请选择删除内容
+</div>
+<div class="popUps" style="display: none;">
+    <span>
+        <i class="iconfont">对号</i>
+    </span>
+    删除成功
+</div>
+<div class="popUps wrong" style="display: none;">
+    <span>
+        <i class="iconfont">叉号</i>
+    </span>
+    请输入合法数字
+</div>
+<div class="popUps wrong" style="display: none;">
+    <span>
+        <i class="iconfont">叉号</i>
+    </span>
+    超过最大限制
+</div>
+<div class="popUps wrong" style="display: none;">
+    <span>
+        <i class="iconfont">叉号</i>
+    </span>
+    当前是最后一页
+</div>
+<div class="popUps wrong" style="display: none;">
+    <span>
+        <i class="iconfont">叉号</i>
+    </span>
+    当前是第一页
+</div>
+<div class="adminHistoryTop">
+    <span class="topText">
+        查看提交历史记录
+    </span>
+    <div class="selectCondition clearFloat">
+        <div class="selectConditionItem">
+            审核状态:<select id="passFail">
+                <option value="">请选择...</option>
+                <option value="">待审核</option>
+                <option value="">通过</option>
+                <option value="">未通过</option>
+            </select>
+        </div>
+        <div class="selectConditionItem">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">日期范围</label>
+                    <div class="layui-inline" id="test-range">
+                        <div class="layui-input-inline">
+                            <input type="text" id="startDate" class="layui-input" placeholder="开始日期">
+                        </div>
+                        <div class="layui-form-mid">-</div>
+                        <div class="layui-input-inline">
+                            <input type="text" id="endDate" class="layui-input" placeholder="结束日期">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="selectConditionItem">
+            <button id="sureSearch">查询</button>
+            <button id="resetSearch">重置</button>
+        </div>
+    </div>
+</div>
+<div class="adminHistoryContent">
+    <div class="totalNumber clearFloat">
+        <button id="del">删除</button>
+        <span class="floatRight" id="allNumber">共1条</span>
+    </div>
+    <div class="adminHistoryContentTop adminHistoryItem">
+        <ul>
+            <li>
+                <input type="checkbox" id="checkDelAll">
+            </li>
+            <li>姓名</li>
+            <li>学号</li>
+            <li>所在班级</li>
+            <li>申请类别</li>
+            <li>申请学分</li>
+            <li>填写时间</li>
+            <li>审核状态</li>
+            <li>操作框</li>
+        </ul>
+    </div>
+    <div class="adminHistoryContentContent adminHistoryItem">
+        <ul>
+            <li>
+                <input type="checkbox" class="checkDel">
+            </li>
+            <li>郑世杰</li>
+            <li>20180514109</li>
+            <li>植保181</li>
+            <li>创新科技</li>
+            <li>6</li>
+            <li>2022-6-29</li>
+            <li>通过普通管理员</li>
+            <li>
+                <button onclick="" class="operatorBtnSty">删除</button>
+                <button onclick="" class="operatorBtnSty">详情</button>
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <input type="checkbox" class="checkDel">
+            </li>
+            <li>郑世杰</li>
+            <li>20180514109</li>
+            <li>植保181</li>
+            <li>创新科技</li>
+            <li>6</li>
+            <li>2022-6-29</li>
+            <li>通过普通管理员</li>
+            <li>
+                <button onclick="" class="operatorBtnSty">删除</button>
+                <button onclick="" class="operatorBtnSty">详情</button>
+            </li>
+        </ul>
+    </div>
+    <div class="adminHistoryContentBottom clearFloat">
+        每页<select name="" id="selectPerpage">
+            <option value="10">10条</option>
+            <option value="15">15条</option>
+            <option value="20">20条</option>
+            <option value="25">25条</option>
+        </select>
+        <span id="allPages">共1页</span>
+        <button id="lastPage">上一页</button>
+        <span id="nowPage">1</span>
+        跳转到:<input type="text" id="jumpPage">  页
+        <button id="jump">跳转</button>
+        <button id="nextPage">下一页</button>
+    </div>
+</div>
+<div id="adminHistoryContentNo" style="display: none;">
+    对不起没有该内容
+</div>
+{{/block}}
+{{block 'bottom'}}
+
+<!-- 引入 layui.js -->
+<script src="//unpkg.com/layui@2.6.8/dist/layui.js"></script>
+<script>
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#test-range' //开始时间和结束时间所在 input 框的父选择器
+            //设置开始日期、日期日期的 input 选择器
+            , range: ['#startDate', '#endDate'] //数组格式为 layui 2.6.6 开始新增
+        });
+    });
+
+</script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="/public/js/adminHistory.js"></script>
+{{/block}}
