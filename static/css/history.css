@@ -84,6 +84,7 @@
     border: 1px solid transparent;
     background-color: rgb(29 197 163);
     border-color: rgb(29 197 163);
+    color: white;
 }
 .container{
     padding-bottom: 0px;
@@ -118,7 +119,7 @@
     width: 90px;
 }
 .student-credit{
-    width: 60px;
+    width: 120px;
 }
 .student-apply{
     width: 140px;
