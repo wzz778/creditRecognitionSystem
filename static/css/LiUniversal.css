@@ -1,0 +1,81 @@
+/* 清除默认样式 */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+input {
+    outline: none;
+    /* padding-left: 15px; */
+    padding: 5px 0px 5px 15px;
+    border: 1px solid #DDDDDD;
+    margin-left: 10px;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+button {
+    outline: none;
+    border: none;
+    cursor: pointer;
+    background-color: white;
+    padding: 7px;
+}
+
+ul {
+    list-style: none;
+}
+
+li {
+    list-style: none;
+}
+
+select {
+    outline: none;
+    margin-left: 10px;
+    padding: 5px;
+    width: 200px;
+    border: 1px solid #DDDDDD;
+    color: #999999;
+}
+
+/* 公共样式 */
+.clearFloat::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.floatRight {
+    float: right;
+}
+
+.floatLeft {
+    float: left;
+}
+
+#body {
+    background-color: white;
+    color: #806A84;
+    position: relative;
+}
+
+/* 弹窗 */
+.popUps {
+    position: absolute;
+    right: 50%;
+    top: 70px;
+    background-color: #D4ECDA;
+    /* opacity: .5; */
+    color: #597A4F;
+    padding: 10px;
+    z-index: 10;
+}
+
+.wrong {
+    background-color: #F9D7DB;
+    color: #733E34;
+}

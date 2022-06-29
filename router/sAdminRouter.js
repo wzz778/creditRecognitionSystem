@@ -8,6 +8,9 @@ router.get('/superAdminAdd', (req, res) => {
 router.get('/adminHistory',(req,res)=>{
     res.render('adminHistory.html')
 })
+router.get('/adminWatchApplication',(req,res)=>{
+    res.render('adminWatchApplication.html')
+})
 
 var provinces = ['江苏省','浙江省','安徽省']
 var citys = []
