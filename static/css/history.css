@@ -118,8 +118,8 @@
 .student-name{
     width: 90px;
 }
-.student-credit{
-    width: 120px;
+.student-state{
+    width: 140px;
 }
 .student-apply{
     width: 140px;
@@ -131,7 +131,7 @@
     width: 160px;
 }
 .student-class{
-    width: 120px;
+    width: 160px;
 }
 .student-apply-credit{
     width: 120px;
