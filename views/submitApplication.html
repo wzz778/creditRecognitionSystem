@@ -1,0 +1,55 @@
+{{extend './layout.html'}}
+{{block 'title'}}个人中心{{/block}}
+{{block 'head'}}
+<link rel="stylesheet" href="public/css/submitApplication.css">
+{{/block}}
+{{block 'body'}}
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 10px;">
+    <legend>申请表提交</legend>
+  </fieldset>
+  <form class="layui-form" action="" lay-filter="example">
+    <div class="layui-form-item">
+      <label class="usermessage-type" name="name" value="王泽政" title="王泽政">姓名：<span class="usermessage"  value="王泽政" >王泽政</span></label>
+      <label class="usermessage-type">性别：<span class="usermessage">男</span></label>
+      <label class="usermessage-type">学号：<span class="usermessage">20211554322</span></label>
+      <label class="usermessage-type">所属学院：<span class="usermessage">信息工程学院</span></label>
+      <label class="usermessage-type">专业及班级：<span class="usermessage">计算机科学与技术</span>   <span class="usermessage">计科214</span></label>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">选择框</label>
+      <div class="layui-input-block">
+        <select name="interest" lay-filter="aihao">
+          <option value="0">科技创新</option>
+          <option value="1">学科竞赛</option>
+          <option value="2">创业实践</option>
+          <option value="3">社会实践</option>
+          <option value="4">职业技能</option>
+        </select>
+      </div>
+    </div> 
+    <div class="layui-form-item">
+      <label class="layui-form-label">是否为集体项目</label>
+      <div class="layui-input-block">
+        <input type="radio" name="team" value="不是" title="不是" checked="">
+        <input type="radio" name="team" value="是" title="是">
+      </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+      <label class="layui-form-label">实践内容说明</label>
+      <div class="layui-input-block">
+        <textarea placeholder="请输入内容" class="layui-textarea" name="desc"></textarea>
+      </div>
+    </div>
+   
+    <div class="layui-form-item">
+      <div class="layui-input-block">
+        <button type="button" class="layui-btn layui-btn-normal" id="LAY-component-form-setval">赋值</button>
+        <button type="button" class="layui-btn layui-btn-normal" id="LAY-component-form-getval">取值</button>
+        <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+      </div>
+    </div>
+  </form>
+{{/block}}
+{{block 'bottom'}}
+<script src="public/js/submitApplication.js"></script>
+{{/block}}
