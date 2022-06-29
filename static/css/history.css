@@ -47,5 +47,97 @@
     /*width: 12px;*/
 }
 .font-search:before{
-    content: '&#xe651';
+    /*content: '&#xe651';*/
+}
+.content{
+    min-height: 75%;
+    width: 100%;
+    background: hsl(0deg 0% 100%);
+    border-radius: 6px;
+    margin-top: 10px;
+    padding-top: 5px;
+    padding-bottom: 13px;
+    box-shadow: 1px 1px 3px rgba(0,0,0,.2);
+    position: relative;
+    padding-right: 15px;
+    padding-left: 15px;
+    box-sizing: border-box;
+}
+
+.pull-left{
+    position: relative;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.btns{
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+    display: inline-block;
+    font-weight: 400;
+    margin-bottom: 0;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid transparent;
+    background-color: rgb(29 197 163);
+    border-color: rgb(29 197 163);
+}
+.container{
+    padding-bottom: 0px;
+    position: relative;
+    clear: both;
+    border: 0 solid rgb(221 221 221);
+    box-sizing: border-box;
+}
+.header{
+    background-color: rgb(239 243 248);
+    height: 43.2px;
+}
+.header li{
+    display: inline-block;
+    vertical-align: middle;
+}
+.checkbox-bs{
+    width: 36px;
+    text-align: center;
+    vertical-align: bottom;
+    padding: 0;
+    margin: 0;
+}
+.lis{
+    padding: .75rem;
+    vertical-align: bottom;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.student-name{
+    width: 90px;
+}
+.student-credit{
+    width: 60px;
+}
+.student-apply{
+    width: 140px;
+}
+.student-grade{
+    width: 90px;
+}
+.student-major{
+    width: 160px;
+}
+.student-class{
+    width: 120px;
+}
+.student-apply-credit{
+    width: 120px;
+}
+.student-operator{
+    width: 200px;
+}
+.student-time{
+    width: 140px;
 }
