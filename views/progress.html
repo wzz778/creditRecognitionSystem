@@ -1,0 +1,42 @@
+{{extend './layout.html'}}
+{{block 'titile'}}进度{{/block}}
+{{block 'head'}}
+<link rel="stylesheet" href="public/layui/css/layui.css">
+<link rel="stylesheet" href="public/css/progress.css">
+{{/block}}
+{{block 'body'}}
+    <div class="content">
+        <div class="card-body">
+            <ul class="nav-step">
+                <li class="nav-step-item active">
+                    <span>步骤一</span>
+                    <a class="active">
+
+                    </a>
+                </li>
+                <li class="nav-step-item">
+                    <span>步骤二</span>
+                    <a class="uncomplete">
+
+                    </a>
+                </li>
+                <li class="nav-step-item">
+                    <span>步骤三</span>
+                    <a class="uncomplete">
+
+                    </a>
+                </li>
+                <li class="nav-step-item">
+                    <span>步骤四</span>
+                    <a class="uncomplete">
+
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+{{/block}}
+{{block 'bottom'}}
+<script src="public/layui/layui.js"></script>
+<script src="public/js/progress.js"></script>
+{{/block}}
