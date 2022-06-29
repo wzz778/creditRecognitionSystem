@@ -1,0 +1,215 @@
+/* 清除默认样式 */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+input {
+    outline: none;
+    /* padding-left: 15px; */
+    padding: 5px 0px 5px 15px;
+    border: 1px solid #DDDDDD;
+    margin-left: 10px;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+button {
+    outline: none;
+    border: none;
+    cursor: pointer;
+    background-color: white;
+    padding: 7px;
+}
+
+ul {
+    list-style: none;
+}
+
+li {
+    list-style: none;
+}
+
+select {
+    outline: none;
+    margin-left: 10px;
+    padding: 5px;
+    width: 200px;
+    border: 1px solid #DDDDDD;
+    color: #999999;
+}
+
+/* 公共样式 */
+.clearFloat::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.floatRight {
+    float: right;
+}
+
+.floatLeft {
+    float: left;
+}
+
+.popUps {
+    position: absolute;
+    right: 50%;
+    top: 70px;
+    background-color: #D4ECDA;
+    /* opacity: .5; */
+    color: #597A4F;
+    padding: 10px;
+    z-index: 10;
+}
+
+.wrong {
+    background-color: #F9D7DB;
+    color: #733E34;
+}
+
+#body {
+    background-color: white;
+    color: #806A84;
+    position: relative;
+}
+
+.layui-form-item {
+    display: inline-block;
+    margin: 0px;
+    margin-top: 3px;
+}
+
+.layui-form-label {
+    width: 115px;
+}
+
+.layui-form-mid {
+    margin: 0px 5px 0px 5px;
+}
+
+.layui-input {
+    padding: 5px;
+}
+
+.selectConditionItem {
+    display: inline-block;
+    height: 100%;
+}
+
+.selectConditionItem:nth-child(2) {
+    position: relative;
+    top: 4px;
+}
+
+#sureSearch {
+    margin-left: 70px;
+    background-color: #1AB394;
+    color: white;
+}
+
+#resetSearch{
+    background-color: #F8AC59;
+    color: white;
+}
+
+#del{
+    padding: 5px;
+    font-size: 14px;
+    background-color: #F59DA6;
+    color: white;
+}
+
+.topText {
+    color: #638ED3;
+}
+
+.selectCondition {
+    padding: 5px;
+    border-bottom: 1px solid #DDDDDD;
+}
+
+.adminHistoryContentTop>ul{
+    background-color: #EFF3F8;
+}
+
+.adminHistoryContent{
+    padding: 10px;
+}
+
+.adminHistoryContentContent{
+    margin-bottom: 10px;
+    min-height: 200px;
+}
+
+.adminHistoryContentContent>ul:hover{
+    background-color: #F5F5F5;
+}
+
+.adminHistoryContentContent>ul:hover>li>button{
+    background-color: #F5F5F5;
+}
+
+.totalNumber{
+    margin-bottom: 10px;
+}
+
+.adminHistoryItem>ul{
+    display: grid;
+    grid-template-columns: 35px repeat(8,1fr);
+    align-items: center;
+    text-align: center;
+    border-bottom: 1px solid #F5F5F5;
+    padding: 5px 0px;
+}
+
+.adminHistoryItem>ul>li>button{
+    padding: 0px;
+    color: #806A84;
+}
+
+.operatorBtnSty:hover{
+    color: red;
+}
+
+.adminHistoryContentBottom>button{
+    padding: 5px;
+    background-color: #638ED3;
+    color: white;
+}
+
+#selectPerpage{
+    width: 60px;
+}
+
+#lastPage{
+    margin-left: 40px;
+}
+
+#nowPage{
+    background: #6DD9C3;
+    color: white;
+    padding: 8px 10px;
+}
+
+#jumpPage{
+    width: 40px;
+    padding-left: 5px;
+}
+
+#jump{
+    background-color: #F8AC59;
+}
+
+.adminHistoryContentNo{
+    color: red;
+    font-size: 35px;
+    height: 400px;
+    line-height: 400px;
+    text-align: center;
+}
