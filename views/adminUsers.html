@@ -1,0 +1,81 @@
+{{extend './layout.html'}}
+{{block 'titile'}}用户管理{{/block}}
+{{block 'head'}}
+<link rel="stylesheet" href="public/layui/css/layui.css">
+<link rel="stylesheet" href="public/css/adminUsers.css">
+{{/block}}
+{{block 'body'}}
+<div class="search-top">
+    <div class="search-title">
+        搜索用户：
+        <input type="text" class="search">
+    </div>
+    <div class="search-title">
+        <a class="btn">
+            <i class="font-search">
+
+            </i>
+            搜索
+        </a>
+        <a class="btn">
+            <i class="font-search">
+
+            </i>
+            重置
+        </a>
+    </div>
+</div>
+<div class="content">
+    <div class="table">
+        <div class="table-toolar">
+            <div class="pull-left">
+                <a class="btns">
+                    <i class="fa">
+
+                    </i>
+                    新增
+                </a>
+                <a class="btns">
+                    <i class="fa">
+
+                    </i>
+                    修改
+                </a>
+                <a class="btns">
+                    <i class="fa">
+
+                    </i>
+                    删除
+                </a>
+                <a class="btns">
+                    <i class="fa">
+
+                    </i>
+                    导出
+                </a>
+            </div>
+        </div>
+        <div class="container">
+            <ul class="header">
+                <li class="checkbox-bs lis"></li>
+                <li class="student-name lis">姓名</li>
+                <li class="student-numbers lis">学号</li>
+                <li class="student-grade lis">年级</li>
+                <li class="student-class lis">所在班级</li>
+                <li class="student-major lis">所在专业</li>
+                <li class="student-credit lis">学分</li>
+                <li class="student-applyNumbers lis">申请次数</li>
+                <li class="student-operator lis">操作</li>
+            </ul>
+        </div>
+    </div>
+    <div id="page">
+
+    </div>
+</div>
+{{/block}}
+
+{{block 'bottom'}}
+<script src="public/layui/layui.js"></script>
+<script src="public/js/adminUsers.js"></script>
+{{/block}}

@@ -1,0 +1,81 @@
+{{extend './layout.html'}}
+{{block 'titile'}}历史记录{{/block}}
+{{block 'head'}}
+    <link rel="stylesheet" href="public/layui/css/layui.css">
+    <link rel="stylesheet" href="public/css/history.css">
+{{/block}}
+{{block 'body'}}
+    <div class="search-top">
+        <div class="search-title">
+            查询历史记录：
+            <input type="text" class="search">
+        </div>
+        <div class="search-title">
+            <a class="btn">
+                <i class="font-search">
+
+                </i>
+                搜索
+            </a>
+            <a class="btn">
+                <i class="font-search">
+
+                </i>
+                重置
+            </a>
+        </div>
+    </div>
+    <div class="content">
+        <div class="table">
+<!--            <div class="table-toolar">-->
+<!--                <div class="pull-left">-->
+<!--                    <a class="btns">-->
+<!--                        <i class="fa">-->
+
+<!--                        </i>-->
+<!--                        新增-->
+<!--                    </a>-->
+<!--                    <a class="btns">-->
+<!--                        <i class="fa">-->
+
+<!--                        </i>-->
+<!--                        修改-->
+<!--                    </a>-->
+<!--                    <a class="btns">-->
+<!--                        <i class="fa">-->
+
+<!--                        </i>-->
+<!--                        删除-->
+<!--                    </a>-->
+<!--                    <a class="btns">-->
+<!--                        <i class="fa">-->
+
+<!--                        </i>-->
+<!--                        导出-->
+<!--                    </a>-->
+<!--                </div>-->
+<!--            </div>-->
+            <div class="container">
+                <ul class="header">
+                    <li class="checkbox-bs lis"></li>
+                    <li class="student-name lis">姓名</li>
+                    <li class="student-major lis">学院</li>
+                    <li class="student-class lis">班级</li>
+                    <li class="student-apply lis">申请类型</li>
+                    <li class="student-time lis">申请时间</li>
+                    <li class="student-state lis">申请状态</li>
+                    <li class="student-apply-credit lis">总学分</li>
+                    <li class="student-operator lis">操作</li>
+                </ul>
+            </div>
+        </div>
+        <div id="page">
+
+        </div>
+    </div>
+{{/block}}
+
+{{block 'bottom'}}
+<script src="public/layui/layui.js"></script>
+<script src="public/js/history.js"></script>
+{{/block}}
