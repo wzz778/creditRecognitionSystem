@@ -5,6 +5,60 @@
 <link rel="stylesheet" href="/public/css/adminWatchApplication.css">
 {{/block}}
 {{block 'body'}}
+<div class="popUps" style="display: none;">
+    <span>
+        <i class="iconfont">对号</i>
+    </span>
+    查询成功
+</div>
+<div class="popUps wrong" style="display: none;">
+    <span>
+        <i class="iconfont">叉号</i>
+    </span>
+    网络错误
+</div>
+<div class="popUps wrong" style="display: none;">
+    <span>
+        <i class="iconfont">叉号</i>
+    </span>
+    请选择查询内容
+</div>
+<div class="popUps wrong" style="display: none;">
+    <span>
+        <i class="iconfont">叉号</i>
+    </span>
+    请选择删除内容
+</div>
+<div class="popUps" style="display: none;">
+    <span>
+        <i class="iconfont">对号</i>
+    </span>
+    删除成功
+</div>
+<div class="popUps wrong" style="display: none;">
+    <span>
+        <i class="iconfont">叉号</i>
+    </span>
+    请输入合法数字
+</div>
+<div class="popUps wrong" style="display: none;">
+    <span>
+        <i class="iconfont">叉号</i>
+    </span>
+    超过最大限制
+</div>
+<div class="popUps wrong" style="display: none;">
+    <span>
+        <i class="iconfont">叉号</i>
+    </span>
+    当前是最后一页
+</div>
+<div class="popUps wrong" style="display: none;">
+    <span>
+        <i class="iconfont">叉号</i>
+    </span>
+    当前是第一页
+</div>
 <div class="WatchApplicationTop">
     <div class="topText">
         查看申请表
@@ -51,12 +105,16 @@
             </select>
         </div>
         <div class="operator">
-            <button>导出申请表信息</button>
-            <button>导入管理员信息</button>
+            <button id="exportForm">导出申请表信息</button>
+            <button id="importForm">导入管理员信息</button>
+            <button id="reset">重置</button>
         </div>
     </div>
 </div>
 <div class="WatchApplicationContent">
+    <div class="totalNumber clearFloat">
+        <span class="floatRight" id="allNumber">共1条</span>
+    </div>
     <div class="WatchApplicationContentTop WatchApplicationContentItem">
         <ul>
             <li>姓名</li>
@@ -70,10 +128,44 @@
             <li>社会实践学分</li>
             <li>职业技能学分</li>
             <li>申请学分合计</li>
-            <li>学院审核结果</li>
-            <li>操作框</li>
+            <li>详情</li>
         </ul>
     </div>
+    <div class="WatchApplicationContentContent WatchApplicationContentItem">
+        <ul>
+            <li>郑世杰</li>
+            <li>20180514109</li>
+            <li>2018</li>
+            <li>植保181班</li>
+            <li>植保181</li>
+            <li>0</li>
+            <li>4.5</li>
+            <li>0</li>
+            <li>0</li>
+            <li>0</li>
+            <li>5.0</li>
+            <li>
+                <button class="watchDetails" onclick="">查看</button>
+            </li>
+        </ul>
+    </div>
+    <div class="WatchApplicationBottom clearFloat">
+        每页<select name="" id="selectPerpage">
+            <option value="10">10条</option>
+            <option value="15">15条</option>
+            <option value="20">20条</option>
+            <option value="25">25条</option>
+        </select>
+        <span id="allPages">共1页</span>
+        <button id="lastPage">上一页</button>
+        <span id="nowPage">1</span>
+        跳转到:<input type="text" id="jumpPage"> 页
+        <button id="jump">跳转</button>
+        <button id="nextPage">下一页</button>
+    </div>
+</div>
+<div class="WatchApplicationNo" style="display: none;">
+    对不起没有该内容
 </div>
 {{/block}}
 {{block 'bottom'}}

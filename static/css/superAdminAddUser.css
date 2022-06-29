@@ -201,7 +201,7 @@ select {
     background-color: #EC4758;
     border-radius: 50%;
     position: relative;
-    top: -4px;
+    top: 0px;
 }
 
 .choiceStuTea>span>span::before {
