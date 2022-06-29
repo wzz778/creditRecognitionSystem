@@ -1,0 +1,125 @@
+{{extend './layout.html'}}
+{{block 'title'}}用户管理{{/block}}
+{{block 'head'}}
+<link rel="stylesheet" href="/public/css/LiUniversal.css">
+<link rel="stylesheet" href="/public/css/adminManageUsers.css">
+{{/block}}
+{{block 'body'}}
+<div class="popUps" style="display: none;">
+    <span>
+        <i class="iconfont">对号</i>
+    </span>
+    查询成功
+</div>
+<div class="popUps wrong" style="display: none;">
+    <span>
+        <i class="iconfont">叉号</i>
+    </span>
+    网络错误
+</div>
+<div class="popUps wrong" style="display: none;">
+    <span>
+        <i class="iconfont">叉号</i>
+    </span>
+    请选择查询内容
+</div>
+<div class="popUps wrong" style="display: none;">
+    <span>
+        <i class="iconfont">叉号</i>
+    </span>
+    请选择删除内容
+</div>
+<div class="popUps" style="display: none;">
+    <span>
+        <i class="iconfont">对号</i>
+    </span>
+    删除成功
+</div>
+<div class="popUps wrong" style="display: none;">
+    <span>
+        <i class="iconfont">叉号</i>
+    </span>
+    请输入合法数字
+</div>
+<div class="popUps wrong" style="display: none;">
+    <span>
+        <i class="iconfont">叉号</i>
+    </span>
+    超过最大限制
+</div>
+<div class="popUps wrong" style="display: none;">
+    <span>
+        <i class="iconfont">叉号</i>
+    </span>
+    当前是最后一页
+</div>
+<div class="popUps wrong" style="display: none;">
+    <span>
+        <i class="iconfont">叉号</i>
+    </span>
+    当前是第一页
+</div>
+<div class="adminManageUsersTop">
+    <span class="topText">管理用户</span>
+</div>
+<div class="adminManageUsersContent">
+    <div class="totalNumber clearFloat">
+        <button id="del">删除</button>
+        <span class="floatRight" id="allNumber">共1条</span>
+    </div>
+    <div class="adminManageUsersContentTop adminHistoryContentItem">
+        <ul>
+            <li>
+                <input type="checkbox" id="checkDelAll">
+            </li>
+            <li>姓名</li>
+            <li>学号</li>
+            <li>用户权限</li>
+            <li>申请类别</li>
+            <li>申请学分</li>
+            <li>填写时间</li>
+            <li>审核状态</li>
+            <li>操作框</li>
+        </ul>
+    </div>
+    <div class="adminManageUsersContentContent adminHistoryContentItem">
+        <ul>
+            <li>
+                <input type="checkbox" class="checkDel">
+            </li>
+            <li>郑世杰</li>
+            <li>20180514109</li>
+            <li>普通管理员</li>
+            <li>创新科技</li>
+            <li>6</li>
+            <li>2022-6-29</li>
+            <li>通过普通管理员</li>
+            <li>
+                <button onclick="removePopup()" class="operatorBtnSty">删除</button>
+                <button onclick="" class="operatorBtnSty">详情</button>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="adminHistoryContentBottom clearFloat">
+    每页<select name="" id="selectPerpage">
+        <option value="10">10条</option>
+        <option value="15">15条</option>
+        <option value="20">20条</option>
+        <option value="25">25条</option>
+    </select>
+    <span id="allPages">共1页</span>
+    <button id="lastPage">上一页</button>
+    <span id="nowPage">1</span>
+    跳转到:<input type="text" id="jumpPage"> 页
+    <button id="jump">跳转</button>
+    <button id="nextPage">下一页</button>
+</div>
+</div>
+<div id="adminHistoryContentNo" style="display: none;">
+    对不起没有该内容
+</div>
+{{/block}}
+{{block 'bottom'}}
+<script src="/public/js/adminManageUsers.js"></script>
+{{/block}}

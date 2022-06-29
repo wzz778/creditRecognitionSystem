@@ -11,6 +11,9 @@ router.get('/adminHistory',(req,res)=>{
 router.get('/adminWatchApplication',(req,res)=>{
     res.render('adminWatchApplication.html')
 })
+router.get('/adminManageUsers',(req,res)=>{
+    res.render('adminManageUsers.html')
+})
 
 var provinces = ['江苏省','浙江省','安徽省']
 var citys = []

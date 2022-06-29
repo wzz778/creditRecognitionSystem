@@ -16,7 +16,7 @@
     margin-bottom: 10px;
 }
 
-#sureSearch{
+#sureSearch {
     background-color: #1AB394;
     color: white;
 }
@@ -27,34 +27,34 @@
     color: white;
 }
 
-#importForm{
+#importForm {
     background-color: #638ED3;
     color: white;
     margin-left: 20px;
 }
 
-.operator{
+.operator {
     position: relative;
 }
 
-#reset{
+#reset {
     position: absolute;
     background-color: #F8AC59;
     color: white;
     right: 55px;
 }
 
-.WatchApplicationContent{
+.WatchApplicationContent {
     margin-top: 10px;
 }
 
-#allNumber{
+#allNumber {
     margin-bottom: 10px;
 }
 
-.WatchApplicationContentItem>ul{
+.WatchApplicationContentItem>ul {
     display: grid;
-    grid-template-columns:  repeat(12,1fr);
+    grid-template-columns: repeat(12, 1fr);
     justify-content: center;
     align-content: center;
     text-align: center;
@@ -62,61 +62,61 @@
     border-bottom: 1px solid #F5F5F5;
 }
 
-.WatchApplicationContentTop>ul{
+.WatchApplicationContentTop>ul {
     background-color: #EFF3F8;
 }
 
-.WatchApplicationContentItem>ul>li>button{
+.WatchApplicationContentItem>ul>li>button {
     padding: 0px;
     color: #806A84;
 }
 
-.WatchApplicationContentContent{
+.WatchApplicationContentContent {
     min-height: 200px;
 }
 
-.WatchApplicationContentContent>ul:hover{
+.WatchApplicationContentContent>ul:hover {
     background-color: #F5F5F5;
 }
 
-.WatchApplicationContentContent>ul:hover>li>button{
+.WatchApplicationContentContent>ul:hover>li>button {
     background-color: #F5F5F5;
 }
 
-.watchDetails:hover{
+.watchDetails:hover {
     color: red;
 }
 
-.WatchApplicationBottom>button{
+.WatchApplicationBottom>button {
     padding: 5px;
     background-color: #638ED3;
     color: white;
 }
 
-#selectPerpage{
+#selectPerpage {
     width: 60px;
 }
 
-#lastPage{
+#lastPage {
     margin-left: 40px;
 }
 
-#nowPage{
+#nowPage {
     background: #6DD9C3;
     color: white;
     padding: 8px 10px;
 }
 
-#jumpPage{
+#jumpPage {
     width: 40px;
     padding-left: 5px;
 }
 
-#jump{
+#jump {
     background-color: #F8AC59;
 }
 
-.WatchApplicationNo{
+.WatchApplicationNo {
     color: red;
     font-size: 35px;
     height: 400px;
