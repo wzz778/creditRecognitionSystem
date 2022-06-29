@@ -64,7 +64,7 @@ select {
 }
 
 /* 弹窗 */
-.popUps{
+.popUps {
     position: absolute;
     right: 50%;
     top: 70px;
@@ -72,8 +72,10 @@ select {
     /* opacity: .5; */
     color: #597A4F;
     padding: 10px;
+    z-index: 10;
 }
-.wrong{
+
+.wrong {
     background-color: #F9D7DB;
     color: #733E34;
 }

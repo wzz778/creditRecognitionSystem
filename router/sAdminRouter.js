@@ -5,6 +5,9 @@ const axios = require('axios')
 router.get('/superAdminAdd', (req, res) => {
     res.render('superAdminAddUser.html')
 })
+router.get('/adminHistory',(req,res)=>{
+    res.render('adminHistory.html')
+})
 
 var provinces = ['江苏省','浙江省','安徽省']
 var citys = []
