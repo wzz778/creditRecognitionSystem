@@ -20,7 +20,7 @@
 
 .adminHistoryContentItem>ul {
     display: grid;
-    grid-template-columns: 35px repeat(8, 1fr);
+    grid-template-columns: 35px repeat(7, 1fr);
     align-items: center;
     text-align: center;
     border-bottom: 1px solid #F5F5F5;
