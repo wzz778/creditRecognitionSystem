@@ -1,0 +1,17 @@
+.usermessage-type {
+  float: left;
+  display: block;
+  padding: 9px 15px;
+  font-weight: 400;
+  line-height: 20px;
+  text-align: right;
+}
+
+.layui-form-label {
+  padding: 9px 12px;
+  text-align: left;
+}
+
+.layui-input-block {
+  margin-left: 90px;
+}

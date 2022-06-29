@@ -23,26 +23,38 @@
 #nav span {
   display: block;
 }
-
+#nav .layui-nav{
+  width: 180px;
+  background-color: #368AE2;
+}
+#nav .layui-this{
+  background-color: #1271D5;
+}
+#nav .layui-nav-bar{
+ width: 10px;
+}
+#nav .layui-nav-itemed>.layui-nav-child:first-child{
+  display: block;
+  background-color: rgba(0,0,0,0)!important;
+}
 #nav .column_a {
   line-height: 20px;
   text-decoration: none;
-  color: #F4F4F4;
+  color: #BCE2FF;
   display: flex;
   cursor: pointer;
   width: 100%;
   padding: 10px 0;
   height: 40px;
-  margin-top: 20px;
+  margin-top: 10px;
   transition: all 0.3s;
-  border-bottom: 2px #368AE2 solid;
   font-size: 16px;
   font-weight: 500;
 }
 
 #nav .column_a:hover {
-  background-color: #368AE2;
-  border-bottom: 2px white solid;
+  color: white;
+  background-color: #1271D5;
 }
 
 #nav .column_a i {
@@ -61,6 +73,7 @@
   top: 0;
   color: white;
   transition: all 0.3s;
+  overflow: hidden;
 }
 
 #head #logo {
@@ -99,9 +112,9 @@
   position: absolute;
   top: 100%;
   right: 0;
-  z-index: 2;
+  z-index: 5;
   float: left;
-  width: 130px;
+  width: 150px;
   text-decoration: none;
   padding: 10px 6px;
   font-size: 15px;
@@ -110,9 +123,8 @@
   text-align: left;
   list-style: none;
   background-color: #fff;
-  border-radius: 0;
   border: none;
-  display: none;
+  /* display: none; */
 }
 
 #head #head-cord #head-cord-fade .dropdown-item {
