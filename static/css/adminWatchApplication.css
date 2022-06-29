@@ -16,15 +16,21 @@
     margin-bottom: 10px;
 }
 
-#exportForm {
+#sureSearch{
     background-color: #1AB394;
+    color: white;
+}
+
+#exportForm {
+    background-color: #5277ae;
+    margin-left: 10px;
     color: white;
 }
 
 #importForm{
     background-color: #638ED3;
     color: white;
-    margin-left: 40px;
+    margin-left: 20px;
 }
 
 .operator{
@@ -35,7 +41,7 @@
     position: absolute;
     background-color: #F8AC59;
     color: white;
-    right: 30px;
+    right: 55px;
 }
 
 .WatchApplicationContent{

@@ -100,3 +100,64 @@ jump.onclick = function () {
         }, 2000)
     }
 }
+
+// 删除弹窗显现函数(只删除一个)
+function removePopup() {
+    swal({
+        title: "你确定？",
+        text: "要删除该条历史记录",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    }, function (isConfirm) {
+        if (isConfirm) {
+            swal('删除成功')
+        } else {
+            swal('已取消')
+        }
+    })
+}
+
+let del = document.getElementById('del')
+del.onclick = function () {
+    // 判断是否选择删除的值
+    let yn = false
+    for (let i = 0; i < checkDel.length; i++) {
+        if (checkDel[i].checked == true) {
+            yn = true
+        }
+    }
+    if (yn) {
+        // 选择删除的值
+        // 删除多个
+        swal({
+            title: "你确定？",
+            text: "要删除多个历史记录信息吗?",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        }, function (isConfirm) {
+            // 发送数据
+            if (isConfirm) {
+                // 请求数据
+                swal('删除成功')
+            } else {
+                swal('已取消')
+            }
+        })
+    }else{
+        // 显示请选择删除信息
+        popUps[3].style.display='block'
+        setTimeout(()=>{
+            popUps[3].style.display='none'
+        },2000)
+    }
+}
