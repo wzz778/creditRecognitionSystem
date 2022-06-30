@@ -20,24 +20,23 @@ router.get('/login',(req,res)=>{
 router.get('/submitApplication',(req,res)=>{
     res.render('submitApplication.html')
 })
-const data =     
-{
-        userName:'sg',
-        password:'1234'
-};
 // let token = jwt.sign(data, 'sercret');
 // console.log(token);
 axios.defaults.baseURL='http://110.40.205.103:8099/';
-router.get('/api/1', (req, res) => {
-    console.log(req.query);
+router.post('/api/login', (req, res) => {
+    console.log(req.body);
     // res.send(JSON.stringify(req.body))
-    axios.post( 'user/login',req.query,
+    axios.post( 'user/login',req.body,
     ).then(response=>{
-        console.log(response.data.data.token);
-        res.send(response.data.data.token);
+        req.session.token= response.data.data.token;
+        console.log(jwt.decode(req.session.token));
+        console.log(req.session.token);
+        res.send(response.data);
     }).catch(function (error) {
-        console.log(error);
         res.send(error)
     });
+})
+router.get('/api/logins', (req, res) => {
+    console.log(req.session.token);
 })
 module.exports = router
