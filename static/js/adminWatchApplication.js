@@ -103,14 +103,3 @@ function getAllApplication(obj) {
         })
 }
 // getAllApplication({ nodePage: 1, pageSize: 10 })
-
-axios({
-    method:'GET',
-    url:'/creditTypeOperate/showCreditType',
-})
-.then((result)=>{
-    console.log(result.data.data)
-})
-.catch((err)=>{
-    console.log(err)
-})
