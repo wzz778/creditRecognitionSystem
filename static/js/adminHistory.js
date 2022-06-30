@@ -1,3 +1,4 @@
+
 // 提示弹窗
 let popUps = document.getElementsByClassName('popUps')
 
@@ -161,3 +162,12 @@ del.onclick = function () {
         }, 2000)
     }
 }
+
+// 请求数据
+axios.post('/admin/records',{nodePage:1,pageSize:10})
+.then((result)=>{
+    console.log(result.data)
+})
+.catch((err)=>{
+    console.log(err)
+})
