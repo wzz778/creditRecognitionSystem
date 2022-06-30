@@ -1,4 +1,3 @@
-
 let popUps = document.getElementsByClassName('popUps')
 
 // 分页
@@ -103,17 +102,14 @@ function getAllApplication(obj) {
             }, 2000)
         })
 }
-getAllApplication({ nodePage: 1, pageSize: 10 })
+// getAllApplication({ nodePage: 1, pageSize: 10 })
 
 axios({
-    method:'POST',
-    url:'/admin/User',
-    data:{
-        us:'123'
-    }
+    method:'GET',
+    url:'/creditTypeOperate/showCreditType',
 })
 .then((result)=>{
-    console.log(result)
+    console.log(result.data.data)
 })
 .catch((err)=>{
     console.log(err)

@@ -112,28 +112,26 @@ router.put('/admin/application', (req, res) => {
 })
 
 router.post('/admin/User',(req,res)=>{
-    console.log(req.body)
-    console.log(req.query)
+    
 })
 
-// axios({
-//     url:'http://110.40.205.103:8099/user/login',
-//     method:'POST',
-//     params:{
-//         password:'1234',
-//         userName:'sg'
-//     },
-// }).then(response=>{
-//     // req.session.token= response.data.data.token;
-//     // console.log(jwt.decode(req.session.token));
-//     // console.log(req.session.token);
-//     // res.send(response.data);
-//     console.log(response.data);
-// }).catch(function (error) {
-//     // res.send(error)
-// });
-
-
+router.get('/creditTypeOperate/showCreditType',(req,res)=>{
+    axios({
+        method:'GET',
+        url:'/creditTypeOperate/showCreditType',
+        headers: {
+            token:'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTY1NzQ5MTAsImV4cCI6MTY1NjY2MTMxMCwidXNlcm5hbWUiOiJzZyJ9.a8p8mMq7A090My2w_LRB3SwBWZ4xA9CTCIoKZiywwPM'
+        }
+    })
+    .then((result)=>{
+        console.log(result.data.data)
+        res.send(result.data)
+    })
+    .catch((err)=>{
+        console.log(err)
+        res.send('错误')
+    })
+})
 
 
 module.exports = router
