@@ -1,0 +1,45 @@
+.content{
+    min-height: 75%;
+    width: 100%;
+    background: hsl(0deg 0% 100%);
+    border-radius: 6px;
+    margin-top: 10px;
+    padding-top: 5px;
+    padding-bottom: 13px;
+    box-shadow: 1px 1px 3px rgb(0 0 0 / 20%);
+    position: relative;
+    padding-right: 15px;
+    padding-left: 15px;
+    box-sizing: border-box;
+}
+.application-details{
+    text-align: center;
+    font-weight: 700;
+    margin: 5px 10px 15px 10px;
+    font-size: 20px;
+}
+.application-message{
+
+}
+.messages{
+    overflow: hidden;
+}
+.messages li{
+    display: inline-block;
+    width: 50%;
+    box-sizing: border-box;
+    float: left;
+    font-weight: 900;
+    font-size: 15px;
+    padding-bottom: 10px;
+    padding-right: 15px;
+}
+.parctice-content{
+    width: 100%;
+}
+.attchment-title{
+    text-align: left;
+    font-weight: 700;
+    margin: 5px 10px 15px 0;
+    font-size: 20px;
+}

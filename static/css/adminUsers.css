@@ -1,3 +1,7 @@
+a:hover{
+    color: white;
+}
+
 .search-top{
     position: relative;
     border-radius: 6px;
@@ -26,8 +30,6 @@
 }
 .btn{
     border-radius: 50px;
-    background-color: rgb(26 179 148);
-    border-color: rgb(26 179 148);
     color: rgb(255 255 255);
     padding: 5px 10px;
     font-size: 12px;
@@ -41,6 +43,14 @@
     user-select: none;
     background-image: none;
     border: 1px solid transparent;
+}
+.btn-primay{
+    background-color: rgb(26 179 148);
+    border-color: rgb(26 179 148);
+}
+.btn-warning{
+    background-color: rgb(248 172 89);
+    border-color: rgb(248 172 89);
 }
 .font-search{
     cursor: pointer;
@@ -82,9 +92,20 @@
     vertical-align: middle;
     cursor: pointer;
     border: 1px solid transparent;
+    color: white;
+}
+.btn-new{
+
+    background-color: rgb(54,138,226);
+    border-color: rgb(54,138,226);
+}
+.btn-update{
     background-color: rgb(29 197 163);
     border-color: rgb(29 197 163);
-    color: white;
+}
+.btn-del{
+    background-color: rgb(239 103 118);
+    border-color: rgb(239 103 118);
 }
 .container{
     padding-bottom: 0px;
@@ -94,12 +115,23 @@
     box-sizing: border-box;
 }
 .header{
-    background-color: rgb(239 243 248);
+
     height: 43.2px;
+}
+.back-color{
+    background-color: rgb(239 243 248);
 }
 .header li{
     display: inline-block;
     vertical-align: middle;
+}
+.lis{
+    padding: .75rem;
+    vertical-align: bottom;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 150px;
 }
 .checkbox-bs{
     width: 36px;
@@ -108,34 +140,10 @@
     padding: 0;
     margin: 0;
 }
-.lis{
-    padding: .75rem;
+.checkbox{
+    width: 36px;
+    text-align: center;
     vertical-align: bottom;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-.student-name{
-    width: 120px;
-}
-.student-numbers{
-    width: 200px;
-}
-.student-credit{
-    width: 120px;
-}
-.student-applyNumbers{
-    width: 140px;
-}
-.student-grade{
-    width: 120px;
-}
-.student-major{
-    width: 160px;
-}
-.student-class{
-    width: 140px;
-}
-.student-operator{
-    width: 220px;
+    padding: 0;
+    margin: 0;
 }

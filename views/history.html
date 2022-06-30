@@ -5,10 +5,36 @@
     <link rel="stylesheet" href="public/css/history.css">
 {{/block}}
 {{block 'body'}}
-    <div class="search-top">
-        <div class="search-title">
-            查询历史记录：
+    <div class="search-top" id="search-top">
+        <div class="search-title search-left">
+            学分查询：
             <input type="text" class="search">
+        </div>
+        <div class="search-title">
+            申请类型：
+            <select class="search-type">
+                <option>所有</option>
+                <option>学科竞赛</option>
+                <option>科技创新</option>
+                <option>社会实践</option>
+                <option>创业实践</option>
+                <option>职业技能</option>
+            </select>
+        </div>
+        <div class="search-title">
+            申请状态：
+            <select class="search-type">
+                <option>所有</option>
+                <option>审核中</option>
+                <option>通过</option>
+                <option>未通过</option>
+            </select>
+        </div>
+        <div class="select-time">
+            <label>创建时间：</label>
+            <input type="text" class="time-input" id="startTime" placeholder="开始时间">
+            <span>-</span>
+            <input type="text" class="time-input" id="endTime" placeholder="结束时间">
         </div>
         <div class="search-title">
             <a class="btn">
@@ -27,46 +53,31 @@
     </div>
     <div class="content">
         <div class="table">
-<!--            <div class="table-toolar">-->
-<!--                <div class="pull-left">-->
-<!--                    <a class="btns">-->
-<!--                        <i class="fa">-->
-
-<!--                        </i>-->
-<!--                        新增-->
-<!--                    </a>-->
-<!--                    <a class="btns">-->
-<!--                        <i class="fa">-->
-
-<!--                        </i>-->
-<!--                        修改-->
-<!--                    </a>-->
-<!--                    <a class="btns">-->
-<!--                        <i class="fa">-->
-
-<!--                        </i>-->
-<!--                        删除-->
-<!--                    </a>-->
-<!--                    <a class="btns">-->
-<!--                        <i class="fa">-->
-
-<!--                        </i>-->
-<!--                        导出-->
-<!--                    </a>-->
-<!--                </div>-->
-<!--            </div>-->
             <div class="container">
-                <ul class="header">
-                    <li class="checkbox-bs lis"></li>
-                    <li class="student-name lis">姓名</li>
-                    <li class="student-major lis">学院</li>
-                    <li class="student-class lis">班级</li>
-                    <li class="student-apply lis">申请类型</li>
-                    <li class="student-time lis">申请时间</li>
-                    <li class="student-state lis">申请状态</li>
-                    <li class="student-apply-credit lis">总学分</li>
-                    <li class="student-operator lis">操作</li>
+                <ul class="header back-color">
+                    <li class=" lis">姓名</li>
+                    <li class=" lis">学院</li>
+                    <li class=" lis">班级</li>
+                    <li class=" lis">申请类型</li>
+                    <li class=" lis">申请时间</li>
+                    <li class=" lis">申请状态</li>
+                    <li class=" lis">总学分</li>
+                    <li class=" lis">操作</li>
                 </ul>
+                <div class="main-content">
+                    {{each }}
+                    <ul class="header">
+                        <li class="student-name lis">{{}}</li>
+                        <li class="student-major lis">{{}}</li>
+                        <li class="student-class lis">{{}}</li>
+                        <li class="student-apply lis">{{}}</li>
+                        <li class="student-time lis">{{}}</li>
+                        <li class="student-state lis">{{}}</li>
+                        <li class="student-apply-credit lis">{{}}</li>
+                        <li class="student-operator lis">查看详情</li>
+                    </ul>
+                    {{/each}}
+                </div>
             </div>
         </div>
         <div id="page">
