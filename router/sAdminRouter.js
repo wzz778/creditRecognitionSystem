@@ -16,6 +16,9 @@ router.get('/adminWatchApplication', (req, res) => {
 router.get('/adminManageUsers', (req, res) => {
     res.render('adminManageUsers.html')
 })
+router.get('/adminCreditManagement',(req,res)=>{
+    res.render('adminCreditManagement.html')
+})
 axios.defaults.baseURL = 'http://110.40.205.103:8099'
 
 // 解析kwt函数
@@ -26,6 +29,7 @@ router.post('/admin/records', (req, res) => {
         return
     }
     let { nodePage, pageSize } = req.body
+    console.log('token',req.session.token)
     // 请求后端接口
    axios({
     method:'GET',
