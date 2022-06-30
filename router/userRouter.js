@@ -1,26 +1,37 @@
 const express = require('express');
 const axios = require("axios");
+const jwt = require("jsonwebtoken");
 const router = express.Router();
-
-router.get('/history',(req,res)=>{
-    axios.get('http://110.40.205.103:8099/user/records',{
+axios.default.baseURL = 'http://110.40.205.103:8099/';
+function ribbon(req,res,next){
+    axios.default.headers = req.session.token;
+    next();
+}
+router.get('/history',ribbon,(req,res)=>{
+    let {nodePage,pageSize} = req.query;
+    axios({
+        method:'get',
+        url:'user/records',
         params:{
-            page:'1',
-        }
+            nodePage:1,
+            pageSize:10,
+        },
+    }).then((data)=>{
+        console.log(data);
+        // res.send(data);
+    }).catch((err)=>{
+
     })
-        .then((data)=>{
-            res.render('history.html',data);
-        })
-        .catch((err)=>{
-            console.log('错误');
-        })
+    res.render('history.html')
 })
-router.get('/adminUsers',(req,res)=>{
+router.get('/adminUsers',ribbon,(req,res)=>{
     res.render('adminUsers.html');
 })
 
-router.get('/progress',(req,res)=>{
+router.get('/progress',ribbon,(req,res)=>{
     res.render('progress.html');
 })
-
+router.get('/particulars',(req,res)=>{
+    res.render('particulars.html');
+})
 module.exports = router;

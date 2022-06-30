@@ -1,7 +1,6 @@
 {{extend './layout.html'}}
 {{block 'titile'}}用户管理{{/block}}
 {{block 'head'}}
-<link rel="stylesheet" href="public/layui/css/layui.css">
 <link rel="stylesheet" href="public/css/adminUsers.css">
 {{/block}}
 {{block 'body'}}
@@ -11,13 +10,13 @@
         <input type="text" class="search">
     </div>
     <div class="search-title">
-        <a class="btn">
+        <a class="btn btn-primay">
             <i class="font-search">
 
             </i>
             搜索
         </a>
-        <a class="btn">
+        <a class="btn btn-warning">
             <i class="font-search">
 
             </i>
@@ -29,34 +28,28 @@
     <div class="table">
         <div class="table-toolar">
             <div class="pull-left">
-                <a class="btns">
+                <a class="btns btn-new">
                     <i class="fa">
 
                     </i>
                     新增
                 </a>
-                <a class="btns">
+                <a class="btns btn-update">
                     <i class="fa">
 
                     </i>
                     修改
                 </a>
-                <a class="btns">
+                <a class="btns btn-del">
                     <i class="fa">
 
                     </i>
                     删除
                 </a>
-                <a class="btns">
-                    <i class="fa">
-
-                    </i>
-                    导出
-                </a>
             </div>
         </div>
         <div class="container">
-            <ul class="header">
+            <ul class="header back-color">
                 <li class="checkbox-bs lis"></li>
                 <li class="student-name lis">姓名</li>
                 <li class="student-numbers lis">学号</li>
@@ -67,6 +60,24 @@
                 <li class="student-applyNumbers lis">申请次数</li>
                 <li class="student-operator lis">操作</li>
             </ul>
+            <div class="main-content">
+                {{each }}
+                <ul class="header">
+                    <li class="checkbox lis">{{}}</li>
+                    <li class="student-name lis">{{}}</li>
+                    <li class="student-major lis">{{}}</li>
+                    <li class="student-class lis">{{}}</li>
+                    <li class="student-apply lis">{{}}</li>
+                    <li class="student-time lis">{{}}</li>
+                    <li class="student-state lis">{{}}</li>
+                    <li class="student-apply-credit lis">{{}}</li>
+                    <li class="student-operator lis">
+                        <span>查看详情</span>
+                        <span>删除</span>
+                    </li>
+                </ul>
+                {{/each}}
+            </div>
         </div>
     </div>
     <div id="page">

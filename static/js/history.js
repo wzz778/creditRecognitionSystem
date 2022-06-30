@@ -13,4 +13,25 @@ layui.use('laypage',function (){
         }
     })
 })
+layui.use('laydate',function () {
+    var laydate = layui.laydate;
 
+    laydate.render({
+        elem: '#startTime',
+        // position:'fixed',
+        change:function (value,date) {
+            lay('#body').html(value)
+        }
+    })
+})
+layui.use('laydate',function () {
+    var laydate = layui.laydate;
+
+    laydate.render({
+        elem: '#endTime',
+        position:'fixed',
+        // ready:function (){
+        //     document.getElementById('layui-laydate1').classList.add('modal');
+        // }
+    })
+})
