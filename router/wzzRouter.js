@@ -25,9 +25,11 @@ router.get('/submitApplication',(req,res)=>{
 axios.defaults.baseURL='http://110.40.205.103:8099/';
 router.post('/api/login', (req, res) => {
     console.log(req.body);
-    // res.send(JSON.stringify(req.body))
-    axios.post( 'user/login',req.body,
-    ).then(response=>{
+    axios({
+        url:'http://110.40.205.103:8099/user/login',
+        method:'post',
+        params:req.body,
+    }).then(response=>{
         req.session.token= response.data.data.token;
         console.log(jwt.decode(req.session.token));
         console.log(req.session.token);
@@ -36,7 +38,17 @@ router.post('/api/login', (req, res) => {
         res.send(error)
     });
 })
-router.get('/api/logins', (req, res) => {
-    console.log(req.session.token);
+router.get('/api/outlogin', (req, res) => {
+    axios.get('user/logout',{
+        params:req.query,
+        headers:{
+            token:req.session.token
+        }},
+    ).then(response=>{
+        console.log(response);
+        res.send(response.data);
+    }).catch(function (error) {
+        res.send(error)
+    });
 })
 module.exports = router
