@@ -109,14 +109,13 @@
 }
 
 #head #head-cord #head-cord-fade {
-  position: absolute;
-  top: 100%;
+  position: fixed;
+  top:55px;
   right: 0;
   z-index: 5;
-  float: left;
   width: 150px;
   text-decoration: none;
-  padding: 10px 6px;
+  padding: 10px 6px;  
   font-size: 15px;
   color: #368AE2;
   box-shadow: #b1aeae 0px 0px 6px;
@@ -124,7 +123,7 @@
   list-style: none;
   background-color: #fff;
   border: none;
-  /* display: none; */
+  display: none;
 }
 
 #head #head-cord #head-cord-fade .dropdown-item {

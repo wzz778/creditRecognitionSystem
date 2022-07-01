@@ -1,4 +1,5 @@
-let popUps=document.getElementsByClassName('popUps')
+
+let popUps = document.getElementsByClassName('popUps')
 
 // 分页
 let allNumber = document.getElementById('allNumber')//总条数
@@ -9,9 +10,27 @@ let nowPage = document.getElementById('nowPage')//显示当前页数
 let jumpPage = document.getElementById('jumpPage')//输入跳转页数
 let jump = document.getElementById('jump')//跳转
 let nextPage = document.getElementById('nextPage')//下一页
+let academy=document.getElementById('academy')
 let all_Page = 1//总条数
 let per_Page = 10//每页几条
 let now_page = 1//当前请求页数
+
+// 查询条件
+
+// let objAll = {
+//     nodePage:now_page,
+//     pageSize:per_Page,
+//     academy:academy.value,
+//     approval_status,
+//     b_Indicator_name,
+//     b_points_available,
+//     beginDate,
+//     endDate,
+//     major_class
+// }
+
+
+
 lastPage.onclick = function () {
     // 点击上一页
     if (now_page == 1) {
@@ -64,3 +83,38 @@ jump.onclick = function () {
         }, 2000)
     }
 }
+
+
+// 获取数据
+function getAllApplication(obj) {
+    axios({
+        method: 'PUT',
+        url: '/admin/application',
+        data: obj
+    })
+        .then((result) => {
+            console.log(result.data)
+        })
+        .catch((err) => {
+            console.log(err)
+            popUps[1].style.display = 'block'
+            setTimeout(() => {
+                popUps[1].style.display = 'none'
+            }, 2000)
+        })
+}
+getAllApplication({ nodePage: 1, pageSize: 10 })
+
+axios({
+    method:'POST',
+    url:'/admin/User',
+    data:{
+        us:'123'
+    }
+})
+.then((result)=>{
+    console.log(result)
+})
+.catch((err)=>{
+    console.log(err)
+})

@@ -20,23 +20,34 @@ router.get('/login',(req,res)=>{
 router.get('/submitApplication',(req,res)=>{
     res.render('submitApplication.html')
 })
-const data =     
-{
-        userName:'sg',
-        password:'1234'
-};
 // let token = jwt.sign(data, 'sercret');
 // console.log(token);
 axios.defaults.baseURL='http://110.40.205.103:8099/';
-router.get('/api/1', (req, res) => {
-    console.log(req.query);
-    // res.send(JSON.stringify(req.body))
-    axios.post( 'user/login',req.query,
-    ).then(response=>{
-        console.log(response.data.data.token);
-        res.send(response.data.data.token);
+router.post('/api/login', (req, res) => {
+    console.log(req.body);
+    axios({
+        url:'http://110.40.205.103:8099/user/login',
+        method:'post',
+        params:req.body,
+    }).then(response=>{
+        req.session.token= response.data.data.token;
+        console.log(jwt.decode(req.session.token));
+        console.log(req.session.token);
+        res.send(response.data);
     }).catch(function (error) {
-        console.log(error);
+        res.send(error)
+    });
+})
+router.get('/api/outlogin', (req, res) => {
+    axios.get('user/logout',{
+        params:req.query,
+        headers:{
+            token:req.session.token
+        }},
+    ).then(response=>{
+        console.log(response);
+        res.send(response.data);
+    }).catch(function (error) {
         res.send(error)
     });
 })

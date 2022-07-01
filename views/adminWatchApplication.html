@@ -1,6 +1,7 @@
 {{extend './layout.html'}}
 {{block 'title'}}查看申请表{{/block}}
 {{block 'head'}}
+<link rel="stylesheet" href="//unpkg.com/layui@2.6.8/dist/css/layui.css">
 <link rel="stylesheet" href="/public/css/LiUniversal.css">
 <link rel="stylesheet" href="/public/css/adminWatchApplication.css">
 {{/block}}
@@ -97,12 +98,39 @@
             </select>
         </div>
         <div class="selectConditionItem">
-            申请人院系:<select>
+            申请人院系:<select id="academy">
                 <option value="">请选择...</option>
                 <option value="">信息工程学院</option>
                 <option value="">机电学院</option>
                 <option value="">人工智能学院</option>
             </select>
+        </div>
+        <div class="selectConditionItem">
+            申请人专业:<select>
+                <option value="">请选择...</option>
+                <option value="">植保181</option>
+                <option value="">计科214</option>
+                <option value="">数据212</option>
+                <option value="">物联211</option>
+            </select>
+        </div>
+    </div>
+    <div class="selectConditionItemChange">
+        <div class="selectConditionItem">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">日期范围</label>
+                    <div class="layui-inline" id="test-range">
+                        <div class="layui-input-inline">
+                            <input type="text" id="startDate" class="layui-input" placeholder="开始日期">
+                        </div>
+                        <div class="layui-form-mid">-</div>
+                        <div class="layui-input-inline">
+                            <input type="text" id="endDate" class="layui-input" placeholder="结束日期">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="operator">
             <button id="sureSearch">查询</button>
@@ -170,5 +198,20 @@
 </div>
 {{/block}}
 {{block 'bottom'}}
+
+<script src="//unpkg.com/layui@2.6.8/dist/layui.js"></script>
+<script>
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#test-range' //开始时间和结束时间所在 input 框的父选择器
+            //设置开始日期、日期日期的 input 选择器
+            , range: ['#startDate', '#endDate'] //数组格式为 layui 2.6.6 开始新增
+        });
+    });
+</script>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="/public/js/adminWatchApplication.js"></script>
 {{/block}}

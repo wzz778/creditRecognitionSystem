@@ -7,6 +7,10 @@ body{
 	font-family: 'Droid Sans', sans-serif;
 	font-size:100%;
 }
+li{
+    text-decoration: none;
+}
+
 #top{
 	width: 100%;
 	padding: 5px 0px;
@@ -50,6 +54,14 @@ body{
 	background: white;
 	padding: 20px 0;
 }
+#loginmain{
+    width: 100%;
+    margin: 20px 0;
+    padding: 0 20px;
+}
+#loginmain .text{
+    margin: 20px 0; 
+}
 .login-head {
 	text-align: center;
 	position:relative;
@@ -57,11 +69,7 @@ body{
 	font-weight: 600;
 	color: #368AE2;
 }
-form {
-	padding: 2em 2em;
-	background: white;
-}
-form li{
+.li{
 	/* border: 2px ridge #368AE2; */
 	border-radius: 0.3em;
 	-webkit-border-radius:0.3em;
@@ -83,14 +91,15 @@ form li{
 .user{
     position: absolute;
     top: 2px;
-    right: 0;
+    left: 5px;
+	color: #B8B8B8;
 	background: url(../img/loginicons.png) no-repeat 7px 1px;
 }
 .lock{
     top: 2px;
-    right: 0;
+    left: 5px;
     position: absolute;
-	background: url(../img/loginicons.png) no-repeat -22px 1px;
+	background: url(../img/loginicons.png) no-repeat -25px 1px;
 }
 .submit{
 	width: 100%;
@@ -108,7 +117,7 @@ input[type="text"], input[type="password"] {
 	font-size:20px;
 	outline: none;
 	border:none;
-	padding-left: 15px;
+	padding-left: 35px;
     width: 100%;
 }
 input[type="text"]:hover, input[type="password"]:hover{
