@@ -102,4 +102,4 @@ function getAllApplication(obj) {
             }, 2000)
         })
 }
-// getAllApplication({ nodePage: 1, pageSize: 10 })
+getAllApplication({ nodePage: 1, pageSize: 10 })

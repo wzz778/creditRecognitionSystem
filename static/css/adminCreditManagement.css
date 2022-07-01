@@ -1,0 +1,85 @@
+.adminCreditManagementTop{
+    padding-bottom: 10px;
+    border-bottom: 1px solid #DDDDDD;
+}
+
+.topText {
+    color: #638ED3;
+    margin-bottom: 15px;
+}
+
+.selectCondition {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+#sureSearch {
+    background-color: #1AB394;
+    color: white;
+}
+
+#resetSearch {
+    background-color: #F8AC59;
+    color: white;
+}
+
+.adminCreditManagementContentTop{
+    margin-top: 10px;
+}
+
+.adminCreditManagementContentTop>ul{
+    background-color: #EFF3F8;
+}
+
+.adminCreditManagementContentItem>ul{
+    display: grid;
+    grid-template-columns: 35px repeat(4,1fr);
+    align-items: center;
+    text-align: center;
+    border-bottom: 1px solid #F5F5F5;
+    padding: 5px 0px;
+}
+
+.adminCreditManagementContentItem>ul>li>button{
+    padding: 0px;
+}
+
+.expandItem{
+    position: relative;
+    margin-right: 7px;
+    top: 2px;
+}
+
+.expandItem>span{
+    display: inline-block;
+    width: 3px;
+    height: 14px;
+    background-color: #a8a5a5;
+}
+
+.expandItem>span:nth-child(1){
+    position: absolute;
+    left: 0px;
+}
+
+.expandItem>span:nth-child(2){
+    transform: rotate(90deg);
+}
+
+.ChildDetails{
+    padding: 5px 0px 0px 0px;
+    margin-left: 160px;
+}
+
+.ChildDetailsItem>ul{
+    display: grid;
+    grid-template-columns: 35px repeat(3,1fr);
+    align-items: center;
+    text-align: center;
+    border-bottom: 1px solid #F5F5F5;
+    padding: 5px 0px;
+}
+
+.ChildDetailsItem>ul>li>button{
+    padding: 0px;
+}
