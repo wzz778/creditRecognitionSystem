@@ -177,6 +177,10 @@ select {
     color: red;
 }
 
+.adminHistoryContentBottom {
+    margin-top: 15px;
+}
+
 .adminHistoryContentBottom>button{
     padding: 5px;
     background-color: #638ED3;
