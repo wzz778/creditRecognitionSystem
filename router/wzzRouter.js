@@ -2,7 +2,7 @@ const express=require('express')
 const router=express.Router()
 const axios=require('axios');
 const jwt = require('jsonwebtoken');
-// var tokens;
+
 // var decoded = jwt.decode(token);
 // console.log(decoded);
 // { name: 'Tom', age: 23, iat: 1584088910, exp: 1584096110 }
@@ -24,19 +24,19 @@ router.get('/submitApplication',(req,res)=>{
 // console.log(token);
 axios.defaults.baseURL='http://110.40.205.103:8099/';
 router.post('/api/login', (req, res) => {
+    console.log(req.body);
     axios({
         url:'user/login',
         method:'post',
         params:req.body,
     }).then(response=>{
         req.session.token= response.data.data.token;
-        console.log(response.data);
-        console.log('登录接口的session',req.session);
+        console.log(jwt.decode(req.session.token));
+        console.log(req.session.token);
         res.send(response.data);
     }).catch(function (error) {
         res.send(error)
     });
-    // console.log(req.session);
 })
 router.get('/api/outlogin', (req, res) => {
     axios.get('user/logout',{
@@ -51,38 +51,9 @@ router.get('/api/outlogin', (req, res) => {
         res.send(error)
     });
 })
-router.get('/api/lookalldicator', (req, res) => {
-    if (!jwt.decode(req.session.token)) {
-        res.send({ err: -1, msg: '用户身份非法' })
-        return
-    }
-    axios({
-        method: 'GET',
-        url: 'IndicatorOperate/showAllIndicator',
-        // params: {
-        //     nodePage: nodePage,
-        //     pageSize: pageSize,
-        // },
-        headers: {
-            token: req.session.token
-        }
-    }).then((result) => {
-        console.log('获取数据成功', result.data.data)
-        let dataTime = result.data.data.allRecords[0].createTime.split(' ')
-        console.log(dataTime[0])
-        res.send('成功')
-    })
-    .catch((err) => {
-        console.log('失败', err)
-        res.send('失败')
-    })
-})
-router.get('/api/a',(req,res)=>{
-    console.log(req.session);
-    res.send(req.session.token);
-    // console.log('session值',req.session)
-    // console.log(req.session.token)
-    // res.send({'token':req.session.token})
+
+router.get('/ccc',(req,res)=>{
+    
 })
 
 module.exports = router
