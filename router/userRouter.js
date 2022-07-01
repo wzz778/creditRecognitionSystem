@@ -8,7 +8,7 @@ function ribbon(req,res,next){
     next();
 }
 router.get('/history',ribbon,(req,res)=>{
-    let {nodePage,pageSize} = req.query;
+    // let {nodePage,pageSize} = req.query;
     axios({
         method:'get',
         url:'user/records',
@@ -25,6 +25,18 @@ router.get('/history',ribbon,(req,res)=>{
     res.render('history.html')
 })
 router.get('/adminUsers',ribbon,(req,res)=>{
+    axios({
+        method:'get',
+        url:'admin/commonUserPage',
+        params:{
+            nodePage:1,
+            nodeSize:10
+        }
+    }).then((data)=>{
+        console.log(data);
+    }).catch((err)=>{
+        console.log(err);
+    })
     res.render('adminUsers.html');
 })
 
