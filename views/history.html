@@ -65,6 +65,20 @@
                     <li class=" lis">操作</li>
                 </ul>
                 <div class="main-content">
+<!--                    {{each }}-->
+<!--                    <ul class="header">-->
+<!--                        <li class="student-name lis">{{}}</li>-->
+<!--                        <li class="student-major lis">{{}}</li>-->
+<!--                        <li class="student-class lis">{{}}</li>-->
+<!--                        <li class="student-apply lis">{{}}</li>-->
+<!--                        <li class="student-time lis">{{}}</li>-->
+<!--                        <li class="student-state lis">{{}}</li>-->
+<!--                        <li class="student-apply-credit lis">{{}}</li>-->
+<!--                        <li class="student-operator lis">查看详情</li>-->
+<!--                    </ul>-->
+<!--                    {{/each}}-->
+                </div>
+                <script type="text/html" id="main-content">
                     {{each }}
                     <ul class="header">
                         <li class="student-name lis">{{}}</li>
@@ -77,7 +91,7 @@
                         <li class="student-operator lis">查看详情</li>
                     </ul>
                     {{/each}}
-                </div>
+                </script>
             </div>
         </div>
         <div id="page">
@@ -89,4 +103,5 @@
 {{block 'bottom'}}
 <script src="public/layui/layui.js"></script>
 <script src="public/js/history.js"></script>
+<script src="public/lib/template-web.js"></script>
 {{/block}}

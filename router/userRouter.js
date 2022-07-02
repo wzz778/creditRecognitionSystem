@@ -61,4 +61,18 @@ router.get('/admin/commonUserPage',(req,res)=>{
     })
 })
 
+
+router.get('/admin/oneApplication',(req,res)=>{
+    axios({
+        method:'get',
+        url:'/user/oneApplication',
+        params:req.body,
+        headers:req.session.token,
+    }).then((date)=>{
+        res.send(date);
+    }).catch((err)=>{
+        res.send(err);
+    })
+})
+
 module.exports = router;
