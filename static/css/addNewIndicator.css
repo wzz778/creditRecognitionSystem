@@ -1,0 +1,129 @@
+input{
+    padding: 10px 0px 10px 15px;
+}
+
+.addNewIndicatorContent {
+    padding: 40px 100px;
+}
+
+.topText{
+    color: #638ED3;
+}
+
+.addNewIndicatorContent>div{
+    margin-bottom: 10px;
+}
+
+#remarks {
+    resize: none;
+    outline: none;
+    padding: 5px 0px 0px 5px;
+    width: 80%;
+    height: 150px
+}
+
+#enterComposition{
+    width: 350px;
+    padding: 10px 0px 10px 15px;
+}
+
+#choiceComposition{
+    width: 350px;
+    padding: 10px 0px 10px 15px;
+}
+
+#addOriginal{
+    background-color: #1C84C6;
+    color: white;
+    margin-left: 30px;
+}
+
+#cancelOriginal{
+    background-color: #1AB394;
+    color: white;
+    margin-left: 10px;
+}
+
+.choice>span{
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border: 1px solid #DDDDDD;
+    border-radius: 50%;
+}
+
+.choiceHaveChild>div{
+    display: inline-block;
+    cursor: pointer;
+}
+
+.choice>span>span{
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    background-color: #EC4758;
+    border-radius: 50%;
+    position: relative;
+}
+
+.choice>span>span::before{
+    display: inline-block;
+    content: '';
+    width: 5px;
+    height: 5px;
+    background-color: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 4px;
+    right: 4px;
+}
+
+.addDirectoryChildItem{
+    padding: 8px 30px;
+}
+
+#addSubdirectory{
+    background-color: #00D136;
+    color: white;
+}
+
+.addScopeCertification{
+    background-color: #F8AC59;
+    color: white;
+}
+
+.cancel{
+    background-color: #F59DA6;
+    color: white;
+}
+
+.addScopeCertification{
+    margin: 0px 5px;
+}
+
+.CertificationItem{
+    margin-top: 8px;
+}
+
+.remarksBottom{
+    padding: 10px 30px;
+}
+
+.addNewIndicatorContentBottom{
+    margin-left: 32%;
+}
+
+#sureAdd{
+    background-color: #1ab394;
+    color: white;
+}
+
+#sureCancel{
+    background-color: #ed5565;
+    color: white;
+    margin-left: 30px
+}
+
+.addDirectoryChildChange{
+    padding: 8px 0px;
+}

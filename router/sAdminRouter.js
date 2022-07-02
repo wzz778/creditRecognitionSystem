@@ -19,6 +19,10 @@ router.get('/adminManageUsers', (req, res) => {
 router.get('/adminCreditManagement', (req, res) => {
     res.render('adminCreditManagement.html')
 })
+router.get('/addNewIndicator',(req,res)=>{
+    res.render('addNewIndicator.html')
+})
+
 axios.defaults.baseURL = 'http://110.40.205.103:8099'
 
 // 解析kwt函数

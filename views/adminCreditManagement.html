@@ -84,15 +84,16 @@
         <div class="selectConditionItem">
             <button id="sureSearch">查询</button>
             <button id="resetSearch">重置</button>
+            <button id="add">新增</button>
         </div>
     </div>
 </div>
 <div class="adminCreditManagementContent">
+    <div class="operation">
+        <button id="del" onclick="delFnAll()">删除</button>
+    </div>
     <div class="adminCreditManagementContentTop adminCreditManagementContentItem">
         <ul>
-            <li>
-                <input type="checkbox" id="checkDelAll" class="commonDel">
-            </li>
             <li>
                 <span>学分构成</span>
             </li>
@@ -104,12 +105,9 @@
     <div class="adminCreditManagementContentContent adminCreditManagementContentItem">
         <ul>
             <li>
-                <input type="checkbox" class="checkDel commonDel">
-            </li>
-            <li>
                 <span class="expandItem">
-                    <span></span>
-                    <span onclick=""></span>
+                    <span class="remove"></span>
+                    <span onclick="" class=""></span>
                 </span>
                 <span>学科竞赛</span>
             </li>
@@ -120,14 +118,14 @@
             <li>
                 <button>编辑</button>
                 <button>新增</button>
-                <button>删除</button>
+                <button onclick="delFnOne(this)">删除</button>
             </li>
         </ul>
-        <div class="ChildDetails">
+        <div class="ChildDetails" style="display: none;">
             <div class="ChildDetailsTop ChildDetailsItem">
                 <ul>
                     <li>
-                        <input type="checkbox" class="childDelAll commonDel">
+                        <input type="checkbox" class="childDelAll commonDel" onclick="allChildInputFather(this)">
                     </li>
                     <li>认定范围</li>
                     <li>学分</li>
@@ -137,24 +135,24 @@
             <div class="ChildDetailsContent ChildDetailsItem">
                 <ul>
                     <li>
-                        <input type="checkbox" class="childDel commonDel">
+                        <input type="checkbox" class="childDel commonDel" onclick="judgeChild(this)">
                     </li>
                     <li>国际竞赛一等奖(最高奖)</li>
                     <li>6.0</li>
                     <li>
-                        <button>删除</button>
+                        <button onclick="delFnOne(this)">删除</button>
                         <button>修改</button>
                         <button>新增</button>
                     </li>
                 </ul>
                 <ul>
                     <li>
-                        <input type="checkbox" class="childDel commonDel">
+                        <input type="checkbox" class="childDel commonDel" onclick="judgeChild(this)">
                     </li>
                     <li>获全国计算机二级及以上等级证书；非外语专业学生通过英语六级考试；外语专业学生通过专业八级</li>
                     <li>6.0</li>
                     <li>
-                        <button>删除</button>
+                        <button onclick="delFnOne(this)">删除</button>
                         <button>修改</button>
                         <button>新增</button>
                     </li>
@@ -165,11 +163,8 @@
     <div class="adminCreditManagementContentContent adminCreditManagementContentItem">
         <ul>
             <li>
-                <input type="checkbox" class="checkDel commonDel">
-            </li>
-            <li>
                 <span class="expandItem">
-                    <span></span>
+                    <span class="remove"></span>
                     <span onclick=""></span>
                 </span>
                 <span>学科竞赛</span>
@@ -181,14 +176,14 @@
             <li>
                 <button>编辑</button>
                 <button>新增</button>
-                <button>删除</button>
+                <button onclick="delFnOne(this)">删除</button>
             </li>
         </ul>
-        <div class="ChildDetails">
+        <div class="ChildDetails" style="display: none;">
             <div class="ChildDetailsTop ChildDetailsItem">
                 <ul>
                     <li>
-                        <input type="checkbox" class="childDelAll commonDel">
+                        <input type="checkbox" class="childDelAll commonDel" onclick="allChildInputFather(this)">
                     </li>
                     <li>认定范围</li>
                     <li>学分</li>
@@ -198,24 +193,36 @@
             <div class="ChildDetailsContent ChildDetailsItem">
                 <ul>
                     <li>
-                        <input type="checkbox" class="childDel commonDel">
+                        <input type="checkbox" class="childDel commonDel" onclick="judgeChild(this)">
                     </li>
                     <li>国际竞赛一等奖(最高奖)</li>
                     <li>6.0</li>
                     <li>
-                        <button>删除</button>
+                        <button onclick="delFnOne(this)">删除</button>
                         <button>修改</button>
                         <button>新增</button>
                     </li>
                 </ul>
                 <ul>
                     <li>
-                        <input type="checkbox" class="childDel commonDel">
+                        <input type="checkbox" class="childDel commonDel" onclick="judgeChild(this)">
                     </li>
                     <li>获全国计算机二级及以上等级证书；非外语专业学生通过英语六级考试；外语专业学生通过专业八级</li>
                     <li>6.0</li>
                     <li>
-                        <button>删除</button>
+                        <button onclick="delFnOne(this)">删除</button>
+                        <button>修改</button>
+                        <button>新增</button>
+                    </li>
+                </ul>
+                <ul>
+                    <li>
+                        <input type="checkbox" class="childDel commonDel" onclick="judgeChild(this)">
+                    </li>
+                    <li>国际竞赛一等奖(最高奖)</li>
+                    <li>6.0</li>
+                    <li>
+                        <button onclick="delFnOne(this)">删除</button>
                         <button>修改</button>
                         <button>新增</button>
                     </li>
@@ -223,6 +230,24 @@
             </div>
         </div>
     </div>
+</div>
+<div class="adminCredManagementBottom clearFloat">
+    每页<select name="" id="selectPerpage">
+        <option value="10">10条</option>
+        <option value="15">15条</option>
+        <option value="20">20条</option>
+        <option value="25">25条</option>
+    </select>
+    <span id="allPages">共1页</span>
+    <button id="lastPage">上一页</button>
+    <span id="nowPage">1</span>
+    跳转到:<input type="text" id="jumpPage"> 页
+    <button id="jump">跳转</button>
+    <button id="nextPage">下一页</button>
+</div>
+</div>
+<div id="adminHistoryContentNo" style="display: none;">
+对不起没有该内容
 </div>
 {{/block}}
 {{block 'bottom'}}
