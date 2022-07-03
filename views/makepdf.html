@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生成表格</title>
+    <link rel="stylesheet" href="public/css/makepdf.css">
+</head>
+<body>
+<html>
+    <div id="float">
+        <button style="background-color:#009688 " onclick="makepdf() ">导出该pdf</button><br>
+        <button style="background-color:#1e9fff" onclick="{window.history.go(-1)}">返回继续上传附件</button>
+    </div>
+    <div id="schoolform" style="background-color: #FFFFFF;">
+        <table  border="0" cellspacing="0" cellpadding="0" style="width: 100%;" align="center">
+        <tr>
+          <td align="center" class="biaoti" height="40">受理员业务统计表</td>
+        </tr>
+        </table>
+		<table border="1" cellspacing="0" style="width: 100%;margin:5px 0;">
+			<!--个人简历-->
+			<col width="100px" />
+			<col width="100px" />
+			<col width="100px" />
+			<col width="100px" />
+			<col width="100px" />
+			<col width="100px" />
+            <col width="100px" />
+			<tr class="aline" height="40px" align="center">
+				<td>姓名</td>
+				<td class="message"></td>
+				<td>性别</td>
+				<td class="message"></td>
+				<td>学号</td>
+				<td colspan="2" class="message"></td>
+			</tr>
+			<tr class="aline" height="40px" align="center">
+				<td>所属学院</td>
+				<td colspan="2" class="message"></td>
+				<td>专业及班级</td>
+				<td colspan="3" class="message"></td>
+			</tr>
+			<tr height="150px" align="center">
+				<td>申请类型</td>
+				<td class="message"></td>
+				<td>是否为集体项目</td>
+				<td colspan="2"></td>
+                <td>申请学分</td>
+                <td ></td>
+			</tr>
+			<tr height="350px" align="center">
+				<td>实践内容说明</td>
+				<td colspan="6" id="zmtd">
+					<div id="zm" class="message">
+					</div>
+					<div>
+						负责人签字:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp年 &nbsp 月 &nbsp 日
+					</div>
+				</td>
+			</tr>
+            <tr height="40px" align="center">
+				<td colspan="2">学院意见</td>
+				<td  colspan="2">相关部门意见</td>
+				<td  colspan="3">教务处意见</td>
+			</tr>
+            <tr class="aline" height="180px" align="center">
+				<td colspan="2">负责人签字:&nbsp&nbsp&nbsp&nbsp（盖章）<br> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp年 &nbsp 月 &nbsp 日</td>
+				<td  colspan="2">负责人签字:&nbsp&nbsp&nbsp&nbsp（盖章）<br> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp年 &nbsp 月 &nbsp 日</td>
+				<td  colspan="1">认定学分：&nbsp&nbsp</td>
+				<td  colspan="2">负责人签字:&nbsp&nbsp&nbsp&nbsp（盖章）<br> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp年 &nbsp 月 &nbsp 日</td>
+			</tr>
+		</table>
+        <div>备注：相关部门指团委，学生处，招生就业处等，学院根据申请学分类型分别提交审核。</div>
+    </div>
+</body>
+<script src="https://cdn.bootcss.com/html2canvas/0.5.0-beta4/html2canvas.js"></script>
+<script src="https://cdn.bootcss.com/jspdf/1.3.4/jspdf.debug.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+<script src="public/js/makepdf.js"></script>
+</html>

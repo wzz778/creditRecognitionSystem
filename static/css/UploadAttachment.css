@@ -1,0 +1,13 @@
+#topdf {
+  font-size: 16px;
+  color: #eb5555;
+}
+
+#topdf:hover {
+  color: red;
+}
+
+#notes {
+  font-size: 12px;
+  color: #5f5f5f;
+}

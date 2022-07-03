@@ -1,0 +1,68 @@
+body {
+    outline: none !important;
+}
+body a {
+text-decoration: none;
+}
+
+input {
+outline: none;
+}
+
+body {
+font-family: NSimSun;
+}
+
+td {
+border: 1.5px black solid;
+}
+
+table:first-child td {
+border: none;
+}
+
+#zmtd {
+text-align: left;
+padding: 10px;
+}
+
+#zmtd #zm {
+width: 750px;
+height: 300px;
+}
+
+#schoolform {
+width: 900px;
+padding: 100px 20px;
+margin: 0px auto;
+}
+
+.biaoti {
+font-size: 26px;
+font-weight: bold;
+}
+
+.yijain {
+width: 100%;
+display: flex;
+}
+#float{
+    position: fixed;
+    top: 50px;
+    right: 30px;
+}
+#float button{
+    cursor: pointer;
+    margin-top: 20px;
+    width: 40px;
+    padding: 12px 6px;
+    font-size: 16px;
+    border-radius: 2px;
+    border: 1px solid transparent;
+    color: #fff;
+    transition: 0.3s all;
+    box-shadow: 3px 3px 5px #939393;
+}
+#float button:hover{
+    opacity: 0.8;
+}
