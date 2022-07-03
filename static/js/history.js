@@ -51,9 +51,9 @@ function package(method,url,args,callback){
     }
 }
 
+function pading(){
 
-function render(numbers){
-    package('get','/users/records',{nodePage:numbers,pageSize:10},function (data){
+    package('get','/users/records',{nodePage:numbers,pageSize:10},function (data) {
         console.log(data);
         layui.use('laypage',function (){
             var laypage = layui.laypage;
@@ -70,6 +70,16 @@ function render(numbers){
                 }
             })
         })
+    })
+
+}
+pading()
+
+
+
+function render(numbers){
+    package('get','/users/records',{nodePage:numbers,pageSize:10},function (data){
+        console.log(data);
 
 
 
