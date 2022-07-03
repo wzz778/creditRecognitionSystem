@@ -13,21 +13,21 @@
         <div class="search-title">
             申请类型：
             <select class="search-type">
-                <option>所有</option>
-                <option>学科竞赛</option>
-                <option>科技创新</option>
-                <option>社会实践</option>
-                <option>创业实践</option>
-                <option>职业技能</option>
+                <option value="">所有</option>
+                <option value="学科竞赛">学科竞赛</option>
+                <option value="科技创新">科技创新</option>
+                <option value="社会实践">社会实践</option>
+                <option value="创业实践">创业实践</option>
+                <option value="职业技能">职业技能</option>
             </select>
         </div>
         <div class="search-title">
             申请状态：
             <select class="search-type">
-                <option>所有</option>
-                <option>审核中</option>
-                <option>通过</option>
-                <option>未通过</option>
+                <option value="">所有</option>
+                <option value="审核中">审核中</option>
+                <option value="通过">通过</option>
+                <option value="未通过">未通过</option>
             </select>
         </div>
         <div class="select-time">
@@ -88,7 +88,9 @@
                         <li class="student-time lis">{{}}</li>
                         <li class="student-state lis">{{}}</li>
                         <li class="student-apply-credit lis">{{}}</li>
-                        <li class="student-operator lis">查看详情</li>
+                        <li class="student-operator lis">
+                            <span class="check">查看</span>
+                        </li>
                     </ul>
                     {{/each}}
                 </script>

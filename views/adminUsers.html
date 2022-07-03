@@ -52,10 +52,7 @@
             <ul class="header back-color">
                 <li class="checkbox-bs lis">
                     <div class="inner">
-                        <input type="checkbox" class="checkbox-all">
-                        <span>
-
-                        </span>
+                        <input type="checkbox" class="checkbox-all" >
                     </div>
                 </li>
                 <li class="student-name lis">姓名</li>
@@ -73,7 +70,11 @@
             <script type="text/html" id="main-content">
                 {{each }}
                 <ul class="header">
-                    <li class="checkbox lis">{{}}</li>
+                    <li class="checkbox lis">
+                        <div class="inner">
+                            <input type="checkbox" class="checkbox-list" >
+                        </div>
+                    </li>
                     <li class="student-name lis">{{}}</li>
                     <li class="student-major lis">{{}}</li>
                     <li class="student-class lis">{{}}</li>
@@ -82,8 +83,9 @@
                     <li class="student-state lis">{{}}</li>
                     <li class="student-apply-credit lis">{{}}</li>
                     <li class="student-operator lis">
-                        <span>查看详情</span>
-                        <span>删除</span>
+                        <span class="opertor-list check">编辑</span>
+                        <span class="opertor-list reset">重置</span>
+                        <span class="opertor-list delete">删除</span>
                     </li>
                 </ul>
                 {{/each}}

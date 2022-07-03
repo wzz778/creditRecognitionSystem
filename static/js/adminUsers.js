@@ -21,8 +21,16 @@ function package(method,url,args,callback){
         $.post(url,args,function (data,status){
             callback(data,status);
         })
-    }else{
+    }else if(method == 'get'){
         $.get(url,args,function (data,status){
+            callback(data,status);
+        })
+    }else if(method == 'put'){
+        $.put(url,args,function (data,status){
+            callback(data,status);
+        })
+    }else if(method == 'delete'){
+        $.delete(url,args,function (data,status){
             callback(data,status);
         })
     }

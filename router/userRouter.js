@@ -75,4 +75,42 @@ router.get('/admin/oneApplication',(req,res)=>{
     })
 })
 
+router.put('/admin/resetUserPass',(req,res)=>{
+    axios({
+        method:'put',
+        url:'/admin/resetUserPass',
+        params:req.body, //id
+        headers:req.session.token,
+    }).then((data)=>{
+        res.send(data);
+    }).catch((err)=>{
+        res.send(err);
+    })
+})
+
+router.put('/admin/update.do.userInfo',(req,res)=>{
+    axios({
+        method:'put',
+        url:'/admin/update.do.userInfo',
+        params:req.body,
+        headers:req.session.token,
+    }).then((data)=>{
+        res.send(data);
+    }).catch((err)=>{
+        res.send(err);
+    })
+})
+
+router.delete('/admin/delete.doUserInfo',(req,res)=>{
+    axios({
+        method:'delete',
+        url:'/admin/delete.doUserInfo',
+        params:req.body,
+        headers:req.session.token,
+    }).then((data)=>{
+        res.send(data);
+    }).catch((err)=>{
+        res.send(err);
+    })
+})
 module.exports = router;
