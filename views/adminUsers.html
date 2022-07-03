@@ -50,7 +50,14 @@
         </div>
         <div class="container">
             <ul class="header back-color">
-                <li class="checkbox-bs lis"></li>
+                <li class="checkbox-bs lis">
+                    <div class="inner">
+                        <input type="checkbox" class="checkbox-all">
+                        <span>
+
+                        </span>
+                    </div>
+                </li>
                 <li class="student-name lis">姓名</li>
                 <li class="student-numbers lis">学号</li>
                 <li class="student-grade lis">年级</li>
@@ -61,6 +68,9 @@
                 <li class="student-operator lis">操作</li>
             </ul>
             <div class="main-content">
+
+            </div>
+            <script type="text/html" id="main-content">
                 {{each }}
                 <ul class="header">
                     <li class="checkbox lis">{{}}</li>
@@ -77,7 +87,7 @@
                     </li>
                 </ul>
                 {{/each}}
-            </div>
+            </script>
         </div>
     </div>
     <div id="page">
@@ -89,4 +99,5 @@
 {{block 'bottom'}}
 <script src="public/layui/layui.js"></script>
 <script src="public/js/adminUsers.js"></script>
+<script src="public/lib/template-web.js"></script>
 {{/block}}

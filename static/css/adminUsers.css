@@ -147,3 +147,44 @@ a:hover{
     padding: 0;
     margin: 0;
 }
+.inner{
+    padding: .75rem;
+    vertical-align: bottom;
+    overflow: hidden;
+    position: relative;
+}
+.checkbox-all{
+    position: absolute;
+    display: none;
+}
+.inner span{
+    /*background-color: rgb(72 176 247);*/
+    /*border-color: rgb(72 176 247);*/
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+}
+.inner span:before{
+    content: '';
+    position: absolute;
+    display: inline-block;
+    height: 18px;
+    width: 18px;
+    left: 10px;
+    top: 10px;
+    border: 2px solid rgb(255,255,255);
+    transition: all .1s;
+}
+.inner span:after{
+    content: '';
+    position: absolute;
+    display: inline-block;
+    border-color: white;
+    transform: rotate(45deg);
+    width: 5px;
+    height: 10px;
+    left: 17px;
+    top: 12px;
+    border: solid rgb(239,243,248);
+    border-width: 0 2px 2px 0;
+}

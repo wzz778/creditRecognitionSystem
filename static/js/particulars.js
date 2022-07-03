@@ -12,7 +12,7 @@ layui.use('carousel',function () {
     })
 })
 
-
+let id = window.location.search.split("=")[1];
 
 
 function package(method,url,args,callback){
@@ -28,8 +28,9 @@ function package(method,url,args,callback){
 }
 
 
-function render(numbers){
-    package('get','/users/records',{nodePage:numbers,pageSize:10},function (data){
+function render(id){
+    package('get','/admin/oneApplication',{id:id},function (data){
         console.log(data);
     })
 }
+render(id);
