@@ -1,0 +1,141 @@
+{{extend './layout.html'}}
+{{block 'title'}}添加学分指标{{/block}}
+
+{{block 'head'}}
+<link rel="stylesheet" href="/public/css/LiUniversal.css">
+<link rel="stylesheet" href="/public/css/addNewIndicator.css">
+{{/block}}
+
+{{block 'body'}}
+<div class="popUps" style="display: none;">
+    <span>
+        <i class="iconfont">对号</i>
+    </span>
+    查询成功
+</div>
+<div class="popUps wrong" style="display: none;">
+    <span>
+        <i class="iconfont">叉号</i>
+    </span>
+    网络错误
+</div>
+<div class="popUps wrong" style="display: none;">
+    <span>
+        <i class="iconfont">叉号</i>
+    </span>
+    请选择查询内容
+</div>
+<div class="popUps wrong" style="display: none;">
+    <span>
+        <i class="iconfont">叉号</i>
+    </span>
+    请选择删除内容
+</div>
+<div class="popUps" style="display: none;">
+    <span>
+        <i class="iconfont">对号</i>
+    </span>
+    删除成功
+</div>
+<div class="popUps wrong" style="display: none;">
+    <span>
+        <i class="iconfont">叉号</i>
+    </span>
+    请输入合法数字
+</div>
+<div class="popUps wrong" style="display: none;">
+    <span>
+        <i class="iconfont">叉号</i>
+    </span>
+    超过最大限制
+</div>
+<div class="popUps wrong" style="display: none;">
+    <span>
+        <i class="iconfont">叉号</i>
+    </span>
+    当前是最后一页
+</div>
+<div class="popUps wrong" style="display: none;">
+    <span>
+        <i class="iconfont">叉号</i>
+    </span>
+    当前是第一页
+</div>
+<div class="addNewIndicatorTop">
+    <div class="topText">添加学分指标</div>
+</div>
+<div class="addNewIndicatorContent">
+    <div class="addNewIndicatorContentItem">
+        学分构成:<input type="text" placeholder="请输入学分构成" id="enterComposition" />
+        <select id="choiceComposition" style="display: none;">
+            <option value="">请选择....</option>
+            <option value="">学科竞赛</option>
+        </select>
+        <button id="addOriginal">添加至已有学分构成</button>
+        <button id="cancelOriginal">取消</button>
+    </div>
+    <!-- 选择的学分构成有子级目录(不能再添加子级目录) -->
+    <div class="choiceHasChild" style="display: none;">
+        子级目录:<select id="choiceComposition">
+            <option value="">请选择....</option>
+            <option value="">创业类比赛</option>
+        </select>
+    </div>
+    <div class="choiceHaveChild">
+        学分构成是否有子级目录:
+        <div class="choice">
+            <span>
+                <span style="display: none;" class="ChoiceSty"></span>
+            </span>
+            是
+        </div>
+        <div class="choice">
+            <span>
+                <span class="ChoiceSty"></span>
+            </span>
+            否
+        </div>
+    </div>
+    <!-- 添加学分构成自选有子级目录 -->
+    <div class="subdirectory" style="display: none;">
+        <div class="subdirectoryItem">
+            学分构成子级目录:<input type="text" placeholder="请输入学分构成子级目录" />
+            <!-- 添加子级目录 -->
+            <button id="addSubdirectory" onclick="addSubdirectory(this)">添加</button>
+            <div class="addDirectoryChildItem">
+                认证范围:<input type="text" placeholder="请输入认证范围" />
+                学分:<input type="text" placeholder="请输入学分大小" />
+                </select>
+                <button class="addScopeCertification" onclick="addCertification(this)">添加</button>
+            </div>
+        </div>
+    </div>
+    <!-- 添加学分构成自选没有子级目录 -->
+    <div class="addNewIndicatorContentItem noDirectory">
+        <div class="CertificationItem">
+            认证范围:<input type="text" placeholder="请输入认证范围" />
+            学分:<input type="text" placeholder="请输入学分大小" />
+            <button class="addScopeCertification" onclick="addNewIndicator(this)">添加</button>
+        </div>
+    </div>
+    <!-- 添加到已有学分 -->
+    <div class=""></div>
+    <div class="remarksItem">
+        <div class="remarksText">备注:</div>
+        <div class="remarksBottom">
+            <textarea id="remarks"></textarea>
+        </div>
+    </div>
+</div>
+<div class="addNewIndicatorContentBottom">
+    <button id="sureAdd">确定</button>
+    <button id="sureCancel">取消</button>
+</div>
+
+{{/block}}
+
+
+{{block 'bottom'}}
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="/public/js/addNewIndicator.js"></script>
+{{/block}}

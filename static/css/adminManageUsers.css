@@ -2,6 +2,30 @@
     color: #638ED3;
 }
 
+.selectUser{
+    margin-top: 10px;
+    padding: 0px 10px;
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+}
+
+.selectUser>div{
+    margin-bottom: 10px;
+}
+
+#sureSearch{
+    background-color: #1AB394;
+    color: white;
+    padding: 5px;
+}
+
+#reset{
+    background-color: #F8AC59;
+    color: white;
+    padding: 5px;
+    margin-left: 30px;
+}
+
 .totalNumber{
     margin-bottom: 10px;
 }
@@ -54,6 +78,10 @@
 
 .operatorBtnSty:hover {
     color: red;
+}
+
+.adminHistoryContentBottom{
+    margin-top: 15px;
 }
 
 .adminHistoryContentBottom>button {
