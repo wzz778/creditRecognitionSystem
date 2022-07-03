@@ -61,6 +61,54 @@
 </div>
 <div class="adminManageUsersTop">
     <span class="topText">管理用户</span>
+    <div class="selectUser">
+        <div class="">
+            用户身份:<select id="useriDentity" class="searchValue">
+                <option value="">请选择...</option>
+                <option value="普通用户">普通用户</option>
+                <option value="普通管理员">普通管理员</option>
+                <!-- 是否管理超级管理员?暂不操作 -->
+            </select>
+        </div>
+        <div class="">
+            用户性别:<select id="sex" class="searchValue">
+                <option value="">请选择...</option>
+                <option value="男">男</option>
+                <option value="女">女</option>
+            </select>
+        </div>
+        <div class="">
+            院系:<select id="Faculty" class="searchValue">
+                <option value="">请选择...</option>
+                <option value="信息工程学院">信息工程学院</option>
+            </select>
+        </div>
+        <div class="">
+            专业:<select id="specialized" class="searchValue">
+                <option value="">请选择...</option>
+                <option value="信息工程学院">计算机科学与技术</option>
+            </select>
+        </div>
+        <div class="">
+            班级:<select id="major_class" class="searchValue">
+                <option value="">请选择...</option>
+                <option value="计科214">计科214</option>
+            </select>
+        </div>
+        <div class="">
+            姓名:
+            <input type="text" placeholder="请输入姓名" id="name" class="searchValue">
+        </div>
+        <div class="">
+            学号:
+            <input type="text" placeholder="请输入学号" id="account" class="searchValue">
+        </div>
+        <div class="">
+            <button id="sureSearch">查询</button>
+            <button id="reset">重置</button>
+        </div>
+    </div>
+    <div class=""></div>
 </div>
 <div class="adminManageUsersContent">
     <div class="totalNumber clearFloat">
@@ -84,7 +132,7 @@
     <div class="adminManageUsersContentContent adminHistoryContentItem">
         <ul>
             <li>
-                <input type="checkbox" class="checkDel">
+                <input type="checkbox" class="checkDel" onclick="checkDelFn()">
             </li>
             <li>郑世杰</li>
             <li>20180514109</li>

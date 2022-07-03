@@ -16,6 +16,12 @@
     </span>
     网络错误
 </div>
+<div class="popUps wrong" style="display: none;">
+    <span>
+        <i class="iconfont">叉号</i>
+    </span>
+    <span id="msgHint"></span>
+</div>
 <div class="addUserTop clearFloat">
     <span>添加用户基本信息</span>
     <div class="bulkAddUser floatRight">
@@ -38,26 +44,37 @@
         <div class="addUserItem">
             用户身份:<select id="usPermission">
                 <option value="">请选择用户身份</option>
-                <option value="">普通用户</option>
-                <option value="">普通管理员</option>
-                <option value="">超级管理员</option>
+                <option value="普通用户">普通用户</option>
+                <option value="普通管理员">普通管理员</option>
+                <option value="超级管理员">超级管理员</option>
             </select>
+            <div class="hintText" style="display: none;">请选择用户身份</div>
         </div>
         <div class="addUserItem">
             初始密码:111111
         </div>
     </div>
-    <div class="teacherInformation">
-        是否填写学生信息:
-        <div class="choiceStuTea">
-            <span>
-                <span id="defaultYes"></span>
-            </span>是
+    <div class="addUserItemgroupingTwo">
+        <div class="">
+            性别:<select id="sex">
+                <option value="">请选择...</option>
+                <option value="男">男</option>
+                <option value="女">女</option>
+            </select>
+            <div class="hintText" style="display: none;">请选择用户性别</div>
         </div>
-        <div class="choiceStuTea">
-            <span>
-                <span id="defaultNo" style="display: none;"></span>
-            </span>否
+        <div class="teacherInformation">
+            是否填写学生信息:
+            <div class="choiceStuTea">
+                <span>
+                    <span id="defaultYes"></span>
+                </span>是
+            </div>
+            <div class="choiceStuTea">
+                <span>
+                    <span id="defaultNo" style="display: none;"></span>
+                </span>否
+            </div>
         </div>
     </div>
     <div class="studentInformation">
@@ -65,12 +82,17 @@
             <div class="addUserItem">
                 所在年级:<select id="usGrade">
                     <option value="">请选择年级...</option>
+                    <option value="2018">2018级</option>
+                    <option value="2019">2019级</option>
+                    <option value="2020">2020级</option>
+                    <option value="2021">2021级</option>
                 </select>
                 <div class="hintText" style="display: none;">请选择所在年级</div>
             </div>
             <div class="addUserItem">
                 所在学院:<select id="usCollege">
                     <option value="">请选择所在学院...</option>
+                    <option value="信息工程学院">信息工程学院</option>
                 </select>
                 <div class="hintText" style="display: none;">请选择所在学院</div>
             </div>
@@ -79,12 +101,14 @@
             <div class="addUserItem">
                 所在专业:<select id="usSpecialized">
                     <option value="">请选择所在专业...</option>
+                    <option value="计算机科学与技术">计算机科学与技术</option>
                 </select>
                 <div class="hintText" style="display: none;">请选择所在专业</div>
             </div>
             <div class="addUserItem">
                 所在班级:<select id="usClass">
                     <option value="">请选择所在班级...</option>
+                    <option value="计科214">计科214</option>
                 </select>
                 <div class="hintText" style="display: none;">请选择所在班级</div>
             </div>
