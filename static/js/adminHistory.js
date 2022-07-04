@@ -5,36 +5,35 @@ let popUps = document.getElementsByClassName('popUps')
 
 // 点击勾选删除的将所有的勾选框选中
 let checkDelAll = document.getElementById('checkDelAll')
-let checkDel = document.getElementsByClassName('checkDel')
 checkDelAll.onclick = function () {
-    if (checkDelAll.checked == false) {
-        // 之前是勾选这里把他取消了
-        for (let i = 0; i < checkDel.length; i++) {
-            checkDel[i].checked = ''
-        }
-    } else {
+    let checkDel = document.getElementsByClassName('checkDel')
+    if (checkDelAll.checked) {
+        // 全部选中
         for (let i = 0; i < checkDel.length; i++) {
             checkDel[i].checked = 'true'
         }
+    } else {
+        for (let i = 0; i < checkDel.length; i++) {
+            checkDel[i].checked = ''
+        }
     }
 }
-// 如果下边的都选择了
-for (let i = 0; i < checkDel.length; i++) {
-    checkDel[i].onclick = function () {
-        // 判断是否全部都选择了
-        let yn = true
-        for (let j = 0; j < checkDel.length; j++) {
-            if (checkDel[j].checked == '') {
-                yn = false
-            }
-        }
-        if (yn) {
-            // 所有的都选择了
-            checkDelAll.checked = 'true'
-        } else {
-            checkDelAll.checked = ''
+function checkDelFn(event) {
+    let checkDel = document.getElementsByClassName('checkDel')
+    // 判断是否都中
+    let yn = true
+    for (let j = 0; j < checkDel.length; j++) {
+        if (checkDel[j].checked == '') {
+            yn = false
         }
     }
+    if (yn) {
+        // 所有的都选择了
+        checkDelAll.checked = 'true'
+    } else {
+        checkDelAll.checked = ''
+    }
+
 }
 
 // 分页
@@ -54,6 +53,8 @@ let now_page = 1//当前请求页数
 let passFail = document.getElementById('passFail')
 let startDate = document.getElementById('startDate')
 let endDate = document.getElementById('endDate')
+let sureSearch=document.getElementById('sureSearch')
+let resetSearch=document.getElementById('resetSearch')
 
 
 // 将搜索的值全部都添加到一个对象中
@@ -65,8 +66,33 @@ function limitationFactor() {
     return obj
 }
 
+// 查询函数
+sureSearch.onclick=function(){
+    if(passFail.value==''&&startDate.value==''){
+        popUps[2].style.display='block'
+        setTimeout(()=>{
+            popUps[2].style.display='none'
+        },2000)
+        return
+    }
+    GetAllInfo(now_page,per_Page,limitationFactor())
+}
+// 重置函数
+resetSearch.onclick=function(){
+    // 将值清空
+    passFail.value=''
+    startDate.value=''
+    endDate.value=''
+    now_page=1
+    nowPage.innerHTML=now_page
+    GetAllInfo(now_page,per_Page,limitationFactor())
+}
+
+
+let adminHistoryContentContent = document.getElementsByClassName('adminHistoryContentContent')[0]
+let adminHistoryContentNo = document.getElementById('adminHistoryContentNo')
 //获取数据
-function GteAllInfo(page, perpage, obj) {
+function GetAllInfo(page, perpage, obj) {
     obj.nodePage = page
     obj.pageSize = perpage
     axios({
@@ -76,6 +102,40 @@ function GteAllInfo(page, perpage, obj) {
     })
         .then((result) => {
             console.log(result.data)
+            all_Page = result.data.allPage
+            //删除的判断
+            // 判断是否有值
+            adminHistoryContentContent.style.display = 'block'
+            adminHistoryContentNo.style.display = 'none'
+            if (result.data.msg.length == 0) {
+                // 没有数据
+                adminHistoryContentContent.style.display = 'none'
+                adminHistoryContentNo.style.display = 'block'
+                return
+            }
+            adminHistoryContentContent.innerHTML = ''
+            // 修改(i从1开始了)
+            for (let i = 1; i < result.data.msg.length; i++) {
+                let time = result.data.msg[i].application.application_time.split(' ')[0]
+                adminHistoryContentContent.innerHTML += `
+                <ul>
+                    <li>
+                        <input type="checkbox" class="checkDel" onclick='checkDelFn(this)'>
+                    </li>
+                    <li>${result.data.msg[i].application.user.name}</li>
+                    <li>${result.data.msg[i].application.user.userName}</li>
+                    <li>${result.data.msg[i].application.user.major_class}</li>
+                    <li>${result.data.msg[i].application.classify.b_Indicator_name}</li>
+                    <li>${result.data.msg[i].application.classify.b_points_available}</li>
+                    <li>${time}</li>
+                    <li>通过普通管理员</li>
+                    <li>
+                        <button onclick="removePopup()" class="operatorBtnSty">删除</button>
+                        <button onclick="" class="operatorBtnSty">详情</button>
+                    </li>
+                </ul>
+                `
+            }
             popUps[0].style.display = 'block'
             setTimeout(() => {
                 popUps[0].style.display = 'none'
@@ -89,7 +149,7 @@ function GteAllInfo(page, perpage, obj) {
             }, 2000)
         })
 }
-GteAllInfo(1,10,{})
+GetAllInfo(1, 10, {})
 
 lastPage.onclick = function () {
     // 点击上一页
@@ -103,6 +163,7 @@ lastPage.onclick = function () {
         now_page--
         nowPage.innerHTML = now_page
         // 请求数据
+        GetAllInfo(now_page, per_Page, limitationFactor())
     }
 }
 nextPage.onclick = function () {
@@ -117,6 +178,7 @@ nextPage.onclick = function () {
         now_page++
         nowPage.innerHTML = now_page
         // 请求数据
+        GetAllInfo(now_page, per_Page, limitationFactor())
     }
 }
 jump.onclick = function () {
@@ -133,6 +195,7 @@ jump.onclick = function () {
             now_page = jumpPage.value
             nowPage.innerHTML = now_page
             // 请求数据
+            GetAllInfo(now_page, per_Page, limitationFactor())
         }
     } else {
         jumpPage.value = ''

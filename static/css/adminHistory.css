@@ -210,10 +210,10 @@ select {
     background-color: #F8AC59;
 }
 
-.adminHistoryContentNo{
+#adminHistoryContentNo{
     color: red;
     font-size: 35px;
-    height: 400px;
-    line-height: 400px;
+    height: 200px;
+    line-height: 200px;
     text-align: center;
 }

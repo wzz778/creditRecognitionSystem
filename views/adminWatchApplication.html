@@ -183,7 +183,6 @@
             <option value="20">20条</option>
             <option value="25">25条</option>
         </select>
-        <span id="allPages">共1页</span>
         <button id="lastPage">上一页</button>
         <span id="nowPage">1</span>
         跳转到:<input type="text" id="jumpPage"> 页
@@ -195,7 +194,7 @@
 {{/block}}
 {{block 'bottom'}}
 
-<script src="//unpkg.com/layui@2.6.8/dist/layui.js"></script>
+<script src="/public/layui/layui.js"></script>
 <script>
     layui.use('laydate', function () {
         var laydate = layui.laydate;

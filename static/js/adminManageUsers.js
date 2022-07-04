@@ -95,8 +95,9 @@ function GetAll(page, perPage, obj) {
                 }
                 return
             }
-            console.log(result.data.msg.length)
+            console.log(result.data)
             all_Page = result.data.page
+            allPages.innerHTML=`共${all_Page}页`
             allNumber.innerHTML = `共${result.data.total}条`
             for (let i = 0; i < result.data.msg.length; i++) {
                 let userClass = '未知'

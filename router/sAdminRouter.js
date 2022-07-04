@@ -9,7 +9,7 @@ const jwt = require('jsonwebtoken')
 router.get('/superAdminAdd', (req, res) => {
     res.render('superAdminAddUser.html')
 })
-// 提交历史记录
+// 提交历史记录 !(删除功能和获取信息函数中的循环从1开始的GetAllInfo(page, perpage, obj))
 router.get('/adminHistory', (req, res) => {
     res.render('adminHistory.html')
 })
@@ -25,7 +25,7 @@ router.get('/adminWatchApplication', (req, res) => {
 router.get('/adminManageUsers', (req, res) => {
     res.render('adminManageUsers.html')
 })
-// 学分构成管理
+// 学分构成管理 !(没有数据新增和修改没有写，以及分类查询)
 router.get('/adminCreditManagement', (req, res) => {
     res.render('adminCreditManagement.html')
 })
@@ -50,7 +50,9 @@ router.post('/admin/records', (req, res) => {
     if (beginDate) {
         obj.beginDate = beginDate
     }
-    obj.endDate = endDate || '2022-07-28 12:28:13'
+    if (endDate) {
+        obj.endDate = endDate
+    }
     if (approval_status) {
         obj.approval_status = approval_status
     }
@@ -66,7 +68,7 @@ router.post('/admin/records', (req, res) => {
     })
         .then((result) => {
             console.log(result.data)
-            res.send({ err: 0, msg: result.data })
+            res.send({ err: 0, msg: result.data.data.allRecords,allPage:(result.data.data.allPages-1),msg1:result.data.data.pageInfo})
         })
         .catch((err) => {
             console.log('失败', err)
@@ -350,7 +352,7 @@ router.get('/IndicatorOperate/showAllIndicator', (req, res) => {
 })
 
 // 封装的循环发送数据的函数
-function fn(id, req,sendResult) {
+function fn(id, req, sendResult) {
     return new Promise((resolve, resject) => {
         axios({
             method: 'GET',
@@ -364,7 +366,7 @@ function fn(id, req,sendResult) {
             }
         })
             .then((result) => {
-               sendResult.child=result.data.data
+                sendResult.child = result.data.data
                 resolve(sendResult)
             })
             .catch((err) => {
@@ -411,23 +413,23 @@ router.post('/IndicatorOperate/showIndicator', (req, res) => {
         .then((result) => {
             let sendResult = result.data.data
             console.log(sendResult)
-            if(sendResult=='下边没有指标了'){
-                res.send({err:0,msg:'没有指标信息'})
+            if (sendResult == '下边没有指标了') {
+                res.send({ err: 0, msg: '没有指标信息' })
                 return
             }
             // 去遍历每一个元素是否有下一级
             let sendArr = []
             for (let i = 0; i < sendResult.length; i++) {
-                sendArr[i] = fn(id, req,sendResult[i])
+                sendArr[i] = fn(id, req, sendResult[i])
             }
             Promise.all(sendArr)
-            .then((result)=>{
-                console.log(result)
-                res.send({err:0,msg:sendResult})
-            })
-            .catch((err)=>{
-                throw new Promise(err)
-            })
+                .then((result) => {
+                    console.log(result)
+                    res.send({ err: 0, msg: sendResult })
+                })
+                .catch((err) => {
+                    throw new Promise(err)
+                })
         })
         .catch((err) => {
             console.log(err)

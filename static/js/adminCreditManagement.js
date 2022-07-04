@@ -23,6 +23,19 @@ function watchChild(event){
     .then((result)=>{
         console.log(result.data)
         ele.innerHTML=''
+        if(result.data.msg=='没有指标信息'){
+            // 没有指标信息
+            ele.innerHTML=`
+            <div id="adminHistoryContentNo" style='min-height: 100px;
+            line-height: 100px;
+            text-align: center;
+            color: red;
+            font-size: 20px'>
+                对不起没有该内容
+            </div>
+            `
+            return
+        }
         for(let i=0;i<result.data.msg.length;i++){
             // 判断是否是目录
             if(result.data.msg[i].child=='下边没有指标了'){

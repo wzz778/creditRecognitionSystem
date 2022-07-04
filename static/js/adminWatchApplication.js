@@ -1,5 +1,3 @@
-const { default: axios } = require("axios")
-
 let popUps = document.getElementsByClassName('popUps')
 
 // 分页
@@ -177,17 +175,3 @@ selectPerpage.onclick=function(){
     per_Page=selectPerpage.value
     GetAllInfo(now_page, per_Page, limitationFactor())
 }
-
-axios({
-    method:'POST',
-    url:'/a',
-    data:{
-        // 数据
-    }
-})
-.then((result)=>{
-    console.log(result)
-})
-.catch((err)=>[
-    console.log(err)
-])
