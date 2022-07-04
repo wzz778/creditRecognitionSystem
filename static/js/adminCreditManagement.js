@@ -1,20 +1,77 @@
 
 // 提示弹窗
 let popUps = document.getElementsByClassName('popUps')
-let remove = document.getElementsByClassName('remove')
 let expandItem = document.getElementsByClassName('expandItem')
-for (let i = 0; i < expandItem.length; i++) {
-    expandItem[i].onclick = function () {
-        // 判断内容盒子是否显现
-        if (expandItem[i].parentElement.parentElement.parentElement.lastElementChild.style.display == 'none') {
-            expandItem[i].parentElement.parentElement.parentElement.lastElementChild.style.display = ''
-            remove[i].style.display = 'none'
-        } else {
-            expandItem[i].parentElement.parentElement.parentElement.lastElementChild.style.display = 'none'
-            remove[i].style.display = ''
-        }
+function watchChild(event){
+    // 判断内容盒子是否显现
+    if (event.parentElement.parentElement.parentElement.lastElementChild.style.display == 'none') {
+        event.parentElement.parentElement.parentElement.lastElementChild.style.display = ''
+        event.firstElementChild.style.display = 'none'
+    } else {
+        event.parentElement.parentElement.parentElement.lastElementChild.style.display = 'none'
+        event.firstElementChild.style.display = ''
     }
+    // 请求下一级函数
+    let ele=event.parentElement.parentElement.parentElement.lastElementChild.lastElementChild//获取存放的位置
+    axios({
+        method:'POST',
+        url:'/IndicatorOperate/showIndicator',
+        data:{
+            id:event.parentElement.lastElementChild.innerHTML
+        }
+    })
+    .then((result)=>{
+        console.log(result.data)
+        ele.innerHTML=''
+        for(let i=0;i<result.data.msg.length;i++){
+            // 判断是否是目录
+            if(result.data.msg[i].child=='下边没有指标了'){
+                // 不是目录
+                ele.innerHTML+=`
+                    <ul>
+                        <li>
+                            <input type="checkbox" class="childDel commonDel" onclick="judgeChild(this)">
+                        </li>
+                        <li>${result.data.msg[i].b_Indicator_name}</li>
+                        <li>${result.data.msg[i].b_points_available}</li>
+                        <li>
+                            <button onclick="delFnOne(this)">删除</button>
+                            //这里需要存放它的二级爸爸贡修改和新增使用
+                            <button>修改</button>
+                            <button>新增</button>
+                            <div style='display:none;'>无二级目录</div>
+                        </li>
+                    </ul>
+                `
+            }else{
+                // 有子级目录
+                ele.innerHTML+=`
+                <div class="SecondDir clearFloat">
+                        <span>子级目录:</span>
+                        <button class="floatRight">删除此子级目录</button>
+                    </div>
+                    <ul>
+                        <li>
+                            <input type="checkbox" class="childDel commonDel" onclick="judgeChild(this)">
+                        </li>
+                        <li>国际竞赛一等奖(最高奖)</li>
+                        <li>6.0</li>
+                        <li>
+                            <button onclick="delFnOne(this)">删除</button>
+                            <button>修改</button>
+                            <button>新增</button>
+                            <div style='display:none;'>二级目录名</div>
+                        </li>
+                    </ul>
+                `
+            }
+        }
+    })
+    .catch((err)=>{
+        console.log(err)
+    })
 }
+
 // 父级选择框
 function allChildInputFather(event) {
     let allUls = event.parentElement.parentElement.parentElement.parentElement.lastElementChild.getElementsByTagName('ul')
@@ -177,3 +234,56 @@ jump.onclick = function () {
         }, 2000)
     }
 }
+
+let item=document.getElementById('item')
+// 获取学分构成数据
+axios({
+    method:'GET',
+    url:'/getCreditsComposition',
+})
+.then((result)=>{
+    console.log(result.data)
+    item.innerHTML=''
+    for(let i=0;i<result.data.msg.length;i++){
+        item.innerHTML+=`
+        <div class="adminCreditManagementContentContent adminCreditManagementContentItem">
+            <ul>
+                <li class="constituteSty">
+                    <span class="expandItem" onclick='watchChild(this)'>
+                        <span class="remove"></span>
+                        <span onclick="" class=""></span>
+                    </span>
+                    <span>${result.data.msg[i].afirstLevel}</span>
+                    <div style="display: none;">${result.data.msg[i].aid}</div>
+                </li>
+                <li>${i+1}</li>
+                <li>
+                    <button>查看</button>
+                </li>
+                <li>
+                    <button>编辑</button>
+                    <button>新增</button>
+                    <button onclick="delFnOne(this)">删除</button>
+                </li>
+            </ul>
+            <div class="ChildDetails" style="display: none;">
+                <div class="ChildDetailsTop ChildDetailsItem">
+                    <ul>
+                        <li>
+                            <input type="checkbox" class="childDelAll commonDel" onclick="allChildInputFather(this)">
+                        </li>
+                        <li>认定范围</li>
+                        <li>学分</li>
+                        <li>操作框</li>
+                    </ul>
+                </div>
+                <div class="ChildDetailsContent ChildDetailsItem"></div>
+            </div>
+        </div>
+        `
+    }
+})
+.catch((err)=>{
+    console.log(err)
+})
+

@@ -61,6 +61,8 @@
 
 .expandItem {
     position: relative;
+    margin-left: 73px;
+    margin-right: 5px;
     padding-right: 7px;
     top: 2px;
     display: inline-block;
@@ -145,4 +147,16 @@
     height: 400px;
     line-height: 400px;
     text-align: center;
+}
+
+.constituteSty{
+    display: grid;
+    grid-template-columns: 30px 200px;
+    text-align: center;
+    justify-content: center;
+}
+
+.SecondDir{
+    position: relative;
+    left: -45px;
 }

@@ -1,3 +1,5 @@
+const { default: axios } = require("axios")
+
 let popUps = document.getElementsByClassName('popUps')
 
 // 分页
@@ -9,24 +11,88 @@ let nowPage = document.getElementById('nowPage')//显示当前页数
 let jumpPage = document.getElementById('jumpPage')//输入跳转页数
 let jump = document.getElementById('jump')//跳转
 let nextPage = document.getElementById('nextPage')//下一页
-let academy=document.getElementById('academy')
+let WatchApplicationContentContent = document.getElementsByClassName('WatchApplicationContentContent')[0]
+let WatchApplicationNo = document.getElementsByClassName('WatchApplicationNo')[0]
 let all_Page = 1//总条数
 let per_Page = 10//每页几条
 let now_page = 1//当前请求页数
 
 // 查询条件
-
-// let objAll = {
-//     nodePage:now_page,
-//     pageSize:per_Page,
-//     academy:academy.value,
-//     approval_status,
-//     b_Indicator_name,
-//     b_points_available,
-//     beginDate,
-//     endDate,
-//     major_class
-// }
+let passFail = document.getElementById('passFail')//审核状态
+let CreditsComposition = document.getElementById('CreditsComposition')//学分构成
+let credit = document.getElementById('credit')//学分
+let academy = document.getElementById('academy')//院系
+let ScopeRecognition = document.getElementById('ScopeRecognition')
+let usClass = document.getElementById('usClass')//班级
+let startDate = document.getElementById('startDate')//开始时间
+let endDate = document.getElementById('endDate')//结束时间
+// 限制条件函数
+function limitationFactor() {
+    let obj = {}
+    obj.academy = academy.value
+    obj.approval_status = passFail.value
+    obj.b_Indicator_name = ScopeRecognition.value
+    obj.b_points_available = credit.value
+    obj.beginDate = startDate.value
+    obj.endDate = endDate.value
+    obj.major_class = usClass.value
+    return obj
+}
+// 请求函数
+function GetAllInfo(page, perpage, obj) {
+    obj.nodePage = page
+    obj.pageSize = perpage
+    // 发送请求
+    axios({
+        method: 'POST',
+        url: '/admin/application',
+        data: obj
+    })
+        .then((result) => {
+            console.log(result.data)
+            // 将数据渲染
+            WatchApplicationContentContent.innerHTML = ''
+            // 判断是否有值
+            WatchApplicationContentContent.style.display = 'block'
+            WatchApplicationNo.style.display = 'none'
+            allNumber.innerHTML = `共${result.data.AllPages}页`
+            if (result.data.msg.length == 0) {
+                WatchApplicationContentContent.style.display = 'none'
+                WatchApplicationNo.style.display = 'block'
+                return
+            }
+            for (let i = 0; i < result.data.msg.length; i++) {
+                WatchApplicationContentContent.innerHTML += `
+                <ul>
+                    <li>${result.data.msg[i].user.name}</li>
+                    <li>${result.data.msg[i].user.userName}</li>
+                    <li>${result.data.msg[i].user.sex}</li>
+                    <li>${result.data.msg[i].user.grade}</li>
+                    <li>${result.data.msg[i].user.academy}</li>
+                    <li>${result.data.msg[i].user.major_class}</li>
+                    <li>${result.data.msg[i].creditType.afirstLevel}</li>
+                    <li>${result.data.msg[i].points}</li>
+                    <li>
+                        <button class="watchDetails" onclick="">下载</button>
+                        <button class="watchDetails" onclick="">查看</button>
+                    </li>
+                </ul>
+                `
+            }
+            popUps[0].style.display = 'block'
+            setTimeout(() => {
+                popUps[0].style.display = 'none'
+            }, 2000)
+        })
+        .catch((err) => {
+            console.log(err)
+            popUps[1].style.display = 'block'
+            setTimeout(() => {
+                popUps[1].style.display = 'none'
+            }, 2000)
+        })
+}
+GetAllInfo(1, 10, {})
 
 
 
@@ -83,23 +149,45 @@ jump.onclick = function () {
     }
 }
 
-
-// 获取数据
-function getAllApplication(obj) {
-    axios({
-        method: 'PUT',
-        url: '/admin/application',
-        data: obj
-    })
-        .then((result) => {
-            console.log(result.data)
-        })
-        .catch((err) => {
-            console.log(err)
-            popUps[1].style.display = 'block'
-            setTimeout(() => {
-                popUps[1].style.display = 'none'
-            }, 2000)
-        })
+// 查询函数
+let sureSearch = document.getElementById('sureSearch')
+sureSearch.onclick = function () {
+    now_page = 1
+    nowPage.innerHTML = now_page
+    GetAllInfo(now_page, per_Page, limitationFactor())
 }
-getAllApplication({ nodePage: 1, pageSize: 10 })
+let reset = document.getElementById('reset')
+let allSelect = document.getElementsByTagName('select')
+let allInput = document.getElementsByTagName('input')
+
+reset.onclick = function () {
+    // 将值全部清空
+    for (let i = 0; i < allInput.length; i++) {
+        allInput[i].value = ''
+    }
+    for (let i = 0; i < allSelect.length; i++) {
+        allSelect[i].value = ''
+    }
+    selectPerpage.value=10
+    now_page = 1
+    nowPage.innerHTML = now_page
+    GetAllInfo(now_page, per_Page, limitationFactor())
+}
+selectPerpage.onclick=function(){
+    per_Page=selectPerpage.value
+    GetAllInfo(now_page, per_Page, limitationFactor())
+}
+
+axios({
+    method:'POST',
+    url:'/a',
+    data:{
+        // 数据
+    }
+})
+.then((result)=>{
+    console.log(result)
+})
+.catch((err)=>[
+    console.log(err)
+])

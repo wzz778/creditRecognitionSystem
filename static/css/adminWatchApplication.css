@@ -73,7 +73,7 @@
 
 .WatchApplicationContentItem>ul {
     display: grid;
-    grid-template-columns: repeat(12, 1fr);
+    grid-template-columns: repeat(9, 1fr);
     justify-content: center;
     align-content: center;
     text-align: center;
@@ -100,6 +100,10 @@
 
 .WatchApplicationContentContent>ul:hover>li>button {
     background-color: #F5F5F5;
+}
+
+.watchDetails{
+    margin-right: 5px;
 }
 
 .watchDetails:hover {
