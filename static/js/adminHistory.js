@@ -49,6 +49,48 @@ let nextPage = document.getElementById('nextPage')//下一页
 let all_Page = 1//总条数
 let per_Page = 10//每页几条
 let now_page = 1//当前请求页数
+
+// 限制条件
+let passFail = document.getElementById('passFail')
+let startDate = document.getElementById('startDate')
+let endDate = document.getElementById('endDate')
+
+
+// 将搜索的值全部都添加到一个对象中
+function limitationFactor() {
+    let obj = {}
+    obj.beginDate = startDate.value
+    obj.endDate = endDate.value
+    obj.approval_status = passFail.value
+    return obj
+}
+
+//获取数据
+function GteAllInfo(page, perpage, obj) {
+    obj.nodePage = page
+    obj.pageSize = perpage
+    axios({
+        method: 'POST',
+        url: '/admin/records',
+        data: obj
+    })
+        .then((result) => {
+            console.log(result.data)
+            popUps[0].style.display = 'block'
+            setTimeout(() => {
+                popUps[0].style.display = 'none'
+            }, 2000)
+        })
+        .catch((err) => {
+            console.log(err)
+            popUps[1].style.display = 'block'
+            setTimeout(() => {
+                popUps[1].style.display = 'none'
+            }, 2000)
+        })
+}
+GteAllInfo(1,10,{})
+
 lastPage.onclick = function () {
     // 点击上一页
     if (now_page == 1) {
@@ -162,12 +204,3 @@ del.onclick = function () {
         }, 2000)
     }
 }
-
-// 请求数据
-axios.post('/admin/records',{nodePage:1,pageSize:10})
-.then((result)=>{
-    console.log(result.data)
-})
-.catch((err)=>{
-    console.log(err)
-})

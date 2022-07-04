@@ -102,131 +102,68 @@
             <li>操作框</li>
         </ul>
     </div>
-    <div class="adminCreditManagementContentContent adminCreditManagementContentItem">
-        <ul>
-            <li>
-                <span class="expandItem">
-                    <span class="remove"></span>
-                    <span onclick="" class=""></span>
-                </span>
-                <span>学科竞赛</span>
-            </li>
-            <li>1</li>
-            <li>
-                <button>查看</button>
-            </li>
-            <li>
-                <button>编辑</button>
-                <button>新增</button>
-                <button onclick="delFnOne(this)">删除</button>
-            </li>
-        </ul>
-        <div class="ChildDetails" style="display: none;">
-            <div class="ChildDetailsTop ChildDetailsItem">
-                <ul>
-                    <li>
-                        <input type="checkbox" class="childDelAll commonDel" onclick="allChildInputFather(this)">
-                    </li>
-                    <li>认定范围</li>
-                    <li>学分</li>
-                    <li>操作框</li>
-                </ul>
-            </div>
-            <div class="ChildDetailsContent ChildDetailsItem">
-                <ul>
-                    <li>
-                        <input type="checkbox" class="childDel commonDel" onclick="judgeChild(this)">
-                    </li>
-                    <li>国际竞赛一等奖(最高奖)</li>
-                    <li>6.0</li>
-                    <li>
-                        <button onclick="delFnOne(this)">删除</button>
-                        <button>修改</button>
-                        <button>新增</button>
-                    </li>
-                </ul>
-                <ul>
-                    <li>
-                        <input type="checkbox" class="childDel commonDel" onclick="judgeChild(this)">
-                    </li>
-                    <li>获全国计算机二级及以上等级证书；非外语专业学生通过英语六级考试；外语专业学生通过专业八级</li>
-                    <li>6.0</li>
-                    <li>
-                        <button onclick="delFnOne(this)">删除</button>
-                        <button>修改</button>
-                        <button>新增</button>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="adminCreditManagementContentContent adminCreditManagementContentItem">
-        <ul>
-            <li>
-                <span class="expandItem">
-                    <span class="remove"></span>
-                    <span onclick=""></span>
-                </span>
-                <span>学科竞赛</span>
-            </li>
-            <li>1</li>
-            <li>
-                <button>查看</button>
-            </li>
-            <li>
-                <button>编辑</button>
-                <button>新增</button>
-                <button onclick="delFnOne(this)">删除</button>
-            </li>
-        </ul>
-        <div class="ChildDetails" style="display: none;">
-            <div class="ChildDetailsTop ChildDetailsItem">
-                <ul>
-                    <li>
-                        <input type="checkbox" class="childDelAll commonDel" onclick="allChildInputFather(this)">
-                    </li>
-                    <li>认定范围</li>
-                    <li>学分</li>
-                    <li>操作框</li>
-                </ul>
-            </div>
-            <div class="ChildDetailsContent ChildDetailsItem">
-                <ul>
-                    <li>
-                        <input type="checkbox" class="childDel commonDel" onclick="judgeChild(this)">
-                    </li>
-                    <li>国际竞赛一等奖(最高奖)</li>
-                    <li>6.0</li>
-                    <li>
-                        <button onclick="delFnOne(this)">删除</button>
-                        <button>修改</button>
-                        <button>新增</button>
-                    </li>
-                </ul>
-                <ul>
-                    <li>
-                        <input type="checkbox" class="childDel commonDel" onclick="judgeChild(this)">
-                    </li>
-                    <li>获全国计算机二级及以上等级证书；非外语专业学生通过英语六级考试；外语专业学生通过专业八级</li>
-                    <li>6.0</li>
-                    <li>
-                        <button onclick="delFnOne(this)">删除</button>
-                        <button>修改</button>
-                        <button>新增</button>
-                    </li>
-                </ul>
-                <ul>
-                    <li>
-                        <input type="checkbox" class="childDel commonDel" onclick="judgeChild(this)">
-                    </li>
-                    <li>国际竞赛一等奖(最高奖)</li>
-                    <li>6.0</li>
-                    <li>
-                        <button onclick="delFnOne(this)">删除</button>
-                        <button>修改</button>
-                        <button>新增</button>
-                    </li>
-                </ul>
+    <div id="item">
+        <div class="adminCreditManagementContentContent adminCreditManagementContentItem">
+            <ul>
+                <li class="constituteSty">
+                    <span class="expandItem" onclick='watchChild(this)'>
+                        <span class="remove"></span>
+                        <span onclick="" class=""></span>
+                    </span>
+                    <span>学科竞赛</span>
+                </li>
+                <li>1</li>
+                <li>
+                    <button>查看</button>
+                </li>
+                <li>
+                    <button>编辑</button>
+                    <button>新增</button>
+                    <button onclick="delFnOne(this)">删除</button>
+                </li>
+            </ul>
+            <!-- 儿子 -->
+            <div class="ChildDetails" style="display: none;">
+                <div class="ChildDetailsTop ChildDetailsItem">
+                    <ul>
+                        <li>
+                            <input type="checkbox" class="childDelAll commonDel" onclick="allChildInputFather(this)">
+                        </li>
+                        <li>认定范围</li>
+                        <li>学分</li>
+                        <li>操作框</li>
+                    </ul>
+                </div>
+                <div class="ChildDetailsContent ChildDetailsItem">
+                    <div class="SecondDir clearFloat">
+                        <span>子级目录:</span>
+                        <button class="floatRight">删除此子级目录</button>
+                    </div>
+                    <ul>
+                        <li>
+                            <input type="checkbox" class="childDel commonDel" onclick="judgeChild(this)">
+                        </li>
+                        <li>国际竞赛一等奖(最高奖)</li>
+                        <li>6.0</li>
+                        <li>
+                            <button onclick="delFnOne(this)">删除</button>
+                            <button>修改</button>
+                            <button>新增</button>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li>
+                            <input type="checkbox" class="childDel commonDel" onclick="judgeChild(this)">
+                        </li>
+                        <li>获全国计算机二级及以上等级证书；非外语专业学生通过英语六级考试；外语专业学生通过专业八级</li>
+                        <li>6.0</li>
+                        <li>
+                            <button onclick="delFnOne(this)">删除</button>
+                            <button>修改</button>
+                            <button>新增</button>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -247,7 +184,7 @@
 </div>
 </div>
 <div id="adminHistoryContentNo" style="display: none;">
-对不起没有该内容
+    对不起没有该内容
 </div>
 {{/block}}
 {{block 'bottom'}}

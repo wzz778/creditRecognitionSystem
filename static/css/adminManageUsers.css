@@ -53,11 +53,15 @@
 
 .adminManageUsersContent {
     margin-top: 10px;
-    min-height: 200px;
+    /* min-height: 200px; */
 }
 
 .adminManageUsersContentTop>ul {
     background-color: #EFF3F8;
+}
+
+.adminManageUsersContentContent{
+    min-height: 200px;
 }
 
 .adminManageUsersContentContent>ul:hover {
@@ -113,10 +117,10 @@
     background-color: #F8AC59;
 }
 
-.adminHistoryContentNo {
+#adminHistoryContentNo {
     color: red;
     font-size: 35px;
-    height: 400px;
-    line-height: 400px;
+    height: 200px;
+    line-height: 200px;
     text-align: center;
 }
