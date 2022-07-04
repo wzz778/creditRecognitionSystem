@@ -20,7 +20,7 @@ app.use(session({
     saveUninitialized: false,
   }))
 app.use('/public', express.static(path.join(__dirname, './static')))
-app.use('/node_modules',express.static(path.join(__dirname,'./node_modules/')));
+app.use('/node_modules',express.static(path.join(__dirname,'./node_modules')));
 // 引入路由
 const sAdminRouter=require('./router/sAdminRouter')
 const wzzRouter=require('./router/wzzRouter')

@@ -1,0 +1,120 @@
+.content{
+    height: 90px;
+    width: 100%;
+    background:#FFFFFF;
+    border-radius: 6px;
+    margin-top: 10px;
+    box-shadow: 1px 1px 3px #d2d2d2;
+    position: relative;
+    padding-right: 15px;
+    padding-left: 15px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+.card-body{
+    padding: 24px 24px;
+    padding-top: 15px;
+    box-sizing: border-box;
+}
+.nav-step{
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: baseline;
+    align-items: baseline;
+    padding: 0px;
+    margin-bottom: 1rem;
+    margin-top: 0;
+    box-sizing: border-box;
+}
+.nav-step a::before {
+    content: '';
+    position: absolute;
+    left: calc(-50% + 14.5px);
+    right: calc(50% + 14.5px);
+    height: 10px;
+    margin-top: 9.5px;
+    background-color: #f7fafc;
+    cursor: default;
+    -webkit-transition: .5s;
+    transition: .5s;
+}
+.nav-step-item{
+    position: relative;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+    -webkit-box-flex: 1;
+    -webkit-box-align: center;
+    align-items: center;
+    flex: 1 1;
+    padding: 0 12px;
+}
+.nav-step a{
+    display: inline-flex;
+    padding: 0;
+    margin: 10px 0;
+    width: 29px;
+    height: 29px;
+    max-height: 29px;
+    background-color: #F7FAFC;
+    border-radius: 50%;
+    transition: .5s;
+    z-index: 1;
+}
+.nav-step a:after{
+    content: "\f12c";
+    /*font-family: "Material Design Icons";*/
+    width: 0;
+    height: 0;
+    text-align: center;
+    font-size: 15px;
+    position: absolute;
+    border-radius: 50%;
+    background-color: transparent;
+    color: transparent;
+    /*-webkit-transform: translate(14.5px, 14.5px);*/
+    transform: translate(14.5px, 14.5px);
+    /*-webkit-transition: .5s;*/
+    transition: .5s;
+    z-index: 1;
+    /*display: -webkit-inline-box;*/
+    display: inline-block;
+    /*-webkit-box-align: center;*/
+    align-items: center;
+    /*-webkit-box-pack: center;*/
+    justify-content: center;
+}
+.nav-step .uncomplete:before{
+    content: '';
+    position: absolute;
+    left: calc(-50% + 14.5px);
+    right: calc(50% + 14.5px);
+    height: 10px;
+    margin-top: 9.5px;
+    background-color: #F7FAFC;
+    cursor: default;
+    /*-webkit-transition: .5s;*/
+    transition: .5s;
+    box-sizing: border-box;
+}
+.nav-step-item  .active:after{
+    display: inline-block;
+    width: 13px;
+    height: 13px;
+    margin-top: 8px;
+    /*-webkit-transform: translateX(8px);*/
+    transform: translateX(8px);
+    color: transparent;
+    background-color: #3FCEBF;
+}
+.active a::before {
+    background-color: #dcfcfa;
+}
+.active a{
+    background-color: #DCFCFA;
+}
+.complete a{
+    background-color: #DCFCFA;
+}

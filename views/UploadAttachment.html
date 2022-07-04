@@ -1,0 +1,79 @@
+{{extend './layout.html'}}
+{{block 'title'}}上传附件{{/block}}
+{{block 'head'}}
+<link rel="stylesheet" href="public/css/UploadAttachment.css">
+<link rel="stylesheet" href="public/css/Applicationprogress.css">
+{{/block}}
+{{block 'body'}}
+<div class="content">
+    <div class="card-body">
+        <ul class="nav-step">
+          <li class="nav-step-item active complete">
+            <span>发布申请</span>
+            <a class="active"  aria-expanded="false">
+            </a>
+          </li>
+          <li class="nav-step-item active ">
+              <span>上传附件</span>
+              <a class=" active">
+              </a>
+          </li>
+            <li class="nav-step-item">
+                <span>上传成功</span>
+                <a class="uncomplete">
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 10px;">
+    <legend>上传附件</legend>
+</fieldset>
+<div class="layui-upload">
+    <button type="button" class="layui-btn layui-btn-normal" id="testList">选择文件</button> 
+    <button type="button" class="layui-btn" id="testListAction">开始上传</button>
+    <button type="button" class="layui-btn layui-btn-normal" id="nextAction">上传完毕，完成申请表提交</button>
+    <div class="layui-upload-list" style="width: 100%;margin-bottom: 20px;">
+        <table class="layui-table">
+            <colgroup>
+                <col width="20%">
+                <col width="20%">
+                <col width="40%">
+                <col width="20%">
+            </colgroup>
+            <thead>
+                <tr><th>文件名</th>
+                    <th>大小</th>
+                    <th>上传进度</th>
+                    <th>操作</th>
+                </tr></thead>
+                <tbody id="demoList"></tbody>
+            </table>
+        </div>
+    </div>
+    <a href="makepdf" id="topdf">没有表格附件？点击去下载pdf表格</a><br>
+    <span id="notes">
+        <span style="color:rgb(235, 85, 85); font-size: 14px;">注：</span>上传附件须编辑附件名称：格式：年 月成果名称;<br>
+        成果名称填写：1.科技创新，写项目名称-级别/论文题目-期刊/专利名称/软件著作权名称等；
+        2.学科竞赛，写竞赛名称-级别-获奖等级，如互联网+大学生创新创业大赛-校赛-一等奖；3.创业实践写项目名称-级别/公司名称；4.社会实践写学校统一活动名称；5.职业技能写证书名称，有级别的加上级别;
+    </span>
+    {{/block}}
+    {{block 'bottom'}}
+    <script src="public/js/UploadAttachment.js"></script>
+    <!-- <script src="https://cdn.bootcdn.net/ajax/libs/art-template/4.13.2/lib/template-web.js"></script>
+        <script id="test111" type="text/html">
+            <h1>{{aaa}}</h1>
+    <h2>swwwwwwwwwwwwwwwwwwww</h2>
+  </script>
+  <script >
+    var data = {
+      title:"hello world"
+    };
+    var rrrr= template("test111", {
+      aaa:"hello world"
+    });
+    console.log("wwwwwwwwwwwwwwwwww");
+    console.log(rrrr);
+    // document.getElementById('sss').innerHTML = www;
+  </script> -->
+{{/block}}

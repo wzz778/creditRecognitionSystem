@@ -1,0 +1,43 @@
+{{extend './layout.html'}}
+{{block 'title'}}上传成功{{/block}}
+{{block 'head'}}
+<link rel="stylesheet" href="public/css/EndApplication.css">
+<link rel="stylesheet" href="public/css/Applicationprogress.css">
+{{/block}}
+{{block 'body'}}
+<div class="content">
+    <div class="card-body">
+        <ul class="nav-step">
+            <li class="nav-step-item active complete">
+                <span>发布申请</span>
+                <a class="active"  aria-expanded="false">
+                </a>
+              </li>
+              <li class="nav-step-item active ">
+                  <span>上传附件</span>
+                  <a class=" active">
+                  </a>
+            </li>
+            <li class="nav-step-item active">
+                <span>上传成功</span>
+                <a class="active">
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 10px;">
+    <legend>上传完成</legend>
+</fieldset>
+<div id="main">
+    <img src="public/img/checkmark.png" alt="">
+    <div>您填写的申请表上传成功</div>
+    <div style="margin-top:50px ;">
+        <button type="button" class="layui-btn layui-btn-normal" id="testList">返回个人中心</button> 
+        <button type="button" class="layui-btn" id="testListAction">观看提交记录</button>
+    </div>
+</div>
+{{/block}}
+{{block 'bottom'}}
+<script src="public/js/EndApplication.js"></script>
+{{/block}}
