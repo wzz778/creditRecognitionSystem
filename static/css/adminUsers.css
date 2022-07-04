@@ -209,7 +209,7 @@ input[type=checkbox]{
     border-color: rgb(35 198 200);
     color: rgb(255 255 255);
 }
-.delete{
+.deletes{
     background-color: red;
     border-color: red;
     color: rgb(255 255 255);
