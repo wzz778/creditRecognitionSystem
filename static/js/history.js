@@ -1,3 +1,5 @@
+
+
 layui.use('laypage',function (){
     var laypage = layui.laypage;
 
@@ -43,6 +45,7 @@ let search_type = document.getElementsByClassName('search-type');
 let search = document.getElementsByClassName('search');
 let startTime = document.getElementById('startTime');
 let endTime = document.getElementById('endTime');
+let check = document.getElementsByClassName('check');
 
 function package(method,url,args,callback){
     if(method == "post"){
@@ -98,12 +101,13 @@ function render(numbers){
 
         let html = template('main-content',data);
         main_content[0].innerHTML = html;
-        for(let i=0;i<student_operator.length;i++){
-            student_operator[i].ids = '';
-            student_operator[i].onclick = function () {
+        let index = 0;
+        for(let i=0;i<check.length;i++){
+            check[i].ids = '';
+            check[i].onclick = function () {
 
 
-                window.location.href = 'particulars.html?id=' + '';
+                window.location.href = 'particulars.html?id=' + check[i].ids;
             }
         }
     })
