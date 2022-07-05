@@ -3,6 +3,10 @@ const router = express.Router()
 const qs = require('qs')
 const axios = require('axios')
 const jwt = require('jsonwebtoken')
+const multipart = require('connect-multiparty')
+const FormData = require('form-data')
+const fs = require('fs')
+var mult = multipart()
 
 // 请求页面
 // 添加用户 !
@@ -32,6 +36,11 @@ router.get('/adminCreditManagement', (req, res) => {
 // 添加学分构成
 router.get('/addNewIndicator', (req, res) => {
     res.render('addNewIndicator.html')
+})
+
+// 测试上传多个文件
+router.get('/a',(req,res)=>{
+    res.render('text.html')
 })
 
 axios.defaults.baseURL = 'http://110.40.205.103:8099'
@@ -179,8 +188,8 @@ router.get('/creditTypeOperate/showCreditType', (req, res) => {
         }
     })
         .then((result) => {
-            console.log(result.data.data)
-            res.send(result.data)
+            // console.log(result.data.data)
+            res.send({err:0,msg:result.data.data})
         })
         .catch((err) => {
             console.log(err)
@@ -300,30 +309,6 @@ router.post('/delAllUser', (req, res) => {
         })
 })
 
-// 获取学分构成数据
-router.get('/getCreditsComposition', (req, res) => {
-    axios({
-        method: 'GET',
-        url: '/creditTypeOperate/showCreditType',
-        headers: {
-            token: req.session.token
-        }
-    })
-        .then((result) => {
-            // console.log(result.data)
-            if (result.data.msg == 'OK') {
-                res.send({ err: 0, msg: result.data.data })
-            } else {
-                // 没请求成功
-                res.send({ err: -1, msg: result.data.msg })
-            }
-        })
-        .catch((err) => {
-            console.log(err)
-            res.send({ err: -1, msg: '网络错误' })
-        })
-})
-
 // 获取学分构成的指标
 router.get('/IndicatorOperate/showAllIndicator', (req, res) => {
     // 请求所有指标
@@ -347,6 +332,29 @@ router.get('/IndicatorOperate/showAllIndicator', (req, res) => {
             }
         })
         .catch((err) => {
+            res.send({ err: -1, msg: '网络错误' })
+        })
+})
+
+router.get('/getCreditsComposition', (req, res) => {
+    axios({
+        method: 'GET',
+        url: '/creditTypeOperate/showCreditType',
+        headers: {
+            token: req.session.token
+        }
+    })
+        .then((result) => {
+            // console.log(result.data)
+            if (result.data.msg == 'OK') {
+                res.send({ err: 0, msg: result.data.data })
+            } else {
+                // 没请求成功
+                res.send({ err: -1, msg: result.data.msg })
+            }
+        })
+        .catch((err) => {
+            console.log(err)
             res.send({ err: -1, msg: '网络错误' })
         })
 })
@@ -412,7 +420,6 @@ router.post('/IndicatorOperate/showIndicator', (req, res) => {
     })
         .then((result) => {
             let sendResult = result.data.data
-            console.log(sendResult)
             if (sendResult == '下边没有指标了') {
                 res.send({ err: 0, msg: '没有指标信息' })
                 return
@@ -436,6 +443,115 @@ router.post('/IndicatorOperate/showIndicator', (req, res) => {
             res.send({ err: -1, msg: '网络错误' })
         })
 })
+
+// 获取学分构成的子级目录
+router.post('/child',(req,res)=>{
+    let {id}=req.body
+    axios({
+        method: 'GET',
+        url: '/IndicatorOperate/showIndicator',
+        params: {
+            id: id,
+            level: 2
+        },
+        headers: {
+            token: req.session.token
+        }
+    })
+    .then((result)=>{
+        console.log(result.data)
+        if(result.data.msg=='OK'){
+            // 判断是否有子级目录
+            res.send({err:0,msg:result.data})
+        }
+    })
+    .catch((err)=>{
+        res.send({err:-1,msg:'网络错误'})
+    })
+})
+
+// 添加学分构成及其子目录
+router.post('/addCreditAll',(req,res)=>{
+    // 添加身份判断
+    let {AFirstLevel}=req.body
+    // 添加学分构成
+    axios({
+        method:'POST',
+        url:'/creditTypeOperate/addCreditType',
+        params:{
+            AFirstLevel:AFirstLevel
+        },
+        headers:{
+            token:req.session.token
+        }
+    })
+    .then((result)=>{
+        res.send({err:0,msg:result.data})
+    })
+    .catch((err)=>{
+        console.log(err)
+        res.send({err:-1,msg:'网络错误'})
+    })
+})
+
+// 添加认定范围
+router.post('/IndicatorOperate/addIndicator',(req,res)=>{
+    let {arrSend}=req.body
+    console.log('传的数据',arrSend)
+    axios({
+        method:'POST',
+        url:'/IndicatorOperate/addIndicator',
+        data:arrSend,
+        headers:{
+            token:req.session.token,
+            'Content-Type':'application/json'
+        }
+    })
+    .then((result)=>{
+        console.log(result.data)
+        res.send({err:0,msg:result.data})
+    })
+    .catch((err)=>{
+        console.log(err)
+        res.send({err:-1,msg:'网络错误'})
+    })
+
+})
+
+// 多文件上传(node接口)
+router.post('/fileUplo', mult, (req, res) => {
+    // console.log(req.files.file)
+    console.log(req.body)
+    console.log()
+    let formdata = new FormData()
+    for (let a in req.files) {
+        formdata.append('file', fs.createReadStream(req.files[a].path),req.files[a].originalFilename)//第二个参数试上传的文件名
+    }
+    formdata.append('enclosure_name','测试')
+    formdata.append(' application_id',15)
+    // formdata.append('addres')
+    let {data}=req.body;
+    axios({
+        method: 'POST',
+        url: 'http://110.40.205.103:8099/user/photo',
+        data:formdata,
+        // headers: formdata.getHeaders(),
+        headers:{
+            token:req.session.token,
+            formdata:formdata.getHeaders(),
+            maxBodyLength:1000000000
+        }
+    })
+        .then((result) => {
+            console.log(result)
+            res.send({ err: 0, msg: result.data })
+        })
+        .catch((err) => {
+            // console.log(err)
+            res.send({ err: -1, msg: err })
+        })
+})
+
 
 
 module.exports = router
