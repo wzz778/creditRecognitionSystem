@@ -131,7 +131,7 @@ a:hover{
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    width: 150px;
+    width: 146px;
 }
 .checkbox-bs{
     width: 36px;
@@ -191,12 +191,25 @@ input[type=checkbox]{
     border: solid rgb(239,243,248);
     border-width: 0 2px 2px 0;
 }
+.operator-check{
+    padding: .75rem;
+    vertical-align: bottom;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 180px;
+}
 .opertor-list{
     padding: 1.5px 5px;
     font-size: 12px;
     display: inline-block;
     border-radius: 3px;
     cursor: pointer;
+}
+.check-out{
+    background-color: rgb(28 132 198);
+    border-color: rgb(28 132 198);
+    color: rgb(255 255 255);
 }
 .check{
     background-color: rgb(28 132 198);
