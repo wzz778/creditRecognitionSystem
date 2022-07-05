@@ -2,7 +2,7 @@
 // 提示弹窗
 let popUps = document.getElementsByClassName('popUps')
 let expandItem = document.getElementsByClassName('expandItem')
-function watchChild(event){
+function watchChild(event) {
     // 判断内容盒子是否显现
     if (event.parentElement.parentElement.parentElement.lastElementChild.style.display == 'none') {
         event.parentElement.parentElement.parentElement.lastElementChild.style.display = ''
@@ -12,20 +12,20 @@ function watchChild(event){
         event.firstElementChild.style.display = ''
     }
     // 请求下一级函数
-    let ele=event.parentElement.parentElement.parentElement.lastElementChild.lastElementChild//获取存放的位置
+    let ele = event.parentElement.parentElement.parentElement.lastElementChild.lastElementChild//获取存放的位置
     axios({
-        method:'POST',
-        url:'/IndicatorOperate/showIndicator',
-        data:{
-            id:event.parentElement.lastElementChild.innerHTML
+        method: 'POST',
+        url: '/IndicatorOperate/showIndicator',
+        data: {
+            id: event.parentElement.lastElementChild.innerHTML
         }
     })
-    .then((result)=>{
-        console.log(result.data)
-        ele.innerHTML=''
-        if(result.data.msg=='没有指标信息'){
-            // 没有指标信息
-            ele.innerHTML=`
+        .then((result) => {
+            console.log(result.data)
+            ele.innerHTML = ''
+            if (result.data.msg == '没有指标信息') {
+                // 没有指标信息
+                ele.innerHTML = `
             <div id="adminHistoryContentNo" style='min-height: 100px;
             line-height: 100px;
             text-align: center;
@@ -34,13 +34,13 @@ function watchChild(event){
                 对不起没有该内容
             </div>
             `
-            return
-        }
-        for(let i=0;i<result.data.msg.length;i++){
-            // 判断是否是目录
-            if(result.data.msg[i].child=='下边没有指标了'){
-                // 不是目录
-                ele.innerHTML+=`
+                return
+            }
+            for (let i = 0; i < result.data.msg.length; i++) {
+                // 判断是否是目录
+                if (result.data.msg[i].child == '下边没有指标了') {
+                    // 不是目录
+                    ele.innerHTML += `
                     <ul>
                         <li>
                             <input type="checkbox" class="childDel commonDel" onclick="judgeChild(this)">
@@ -56,9 +56,9 @@ function watchChild(event){
                         </li>
                     </ul>
                 `
-            }else{
-                // 有子级目录
-                ele.innerHTML+=`
+                } else {
+                    // 有子级目录
+                    ele.innerHTML += `
                 <div class="SecondDir clearFloat">
                         <span>子级目录:</span>
                         <button class="floatRight">删除此子级目录</button>
@@ -77,12 +77,12 @@ function watchChild(event){
                         </li>
                     </ul>
                 `
+                }
             }
-        }
-    })
-    .catch((err)=>{
-        console.log(err)
-    })
+        })
+        .catch((err) => {
+            console.log(err)
+        })
 }
 
 // 父级选择框
@@ -248,17 +248,17 @@ jump.onclick = function () {
     }
 }
 
-let item=document.getElementById('item')
+let item = document.getElementById('item')
 // 获取学分构成数据
 axios({
-    method:'GET',
-    url:'/getCreditsComposition',
+    method: 'GET',
+    url: '/getCreditsComposition',
 })
-.then((result)=>{
-    console.log(result.data)
-    item.innerHTML=''
-    for(let i=0;i<result.data.msg.length;i++){
-        item.innerHTML+=`
+    .then((result) => {
+        console.log(result.data)
+        item.innerHTML = ''
+        for (let i = 0; i < result.data.msg.length; i++) {
+            item.innerHTML += `
         <div class="adminCreditManagementContentContent adminCreditManagementContentItem">
             <ul>
                 <li class="constituteSty">
@@ -269,14 +269,14 @@ axios({
                     <span>${result.data.msg[i].afirstLevel}</span>
                     <div style="display: none;">${result.data.msg[i].aid}</div>
                 </li>
-                <li>${i+1}</li>
-                <li>
-                    <button>查看</button>
-                </li>
+                <li>${i + 1}</li>
                 <li>
                     <button>编辑</button>
-                    <button>新增</button>
+                </li>
+                <li>
+                    <button onclick='skipAdd(this)'>添加</button>
                     <button onclick="delFnOne(this)">删除</button>
+                    <div style="display: none;">${result.data.msg[i].aid}</div>
                 </li>
             </ul>
             <div class="ChildDetails" style="display: none;">
@@ -294,9 +294,83 @@ axios({
             </div>
         </div>
         `
+        }
+    })
+    .catch((err) => {
+        console.log(err)
+    })
+
+function skipAdd(event){
+    // 将id保存到本地
+    sessionStorage.setItem('skipAddAid', event.parentElement.lastElementChild.innerHTML)
+    window.location.href='http://127.0.0.1:8080/addNewIndicator'
+}
+
+
+function addCertification(event) {
+    event.parentElement.parentElement.innerHTML += `
+        <div class="dirItemI">
+            请输入子级目录:
+            <input type="text" placeholder="请输入子级目录"  class="clearValue subvalue">
+            <button  class="addChildDri" onclick="addCertification(this)">添加</button>
+            <!-- 第一个不能取消 -->
+            <button class="cancel" onclick="removeEle(this)">取消</button>
+        </div>
+    `
+}
+
+// 取消添加
+function removeEle(event) {
+    // 移除元素
+    event.parentElement.remove()
+}
+
+
+let sureAdd = document.getElementById('sureAdd')
+let enterComposition = document.getElementById('enterComposition')
+sureAdd.onclick = function () {
+    // 判断值是否为空
+    if (enterComposition.value == '') {
+        enterComposition.parentElement.lastElementChild.style.display = 'block'
+    } else {
+        // 发送请求
+        axios({
+            method: 'POST',
+            url: '/addCreditAll',
+            data: {
+                AFirstLevel: enterComposition.value
+            }
+        })
+            .then((result) => {
+                console.log(result.data)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
     }
-})
-.catch((err)=>{
-    console.log(err)
-})
+}
+
+let selectHasChild = document.getElementById('selectHasChild')
+let dirItem = document.getElementsByClassName('dirItem')[0]
+selectHasChild.onclick = function () {
+    if (selectHasChild.value == '2') {
+        dirItem.style.display = 'none'
+    } else {
+        dirItem.style.display = 'block'
+    }
+}
+
+let cancelAdd = document.getElementById('cancelAdd')
+let bodyTop = document.getElementsByClassName('bodyTop')
+cancelAdd.onclick = function () {
+    bodyTop[0].style.display = 'none'
+}
+let add = document.getElementById('add')
+add.onclick = function () {
+    let clearValue = document.getElementsByClassName('clearValue')
+    for (let i = 0; i < clearValue.length; i++) {
+        clearValue[i].value = ''
+    }
+    bodyTop[0].style.display = 'block'
+}
 

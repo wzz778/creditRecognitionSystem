@@ -5,6 +5,37 @@
 <link rel="stylesheet" href="/public/css/LiUniversal.css">
 <link rel="stylesheet" href="/public/css/adminCreditManagement.css">
 {{/block}}
+{{block 'bodytop'}}
+<div class="bodyTop" style="display: none;">
+    <div class="">
+        <div class="bodyTopItem">
+            学分构成:
+            <input type="text" placeholder="请输入学分构成" id="enterComposition" class="clearValue">
+            <div class="hintText" style="display: none;">请输入学分构成</div>
+        </div>
+        <div class="bodyTopItem">
+            是否输入子级目录
+            <select id="selectHasChild">
+                <option value="2">否</option>
+                <option value="1">是</option>
+            </select>
+        </div>
+        <div class="bodyTopItem">
+            <div class="dirItem" style="display: none;">
+                <div class="dirItemI">
+                    请输入子级目录:
+                    <input type="text" placeholder="请输入子级目录"  class="clearValue subValue">
+                    <button class="addChildDri" onclick="addCertification(this)">添加</button>
+                </div>
+            </div>
+        </div>
+        <div class="bodyTopBottom">
+            <button id="sureAdd">确定</button>
+            <button id="cancelAdd">取消</button>
+        </div>
+    </div>
+</div>
+{{/block}}
 
 {{block 'body'}}
 <div class="popUps" style="display: none;">
@@ -98,7 +129,7 @@
                 <span>学分构成</span>
             </li>
             <li>排序</li>
-            <li>备注</li>
+            <li>详情</li>
             <li>操作框</li>
         </ul>
     </div>
