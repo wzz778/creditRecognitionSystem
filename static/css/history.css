@@ -161,3 +161,12 @@
 .student-operator:hover{
     color: rgba(54,138,226);
 }
+.check{
+    background-color: rgb(28 132 198);
+    border-color: rgb(28 132 198);
+    color: rgb(255 255 255);
+    padding: 1.5px 5px;
+    font-size: 12px;
+    display: inline-block;
+    border-radius: 3px;
+}

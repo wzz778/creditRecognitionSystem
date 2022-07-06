@@ -68,9 +68,9 @@
         <div class="selectConditionItem">
             审核状态:<select id="passFail">
                 <option value="">请选择...</option>
-                <option value="">待审核</option>
-                <option value="">通过</option>
-                <option value="">未通过</option>
+                <option value="0">待审核</option>
+                <option value="1">通过</option>
+                <option value="-1">未通过</option>
             </select>
         </div>
         <div class="selectConditionItem">
@@ -149,6 +149,9 @@
             </li>
         </ul>
     </div>
+    <div id="adminHistoryContentNo" style="display: none;">
+        对不起没有该内容
+    </div>
     <div class="adminHistoryContentBottom clearFloat">
         每页<select name="" id="selectPerpage">
             <option value="10">10条</option>
@@ -156,7 +159,6 @@
             <option value="20">20条</option>
             <option value="25">25条</option>
         </select>
-        <span id="allPages">共1页</span>
         <button id="lastPage">上一页</button>
         <span id="nowPage">1</span>
         跳转到:<input type="text" id="jumpPage"> 页
@@ -164,14 +166,12 @@
         <button id="nextPage">下一页</button>
     </div>
 </div>
-<div id="adminHistoryContentNo" style="display: none;">
-    对不起没有该内容
-</div>
+
 {{/block}}
 {{block 'bottom'}}
 
 <!-- 引入 layui.js -->
-<script src="//unpkg.com/layui@2.6.8/dist/layui.js"></script>
+<script src="/public/layui/layui.js"></script>
 <script>
     layui.use('laydate', function () {
         var laydate = layui.laydate;

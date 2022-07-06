@@ -42,6 +42,7 @@ let nowPage = document.getElementById('nowPage')//显示当前页数
 let jumpPage = document.getElementById('jumpPage')//输入跳转页数
 let jump = document.getElementById('jump')//跳转
 let nextPage = document.getElementById('nextPage')//下一页
+let reset=document.getElementById('reset')//重置按钮
 let all_Page = 1//总页数
 let per_Page = 10//每页几条
 let now_page = 1//当前请求页数
@@ -57,6 +58,20 @@ let account = document.getElementById('account')
 let sureSearch = document.getElementById('sureSearch')
 let searchValue = document.getElementsByClassName('searchValue')
 let adminManageUsersContentContent = document.getElementsByClassName('adminManageUsersContentContent')[0]
+let adminHistoryContentNo = document.getElementById('adminHistoryContentNo')
+
+// 判断是否需要请求上一页
+function judgeHas() {
+    let allUls = adminManageUsersContentContent.getElementsByTagName('ul')
+    // console.log('函数',allUls)
+    if (allUls.length == 0 && now_page != 1) {
+        // 请求上一页
+        now_page--
+        nowPage.innerHTML=nowPage
+        GetAll(now_page, per_Page, assignFn())
+        checkDelAll.checked = ''
+    }
+}
 
 // 分页/查询函数(将值全部传入，最后node里边判断)
 function GetAll(page, perPage, obj) {
@@ -68,11 +83,27 @@ function GetAll(page, perPage, obj) {
         data: obj
     })
         .then((result) => {
+            console.log(result.data.msg)
+            adminManageUsersContentContent.innerHTML = ''
+            adminManageUsersContentContent.style.display = 'block'
+            adminHistoryContentNo.style.display = 'none'
+            if (result.data.msg.length == 0) {
+                judgeHas()
+                if (now_page == 1) {
+                    adminManageUsersContentContent.style.display = 'none'
+                    adminHistoryContentNo.style.display = 'block'
+                }
+                return
+            }
             console.log(result.data)
             all_Page = result.data.page
+            allPages.innerHTML=`共${all_Page}页`
             allNumber.innerHTML = `共${result.data.total}条`
-            adminManageUsersContentContent.innerHTML = ''
             for (let i = 0; i < result.data.msg.length; i++) {
+                let userClass = '未知'
+                if (result.data.msg[i].major_class) {
+                    userClass = result.data.msg[i].major_class
+                }
                 adminManageUsersContentContent.innerHTML += `
             <ul>
                 <li>
@@ -83,7 +114,7 @@ function GetAll(page, perPage, obj) {
                 <li>${result.data.msg[i].userName}</li>
                 <li>${result.data.msg[i].power}</li>
                 <li>${result.data.msg[i].grade}</li>
-                <li>${result.data.msg[i].major_class}</li>
+                <li>${userClass}</li>
                 <li>
                     <button class="operatorBtnSty">查看</button>
                 </li>
@@ -131,7 +162,8 @@ sureSearch.onclick = function () {
     }
     if (yn) {
         // 查询数据
-        GetAll(1, 10, assignFn())
+        now_page=1
+        GetAll(now_page, per_Page, assignFn())
     } else {
         // 没有查询的数据
         popUps[2].style.display = 'block'
@@ -198,9 +230,9 @@ jump.onclick = function () {
 }
 // 改变一页的条数
 selectPerpage.onclick = function () {
-    GetAll(now_page, selectPerpage.value, assignFn())
+    per_Page=selectPerpage.value
+    GetAll(now_page, per_Page, assignFn())
 }
-
 // 删除弹窗显现函数(只删除一个)
 function removePopup(event) {
     // 判断删除的是否是自己
@@ -231,24 +263,29 @@ function removePopup(event) {
                     if (result.data.err != -1) {
                         // 删除成功
                         swal('删除成功')
-                        GetAll(1, 10, assignFn())
+                        GetAll(now_page, per_Page, assignFn())
                     } else {
                         swal(result.data.msg)
                     }
+                })
+                .catch((err) => {
+                    console.log(err)
+                    popUps[1].style.display = 'block'
+                    setTimeout(() => {
+                        popUps[1].style.display = 'none'
+                    }, 2000)
                 })
         } else {
             swal('已取消')
         }
     })
 }
-
 let del = document.getElementById('del')
-
 del.onclick = function () {
     let checkDel = document.getElementsByClassName('checkDel')
     // 判断是否选择删除的值
     let yn = false
-    let arrId=[]
+    let arrId = []
     for (let i = 0; i < checkDel.length; i++) {
         if (checkDel[i].checked == true) {
             yn = true
@@ -273,10 +310,28 @@ del.onclick = function () {
             if (isConfirm) {
                 // 请求数据
                 axios({
-                    method:'POST',
-                    url:'/delAllUser',
-                    data:arrId
+                    method: 'POST',
+                    url: '/delAllUser',
+                    data: {
+                        arrId: arrId
+                    }
                 })
+                    .then((result) => {
+                        if (result.data.err != -1) {
+                            // 删除成功
+                            swal('删除成功')
+                            GetAll(now_page, per_Page, assignFn())
+                        } else {
+                            swal(result.data.msg)
+                        }
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                        popUps[1].style.display = 'block'
+                        setTimeout(() => {
+                            popUps[1].style.display = 'none'
+                        }, 2000)
+                    })
                 swal('删除成功')
             } else {
                 swal('已取消')
@@ -289,4 +344,14 @@ del.onclick = function () {
             popUps[3].style.display = 'none'
         }, 2000)
     }
+}
+// 重置按钮
+reset.onclick=function(){
+    // 将所有搜索框的东西清空
+    for(let i=0;i<searchValue.length;i++){
+        searchValue[i].value=''
+    }
+    now_page=1
+    nowPage.innerHTML=now_page
+    GetAll(now_page,per_Page,assignFn())
 }

@@ -66,22 +66,34 @@
 </div>
 <div class="addNewIndicatorContent">
     <div class="addNewIndicatorContentItem">
-        学分构成:<input type="text" placeholder="请输入学分构成" id="enterComposition" />
-        <select id="choiceComposition" style="display: none;">
-            <option value="">请选择....</option>
-            <option value="">学科竞赛</option>
-        </select>
-        <button id="addOriginal">添加至已有学分构成</button>
+        学分构成:
+        <!-- 遍历出来学分构成 -->
+        <select id="CreditsComposition"></select>
         <button id="cancelOriginal">取消</button>
     </div>
-    <!-- 选择的学分构成有子级目录(不能再添加子级目录) -->
-    <div class="choiceHasChild" style="display: none;">
-        子级目录:<select id="choiceComposition">
-            <option value="">请选择....</option>
-            <option value="">创业类比赛</option>
-        </select>
+    <div class="addNewIndicatorContentItem">
+        请选择学分构成的子级目录:
+        <select id="childDir"></select>
     </div>
-    <div class="choiceHaveChild">
+    <div class="addNewIndicatorContentItem noDirectory">
+        <div class="CertificationItem">
+            认证范围:<input type="text" placeholder="请输入认证范围" class='b_Indicator_name' />
+            学分:<input type="text" placeholder="请输入学分大小" class="b_points_available" />
+            <button class="addScopeCertification" onclick="addNewIndicator(this)">添加</button>
+            <div class="remarksText">备注:
+                <div class="remarksBottom">
+                    <textarea class="b_remark"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="addNewIndicatorContentBottom">
+    <button id="sureAdd">确定</button>
+    <button id="sureCancel">取消</button>
+</div>
+
+ <!-- <div class="choiceHaveChild">
         学分构成是否有子级目录:
         <div class="choice">
             <span>
@@ -95,42 +107,7 @@
             </span>
             否
         </div>
-    </div>
-    <!-- 添加学分构成自选有子级目录 -->
-    <div class="subdirectory" style="display: none;">
-        <div class="subdirectoryItem">
-            学分构成子级目录:<input type="text" placeholder="请输入学分构成子级目录" />
-            <!-- 添加子级目录 -->
-            <button id="addSubdirectory" onclick="addSubdirectory(this)">添加</button>
-            <div class="addDirectoryChildItem">
-                认证范围:<input type="text" placeholder="请输入认证范围" />
-                学分:<input type="text" placeholder="请输入学分大小" />
-                </select>
-                <button class="addScopeCertification" onclick="addCertification(this)">添加</button>
-            </div>
-        </div>
-    </div>
-    <!-- 添加学分构成自选没有子级目录 -->
-    <div class="addNewIndicatorContentItem noDirectory">
-        <div class="CertificationItem">
-            认证范围:<input type="text" placeholder="请输入认证范围" />
-            学分:<input type="text" placeholder="请输入学分大小" />
-            <button class="addScopeCertification" onclick="addNewIndicator(this)">添加</button>
-        </div>
-    </div>
-    <!-- 添加到已有学分 -->
-    <div class=""></div>
-    <div class="remarksItem">
-        <div class="remarksText">备注:</div>
-        <div class="remarksBottom">
-            <textarea id="remarks"></textarea>
-        </div>
-    </div>
-</div>
-<div class="addNewIndicatorContentBottom">
-    <button id="sureAdd">确定</button>
-    <button id="sureCancel">取消</button>
-</div>
+    </div> -->
 
 {{/block}}
 

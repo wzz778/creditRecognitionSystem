@@ -66,7 +66,7 @@
     </div>
     <div class="selectCondition">
         <div class="selectConditionItem">
-            审核状态:<select id="passFail">
+            申请表类型:<select id="passFail">
                 <option value="">请选择...</option>
                 <option value="">待审核</option>
                 <option value="">通过</option>
@@ -74,7 +74,7 @@
             </select>
         </div>
         <div class="selectConditionItem">
-            学分构成:<select>
+            学分构成:<select id="CreditsComposition">
                 <option value="">请选择...</option>
                 <option value="">学科竞赛</option>
                 <option value="">科技创新</option>
@@ -83,14 +83,14 @@
             </select>
         </div>
         <div class="selectConditionItem">
-            认定范围:<select>
+            认定范围:<select id="ScopeRecognition">
                 <option value="">请选择...</option>
                 <option value="">国家竞赛一等奖</option>
                 <option value="">国际竞赛二等奖、国家级竞赛一等奖(最高奖)</option>
             </select>
         </div>
         <div class="selectConditionItem">
-            学分:<select>
+            学分:<select id="credit">
                 <option value="">请选择...</option>
                 <option value="">8分</option>
                 <option value="">6分</option>
@@ -106,7 +106,7 @@
             </select>
         </div>
         <div class="selectConditionItem">
-            申请人专业:<select>
+            申请人班级:<select id="usClass">
                 <option value="">请选择...</option>
                 <option value="">植保181</option>
                 <option value="">计科214</option>
@@ -134,8 +134,8 @@
         </div>
         <div class="operator">
             <button id="sureSearch">查询</button>
-            <button id="exportForm">导出申请表</button>
-            <button id="importForm">导入管理员信息</button>
+            <button id="exportForm">导出申请表(学长发的图片)</button>
+            <!-- <button id="importForm">导入管理员信息</button> -->
             <button id="reset">重置</button>
         </div>
     </div>
@@ -148,15 +148,12 @@
         <ul>
             <li>姓名</li>
             <li>学号</li>
+            <li>性别</li>
             <li>年级</li>
-            <li>所在专业</li>
+            <li>所在学院</li>
             <li>所在班级</li>
-            <li>科技创新学分</li>
-            <li>学科竞赛学分</li>
-            <li>创业实践学分</li>
-            <li>社会实践学分</li>
-            <li>职业技能学分</li>
-            <li>申请学分合计</li>
+            <li>申请类别</li>
+            <li>申请学分</li>
             <li>详情</li>
         </ul>
     </div>
@@ -164,28 +161,28 @@
         <ul>
             <li>郑世杰</li>
             <li>20180514109</li>
+            <li>男</li>
             <li>2018</li>
-            <li>植保181班</li>
+            <li>信息工程学院</li>
             <li>植保181</li>
-            <li>0</li>
-            <li>4.5</li>
-            <li>0</li>
-            <li>0</li>
-            <li>0</li>
-            <li>5.0</li>
+            <li>科技创新</li>
+            <li>5</li>
             <li>
+                <button class="watchDetails" onclick="">下载</button>
                 <button class="watchDetails" onclick="">查看</button>
             </li>
         </ul>
     </div>
+    <div class="WatchApplicationNo" style="display: none;">
+        对不起没有该内容
+    </div>
     <div class="WatchApplicationBottom clearFloat">
-        每页<select name="" id="selectPerpage">
+        每页<select id="selectPerpage">
             <option value="10">10条</option>
             <option value="15">15条</option>
             <option value="20">20条</option>
             <option value="25">25条</option>
         </select>
-        <span id="allPages">共1页</span>
         <button id="lastPage">上一页</button>
         <span id="nowPage">1</span>
         跳转到:<input type="text" id="jumpPage"> 页
@@ -193,13 +190,11 @@
         <button id="nextPage">下一页</button>
     </div>
 </div>
-<div class="WatchApplicationNo" style="display: none;">
-    对不起没有该内容
-</div>
+
 {{/block}}
 {{block 'bottom'}}
 
-<script src="//unpkg.com/layui@2.6.8/dist/layui.js"></script>
+<script src="/public/layui/layui.js"></script>
 <script>
     layui.use('laydate', function () {
         var laydate = layui.laydate;

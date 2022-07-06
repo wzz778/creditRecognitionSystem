@@ -1,3 +1,57 @@
+.bodyTop{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .4);
+    position: fixed;
+    z-index: 999;
+}
+
+.bodyTop>div{
+    padding: 30px;
+    margin: 100px auto;
+    width: 550px;
+    min-height: 250px;
+    max-height: 500px;
+    background-color: white;
+}
+
+.bodyTopItem{
+    margin-bottom: 20px;
+}
+
+.addChildDri{
+    background-color: #F8AC59;
+    color: white;
+}
+
+.cancel{
+    background-color: #F59DA6;
+    color: white;
+}
+
+.bodyTopItem{
+    min-height: 10px;
+}
+
+.dirItemI{
+    margin-bottom: 10px;
+}
+
+#sureAdd{
+    background-color: #1AB394;
+    color: white;
+}
+
+#cancelAdd{
+    background-color: #ED5565;
+    color: white;
+}
+
+.dirItem{
+    max-height: 300px;
+    overflow-y: auto;
+}
+
 .adminCreditManagementTop {
     padding-bottom: 10px;
     border-bottom: 1px solid #DDDDDD;
@@ -61,6 +115,8 @@
 
 .expandItem {
     position: relative;
+    margin-left: 73px;
+    margin-right: 5px;
     padding-right: 7px;
     top: 2px;
     display: inline-block;
@@ -145,4 +201,16 @@
     height: 400px;
     line-height: 400px;
     text-align: center;
+}
+
+.constituteSty{
+    display: grid;
+    grid-template-columns: 30px 200px;
+    text-align: center;
+    justify-content: center;
+}
+
+.SecondDir{
+    position: relative;
+    left: -45px;
 }

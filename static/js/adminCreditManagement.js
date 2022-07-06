@@ -1,20 +1,90 @@
 
 // 提示弹窗
 let popUps = document.getElementsByClassName('popUps')
-let remove = document.getElementsByClassName('remove')
 let expandItem = document.getElementsByClassName('expandItem')
-for (let i = 0; i < expandItem.length; i++) {
-    expandItem[i].onclick = function () {
-        // 判断内容盒子是否显现
-        if (expandItem[i].parentElement.parentElement.parentElement.lastElementChild.style.display == 'none') {
-            expandItem[i].parentElement.parentElement.parentElement.lastElementChild.style.display = ''
-            remove[i].style.display = 'none'
-        } else {
-            expandItem[i].parentElement.parentElement.parentElement.lastElementChild.style.display = 'none'
-            remove[i].style.display = ''
-        }
+function watchChild(event) {
+    // 判断内容盒子是否显现
+    if (event.parentElement.parentElement.parentElement.lastElementChild.style.display == 'none') {
+        event.parentElement.parentElement.parentElement.lastElementChild.style.display = ''
+        event.firstElementChild.style.display = 'none'
+    } else {
+        event.parentElement.parentElement.parentElement.lastElementChild.style.display = 'none'
+        event.firstElementChild.style.display = ''
     }
+    // 请求下一级函数
+    let ele = event.parentElement.parentElement.parentElement.lastElementChild.lastElementChild//获取存放的位置
+    axios({
+        method: 'POST',
+        url: '/IndicatorOperate/showIndicator',
+        data: {
+            id: event.parentElement.lastElementChild.innerHTML
+        }
+    })
+        .then((result) => {
+            console.log(result.data)
+            ele.innerHTML = ''
+            if (result.data.msg == '没有指标信息') {
+                // 没有指标信息
+                ele.innerHTML = `
+            <div id="adminHistoryContentNo" style='min-height: 100px;
+            line-height: 100px;
+            text-align: center;
+            color: red;
+            font-size: 20px'>
+                对不起没有该内容
+            </div>
+            `
+                return
+            }
+            for (let i = 0; i < result.data.msg.length; i++) {
+                // 判断是否是目录
+                if (result.data.msg[i].child == '下边没有指标了') {
+                    // 不是目录
+                    ele.innerHTML += `
+                    <ul>
+                        <li>
+                            <input type="checkbox" class="childDel commonDel" onclick="judgeChild(this)">
+                        </li>
+                        <li>${result.data.msg[i].b_Indicator_name}</li>
+                        <li>${result.data.msg[i].b_points_available}</li>
+                        <li>
+                            <button onclick="delFnOne(this)">删除</button>
+                            //这里需要存放它的二级爸爸贡修改和新增使用
+                            <button>修改</button>
+                            <button>新增</button>
+                            <div style='display:none;'>无二级目录</div>
+                        </li>
+                    </ul>
+                `
+                } else {
+                    // 有子级目录
+                    ele.innerHTML += `
+                <div class="SecondDir clearFloat">
+                        <span>子级目录:</span>
+                        <button class="floatRight">删除此子级目录</button>
+                    </div>
+                    <ul>
+                        <li>
+                            <input type="checkbox" class="childDel commonDel" onclick="judgeChild(this)">
+                        </li>
+                        <li>国际竞赛一等奖(最高奖)</li>
+                        <li>6.0</li>
+                        <li>
+                            <button onclick="delFnOne(this)">删除</button>
+                            <button>修改</button>
+                            <button>新增</button>
+                            <div style='display:none;'>二级目录名</div>
+                        </li>
+                    </ul>
+                `
+                }
+            }
+        })
+        .catch((err) => {
+            console.log(err)
+        })
 }
+
 // 父级选择框
 function allChildInputFather(event) {
     let allUls = event.parentElement.parentElement.parentElement.parentElement.lastElementChild.getElementsByTagName('ul')
@@ -177,3 +247,130 @@ jump.onclick = function () {
         }, 2000)
     }
 }
+
+let item = document.getElementById('item')
+// 获取学分构成数据
+axios({
+    method: 'GET',
+    url: '/getCreditsComposition',
+})
+    .then((result) => {
+        console.log(result.data)
+        item.innerHTML = ''
+        for (let i = 0; i < result.data.msg.length; i++) {
+            item.innerHTML += `
+        <div class="adminCreditManagementContentContent adminCreditManagementContentItem">
+            <ul>
+                <li class="constituteSty">
+                    <span class="expandItem" onclick='watchChild(this)'>
+                        <span class="remove"></span>
+                        <span onclick="" class=""></span>
+                    </span>
+                    <span>${result.data.msg[i].afirstLevel}</span>
+                    <div style="display: none;">${result.data.msg[i].aid}</div>
+                </li>
+                <li>${i + 1}</li>
+                <li>
+                    <button>编辑</button>
+                </li>
+                <li>
+                    <button onclick='skipAdd(this)'>添加</button>
+                    <button onclick="delFnOne(this)">删除</button>
+                    <div style="display: none;">${result.data.msg[i].aid}</div>
+                </li>
+            </ul>
+            <div class="ChildDetails" style="display: none;">
+                <div class="ChildDetailsTop ChildDetailsItem">
+                    <ul>
+                        <li>
+                            <input type="checkbox" class="childDelAll commonDel" onclick="allChildInputFather(this)">
+                        </li>
+                        <li>认定范围</li>
+                        <li>学分</li>
+                        <li>操作框</li>
+                    </ul>
+                </div>
+                <div class="ChildDetailsContent ChildDetailsItem"></div>
+            </div>
+        </div>
+        `
+        }
+    })
+    .catch((err) => {
+        console.log(err)
+    })
+
+function skipAdd(event){
+    // 将id保存到本地
+    sessionStorage.setItem('skipAddAid', event.parentElement.lastElementChild.innerHTML)
+    window.location.href='http://127.0.0.1:8080/addNewIndicator'
+}
+
+
+function addCertification(event) {
+    event.parentElement.parentElement.innerHTML += `
+        <div class="dirItemI">
+            请输入子级目录:
+            <input type="text" placeholder="请输入子级目录"  class="clearValue subvalue">
+            <button  class="addChildDri" onclick="addCertification(this)">添加</button>
+            <!-- 第一个不能取消 -->
+            <button class="cancel" onclick="removeEle(this)">取消</button>
+        </div>
+    `
+}
+
+// 取消添加
+function removeEle(event) {
+    // 移除元素
+    event.parentElement.remove()
+}
+
+
+let sureAdd = document.getElementById('sureAdd')
+let enterComposition = document.getElementById('enterComposition')
+sureAdd.onclick = function () {
+    // 判断值是否为空
+    if (enterComposition.value == '') {
+        enterComposition.parentElement.lastElementChild.style.display = 'block'
+    } else {
+        // 发送请求
+        axios({
+            method: 'POST',
+            url: '/addCreditAll',
+            data: {
+                AFirstLevel: enterComposition.value
+            }
+        })
+            .then((result) => {
+                console.log(result.data)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }
+}
+
+let selectHasChild = document.getElementById('selectHasChild')
+let dirItem = document.getElementsByClassName('dirItem')[0]
+selectHasChild.onclick = function () {
+    if (selectHasChild.value == '2') {
+        dirItem.style.display = 'none'
+    } else {
+        dirItem.style.display = 'block'
+    }
+}
+
+let cancelAdd = document.getElementById('cancelAdd')
+let bodyTop = document.getElementsByClassName('bodyTop')
+cancelAdd.onclick = function () {
+    bodyTop[0].style.display = 'none'
+}
+let add = document.getElementById('add')
+add.onclick = function () {
+    let clearValue = document.getElementsByClassName('clearValue')
+    for (let i = 0; i < clearValue.length; i++) {
+        clearValue[i].value = ''
+    }
+    bodyTop[0].style.display = 'block'
+}
+
