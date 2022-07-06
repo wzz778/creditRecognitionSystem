@@ -115,7 +115,7 @@ function GetAllInfo(page, perpage, obj) {
             }
             adminHistoryContentContent.innerHTML = ''
             // 修改(i从1开始了)
-            for (let i = 1; i < result.data.msg.length; i++) {
+            for (let i = 0; i < result.data.msg.length; i++) {
                 let time = result.data.msg[i].application.application_time.split(' ')[0]
                 adminHistoryContentContent.innerHTML += `
                 <ul>

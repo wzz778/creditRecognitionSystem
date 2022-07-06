@@ -1,4 +1,3 @@
-
 // 提示弹窗
 let popUps = document.getElementsByClassName('popUps')
 let expandItem = document.getElementsByClassName('expandItem')
@@ -38,28 +37,45 @@ function watchChild(event) {
             }
             for (let i = 0; i < result.data.msg.length; i++) {
                 // 判断是否是目录
-                if (result.data.msg[i].child == '下边没有指标了') {
+                if (result.data.msg[i].child == '下边没有指标了' && result.data.msg[i].b_points_available) {
                     // 不是目录
                     ele.innerHTML += `
                     <ul>
                         <li>
                             <input type="checkbox" class="childDel commonDel" onclick="judgeChild(this)">
+                            <div style="display: none;">${result.data.msg[i].b_id}</div>
                         </li>
                         <li>${result.data.msg[i].b_Indicator_name}</li>
                         <li>${result.data.msg[i].b_points_available}</li>
                         <li>
                             <button onclick="delFnOne(this)">删除</button>
-                            //这里需要存放它的二级爸爸贡修改和新增使用
-                            <button>修改</button>
-                            <button>新增</button>
+                            <button onclick='changeTwoDir(this)'>修改</button>
+                            <button>查看备注</button>
                             <div style='display:none;'>无二级目录</div>
                         </li>
                     </ul>
                 `
                 } else {
-                    // 有子级目录
-                    ele.innerHTML += `
+                    // 有子级目录判断下面有没有值
+                    if (result.data.msg[i].child == '下边没有指标了') {
+                        // 这里是目录但是没有指标
+                        ele.innerHTML += `
                 <div class="SecondDir clearFloat">
+                        <span>子级目录:</span>
+                        <button class="floatRight">删除此子级目录</button>
+                    </div>
+                    <div id="adminHistoryContentNo" style='min-height: 100px;
+            line-height: 100px;
+            text-align: center;
+            color: red;
+            font-size: 20px'>
+                对不起没有没有子级指标
+            </div>
+                `
+                    }else{
+                        // 遍历
+                        ele.innerHTML += `
+                    <div class="SecondDir clearFloat">
                         <span>子级目录:</span>
                         <button class="floatRight">删除此子级目录</button>
                     </div>
@@ -77,12 +93,19 @@ function watchChild(event) {
                         </li>
                     </ul>
                 `
+                    }
+
                 }
             }
         })
         .catch((err) => {
             console.log(err)
         })
+}
+
+// 二级修改(没有子级目录)
+function changeTwoDir(event) {
+    console.log(event.parentElement.parentElement.parentElement.parentElement.parentElement.firstElementChild.firstElementChild.lastElementChild.innerHTML)
 }
 
 // 父级选择框
@@ -124,8 +147,10 @@ let commonDel = document.getElementsByClassName('commonDel')
 // 删除的选中函数
 function delFnAll() {
     let yn = false
+    let arrId = []
     for (let i = 0; i < commonDel.length; i++) {
         if (commonDel[i].checked) {
+            arrId.push(Number(commonDel[i].parentElement.lastElementChild.innerHTML))
             yn = true
         }
     }
@@ -142,8 +167,26 @@ function delFnAll() {
             closeOnCancel: false
         }, function (isConfirm) {
             if (isConfirm) {
-                swal('确定')
-                return true
+                axios({
+                    method: 'POST',
+                    url: '/IndicatorOperate/deleteIndicator',
+                    data: {
+                        arrId: arrId
+                    }
+                })
+                    .then((result) => {
+                        console.log(result.data)
+                        if (result.data.err == 0) {
+                            swal('删除成功')
+                            // 重新获取数据
+                            watchFather()
+                        } else {
+                            swal('删除失败')
+                        }
+                    })
+                    .catch((err) => {
+                        swal('网络错误')
+                    })
             } else {
                 swal('已取消')
                 return false
@@ -174,8 +217,71 @@ function delFnOne(event) {
         closeOnCancel: false
     }, function (isConfirm) {
         if (isConfirm) {
-            swal('确定')
-            return true
+            console.log(event.parentElement.parentElement.firstElementChild.lastElementChild.innerHTML)
+            // 发送数据
+            let arrId = []
+            arrId.push(Number(event.parentElement.parentElement.firstElementChild.lastElementChild.innerHTML))
+            axios({
+                method: 'POST',
+                url: '/IndicatorOperate/deleteIndicator',
+                data: {
+                    arrId: arrId
+                }
+            })
+                .then((result) => {
+                    console.log(result.data)
+                    if (result.data.err == 0) {
+                        swal('删除成功')
+                        // 重新获取数据
+                        watchFather()
+                    } else {
+                        swal('删除失败')
+                    }
+                })
+                .catch((err) => {
+                    swal('网络错误')
+                })
+        } else {
+            swal('已取消')
+            return false
+        }
+    })
+}
+
+// 删除学分构成
+function delFnFather(event) {
+    swal({
+        title: "你确定？",
+        text: "要删除选中学分认定范围",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    }, function (isConfirm) {
+        if (isConfirm) {
+            axios({
+                method: 'POST',
+                url: '/creditTypeOperate/deleteCreditType',
+                data: {
+                    ids: Number(event.parentElement.parentElement.firstElementChild.lastElementChild.innerHTML)
+                }
+            })
+                .then((result) => {
+                    console.log(result.data)
+                    if (result.data.err == 0) {
+                        swal('删除成功')
+                        // 重新获取数据
+                        watchFather()
+                    } else {
+                        swal('删除失败')
+                    }
+                })
+                .catch((err) => {
+                    swal('网络错误')
+                })
         } else {
             swal('已取消')
             return false
@@ -250,73 +356,87 @@ jump.onclick = function () {
 
 let item = document.getElementById('item')
 // 获取学分构成数据
-axios({
-    method: 'GET',
-    url: '/getCreditsComposition',
-})
-    .then((result) => {
-        console.log(result.data)
-        item.innerHTML = ''
-        for (let i = 0; i < result.data.msg.length; i++) {
-            item.innerHTML += `
-        <div class="adminCreditManagementContentContent adminCreditManagementContentItem">
-            <ul>
-                <li class="constituteSty">
-                    <span class="expandItem" onclick='watchChild(this)'>
-                        <span class="remove"></span>
-                        <span onclick="" class=""></span>
-                    </span>
-                    <span>${result.data.msg[i].afirstLevel}</span>
-                    <div style="display: none;">${result.data.msg[i].aid}</div>
-                </li>
-                <li>${i + 1}</li>
-                <li>
-                    <button>编辑</button>
-                </li>
-                <li>
-                    <button onclick='skipAdd(this)'>添加</button>
-                    <button onclick="delFnOne(this)">删除</button>
-                    <div style="display: none;">${result.data.msg[i].aid}</div>
-                </li>
-            </ul>
-            <div class="ChildDetails" style="display: none;">
-                <div class="ChildDetailsTop ChildDetailsItem">
-                    <ul>
-                        <li>
-                            <input type="checkbox" class="childDelAll commonDel" onclick="allChildInputFather(this)">
-                        </li>
-                        <li>认定范围</li>
-                        <li>学分</li>
-                        <li>操作框</li>
-                    </ul>
+function watchFather() {
+    axios({
+        method: 'GET',
+        url: '/getCreditsComposition',
+    })
+        .then((result) => {
+            console.log(result.data)
+            item.innerHTML = ''
+            for (let i = 0; i < result.data.msg.length; i++) {
+                item.innerHTML += `
+            <div class="adminCreditManagementContentContent adminCreditManagementContentItem">
+                <ul>
+                    <li class="constituteSty">
+                        <span class="expandItem" onclick='watchChild(this)'>
+                            <span class="remove"></span>
+                            <span onclick="" class=""></span>
+                        </span>
+                        <span>${result.data.msg[i].afirstLevel}</span>
+                        <div style="display: none;">${result.data.msg[i].aid}</div>
+                    </li>
+                    <li>${i + 1}</li>
+                    <li>
+                        <button>编辑</button>
+                    </li>
+                    <li>
+                        <button onclick='skipAdd(this)'>添加</button>
+                        <button onclick="delFnFather(this)">删除</button>
+                        <div style="display: none;">${result.data.msg[i].aid}</div>
+                    </li>
+                </ul>
+                <div class="ChildDetails" style="display: none;">
+                    <div class="ChildDetailsTop ChildDetailsItem">
+                        <ul>
+                            <li>
+                                <input type="checkbox" class="childDelAll commonDel" onclick="allChildInputFather(this)">
+                            </li>
+                            <li>认定范围</li>
+                            <li>学分</li>
+                            <li>操作框</li>
+                        </ul>
+                    </div>
+                    <div class="ChildDetailsContent ChildDetailsItem"></div>
                 </div>
-                <div class="ChildDetailsContent ChildDetailsItem"></div>
             </div>
-        </div>
-        `
-        }
-    })
-    .catch((err) => {
-        console.log(err)
-    })
+            `
+            }
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}
+watchFather()
 
-function skipAdd(event){
+function skipAdd(event) {
     // 将id保存到本地
     sessionStorage.setItem('skipAddAid', event.parentElement.lastElementChild.innerHTML)
-    window.location.href='http://127.0.0.1:8080/addNewIndicator'
+    window.location.href = 'http://127.0.0.1:8080/addNewIndicator'
 }
 
 
 function addCertification(event) {
-    event.parentElement.parentElement.innerHTML += `
+    let div=document.createElement('div')
+    div.innerHTML=`
         <div class="dirItemI">
             请输入子级目录:
-            <input type="text" placeholder="请输入子级目录"  class="clearValue subvalue">
+            <input type="text" placeholder="请输入子级目录"  class="clearValue subValue">
             <button  class="addChildDri" onclick="addCertification(this)">添加</button>
             <!-- 第一个不能取消 -->
             <button class="cancel" onclick="removeEle(this)">取消</button>
         </div>
     `
+    event.parentElement.parentElement.append(div)
+    // event.parentElement.parentElement.innerHTML += `
+    //     <div class="dirItemI">
+    //         请输入子级目录:
+    //         <input type="text" placeholder="请输入子级目录"  class="clearValue subValue">
+    //         <button  class="addChildDri" onclick="addCertification(this)">添加</button>
+    //         <!-- 第一个不能取消 -->
+    //         <button class="cancel" onclick="removeEle(this)">取消</button>
+    //     </div>
+    // `
 }
 
 // 取消添加
@@ -328,17 +448,42 @@ function removeEle(event) {
 
 let sureAdd = document.getElementById('sureAdd')
 let enterComposition = document.getElementById('enterComposition')
+let hasDir = false
+let selectHasChild = document.getElementById('selectHasChild')
+let dirItem = document.getElementsByClassName('dirItem')[0]
+selectHasChild.onclick = function () {
+    if (selectHasChild.value == '2') {
+        hasDir = false
+        dirItem.style.display = 'none'
+    } else {
+        hasDir = true
+        dirItem.style.display = 'block'
+    }
+}
+// 确定添加
 sureAdd.onclick = function () {
     // 判断值是否为空
     if (enterComposition.value == '') {
         enterComposition.parentElement.lastElementChild.style.display = 'block'
     } else {
+        let resultData = []
+        if (hasDir) {
+            // 奖子级目录添加进去
+            let subValue = document.getElementsByClassName('subValue')
+            for (let i = 0; i < subValue.length; i++) {
+                if (subValue[i].value != '') {
+                    resultData.push(subValue[i].value)
+                }
+            }
+        }
+        console.log(resultData)
         // 发送请求
         axios({
             method: 'POST',
             url: '/addCreditAll',
             data: {
-                AFirstLevel: enterComposition.value
+                AFirstLevel: enterComposition.value,
+                resultData: resultData
             }
         })
             .then((result) => {
@@ -347,16 +492,6 @@ sureAdd.onclick = function () {
             .catch((err) => {
                 console.log(err)
             })
-    }
-}
-
-let selectHasChild = document.getElementById('selectHasChild')
-let dirItem = document.getElementsByClassName('dirItem')[0]
-selectHasChild.onclick = function () {
-    if (selectHasChild.value == '2') {
-        dirItem.style.display = 'none'
-    } else {
-        dirItem.style.display = 'block'
     }
 }
 

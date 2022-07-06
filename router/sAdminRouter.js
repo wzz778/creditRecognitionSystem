@@ -6,6 +6,8 @@ const jwt = require('jsonwebtoken')
 const multipart = require('connect-multiparty')
 const FormData = require('form-data')
 const fs = require('fs')
+const { log } = require('console')
+const { send } = require('process')
 var mult = multipart()
 
 // 请求页面
@@ -13,7 +15,7 @@ var mult = multipart()
 router.get('/superAdminAdd', (req, res) => {
     res.render('superAdminAddUser.html')
 })
-// 提交历史记录 !(删除功能和获取信息函数中的循环从1开始的GetAllInfo(page, perpage, obj))
+// 提交历史记录 !(删除功能)
 router.get('/adminHistory', (req, res) => {
     res.render('adminHistory.html')
 })
@@ -36,11 +38,6 @@ router.get('/adminCreditManagement', (req, res) => {
 // 添加学分构成
 router.get('/addNewIndicator', (req, res) => {
     res.render('addNewIndicator.html')
-})
-
-// 测试上传多个文件
-router.get('/a',(req,res)=>{
-    res.render('text.html')
 })
 
 axios.defaults.baseURL = 'http://110.40.205.103:8099'
@@ -77,7 +74,7 @@ router.post('/admin/records', (req, res) => {
     })
         .then((result) => {
             console.log(result.data)
-            res.send({ err: 0, msg: result.data.data.allRecords,allPage:(result.data.data.allPages-1),msg1:result.data.data.pageInfo})
+            res.send({ err: 0, msg: result.data.data.allRecords, allPage: (result.data.data.allPages - 1), msg1: result.data.data.pageInfo })
         })
         .catch((err) => {
             console.log('失败', err)
@@ -189,7 +186,7 @@ router.get('/creditTypeOperate/showCreditType', (req, res) => {
     })
         .then((result) => {
             // console.log(result.data.data)
-            res.send({err:0,msg:result.data.data})
+            res.send({ err: 0, msg: result.data.data })
         })
         .catch((err) => {
             console.log(err)
@@ -367,7 +364,7 @@ function fn(id, req, sendResult) {
             url: '/IndicatorOperate/showIndicator',
             params: {
                 id: id,
-                level: 3
+                level: 2
             },
             headers: {
                 token: req.session.token
@@ -412,7 +409,7 @@ router.post('/IndicatorOperate/showIndicator', (req, res) => {
         url: '/IndicatorOperate/showIndicator',
         params: {
             id: id,
-            level: 2
+            level: 1
         },
         headers: {
             token: req.session.token
@@ -420,6 +417,7 @@ router.post('/IndicatorOperate/showIndicator', (req, res) => {
     })
         .then((result) => {
             let sendResult = result.data.data
+            console.log('二级:', result.data)
             if (sendResult == '下边没有指标了') {
                 res.send({ err: 0, msg: '没有指标信息' })
                 return
@@ -445,8 +443,8 @@ router.post('/IndicatorOperate/showIndicator', (req, res) => {
 })
 
 // 获取学分构成的子级目录
-router.post('/child',(req,res)=>{
-    let {id}=req.body
+router.post('/child', (req, res) => {
+    let { id } = req.body
     axios({
         method: 'GET',
         url: '/IndicatorOperate/showIndicator',
@@ -458,63 +456,93 @@ router.post('/child',(req,res)=>{
             token: req.session.token
         }
     })
-    .then((result)=>{
-        console.log(result.data)
-        if(result.data.msg=='OK'){
-            // 判断是否有子级目录
-            res.send({err:0,msg:result.data})
-        }
-    })
-    .catch((err)=>{
-        res.send({err:-1,msg:'网络错误'})
-    })
+        .then((result) => {
+            console.log(result.data)
+            if (result.data.msg == 'OK') {
+                // 判断是否有子级目录
+                res.send({ err: 0, msg: result.data })
+            }
+        })
+        .catch((err) => {
+            res.send({ err: -1, msg: '网络错误' })
+        })
 })
+// 封装的添加二级目录的信息
+function addSecondDir(req, b_first_level, resultData) {
+    return new Promise((resolve, resject) => {
+        let sendArr = []
+        for (let i = 0; i < resultData.length; i++) {
+            sendArr.push({ b_Indicator_level: 2, b_Indicator_name: resultData[i], b_superior_id: b_first_level, b_first_level: b_first_level })
+        }
+        axios({
+            method: 'POST',
+            url: '/IndicatorOperate/addIndicator',
+            data: sendArr,
+            headers: {
+                token: req.session.token,
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((result) => {
+                console.log('封装函数二级目录的函数', result.data)
+                resolve(result)
+            })
+            .catch((err) => {
+                resject(err)
+            })
+    })
+}
 
 // 添加学分构成及其子目录
-router.post('/addCreditAll',(req,res)=>{
+router.post('/addCreditAll', (req, res) => {
     // 添加身份判断
-    let {AFirstLevel}=req.body
+    let { AFirstLevel, resultData } = req.body
+    console.log('收到的resultdata',resultData)
     // 添加学分构成
     axios({
-        method:'POST',
-        url:'/creditTypeOperate/addCreditType',
-        params:{
-            AFirstLevel:AFirstLevel
+        method: 'POST',
+        url: '/creditTypeOperate/addCreditType',
+        params: {
+            AFirstLevel: AFirstLevel
         },
-        headers:{
-            token:req.session.token
+        headers: {
+            token: req.session.token
         }
     })
-    .then((result)=>{
-        res.send({err:0,msg:result.data})
-    })
-    .catch((err)=>{
-        console.log(err)
-        res.send({err:-1,msg:'网络错误'})
-    })
+        .then((result) => {
+            console.log('一级目录返回的数据',result.data)
+            return addSecondDir(req, result.data.data, resultData)
+        })
+        .then((result)=>{
+            res.send({err:0,msg:result.data})
+        })
+        .catch((err) => {
+            console.log(err)
+            res.send({ err: -1, msg: '网络错误' })
+        })
 })
 
 // 添加认定范围
-router.post('/IndicatorOperate/addIndicator',(req,res)=>{
-    let {arrSend}=req.body
-    console.log('传的数据',arrSend)
+router.post('/IndicatorOperate/addIndicator', (req, res) => {
+    let { arrSend } = req.body
+    console.log('传的数据', arrSend)
     axios({
-        method:'POST',
-        url:'/IndicatorOperate/addIndicator',
-        data:arrSend,
-        headers:{
-            token:req.session.token,
-            'Content-Type':'application/json'
+        method: 'POST',
+        url: '/IndicatorOperate/addIndicator',
+        data: arrSend,
+        headers: {
+            token: req.session.token,
+            'Content-Type': 'application/json'
         }
     })
-    .then((result)=>{
-        console.log(result.data)
-        res.send({err:0,msg:result.data})
-    })
-    .catch((err)=>{
-        console.log(err)
-        res.send({err:-1,msg:'网络错误'})
-    })
+        .then((result) => {
+            console.log(result.data)
+            res.send({ err: 0, msg: result.data })
+        })
+        .catch((err) => {
+            console.log(err)
+            res.send({ err: -1, msg: '网络错误' })
+        })
 
 })
 
@@ -525,21 +553,21 @@ router.post('/fileUplo', mult, (req, res) => {
     console.log()
     let formdata = new FormData()
     for (let a in req.files) {
-        formdata.append('file', fs.createReadStream(req.files[a].path),req.files[a].originalFilename)//第二个参数试上传的文件名
+        formdata.append('file', fs.createReadStream(req.files[a].path), req.files[a].originalFilename)//第二个参数试上传的文件名
     }
-    formdata.append('enclosure_name','测试')
-    formdata.append(' application_id',15)
+    formdata.append('enclosure_name', '测试')
+    formdata.append(' application_id', 15)
     // formdata.append('addres')
-    let {data}=req.body;
+    let { data } = req.body;
     axios({
         method: 'POST',
         url: 'http://110.40.205.103:8099/user/photo',
-        data:formdata,
+        data: formdata,
         // headers: formdata.getHeaders(),
-        headers:{
-            token:req.session.token,
-            formdata:formdata.getHeaders(),
-            maxBodyLength:1000000000
+        headers: {
+            token: req.session.token,
+            formdata: formdata.getHeaders(),
+            maxBodyLength: 1000000000
         }
     })
         .then((result) => {
@@ -552,6 +580,59 @@ router.post('/fileUplo', mult, (req, res) => {
         })
 })
 
+// 删除指标(多个)
+router.post('/IndicatorOperate/deleteIndicator', (req, res) => {
+    console.log(req.body)
+    let { arrId } = req.body
+    console.log(arrId)
+    let urlStr = `http://110.40.205.103:8099/IndicatorOperate/deleteIndicator?ids=${arrId[0]}`
+    for (let i = 1; i < arrId.length; i++) {
+        urlStr += `&ids=${arrId[i]}`
+    }
+    console.log(urlStr)
+    axios({
+        method: 'DELETE',
+        url: urlStr,
+        headers: {
+            token: req.session.token
+        }
+    })
+        .then((result) => {
+            if (result.data.msg == 'OK') {
+                res.send({ err: 0, msg: result.data.data })
+            } else {
+                // 没请求成功
+                res.send({ err: -1, msg: result.data.msg })
+            }
+        })
+        .catch((err) => {
+            res.send({ err: -1, msg: err })
+        })
+})
+
+// 删除学分构成
+router.post('/creditTypeOperate/deleteCreditType', (req, res) => {
+    let { ids } = req.body
+    let urlStr = `http://110.40.205.103:8099/creditTypeOperate/deleteCreditType?ids=${ids}`
+    axios({
+        method: 'DELETE',
+        url: urlStr,
+        headers: {
+            token: req.session.token
+        }
+    })
+        .then((result) => {
+            if (result.data.msg == 'OK') {
+                res.send({ err: 0, msg: result.data.data })
+            } else {
+                // 没请求成功
+                res.send({ err: -1, msg: result.data.msg })
+            }
+        })
+        .catch((err) => {
+            res.send({ err: -1, msg: err })
+        })
+})
 
 
 module.exports = router
