@@ -202,7 +202,7 @@ router.post('/api/UploadAttachment', multipartMiddleware,(req, res) => {
         data:formdata,
         // headers: formdata.getHeaders(),
         headers:{
-            token:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTcwNzIzMzcsImV4cCI6MTY1NzA3NTkzNywidXNlcm5hbWUiOiIxIiwicG93ZXIiOiLotoXnuqfnrqHnkIblkZgifQ.QDTGM7CUn1cH63yc2MP9aoCJ3T7G8bun2j6cb3g09_c",
+            token:req.session.token,
             formdata:formdata.getHeaders(),
             maxBodyLength:1000000000
         }

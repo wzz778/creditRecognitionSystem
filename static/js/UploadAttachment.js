@@ -10,20 +10,21 @@ layui.use('upload', function () {
         , multiple: true
         ,number: 3
         , auto: false
-        , bindAction: '#testListAction'
+        // , bindAction: '#testListAction'
         , choose: function (obj) {
+            var that = this;
             files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
             //读取本地文件
             obj.preview(function (index, file, result) {
-                var tr = $(['<tr id="upload-' + index + '">'
-                    , '<td>' + file.name + '</td>'
-                    , '<td>' + (file.size / 1024).toFixed(1) + 'kb</td>'
-                    , '<td>等待上传</td>'
-                    , '<td>'
-                    , '<button class="layui-btn layui-btn-xs demo-reload layui-hide">重传</button>'
-                    , '<button class="layui-btn layui-btn-xs layui-btn-danger demo-delete">删除</button>'
-                    , '</td>'
-                    , '</tr>'].join(''));
+                var tr = $(['<tr id="upload-'+ index +'">'
+                ,'<td>'+ file.name +'</td>'
+                ,'<td>'+ (file.size/1014).toFixed(1) +'kb</td>'
+                ,'<td class="datastatus">等待上传</td>'
+                ,'<td>'
+                  ,'<button class="layui-btn layui-btn-xs demo-reload layui-hide">重传</button>'
+                  ,'<button class="layui-btn layui-btn-xs layui-btn-danger demo-delete">删除</button>'
+                ,'</td>'
+              ,'</tr>'].join(''));
 
                 //单个重传
                 tr.find('.demo-reload').on('click', function () {
@@ -41,92 +42,73 @@ layui.use('upload', function () {
         }
     });
 });
-
+let Attname=document.getElementById('Attname');
 $("#testListAction").on("click", function () {
-//   var form = new FormData();
-//   console.log(files);
-//   for (let i in files) {
-//       form.append("file", files[i]);
-//   }
-// //   console.log(files[0]);
-//   form.append("application_id", '11');
-//   form.append("enclosure_name",'上传的附件1');
-//     axios({
-//             method: 'POST',
-//             url: 'http://127.0.0.1:8080/api/UploadAttachment',
-//             data: formData,
-//             params:{
-//                 id:11,
-//                 name:'测试'
-//             }
-//         }).then((result) => {
-//             console.log(result.data)
-//         })
-//         .then((err)=>{
-//             console.log(err)
-//         })
+        let name=Attname.value;
+        if(name==''){
+            swal("请输入附件名！");
+            return
+        }
         let formData = new FormData()   
         let a=JSON.stringify(files)
-        // for(let key in files){
-        //      console.log(key);
-        //      console.log(files[key]);
-        // }
-        // let b=JSON.parse(a)
-        // let d=a.replaceAll(/"/g, "").replaceAll(/:{}/g, "").replaceAll(/{/g, "").replaceAll(/}/g, "")
-        // console.log(d);
-        // let c=d.split(',');
-        // console.log(c);
-        // console.log(c[0]);
-        // let w=c[0]
-        // console.log(files);
         let i=0;
         for (let key in files) {
             formData.append(`file${i}`,files[key])
             i++;
         }
-
-        formData.append('application_id',22)
-        formData.append('enclosure_name','测试22')
+        formData.append('application_id', sessionStorage.getItem('Applicationid'))
+        formData.append('enclosure_name',name)
         // console.log(formData)
         axios({
             method: 'POST',
             url: 'http://127.0.0.1:8080/api/UploadAttachment',
             data: formData,
-            params:{
-                id:11,
-                name:'测试222'
-            }
+            // params:{
+            //     id:11,
+            //     name:'测试222'
+            // }
         })
             .then((result) => {
                 console.log(result.data)
+                if(result.data.msg.msg=="OK"){
+                    swal("上传成功！","您的文件上传成功！","success")
+                    let static=document.getElementsByClassName("datastatus");
+                    for(let n of static){
+                        n.innerHTML='上传成功'
+                        n.style.color="#3FCEBF"
+                    }
+                }else if(result.data.err==-1){
+                    swal("上传失败！","您提交的文件上传失败！","error")
+                }else if(result.data.msg.msg=="文件格式错误"){
+                    swal("上传失败！","您提交的文件格式错误！","error")
+                }else{
+                    swal("上传失败！","您提交的文件上传失败！","error")
+                }
             })
             .then((err)=>{
                 console.log(err)
             })
 });
-
-// let sure = document.getElementById('sure')
-//         let uploadFile = document.getElementById('uploadFile')
-//         sure.onclick = function () {
-//             let formData = new FormData()
-//             console.log(uploadFile.files)
-//             console.log(typeof uploadFile.files)
-//             for (let i = 0; i < uploadFile.files.length; i++) {
-//                 console.log(uploadFile.files[i]);
-//                 formData.append(`file${i}`, uploadFile.files[i])
-//             }
-//             formData.append('application_id',22)
-//             formData.append('enclosure_name','测试22')
-//             // console.log(formData)
-//             axios({
-//                 method: 'POST',
-//                 url: 'http://127.0.0.1:8080/api/UploadAttachment',
-//                 data: formData,
-//             })
-//                 .then((result) => {
-//                     console.log(result.data)
-//                 })
-//                 .then((err)=>{
-//                     console.log(err)
-//                 })
-//         }
+document.getElementById('toend').onclick=function(){
+    swal({
+        title: "你确定完成该申请表？",
+        text: "你将没有机会修改该申请表！",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      }, function (isConfirm) {
+        if (isConfirm) {
+              swal('提交成功', '您所填写的申请表提交成功', 'success');
+              setTimeout(function () {
+                window.location.assign("http://127.0.0.1:8080/EndApplication");
+                // sessionStorage.setItem("tousers", '1');
+              }, 1000)
+        } else {
+          swal("您已经取消完成")
+        }
+      })
+}

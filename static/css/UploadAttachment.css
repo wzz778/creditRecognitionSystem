@@ -11,3 +11,28 @@
   font-size: 12px;
   color: #5f5f5f;
 }
+
+#datatop {
+  width: 100%;
+  display: flex;
+}
+
+.layui-btn {
+  margin: 0 10px;
+}
+
+.layui-form-label {
+  padding: 9px 0px;
+}
+
+.layui-input-block {
+  margin-left: 90px;
+  min-height: 36px;
+  margin-right: 20px;
+}
+
+.layui-form-item {
+  width: 400px;
+  max-width: 400px;
+  min-width: 300px;
+}

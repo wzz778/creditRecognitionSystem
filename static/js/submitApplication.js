@@ -45,7 +45,6 @@ let usermessage = document.getElementsByClassName('usermessage');
 let credittypesonson = document.getElementById('credittypesonson');
 
 $('#postbutton').on('click', function () {
-
   var o = $('#form').serializeObject();
   console.log(o);
   if (o.remarks == '') {
@@ -58,9 +57,10 @@ $('#postbutton').on('click', function () {
   } else if (credittypesonson.style.display == 'block') {
     console.log(o.specific_information);
     o.specific_information = o.specific_information[1];
+    console.log(o);
     swal({
-      title: "你确定完成该申请表？",
-      text: "你将没有机会修改该申请表！",
+      title: "你确定提交该申请表？",
+      text: "你将没有机会修改该部分数据！",
       type: "warning",
       showCancelButton: true,
       confirmButtonColor: "#DD6B55",
@@ -77,7 +77,6 @@ $('#postbutton').on('click', function () {
           header: {
             'Content-Type': 'application/json' 
              //如果写成contentType会报错
-            
           }
         }).then(data => {
           if (data.data.msg == 'OK') {
@@ -98,7 +97,45 @@ $('#postbutton').on('click', function () {
       }
     })
   } else {
-
+    o.specific_information = o.specific_information[0];
+    swal({
+      title: "你确定提交该申请表？",
+      text: "你将没有机会修改该部分数据！",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#DD6B55",
+      confirmButtonText: "确定",
+      cancelButtonText: "取消",
+      closeOnConfirm: false,
+      closeOnCancel: false
+    }, function (isConfirm) {
+      if (isConfirm) {
+        axios({
+          url: 'http://127.0.0.1:8080/api/getpost',
+          method: 'post',
+          data: o,
+          header: {
+            'Content-Type': 'application/json' 
+             //如果写成contentType会报错
+          }
+        }).then(data => {
+          if (data.data.msg == 'OK') {
+            swal('提交成功', '您所填写的申请表提交成功', 'success');
+            sessionStorage.setItem('Applicationid', data.data.data);
+            console.log(data.data);
+            setTimeout(function () {
+              window.location.assign("http://127.0.0.1:8080/UploadAttachment");
+              // sessionStorage.setItem("tousers", '1');
+            }, 1000)
+          }
+        }).catch(function (error) {
+          swal('提交失败',"您所填写的申请表提交失败",'error')
+          console.log(error);
+        });
+      } else {
+        swal("您已经取消提交")
+      }
+    })
   }
   // console.log(JSON.stringify(o));
 });

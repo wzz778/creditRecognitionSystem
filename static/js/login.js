@@ -1,6 +1,6 @@
 let text = document.getElementsByClassName('text');
 let eyeimg=document.getElementById('eyeimg');
-
+let passwordin=document.getElementById('passwordin');
 function myFunction() {
     if (text[0].value == '' || text[1].value == '') {
         swal("请输入完整的内容！")
@@ -28,7 +28,12 @@ function myFunction() {
     }
 }
 function eye() {
-    let img=eyeimg.src;
-    
-    console.log(img);
+    let type=passwordin.type;
+    if(type=='password'){
+        passwordin.type='text'
+        eyeimg.src='public/img/eye.png'
+    }else{
+        passwordin.type='password'
+        eyeimg.src='public/img/noeye.png'
+    }
 }

@@ -30,8 +30,18 @@
     <legend>上传附件</legend>
 </fieldset>
     <div class="layui-upload" style="">
-		<button type="button" class="layui-btn layui-btn-normal" id="testList">选择多文件</button>
-		<div class="layui-upload-list">
+        <div id="datatop">
+            <button type="button" class="layui-btn layui-btn-normal" id="testList">选择多文件</button>
+            <button type="button" class="layui-btn" id="testListAction">开始上传</button>
+            <div class="layui-form-item">
+                <label class="layui-form-label">附件名称:</label>
+                <div class="layui-input-block">
+                  <input id="Attname" type="text" name="identity" lay-verify="identity" placeholder="" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <button type="button" class="layui-btn layui-btn-normal" id="toend">上传完成？点击完成提交申请表</button>
+        </div>
+		<div class="layui-upload-table">
 			<table class="layui-table">
 				<thead>
 				<tr>
@@ -44,10 +54,6 @@
 				<tbody id="demoList"></tbody>
 			</table>
 		</div>
-
-		<br/>
-		<br/>
-		<button type="button" class="layui-btn" id="testListAction">开始上传</button>
   </div>
 
     <a href="makepdf" id="topdf">没有表格附件？点击去下载pdf表格</a><br>
