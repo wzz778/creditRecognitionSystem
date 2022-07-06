@@ -227,3 +227,128 @@ input[type=checkbox]{
     border-color: red;
     color: rgb(255 255 255);
 }
+.cover-layer{
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 10000000;
+}
+.cover-main{
+    position: relative;
+    display: inline-block;
+    width: 400px;
+    height: 500px;
+    background-color: white;
+    padding: 10px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    padding-top: 25px;
+}
+.layer-form-item{
+    margin-bottom: 15px;
+    clear: both;
+}
+.layer-form-label{
+    position: relative;
+    float: left;
+    display: block;
+    padding: 9px 15px;
+    width: 80px;
+    font-weight: 400;
+    line-height: 20px;
+    text-align: right;
+
+}
+.layer-input-block{
+    margin-left: 110px;
+    min-height: 36px;
+    position: relative;
+}
+.layer-input{
+    display: block;
+    width: 100%;
+    padding-left: 10px;
+    height: 38px;
+    line-height: 1.3;
+    border-width: 1px;
+    border-style: solid;
+    background-color: rgb(255 255 255);
+    color: rgba(0,0,0,.85);
+    border-radius: 2px;
+    border-color: rgb(238 238 238);
+}
+.layer-form-select{
+    position: relative;
+}
+.layer-form-select .layer-input{
+    padding-right: 30px;
+    cursor: pointer;
+}
+.layer-edge{
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    width: 0;
+    height: 0;
+    border-width: 6px;
+    border-style: dashed;
+    border-color: transparent;
+    overflow: hidden;
+}
+.layer-form-select .layer-edge{
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    margin-top: -3px;
+    cursor: pointer;
+    border-width: 6px;
+    border-top-color: #c2c2c2;
+    border-top-style: solid;
+    transition: all .3s;
+}
+.layer-list{
+    display: none;
+}
+.layer-form-select dl{
+    /*display: block;*/
+    position: absolute;
+    left: 0;
+    top: 42px;
+    padding: 5px 0;
+    z-index: 899;
+    min-width: 100%;
+    border: 1px solid rgb(238 238 238);
+    max-height: 300px;
+    overflow-y: auto;
+    background-color: rgb(255 255 255);
+    border-radius: 2px;
+    box-shadow: 1px 1px 4px rgb(0 0 0 / 8%);
+    box-sizing: border-box;
+}
+.layer-this{
+    background-color: rgb(95 184 120);
+    color: rgb(255 255 255);
+
+}
+.layer-select-tips{
+    padding-left: 10px!important;
+}
+.layer-form-select dl dd{
+    cursor: pointer;
+    padding: 0 10px;
+    line-height: 36px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.layer-form-selected .layer-edge{
+    margin-top: -9px;
+    transform: rotate(180deg);
+}
