@@ -19,7 +19,8 @@ function removeEle(event) {
 
 // 没有子级目录的添加
 function addNewIndicator(event) {
-    event.parentElement.parentElement.innerHTML += `
+    let div=document.createElement('div')
+    div.innerHTML=`
     <div class="CertificationItem">
             认证范围:<input type="text" placeholder="请输入认证范围" class='b_Indicator_name' />
             学分:<input type="text" placeholder="请输入学分大小" class='b_points_available' />
@@ -32,6 +33,20 @@ function addNewIndicator(event) {
             </div>
     </div>
     `
+    event.parentElement.parentElement.append(div)
+    // event.parentElement.parentElement.innerHTML += `
+    // <div class="CertificationItem">
+    //         认证范围:<input type="text" placeholder="请输入认证范围" class='b_Indicator_name' />
+    //         学分:<input type="text" placeholder="请输入学分大小" class='b_points_available' />
+    //         <button class="addScopeCertification" onclick="addNewIndicator(this)">添加</button>
+    //         <button class="cancel" onclick="removeEle(this)">取消</button>
+    //         <div class="remarksText">备注:
+    //             <div class="remarksBottom">
+    //                 <textarea class="b_remark"></textarea>
+    //             </div>
+    //         </div>
+    // </div>
+    // `
 }
 // 将学分构成数据请求过来
 let CreditsComposition = document.getElementById('CreditsComposition')
