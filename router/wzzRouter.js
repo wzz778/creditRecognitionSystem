@@ -2,11 +2,13 @@ const express=require('express')
 const router=express.Router()
 const axios=require('axios');
 const jwt = require('jsonwebtoken');
+const FormData=require('form-data');
+const fs=require('fs');
+var multipart = require('connect-multiparty');
+var multipartMiddleware = multipart();
 
-// var decoded = jwt.decode(token);
-// console.log(decoded);
-// { name: 'Tom', age: 23, iat: 1584088910, exp: 1584096110 }
-
+var multiparty = require('multiparty');
+const { log } = require('console');
 // 请求页面
 router.get('/',(req,res)=>{
     res.render('index.html')
@@ -22,6 +24,9 @@ router.get('/UploadAttachment',(req,res)=>{
 })
 router.get('/makepdf',(req,res)=>{
     res.render('makepdf.html')
+})
+router.get('/repassword',(req,res)=>{
+    res.render('repassword.html')
 })
 router.get('/submitApplication',(req,res)=>{
     axios.get('/creditTypeOperate/showCreditType',{
@@ -40,8 +45,6 @@ router.get('/submitApplication',(req,res)=>{
         // res.send(error)
     });
 })
-// let token = jwt.sign(data, 'sercret');
-// console.log(token);
 axios.defaults.baseURL='http://110.40.205.103:8099/';
 router.post('/api/login', (req, res) => {
     console.log(req.body);
@@ -51,6 +54,7 @@ router.post('/api/login', (req, res) => {
         params:req.body,
     }).then(response=>{
         req.session.token= response.data.data.token;
+        req.session.password= req.body.password;
         console.log(req.session.token);
         res.send(response.data);
         // return jwt.decode(req.session.token).username;
@@ -67,28 +71,12 @@ router.get('/api/getmymessage', (req, res) => {
             token:req.session.token
         }
     }).then(user=>{
-        console.log('----------------');
         req.session.user=user.data.data;
-        console.log(req.session.user);
-        console.log('----------------');
         res.send(req.session.user)
     }).catch(function (error) {
         console.log(error);
     });
 })
-// axios({
-//     url:'user/userInfo',
-//     method:'get',
-//     params:{username:jwt.decode(req.session.token).username},
-//     headers:{
-//         token:req.session.token
-//     }
-// }).then(user=>{
-//     req.session.user=user.data.data;
-//     console.log(req.session.user);
-// }).catch(function (error) {
-//     console.log(error);
-// });
 router.get('/api/outlogin', (req, res) => {
     axios.get('user/logout',{
         params:req.query,
@@ -104,11 +92,10 @@ router.get('/api/outlogin', (req, res) => {
         res.send(error)
     });
 })
-router.get('/api/getpostmessage', (req, res) => {
+router.get('/api/getcreditmessage', (req, res) => {
     axios.get('/creditTypeOperate/showCreditType',{
-        // params:req.query,
         headers:{
-            token:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTY2NzMyMjUsImV4cCI6MTY1Njc1OTYyNSwidXNlcm5hbWUiOiJzZyJ9.Og2YS-khn_tW3uGo0kv4zEcdcVyFzVb1Vss3j-N9IZw"
+            token:req.session.token
         }},
     ).then(response=>{
         console.log(response.data.data);
@@ -120,13 +107,12 @@ router.get('/api/getpostmessage', (req, res) => {
 })
 router.post('/api/getpost', (req, res) => {
     console.log(req.body);
-    console.log(JSON.stringify(req.body));
     axios({
         url:'user/application',
         method:'post',
         data:req.body,
         headers:{
-            token:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTY3NTIyMTIsImV4cCI6MTY1Njc1NTgxMiwidXNlcm5hbWUiOiJzZyIsInBvd2VyIjoi5pmu6YCa55So5oi3In0.xDTFxQY0jS9Fo5P4lri1RTB0Lit0Fj1q0Xy92p6Rdeo"
+            token:req.session.token
         },
     }).then(response=>{
         console.log(response.data);
@@ -161,5 +147,97 @@ router.get('/api/getsonson', (req, res) => {
     }).catch(function (error) {
         res.send(error)
     });
+})
+router.get('/api/getpostmessage', (req, res) => {
+    axios.get('/user/oneApplication/{id}',{
+        params:req.query,
+        headers:{
+            token:req.session.token
+        }},
+    ).then(response=>{
+        console.log("wwwwwwwwwwwwww");
+        console.log(response.data);
+        res.send(response.data);
+    }).catch(function (error) {
+        console.log("wwwwwwwwwwwwww");
+        res.send(error)
+    });
+})
+
+// router.post('/api/UploadAttachment',multipartMiddleware,(req, res) => {
+//     console.log(req.files.file  );
+//     console.log(req.files.file.path);
+//     let form = new FormData();
+//     form.append("application_id", req.body.application_id);
+//     form.append("enclosure_name",req.body.enclosure_name);
+//     form.append("file",fs.createReadStream(req.files.file.path));
+//     axios.post('/user/photo',{
+//         data:form,
+//         header:form.getHeaders(),
+//         ContentType: 'multipart/form-data',
+//         headers:{
+//            ' Content-Type': 'multipart/form-data',
+//             token:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTcwMjM2MTksImV4cCI6MTY1NzAyNzIxOSwidXNlcm5hbWUiOiIxIiwicG93ZXIiOiLotoXnuqfnrqHnkIblkZgifQ.jmuAvfvI487bcb5Qp-5DlYFxEX5BgPjaAZlS9S6ZQVo"
+//         }
+//     }).then(response=>{
+//         console.log("wwwwwwwwwwwwww");
+//         console.log(response.data);
+//         res.send(response.data);
+//     }).catch(function (error) {
+//         console.log("error");
+//         // console.log(error);
+//         res.send(error)
+//     });
+// })
+router.post('/api/UploadAttachment', multipartMiddleware,(req, res) => {
+    let formdata = new FormData()
+    for (let a in req.files) {
+        formdata.append('file', fs.createReadStream(req.files[a].path),req.files[a].originalFilename)//第二个参数试上传的文件名
+    }
+    formdata.append('enclosure_name',req.body.enclosure_name)
+    formdata.append('application_id',req.body.application_id)
+    axios({
+        method: 'POST',
+        url: 'http://110.40.205.103:8099/user/photo',
+        data:formdata,
+        // headers: formdata.getHeaders(),
+        headers:{
+            token:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTcwNzIzMzcsImV4cCI6MTY1NzA3NTkzNywidXNlcm5hbWUiOiIxIiwicG93ZXIiOiLotoXnuqfnrqHnkIblkZgifQ.QDTGM7CUn1cH63yc2MP9aoCJ3T7G8bun2j6cb3g09_c",
+            formdata:formdata.getHeaders(),
+            maxBodyLength:1000000000
+        }
+    })
+        .then((result) => {
+            console.log(result.data)
+            res.send({ err: 0, msg: result.data })
+        })
+        .catch((err) => {
+            // console.log(err)
+            res.send({ err: -1, msg: err})
+        })
+})  
+router.put('/api/uppassword', (req, res) => {
+    if(req.query.mypassword==req.session.password){
+        axios({
+        headers: {
+            token:req.session.token
+        },
+        method: 'put',
+        url: 'http://110.40.205.103:8099/user/password',
+        params:{
+            password:req.query. password,
+            prePassword:req.query.prePassword,
+            username:req.query.username,
+        }
+        }).then(response=>{
+            console.log(response.data);
+            res.send(response.data);
+        }).catch(function (error) {
+            console.log(error);
+            res.send(error)
+        });
+    }else{
+        res.send('您的密码输入错误！');
+    }
 })
 module.exports = router

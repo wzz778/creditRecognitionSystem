@@ -1,11 +1,28 @@
 let message=document.getElementsByClassName('message');
-message[0].innerHTML=sessionStorage.getItem('username');
-message[1].innerHTML=sessionStorage.getItem('usersex');
-message[2].innerHTML=sessionStorage.getItem('userName');
-message[3].innerHTML=sessionStorage.getItem('useracademy');
-message[4].innerHTML=sessionStorage.getItem('userclass');
-message[5].innerHTML=sessionStorage.getItem('application_credit_type');
-message[6].innerHTML=sessionStorage.getItem('remarks');
+axios({
+    url: 'http://127.0.0.1:8080/api/getpostmessage',
+    method: 'get',
+    params: {id: sessionStorage.getItem('Applicationid')},
+  }).then(response=> {
+    console.log(response.data);
+    if(response.data.msg!='OK'){
+        alert('获取失败！');
+    }else{
+        let data=response.data.data;
+        message[0].innerHTML=data.user.name;
+        message[1].innerHTML=data.user.sex;
+        message[2].innerHTML=data.user.userName;
+        message[3].innerHTML=data.user.academy;
+        message[4].innerHTML=data.user.major_class
+        message[5].innerHTML=data.creditType.afirstLevel;
+        message[6].innerHTML=data.classify.b_points_available;
+        message[7].innerHTML=data.remarks;
+    }
+  }).catch(error=> {
+    // swal('提交失败',"您所填写的申请表提交失败",'error')
+    alert('获取内容失败！');
+    console.log(error);
+});
 for(let n of message){
     if(n.innerHTML=='null'){
         n.innerHTML=''

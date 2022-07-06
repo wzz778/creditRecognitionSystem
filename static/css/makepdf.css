@@ -33,8 +33,9 @@ height: 300px;
 
 #schoolform {
 width: 900px;
-padding: 100px 20px;
 margin: 0px auto;
+padding: 0 50px;
+padding-top: 100px;
 }
 
 .biaoti {

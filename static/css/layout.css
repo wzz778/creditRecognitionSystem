@@ -145,6 +145,7 @@
   min-height: 100vh;
   background-color: #F8F8F8;
   transition: all 0.3s;
+  min-width:800px;
   padding: 58px 10px 10px 190px;
 }
 

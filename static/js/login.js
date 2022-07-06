@@ -1,4 +1,6 @@
 let text = document.getElementsByClassName('text');
+let eyeimg=document.getElementById('eyeimg');
+
 function myFunction() {
     if (text[0].value == '' || text[1].value == '') {
         swal("请输入完整的内容！")
@@ -25,6 +27,8 @@ function myFunction() {
         });
     }
 }
-function show(event) {
-
+function eye() {
+    let img=eyeimg.src;
+    
+    console.log(img);
 }
