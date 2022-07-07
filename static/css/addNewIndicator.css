@@ -1,9 +1,9 @@
 input{
-    padding: 10px 0px 10px 15px;
+    padding: 10px 18px 10px 15px;
 }
 
 .addNewIndicatorContent {
-    padding: 40px 100px;
+    padding: 40px 160px;
 }
 
 .topText{
@@ -17,7 +17,7 @@ input{
     resize: none;
     outline: none;
     padding: 5px 0px 0px 5px;
-    width: 50%;
+    width: 58%;
     height: 90px
 }
 
@@ -129,4 +129,13 @@ input{
 
 .hintText {
     color: red;
+}
+
+select{
+    width: 400px;
+    height: 40px;
+}
+
+#CreditsComposition{
+    width: 510px;
 }

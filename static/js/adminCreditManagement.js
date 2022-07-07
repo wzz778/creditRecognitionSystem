@@ -77,7 +77,7 @@ function watchChild(event) {
         }
     })
         .then((result) => {
-            console.log(result.data)
+            // console.log(result.data)
             ele.innerHTML = ''
             if (result.data.msg == '没有指标信息') {
                 // 没有指标信息
@@ -121,12 +121,14 @@ function watchChild(event) {
                 } else {
                     // 有子级目录判断下面有没有值
                     if (result.data.msg[i].child == '下边没有指标了') {
+                        console.log(123)
                         // 这里是目录但是没有指标
                         ele.innerHTML += `
                     <div class="SecondDir clearFloat">
+                        子级目录:
                         <span>${result.data.msg[i].b_Indicator_name}</span>
+                        <button style="float: right;" onclick='changeOneDirFn(this)'>修改子级目录</button>
                         <button class="floatRight" onclick='delFnOne(this)'>删除此子级目录</button>
-                        <button clsss='floatRight' onclick='changeTwoDirFn(this)'>修改子级目录</button>
                         <div style='display:none'>${result.data.msg[i].b_id}</div>
                     </div>
                     <div id="adminHistoryContentNo" style='min-height: 50px;
@@ -139,11 +141,12 @@ function watchChild(event) {
                 `
                     } else {
                         // 遍历
-                        let divEle=document.createElement('div')
+                        let divEle = document.createElement('div')
                         divEle.innerHTML += `
                         <div class="SecondDir clearFloat">
+                            子级目录:
                             <span>${result.data.msg[i].b_Indicator_name}</span>
-                            <button clsss='floatRight' onclick='changeTwoDirFn(this)'>修改子级目录</button>
+                            <button style="float: right;" onclick='changeTwoDirFn(this)'>修改子级目录</button>
                             <button class="floatRight" onclick='delFnOne(this)'>删除此子级目录</button>
                             <div style='display:none'>${result.data.msg[i].b_id}</div>
                         </div>
@@ -167,7 +170,7 @@ function watchChild(event) {
                                 </ul>
                 `
                         }
-                        divEle.className='ChildDetailsContent ChildDetailsItem new'
+                        divEle.className = 'ChildDetailsContent ChildDetailsItem new'
                         ele.append(divEle)
 
                     }
@@ -183,7 +186,7 @@ function watchChild(event) {
 function watchRemark(event) {
     // 奖备注显示在弹窗中
     let str = '没有备注信息'
-    if (event.parentElement.firstElementChild.innerHTML!='null') {
+    if (event.parentElement.firstElementChild.innerHTML != 'null') {
         str = event.parentElement.firstElementChild.innerHTML
     }
     swal(str)
@@ -307,7 +310,7 @@ function delFnOne(event) {
                 }
             })
                 .then((result) => {
-                    console.log(result.data)
+                    // console.log(result.data)
                     if (result.data.err == 0) {
                         swal('删除成功')
                         // 重新获取数据
@@ -464,7 +467,7 @@ cancelChange.onclick = function () {
 }
 let changeTwoDirEle = document.getElementById('changeTwoDir')
 let changeTwoDirId = document.getElementById('changeTwoDirId')
-let changeTwoDirFather=document.getElementById('changeTwoDirFather')
+let changeTwoDirFather = document.getElementById('changeTwoDirFather')
 // 修改二级目录函数
 function changeTwoDirFn(event) {
     bodyTop[1].style.display = 'block'
@@ -477,7 +480,26 @@ function changeTwoDirFn(event) {
             for (let i = 0; i < result.data.msg.length; i++) {
                 changeTwoDirFather.add(new Option(result.data.msg[i].afirstLevel, result.data.msg[i].aid))
             }
-            // 添加或者修改,如果本地没有保存就是添加
+            changeTwoDirFather.value = event.parentElement.parentElement.parentElement.parentElement.parentElement.firstElementChild.firstElementChild.lastElementChild.innerHTML
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+    changeTwoDirEle.value = event.parentElement.firstElementChild.innerHTML
+    changeTwoDirId.innerHTML = event.parentElement.lastElementChild.innerHTML
+}
+
+function changeOneDirFn(event) {
+    bodyTop[1].style.display = 'block'
+    // 父级的id
+    axios({
+        method: 'GET',
+        url: '/creditTypeOperate/showCreditType',
+    })
+        .then((result) => {
+            for (let i = 0; i < result.data.msg.length; i++) {
+                changeTwoDirFather.add(new Option(result.data.msg[i].afirstLevel, result.data.msg[i].aid))
+            }
             changeTwoDirFather.value = event.parentElement.parentElement.parentElement.parentElement.firstElementChild.firstElementChild.lastElementChild.innerHTML
         })
         .catch((err) => {
@@ -486,6 +508,7 @@ function changeTwoDirFn(event) {
     changeTwoDirEle.value = event.parentElement.firstElementChild.innerHTML
     changeTwoDirId.innerHTML = event.parentElement.lastElementChild.innerHTML
 }
+
 let sureChange = document.getElementById('sureChange')
 changeTwoDirEle.onclick = function () {
     changeTwoDirEle.parentElement.lastElementChild.style.display = 'none'
@@ -502,8 +525,8 @@ sureChange.onclick = function () {
         data: {
             b_id: Number(changeTwoDirId.innerHTML),
             b_Indicator_name: changeTwoDirEle.value,
-            b_superior_id:Number(changeTwoDirFather.value),
-            b_first_level:Number(changeTwoDirFather.value)
+            b_superior_id: Number(changeTwoDirFather.value),
+            b_first_level: Number(changeTwoDirFather.value)
         }
     })
         .then((result) => {

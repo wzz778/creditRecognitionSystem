@@ -1,3 +1,48 @@
+.bodyTop{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .4);
+    position: fixed;
+    z-index: 999;
+}
+
+.bodyTop>div{
+    padding: 30px;
+    margin: 100px auto;
+    width: 425px;
+    min-height: 250px;
+    background-color: white;
+}
+
+.bodyTopItem{
+    margin-bottom: 10px;
+    /* display: inline-block; */
+}
+
+.bodyTopItem>input{
+    width: 70%;
+    height: 30px;
+}
+
+.bodyTopItem>select{
+    width: 70%;
+    height: 30px;
+}
+
+.bodyTopBottom{
+    margin-left: 130px;
+}
+
+#cancel{
+    background-color: #ED5565;
+    color: white;
+}
+
+#changeUserInfo{
+    background-color: #1AB394;
+    color: white;
+}
+
 .topText {
     color: #638ED3;
 }

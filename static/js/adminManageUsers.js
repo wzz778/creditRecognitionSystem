@@ -1,4 +1,3 @@
-
 let popUps = document.getElementsByClassName('popUps')
 
 // 点击勾选删除的将所有的勾选框选中
@@ -42,7 +41,7 @@ let nowPage = document.getElementById('nowPage')//显示当前页数
 let jumpPage = document.getElementById('jumpPage')//输入跳转页数
 let jump = document.getElementById('jump')//跳转
 let nextPage = document.getElementById('nextPage')//下一页
-let reset=document.getElementById('reset')//重置按钮
+let reset = document.getElementById('reset')//重置按钮
 let all_Page = 1//总页数
 let per_Page = 10//每页几条
 let now_page = 1//当前请求页数
@@ -67,7 +66,7 @@ function judgeHas() {
     if (allUls.length == 0 && now_page != 1) {
         // 请求上一页
         now_page--
-        nowPage.innerHTML=nowPage
+        nowPage.innerHTML = nowPage
         GetAll(now_page, per_Page, assignFn())
         checkDelAll.checked = ''
     }
@@ -97,7 +96,7 @@ function GetAll(page, perPage, obj) {
             }
             console.log(result.data)
             all_Page = result.data.page
-            allPages.innerHTML=`共${all_Page}页`
+            allPages.innerHTML = `共${all_Page}页`
             allNumber.innerHTML = `共${result.data.total}条`
             for (let i = 0; i < result.data.msg.length; i++) {
                 let userClass = '未知'
@@ -121,6 +120,7 @@ function GetAll(page, perPage, obj) {
                 <li>
                     <div style='display:none'>${result.data.msg[i].uid}</div>
                     <button onclick="removePopup(this)" class="operatorBtnSty">删除</button>
+                    <button onclick="changeUserInfoFn(this)" class="operatorBtnSty">修改</button>
                 </li>
             </ul>
                 `
@@ -162,7 +162,7 @@ sureSearch.onclick = function () {
     }
     if (yn) {
         // 查询数据
-        now_page=1
+        now_page = 1
         GetAll(now_page, per_Page, assignFn())
     } else {
         // 没有查询的数据
@@ -230,7 +230,7 @@ jump.onclick = function () {
 }
 // 改变一页的条数
 selectPerpage.onclick = function () {
-    per_Page=selectPerpage.value
+    per_Page = selectPerpage.value
     GetAll(now_page, per_Page, assignFn())
 }
 // 删除弹窗显现函数(只删除一个)
@@ -347,12 +347,59 @@ del.onclick = function () {
     }
 }
 // 重置按钮
-reset.onclick=function(){
+reset.onclick = function () {
     // 将所有搜索框的东西清空
-    for(let i=0;i<searchValue.length;i++){
-        searchValue[i].value=''
+    for (let i = 0; i < searchValue.length; i++) {
+        searchValue[i].value = ''
     }
-    now_page=1
-    nowPage.innerHTML=now_page
-    GetAll(now_page,per_Page,assignFn())
+    now_page = 1
+    nowPage.innerHTML = now_page
+    GetAll(now_page, per_Page, assignFn())
+}
+
+// 修改用户信息弹窗
+let bodyTop = document.getElementsByClassName('bodyTop')
+let cancel = document.getElementById('cancel')
+let changeUserInfo = document.getElementById('changeUserInfo')
+let changeUserName = document.getElementById('changeUserName')//用户名
+let changeUserAccount = document.getElementById('changeUserAccount')//账号
+let changeUserPermission = document.getElementById('changeUserPermission')//用户身份
+let changeUserSex = document.getElementById('changeUserSex')//性别
+let changeUserHas = document.getElementById('changeUserHas')//是否有学生信息
+let changeUserGrade = document.getElementById('changeUserGrade')//年级
+let changeUseraCademy = document.getElementById('changeUseraCademy')//学院
+let changeUserSpecialized = document.getElementById('changeUserSpecialized')//专业
+let changeUserClass = document.getElementById('changeUserClass')//班级
+let changeUserId = document.getElementById('changeUserId')//用户id
+cancel.onclick = function () {
+    bodyTop[0].style.display = 'none'
+}
+
+function changeUserInfoFn(event) {
+
+}
+
+axios({
+    method: 'GET',
+    url: '/a'
+})
+    .then((result) => {
+        console.log(result.data)
+    })
+    .catch((err) => {
+        console.log(err)
+    })
+
+let btn = document.getElementById('btn')
+btn.onclick = function () {
+    axios({
+        method: 'GET',
+        url: '/isLogin',
+    })
+        .then((result) => {
+            console.log(result.data)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
 }

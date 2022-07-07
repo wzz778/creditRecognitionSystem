@@ -65,7 +65,11 @@ function IndicatorTwo(event) {
 function IndicatorThree(event) {
     bodyTop[4].style.display = 'block'
     selfId.innerHTML = event.parentElement.parentElement.firstElementChild.lastElementChild.innerHTML
-    reviseText.value = event.parentElement.firstElementChild.innerHTML
+    let text=''
+    if(event.parentElement.firstElementChild.innerHTML!='null'){
+        text=event.parentElement.firstElementChild.innerHTML
+    }
+    reviseText.value = text
     let ele = event.parentElement.parentElement.parentElement
     let secondId = ele.firstElementChild.lastElementChild.innerHTML
     let fatherId = ele.parentElement.parentElement.parentElement.firstElementChild.firstElementChild.lastElementChild.innerHTML

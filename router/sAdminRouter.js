@@ -73,7 +73,8 @@ router.post('/admin/records', (req, res) => {
         }
     })
         .then((result) => {
-            res.send({ err: 0, msg: result.data.data.allRecords, allPage: (result.data.data.allPages - 1), msg1: result.data.data.pageInfo })
+            // console.log(result.data)
+            res.send({ err: 0, msg: result.data.data.allRecords, allPage: Math.ceil((result.data.data.allPages-1)/pageSize), msg1: result.data })
         })
         .catch((err) => {
             console.log('失败', err)
@@ -123,7 +124,8 @@ router.post('/admin/application', (req, res) => {
         }
     })
         .then((result) => {
-            res.send({ err: 0, msg: result.data.data.allRecords, AllPages: result.data.data.allPage })
+            console.log(result.data)
+            res.send({ err: 0, msg: result.data.data.allRecords, AllPages:  Math.ceil((result.data.data.allPage-1)/pageSize) })
         })
         .catch((err) => {
             res.send({ err: -1, msg: '错误' })
@@ -551,14 +553,12 @@ router.post('/IndicatorOperate/deleteIndicator', (req, res) => {
     for (let i = 1; i < arrId.length; i++) {
         urlStr += `&ids=${arrId[i]}`
     }
-    console.log(urlStr)
     axios.delete(urlStr, {
         headers: {
             token: req.session.token
         }
     })
         .then((result) => {
-            console.log('删除',result.data)
             if (result.data.msg == 'OK') {
                 res.send({ err: 0, msg: result.data.data })
             } else {
@@ -660,5 +660,49 @@ router.post('/changeIndicator',(req,res)=>{
         res.send({err:-1,msg:err})
     })
 })
+
+router.get('/a',(req,res)=>{
+    axios({
+        method:'POST',
+        url:'http://110.40.211.224:8080/xingchen/login',
+        params:{
+           userPassword:'123456',
+           userAccount:'123'
+        }
+    })
+    .then((result)=>{
+        console.log(result.data)
+        req.session.token = result.data.data
+        res.send({err:0,msg:result.data})
+    })
+    .catch((err)=>{
+        console.log(err)
+        res.send({err:-1,msg:'网络错误'})
+    })
+})
+
+// 判断登录
+router.get('/isLogin',(req,res)=>{
+    // let {token} = req.query;
+    console.log('存到的token',req.session.token)
+    axios({
+        method:'get',
+        url:'http://110.40.211.224:8080/xingchen/isLogin',
+        params:{
+            token:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXNzd29yZCI6IjEyMzQ1NiIsImV4cCI6MTY1NzE4NzYxNCwidXNlcm5hbWUiOiIxMjMifQ.3FCwo8s4RUu49V7wbt86bDTGm7VjUg6H5iXZFQOo11c'
+        }
+    })
+    .then((result)=>{
+        console.log(result.data)
+        // console.log(req.session.token)
+        res.send({err:0,msg:result.data})
+    })
+    .catch((err)=>{
+        console.log(err)
+        res.send({err:-1,msg:'网络错误'})
+    })
+})
+
+
 
 module.exports = router
