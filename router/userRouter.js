@@ -129,4 +129,38 @@ router.delete('/admin/delete.doUserInfo',(req,res)=>{
         res.send(err);
     })
 })
+
+router.post('/admin/addUsers',(req,res)=>{
+    axios({
+        method:'post',
+        url:'/admin/addUsers',
+        data:req.body,
+        headers:{
+            token:req.session.token,
+        }
+    }).then((date)=>{
+        res.send(date.data);
+    }).catch((err)=>{
+        res.send(err);
+    })
+})
+
+router.get('/admin/getUserByClass',(req,res)=>{
+    axios({
+        method:'get',
+        url:'/admin/getUserByClass',
+        params:req.query,
+        headers:{
+            token:req.session.token
+        }
+    }).then((date)=>{
+        res.send(date.data);
+    }).catch((err)=>{
+        res.send(err);
+    })
+})
+
+
+
+
 module.exports = router;
