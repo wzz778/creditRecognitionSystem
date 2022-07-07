@@ -42,7 +42,37 @@
     color: white;
 }
 
+#sureChange{
+    background-color: #1AB394;
+    color: white;
+}
+
+#SurechangeComposition{
+    background-color: #1AB394;
+    color: white;
+}
+
+#SureaddDir{
+    background-color: #1AB394;
+    color: white;
+}
+
+#CancelAddDir{
+    background-color: #ED5565;
+    color: white;
+}
+
 #cancelAdd{
+    background-color: #ED5565;
+    color: white;
+}
+
+#CancelchangeComposition{
+    background-color: #ED5565;
+    color: white;
+}
+
+#cancelChange{
     background-color: #ED5565;
     color: white;
 }
@@ -213,4 +243,46 @@
 .SecondDir{
     position: relative;
     left: -45px;
+}
+
+.hintText{
+    color: red;
+}
+
+#revise{
+    width: 430px;
+}
+
+#revise>div>input{
+    width: 70%;
+}
+
+#revise>div>select{
+    width: 70%;
+}
+
+.operator{
+    margin-left: 150px;
+}
+
+#reviseText{
+    display: inline-block;
+    resize: none;
+    outline: none;
+    border: 1px solid #DDDDDD;
+    padding: 5px 0px 0px 5px;
+    width: 80%;
+    height: 60px;
+    margin-left: 38px;
+    overflow-y: auto;
+}
+
+#sureRevise{
+    background-color: #1AB394;
+    color: white;
+}
+
+#cancelRevise{
+    background-color: #ED5565;
+    color: white;
 }

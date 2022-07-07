@@ -8,6 +8,7 @@ const FormData = require('form-data')
 const fs = require('fs')
 const { log } = require('console')
 const { send } = require('process')
+const { url } = require('inspector')
 var mult = multipart()
 
 // 请求页面
@@ -62,7 +63,6 @@ router.post('/admin/records', (req, res) => {
     if (approval_status) {
         obj.approval_status = approval_status
     }
-    console.log(obj)
     // 请求后端接口
     axios({
         method: 'GET',
@@ -73,7 +73,6 @@ router.post('/admin/records', (req, res) => {
         }
     })
         .then((result) => {
-            console.log(result.data)
             res.send({ err: 0, msg: result.data.data.allRecords, allPage: (result.data.data.allPages - 1), msg1: result.data.data.pageInfo })
         })
         .catch((err) => {
@@ -84,7 +83,6 @@ router.post('/admin/records', (req, res) => {
 })
 // 查看申请表
 router.post('/admin/application', (req, res) => {
-    // console.log(req.body)
     if (!jwt.decode(req.session.token)) {
         res.send({ err: -1, msg: '用户身份非法' })
         return
@@ -128,7 +126,6 @@ router.post('/admin/application', (req, res) => {
             res.send({ err: 0, msg: result.data.data.allRecords, AllPages: result.data.data.allPage })
         })
         .catch((err) => {
-            console.log(err)
             res.send({ err: -1, msg: '错误' })
         })
 })
@@ -158,7 +155,6 @@ router.post('/admin/User', (req, res) => {
         }
     })
         .then((result) => {
-            console.log(result.data)
             if (result.data.msg == 'OK') {
                 res.send({ err: 0, msg: result.data })
             } else {
@@ -167,7 +163,6 @@ router.post('/admin/User', (req, res) => {
             }
         })
         .catch((err) => {
-            console.log(err)
             res.send({ err: -1, msg: '错误' })
         })
 })
@@ -185,11 +180,9 @@ router.get('/creditTypeOperate/showCreditType', (req, res) => {
         }
     })
         .then((result) => {
-            // console.log(result.data.data)
             res.send({ err: 0, msg: result.data.data })
         })
         .catch((err) => {
-            console.log(err)
             res.send('错误')
         })
 })
@@ -238,7 +231,6 @@ router.post('/admin/getUserByClass', (req, res) => {
             }
         })
         .catch((err) => {
-            console.log(err)
             res.send({ err: -1, msg: '网络错误' })
         })
 })
@@ -249,7 +241,6 @@ router.post('/admin/delete.doUserInfo', (req, res) => {
         return
     }
     let idArray = req.body.idArray
-    console.log(idArray)
     axios({
         method: 'DELETE',
         url: '/admin/delete.doUserInfo',
@@ -260,7 +251,6 @@ router.post('/admin/delete.doUserInfo', (req, res) => {
             token: req.session.token
         }
     }).then((result) => {
-        console.log(result.data)
         if (result.data.msg == 'OK') {
             res.send({ err: 0, msg: '删除成功' })
         } else {
@@ -268,7 +258,6 @@ router.post('/admin/delete.doUserInfo', (req, res) => {
         }
     })
         .catch((err) => {
-            console.log(err)
             res.send({ err: -1, msg: '网络错误' })
         })
 })
@@ -278,22 +267,17 @@ router.post('/delAllUser', (req, res) => {
         res.send({ err: -1, msg: '用户身份非法' })
         return
     }
-    console.log('我自己的')
-    // console.log(req.body)
     let user = req.body.arrId
-    // console.log(user)
-    let urlStr = `http://110.40.205.103:8099/admin/delete.doUserInfo?`
-    for (let i = 0; i < user.length; i++) {
+    let urlStr = `http://110.40.205.103:8099/admin/delete.doUserInfo?user=${user[0]}`
+    for (let i = 1; i < user.length; i++) {
         urlStr += `&user=${user[i]}`
     }
-    console.log(urlStr)
     axios.delete(urlStr, {
         headers: {
             token: req.session.token
         }
     })
         .then((result) => {
-            console.log(result.data)
             if (result.data.msg == 'OK') {
                 res.send({ err: 0, msg: '删除成功' })
             } else {
@@ -301,7 +285,6 @@ router.post('/delAllUser', (req, res) => {
             }
         })
         .catch((err) => {
-            console.log(err.response)
             res.send({ err: -1, msg: '网络错误' })
         })
 })
@@ -321,7 +304,6 @@ router.get('/IndicatorOperate/showAllIndicator', (req, res) => {
         }
     })
         .then((result) => {
-            console.log(result.data)
             if (result.data.msg == 'OK') {
                 res.send({ err: 0, msg: result.data.data })
             } else {
@@ -342,7 +324,6 @@ router.get('/getCreditsComposition', (req, res) => {
         }
     })
         .then((result) => {
-            // console.log(result.data)
             if (result.data.msg == 'OK') {
                 res.send({ err: 0, msg: result.data.data })
             } else {
@@ -351,7 +332,6 @@ router.get('/getCreditsComposition', (req, res) => {
             }
         })
         .catch((err) => {
-            console.log(err)
             res.send({ err: -1, msg: '网络错误' })
         })
 })
@@ -363,7 +343,7 @@ function fn(id, req, sendResult) {
             method: 'GET',
             url: '/IndicatorOperate/showIndicator',
             params: {
-                id: id,
+                id: sendResult.b_id,
                 level: 2
             },
             headers: {
@@ -417,7 +397,6 @@ router.post('/IndicatorOperate/showIndicator', (req, res) => {
     })
         .then((result) => {
             let sendResult = result.data.data
-            console.log('二级:', result.data)
             if (sendResult == '下边没有指标了') {
                 res.send({ err: 0, msg: '没有指标信息' })
                 return
@@ -429,7 +408,6 @@ router.post('/IndicatorOperate/showIndicator', (req, res) => {
             }
             Promise.all(sendArr)
                 .then((result) => {
-                    console.log(result)
                     res.send({ err: 0, msg: sendResult })
                 })
                 .catch((err) => {
@@ -437,7 +415,6 @@ router.post('/IndicatorOperate/showIndicator', (req, res) => {
                 })
         })
         .catch((err) => {
-            console.log(err)
             res.send({ err: -1, msg: '网络错误' })
         })
 })
@@ -450,17 +427,16 @@ router.post('/child', (req, res) => {
         url: '/IndicatorOperate/showIndicator',
         params: {
             id: id,
-            level: 2
+            level: 1
         },
         headers: {
             token: req.session.token
         }
     })
         .then((result) => {
-            console.log(result.data)
             if (result.data.msg == 'OK') {
                 // 判断是否有子级目录
-                res.send({ err: 0, msg: result.data })
+                res.send({ err: 0, msg: result.data.data })
             }
         })
         .catch((err) => {
@@ -484,7 +460,6 @@ function addSecondDir(req, b_first_level, resultData) {
             }
         })
             .then((result) => {
-                console.log('封装函数二级目录的函数', result.data)
                 resolve(result)
             })
             .catch((err) => {
@@ -497,7 +472,6 @@ function addSecondDir(req, b_first_level, resultData) {
 router.post('/addCreditAll', (req, res) => {
     // 添加身份判断
     let { AFirstLevel, resultData } = req.body
-    console.log('收到的resultdata',resultData)
     // 添加学分构成
     axios({
         method: 'POST',
@@ -510,14 +484,12 @@ router.post('/addCreditAll', (req, res) => {
         }
     })
         .then((result) => {
-            console.log('一级目录返回的数据',result.data)
             return addSecondDir(req, result.data.data, resultData)
         })
         .then((result)=>{
             res.send({err:0,msg:result.data})
         })
         .catch((err) => {
-            console.log(err)
             res.send({ err: -1, msg: '网络错误' })
         })
 })
@@ -525,7 +497,6 @@ router.post('/addCreditAll', (req, res) => {
 // 添加认定范围
 router.post('/IndicatorOperate/addIndicator', (req, res) => {
     let { arrSend } = req.body
-    console.log('传的数据', arrSend)
     axios({
         method: 'POST',
         url: '/IndicatorOperate/addIndicator',
@@ -536,11 +507,9 @@ router.post('/IndicatorOperate/addIndicator', (req, res) => {
         }
     })
         .then((result) => {
-            console.log(result.data)
             res.send({ err: 0, msg: result.data })
         })
         .catch((err) => {
-            console.log(err)
             res.send({ err: -1, msg: '网络错误' })
         })
 
@@ -548,9 +517,6 @@ router.post('/IndicatorOperate/addIndicator', (req, res) => {
 
 // 多文件上传(node接口)
 router.post('/fileUplo', mult, (req, res) => {
-    // console.log(req.files.file)
-    console.log(req.body)
-    console.log()
     let formdata = new FormData()
     for (let a in req.files) {
         formdata.append('file', fs.createReadStream(req.files[a].path), req.files[a].originalFilename)//第二个参数试上传的文件名
@@ -571,33 +537,28 @@ router.post('/fileUplo', mult, (req, res) => {
         }
     })
         .then((result) => {
-            console.log(result)
             res.send({ err: 0, msg: result.data })
         })
         .catch((err) => {
-            // console.log(err)
             res.send({ err: -1, msg: err })
         })
 })
 
 // 删除指标(多个)
 router.post('/IndicatorOperate/deleteIndicator', (req, res) => {
-    console.log(req.body)
     let { arrId } = req.body
-    console.log(arrId)
     let urlStr = `http://110.40.205.103:8099/IndicatorOperate/deleteIndicator?ids=${arrId[0]}`
     for (let i = 1; i < arrId.length; i++) {
         urlStr += `&ids=${arrId[i]}`
     }
     console.log(urlStr)
-    axios({
-        method: 'DELETE',
-        url: urlStr,
+    axios.delete(urlStr, {
         headers: {
             token: req.session.token
         }
     })
         .then((result) => {
+            console.log('删除',result.data)
             if (result.data.msg == 'OK') {
                 res.send({ err: 0, msg: result.data.data })
             } else {
@@ -634,5 +595,70 @@ router.post('/creditTypeOperate/deleteCreditType', (req, res) => {
         })
 })
 
+// 修改二级目录
+router.post('/changeTwoDir',(req,res)=>{
+    let {b_id,b_Indicator_name,b_superior_id,b_first_level}=req.body
+    axios({
+        method:'PUT',
+        url:'/IndicatorOperate/updateIndicator',
+        params:{
+            b_id:b_id,
+            b_Indicator_name:b_Indicator_name,
+            b_superior_id:b_superior_id,
+            b_first_level:b_first_level,
+            id:0
+        },
+        headers:{
+            token:req.session.token
+        }
+    })
+    .then((result)=>{
+        res.send({err:0,msg:result.data})
+    })
+    .catch((err)=>{
+        res.send({err:-1,msg:err})
+    })
+})
+
+// 修改学分构成
+router.post('/creditTypeOperate/updateCreditType',(req,res)=>{
+    axios({
+        method:'PUT',
+        url:'/creditTypeOperate/updateCreditType',
+        params:req.body,
+        headers:{
+            token:req.session.token
+        }
+    })
+    .then((result)=>{
+        if(result.data.msg=='OK'){
+            res.send({err:0,msg:result.data})
+        }else{
+            res.send({err:-1,msg:result.data})
+        }
+    })
+    .catch((err)=>{
+        res.send({err:-1,msg:err})
+    })
+})
+
+// 修改指标信息
+router.post('/changeIndicator',(req,res)=>{
+    let {sendArr}=req.body
+    axios({
+        method:'PUT',
+        url:'/IndicatorOperate/updateIndicator',
+        params:sendArr,
+        headers:{
+            token:req.session.token
+        }
+    })
+    .then((result)=>{
+        res.send({err:0,msg:result.data})
+    })
+    .catch((err)=>{
+        res.send({err:-1,msg:err})
+    })
+})
 
 module.exports = router

@@ -107,7 +107,7 @@ function GetAll(page, perPage, obj) {
                 adminManageUsersContentContent.innerHTML += `
             <ul>
                 <li>
-                    <div style='display:none'>${result.data.msg[i].id}</div>
+                    <div style='display:none'>${result.data.msg[i].uid}</div>
                     <input type="checkbox" class="checkDel" onclick="checkDelFn()">
                 </li>
                 <li>${result.data.msg[i].name}</li>
@@ -119,7 +119,7 @@ function GetAll(page, perPage, obj) {
                     <button class="operatorBtnSty">查看</button>
                 </li>
                 <li>
-                    <div style='display:none'>${result.data.msg[i].id}</div>
+                    <div style='display:none'>${result.data.msg[i].uid}</div>
                     <button onclick="removePopup(this)" class="operatorBtnSty">删除</button>
                 </li>
             </ul>
@@ -260,6 +260,7 @@ function removePopup(event) {
                 }
             })
                 .then((result) => {
+                    console.log(result)
                     if (result.data.err != -1) {
                         // 删除成功
                         swal('删除成功')

@@ -24,7 +24,7 @@
             <div class="dirItem" style="display: none;">
                 <div class="dirItemI">
                     请输入子级目录:
-                    <input type="text" placeholder="请输入子级目录"  class="clearValue subValue">
+                    <input type="text" placeholder="请输入子级目录" class="clearValue subValue">
                     <button class="addChildDri" onclick="addCertification(this)">添加</button>
                 </div>
             </div>
@@ -32,6 +32,98 @@
         <div class="bodyTopBottom">
             <button id="sureAdd">确定</button>
             <button id="cancelAdd">取消</button>
+        </div>
+    </div>
+</div>
+<div class="bodyTop" style="display: none;">
+    <div class="changeSty" style="min-height: 100px;">
+        <div class="bodyTopItem">
+            父级目录
+            <select id="changeTwoDirFather"></select>
+        </div>
+        <div class="bodyTopItem">
+            <div id="changeTwoDirId" style="display: none;"></div>
+            子级目录:
+            <input type="text" placeholder="请输入二级目录名" id="changeTwoDir">
+            <div class="hintText" style="display: none;">请输入学分构成</div>
+        </div>
+        <div class="bodyTopBottom">
+            <div class="bodyTopBottom">
+                <button id="sureChange">确定</button>
+                <button id="cancelChange">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="bodyTop" style="display: none;">
+    <div class="" style="min-height: 100px;">
+        <div class="bodyTopItem">
+            请输入新的学分构成:
+        </div>
+        <div class="bodyTopItem">
+            <div id="CompositionId" style="display: none;"></div>
+            学分构成:
+            <input type="text" placeholder="请输入学分构成" id="CompositionName">
+            <div class="hintText" style="display: none;">请输入学分构成</div>
+        </div>
+        <div class="bodyTopBottom">
+            <button id="SurechangeComposition">修改</button>
+            <button id="CancelchangeComposition">取消</button>
+        </div>
+    </div>
+</div>
+<div class="bodyTop" style="display: none;">
+    <div class="" style="min-height: 150px;">
+        <div class="bodyTopItem">
+            学分构成:
+            <span id="AddDirFatherName">专业技能学分</span>
+            <span id="AddDirFatherId" style="display: none;"></span>
+        </div>
+        <div class="bodyTopItem">
+            <div class="dirItem">
+                <div class="dirItemI">
+                    请输入子级目录:
+                    <input type="text" placeholder="请输入子级目录" class="clearValue subValue AddDirValue">
+                    <button class="addChildDri" onclick="addCertification(this)">添加</button>
+                </div>
+            </div>
+        </div>
+        <div class="bodyTopBottom">
+            <button id="SureaddDir">修改</button>
+            <button id="CancelAddDir">取消</button>
+        </div>
+    </div>
+</div>
+<div class="bodyTop" style="display: none;">
+    <div id="revise">
+        <div class="bodyTopItem">
+            学分构成:
+            <select id="reviseCreComposition"></select>
+        </div>
+        <div class="bodyTopItem">
+            子级目录
+            <select id="reviseChildDir"></select>
+        </div>
+        <div class="bodyTopItem">
+            认定范围:
+            <input type="text" id="reviseRecognize" onclick="clearFn(this)">
+            <div class="hintText" style="display: none;">请输入认证范围</div>
+        </div>
+        <div class="bodyTopItem">
+            学分大小:
+            <input type="text" id="reviseCreditNumber" onclick="clearFn(this)">
+            <div class="hintText" style="display: none;">请输入正确的数字</div>
+        </div>
+        <div class="bodyTopItem">
+            备注:
+            <div class="">
+                <textarea name="" id="reviseText" cols="30" rows="10"></textarea>
+            </div>
+        </div>
+        <div class="bodyTopBottom operator">
+            <button id="sureRevise">修改</button>
+            <button id="cancelRevise">取消</button>
+            <div id="selfId" style="display: none;"></div>
         </div>
     </div>
 </div>
@@ -220,5 +312,6 @@
 {{/block}}
 {{block 'bottom'}}
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="/public/js/adminCreditManagementTwo.js"></script>
 <script src="/public/js/adminCreditManagement.js"></script>
 {{/block}}
