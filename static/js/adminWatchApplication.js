@@ -54,6 +54,7 @@ function GetAllInfo(page, perpage, obj) {
             WatchApplicationContentContent.style.display = 'block'
             WatchApplicationNo.style.display = 'none'
             allNumber.innerHTML = `共${result.data.AllPages}页`
+            all_Page=result.data.AllPages
             if (result.data.msg.length == 0) {
                 WatchApplicationContentContent.style.display = 'none'
                 WatchApplicationNo.style.display = 'block'
@@ -69,7 +70,7 @@ function GetAllInfo(page, perpage, obj) {
                     <li>${result.data.msg[i].user.academy}</li>
                     <li>${result.data.msg[i].user.major_class}</li>
                     <li>${result.data.msg[i].creditType.afirstLevel}</li>
-                    <li>${result.data.msg[i].points}</li>
+                    <li>${result.data.msg[i].classify.b_points_available}</li>
                     <li>
                         <button class="watchDetails" onclick="">下载</button>
                         <button class="watchDetails" onclick="">查看</button>

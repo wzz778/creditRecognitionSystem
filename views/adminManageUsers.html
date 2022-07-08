@@ -6,7 +6,7 @@
 {{/block}}
 {{block 'bodytop'}}
 
-<div class="bodyTop">
+<div class="bodyTop" style="display: none;">
     <div>
         <div class="bodyTopItem">
             用户姓名:
@@ -43,12 +43,15 @@
                 所在年级:
                 <select id="changeUserGrade">
                     <option value="">请选择年级...</option>
+                    <option value="2018">2018</option>
+                    <option value="2021">2021</option>
                 </select>
             </div>
             <div class="bodyTopItem">
                 所在学院:
                 <select id="changeUseraCademy">
                     <option value="">请选择学院...</option>
+                    <option value="信息工程学院">信息工程学院</option>
                 </select>
             </div>
             <div class="bodyTopItem">
@@ -61,13 +64,15 @@
                 所在班级:
                 <select id="changeUserClass">
                     <option value="">请选择班级...</option>
+                    <option value="计科214">计科214</option>
+                    <option value="信工212">信工212</option>
                 </select>
             </div>
         </div>
         <div class="bodyTopBottom">
             <button id="changeUserInfo">修改</button>
             <button id="cancel">取消</button>
-            <div id="changeUserId"></div>
+            <div id="changeUserId" style="display: none;"></div>
         </div>
     </div>
 </div>
@@ -235,8 +240,6 @@
     <button id="jump">跳转</button>
     <button id="nextPage">下一页</button>
 </div>
-
-<button id="btn">去顶</button>
 {{/block}}
 {{block 'bottom'}}
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>

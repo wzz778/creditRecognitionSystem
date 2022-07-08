@@ -1,4 +1,3 @@
-
 // 提示弹窗
 let popUps = document.getElementsByClassName('popUps')
 
@@ -53,8 +52,8 @@ let now_page = 1//当前请求页数
 let passFail = document.getElementById('passFail')
 let startDate = document.getElementById('startDate')
 let endDate = document.getElementById('endDate')
-let sureSearch=document.getElementById('sureSearch')
-let resetSearch=document.getElementById('resetSearch')
+let sureSearch = document.getElementById('sureSearch')
+let resetSearch = document.getElementById('resetSearch')
 
 
 // 将搜索的值全部都添加到一个对象中
@@ -67,25 +66,25 @@ function limitationFactor() {
 }
 
 // 查询函数
-sureSearch.onclick=function(){
-    if(passFail.value==''&&startDate.value==''){
-        popUps[2].style.display='block'
-        setTimeout(()=>{
-            popUps[2].style.display='none'
-        },2000)
+sureSearch.onclick = function () {
+    if (passFail.value == '' && startDate.value == '') {
+        popUps[2].style.display = 'block'
+        setTimeout(() => {
+            popUps[2].style.display = 'none'
+        }, 2000)
         return
     }
-    GetAllInfo(now_page,per_Page,limitationFactor())
+    GetAllInfo(now_page, per_Page, limitationFactor())
 }
 // 重置函数
-resetSearch.onclick=function(){
+resetSearch.onclick = function () {
     // 将值清空
-    passFail.value=''
-    startDate.value=''
-    endDate.value=''
-    now_page=1
-    nowPage.innerHTML=now_page
-    GetAllInfo(now_page,per_Page,limitationFactor())
+    passFail.value = ''
+    startDate.value = ''
+    endDate.value = ''
+    now_page = 1
+    nowPage.innerHTML = now_page
+    GetAllInfo(now_page, per_Page, limitationFactor())
 }
 
 
@@ -103,6 +102,7 @@ function GetAllInfo(page, perpage, obj) {
         .then((result) => {
             console.log(result.data)
             all_Page = result.data.allPage
+            allNumber.innerHTML = `共${result.data.allRecords}条`
             //删除的判断
             // 判断是否有值
             adminHistoryContentContent.style.display = 'block'
@@ -120,7 +120,8 @@ function GetAllInfo(page, perpage, obj) {
                 adminHistoryContentContent.innerHTML += `
                 <ul>
                     <li>
-                        <input type="checkbox" class="checkDel" onclick='checkDelFn(this)'>
+                        <div style='display:none'>${result.data.msg[i].application.id}</div>
+                        <input type="checkbox" class="checkDel delAllBox" onclick='checkDelFn(this)'>
                     </li>
                     <li>${result.data.msg[i].application.user.name}</li>
                     <li>${result.data.msg[i].application.user.userName}</li>
@@ -130,7 +131,8 @@ function GetAllInfo(page, perpage, obj) {
                     <li>${time}</li>
                     <li>通过普通管理员</li>
                     <li>
-                        <button onclick="removePopup()" class="operatorBtnSty">删除</button>
+                        <div style='display:none'>${result.data.msg[i].application.id}</div>
+                        <button onclick="removePopup(this)" class="operatorBtnSty">删除</button>
                         <button onclick="" class="operatorBtnSty">详情</button>
                     </li>
                 </ul>
@@ -208,7 +210,7 @@ jump.onclick = function () {
 }
 
 // 删除弹窗显现函数(只删除一个)
-function removePopup() {
+function removePopup(event) {
     swal({
         title: "你确定？",
         text: "要删除该条历史记录",
@@ -221,7 +223,29 @@ function removePopup() {
         closeOnCancel: false
     }, function (isConfirm) {
         if (isConfirm) {
-            swal('删除成功')
+            let idArr = []
+            idArr.push(Number(event.parentElement.firstElementChild.innerHTML))
+            // 发送删除请求
+            console.log(idArr)
+            axios({
+                method: 'POST',
+                url: '/del/admin/records',
+                data: {
+                    idArr: idArr
+                }
+            })
+                .then((result) => {
+                    console.log(result.data)
+                    if (result.data.err == 0) {
+                        swal('删除成功')
+                    } else {
+                        swal('删除失败,请重试')
+                    }
+                })
+                .catch((err) => {
+                    console.log(err)
+                    swal('网络错误')
+                })
         } else {
             swal('已取消')
         }
@@ -230,11 +254,14 @@ function removePopup() {
 
 let del = document.getElementById('del')
 del.onclick = function () {
+    let checkDel = document.getElementsByClassName('checkDel')
     // 判断是否选择删除的值
     let yn = false
+    let idArr = []
     for (let i = 0; i < checkDel.length; i++) {
-        if (checkDel[i].checked == true) {
+        if (checkDel[i].checked) {
             yn = true
+            idArr.push(Number(checkDel[i].parentElement.firstElementChild.innerHTML))
         }
     }
     if (yn) {
@@ -253,8 +280,25 @@ del.onclick = function () {
         }, function (isConfirm) {
             // 发送数据
             if (isConfirm) {
-                // 请求数据
-                swal('删除成功')
+                axios({
+                    method: 'POST',
+                    url: '/del/admin/records',
+                    data: {
+                        idArr: idArr
+                    }
+                })
+                    .then((result) => {
+                        console.log(result.data)
+                        if (result.data.err == 0) {
+                            swal('删除成功')
+                        } else {
+                            swal('删除失败,请重试')
+                        }
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                        swal('网络错误')
+                    })
             } else {
                 swal('已取消')
             }

@@ -128,7 +128,7 @@ function watchChild(event) {
                         子级目录:
                         <span>${result.data.msg[i].b_Indicator_name}</span>
                         <button style="float: right;" onclick='changeOneDirFn(this)'>修改子级目录</button>
-                        <button class="floatRight" onclick='delFnOne(this)'>删除此子级目录</button>
+                        <button class="floatRight" onclick='delFnOneNo(this)'>删除此子级目录</button>
                         <div style='display:none'>${result.data.msg[i].b_id}</div>
                     </div>
                     <div id="adminHistoryContentNo" style='min-height: 50px;
@@ -310,7 +310,7 @@ function delFnOne(event) {
                 }
             })
                 .then((result) => {
-                    // console.log(result.data)
+                    console.log(result.data)
                     if (result.data.err == 0) {
                         swal('删除成功')
                         // 重新获取数据
@@ -329,6 +329,52 @@ function delFnOne(event) {
         }
     })
 }
+// 删除当个元素(是目录但是没有子级指标)
+function delFnOneNo(event){
+    // 获取id值
+    swal({
+        title: "你确定？",
+        text: "要删除该内容",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    }, function (isConfirm) {
+        if (isConfirm) {
+            // 发送数据
+            let arrId = []
+            arrId.push(Number(event.parentElement.lastElementChild.innerHTML))
+            axios({
+                method: 'POST',
+                url: '/IndicatorOperate/deleteIndicator',
+                data: {
+                    arrId: arrId
+                }
+            })
+                .then((result) => {
+                    console.log(result.data)
+                    if (result.data.err == 0) {
+                        swal('删除成功')
+                        // 重新获取数据
+                        watchFather()
+                    } else {
+                        swal('删除失败')
+                    }
+                })
+                .catch((err) => {
+                    console.log(err)
+                    swal('网络错误')
+                })
+        } else {
+            swal('已取消')
+            return false
+        }
+    })
+}
+
 // 删除学分构成
 function delFnFather(event) {
     swal({

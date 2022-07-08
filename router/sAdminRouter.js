@@ -32,7 +32,7 @@ router.get('/adminWatchApplication', (req, res) => {
 router.get('/adminManageUsers', (req, res) => {
     res.render('adminManageUsers.html')
 })
-// 学分构成管理 !(没有数据新增和修改没有写，以及分类查询)
+// 学分构成管理 !(分类查询)
 router.get('/adminCreditManagement', (req, res) => {
     res.render('adminCreditManagement.html')
 })
@@ -40,7 +40,6 @@ router.get('/adminCreditManagement', (req, res) => {
 router.get('/addNewIndicator', (req, res) => {
     res.render('addNewIndicator.html')
 })
-
 axios.defaults.baseURL = 'http://110.40.205.103:8099'
 
 // 解析kwt函数
@@ -74,10 +73,9 @@ router.post('/admin/records', (req, res) => {
     })
         .then((result) => {
             // console.log(result.data)
-            res.send({ err: 0, msg: result.data.data.allRecords, allPage: Math.ceil((result.data.data.allPages-1)/pageSize), msg1: result.data })
+            res.send({ err: 0, msg: result.data.data.pageInfo, allPage: result.data.data.allPages,allRecords:result.data.data.allRecords})
         })
         .catch((err) => {
-            console.log('失败', err)
             res.send({ err: -1, msg: '网络错误' })
         })
 
@@ -125,7 +123,7 @@ router.post('/admin/application', (req, res) => {
     })
         .then((result) => {
             console.log(result.data)
-            res.send({ err: 0, msg: result.data.data.allRecords, AllPages:  Math.ceil((result.data.data.allPage-1)/pageSize) })
+            res.send({ err: 0, msg: result.data.data.pageInfo, AllPages: result.data.data.allPage })
         })
         .catch((err) => {
             res.send({ err: -1, msg: '错误' })
@@ -661,48 +659,99 @@ router.post('/changeIndicator',(req,res)=>{
     })
 })
 
-router.get('/a',(req,res)=>{
+// 修改用户信息
+router.post('/admin/update.do.userInfo',(req,res)=>{
+    let {obj}=req.body
     axios({
-        method:'POST',
-        url:'http://110.40.211.224:8080/xingchen/login',
-        params:{
-           userPassword:'123456',
-           userAccount:'123'
+        method:'PUT',
+        url:'/admin/update.do.userInfo',
+        params:obj,
+        headers:{
+            token:req.session.token
         }
     })
     .then((result)=>{
-        console.log(result.data)
-        req.session.token = result.data.data
-        res.send({err:0,msg:result.data})
+        console.log('修改用户信息',result.data)
+        if(result.data.msg=='OK'){
+            res.send({err:0,msg:result.data})
+        }else{
+            res.send({err:-1,msg:result.data})
+        }
     })
     .catch((err)=>{
-        console.log(err)
-        res.send({err:-1,msg:'网络错误'})
+        res.send({err:-1,msg:err})
     })
 })
-
-// 判断登录
-router.get('/isLogin',(req,res)=>{
-    // let {token} = req.query;
-    console.log('存到的token',req.session.token)
+// 重置密码
+router.post('/admin/resetUserPass',(req,res)=>{
+    let {id}=req.body
     axios({
-        method:'get',
-        url:'http://110.40.211.224:8080/xingchen/isLogin',
+        method:'PUT',
+        url:'/admin/resetUserPass',
         params:{
-            token:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXNzd29yZCI6IjEyMzQ1NiIsImV4cCI6MTY1NzE4NzYxNCwidXNlcm5hbWUiOiIxMjMifQ.3FCwo8s4RUu49V7wbt86bDTGm7VjUg6H5iXZFQOo11c'
+            id:id
+        },
+        headers:{
+            token:req.session.token
         }
     })
     .then((result)=>{
-        console.log(result.data)
-        // console.log(req.session.token)
-        res.send({err:0,msg:result.data})
+        if(result.data.msg=='OK'){
+            res.send({err:0,msg:result.data})
+        }else{
+            res,send({err:-1,msg:result.data})
+        }
     })
     .catch((err)=>{
-        console.log(err)
-        res.send({err:-1,msg:'网络错误'})
+        res.send({err:-1,msg:err})
     })
 })
 
+// 封装的删除2历史记录函数
+function delRecord(req,id){
+    return new Promise((resolve,resject)=>{
+        axios({
+            method:'DELETE',
+            url:'/admin/records',
+            params:{
+                id:id
+            },
+            headers:{
+                token:req.session.token
+            }
+        })
+        .then((result)=>{
+            console.log('封装的删除函数里边的结果',result.data)
+            if(result.data.msg=='OK'){
+                resolve(result.data)
+            }else{
+                throw new Error(result.data)
+            }
+        })
+        .catch((err)=>{
+            resject(err)
+        })
+    })
+}
 
+// 删除历史记录
+router.post('/del/admin/records',(req,res)=>{
+    console.log(123)
+    let {idArr}=req.body
+    console.log('传的数据',req.body)
+    let sendArr=[]
+    for(let i=0;i<idArr.length;i++){
+        sendArr.push(delRecord(req,idArr[i]))
+    }
+    Promise.all(sendArr)
+    .then((result)=>{
+        console.log('删除接口的数据',result)
+        res.send({err:0,msg:result})
+    })
+    .catch((err)=>{
+        console.log(err)
+        res.send({err:-1,msg:err})
+    })
+})
 
 module.exports = router

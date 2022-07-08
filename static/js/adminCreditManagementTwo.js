@@ -32,6 +32,8 @@ SureaddDir.onclick = function () {
         }
     })
         .then((result) => {
+            bodyTop[3].style.display='none'
+            swal('添加成功')
             console.log(result.data)
         })
         .catch((err) => {
@@ -59,7 +61,11 @@ function IndicatorTwo(event) {
     getChild(Number(reviseCreComposition.value), false)
     reviseRecognize.value = ele.nextElementSibling.innerHTML
     reviseCreditNumber.value = Number(ele.nextElementSibling.nextElementSibling.innerHTML)
-    reviseText.value = ele.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML
+    let test=''
+    if(ele.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML!='null'){
+        test=ele.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML
+    }
+    reviseText.value=test
 }
 
 function IndicatorThree(event) {

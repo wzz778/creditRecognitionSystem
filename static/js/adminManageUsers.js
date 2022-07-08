@@ -82,7 +82,6 @@ function GetAll(page, perPage, obj) {
         data: obj
     })
         .then((result) => {
-            console.log(result.data.msg)
             adminManageUsersContentContent.innerHTML = ''
             adminManageUsersContentContent.style.display = 'block'
             adminHistoryContentNo.style.display = 'none'
@@ -94,7 +93,6 @@ function GetAll(page, perPage, obj) {
                 }
                 return
             }
-            console.log(result.data)
             all_Page = result.data.page
             allPages.innerHTML = `共${all_Page}页`
             allNumber.innerHTML = `共${result.data.total}条`
@@ -108,6 +106,7 @@ function GetAll(page, perPage, obj) {
                 <li>
                     <div style='display:none'>${result.data.msg[i].uid}</div>
                     <input type="checkbox" class="checkDel" onclick="checkDelFn()">
+                    <div style='display:none'>${result.data.msg[i].academy}</div>
                 </li>
                 <li>${result.data.msg[i].name}</li>
                 <li>${result.data.msg[i].userName}</li>
@@ -115,12 +114,14 @@ function GetAll(page, perPage, obj) {
                 <li>${result.data.msg[i].grade}</li>
                 <li>${userClass}</li>
                 <li>
-                    <button class="operatorBtnSty">查看</button>
+                    <button class="operatorBtnSty" onclick='reviseFn(this)'>重置密码</button>
+                    <div style='display:none'>${result.data.msg[i].uid}</div>
                 </li>
                 <li>
                     <div style='display:none'>${result.data.msg[i].uid}</div>
                     <button onclick="removePopup(this)" class="operatorBtnSty">删除</button>
                     <button onclick="changeUserInfoFn(this)" class="operatorBtnSty">修改</button>
+                    <div style='display:none'>${result.data.msg[i].sex}</div>
                 </li>
             </ul>
                 `
@@ -371,35 +372,117 @@ let changeUseraCademy = document.getElementById('changeUseraCademy')//学院
 let changeUserSpecialized = document.getElementById('changeUserSpecialized')//专业
 let changeUserClass = document.getElementById('changeUserClass')//班级
 let changeUserId = document.getElementById('changeUserId')//用户id
+let bodyTopClu = document.getElementsByClassName('bodyTopClu')
 cancel.onclick = function () {
     bodyTop[0].style.display = 'none'
 }
 
 function changeUserInfoFn(event) {
-
+    bodyTop[0].style.display = 'block'
+    changeUserId.innerHTML = event.parentElement.firstElementChild.innerHTML
+    let ele = event.parentElement.parentElement.firstElementChild
+    changeUserName.value = ele.nextElementSibling.innerHTML
+    changeUserAccount.value = ele.nextElementSibling.nextElementSibling.innerHTML
+    changeUserPermission.value = ele.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML
+    changeUserSex.value = event.parentElement.lastElementChild.innerHTML
+    if (ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML == '未知') {
+        changeUserHas.value = '无'
+        bodyTopClu[0].style.display = 'none'
+    } else {
+        changeUserHas.value = '有'
+        bodyTopClu[0].style.display = 'block'
+        changeUserGrade.value = ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML
+        changeUserClass.value = ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML
+        changeUseraCademy.value = ele.lastElementChild.innerHTML
+    }
 }
 
-axios({
-    method: 'GET',
-    url: '/a'
-})
-    .then((result) => {
-        console.log(result.data)
-    })
-    .catch((err) => {
-        console.log(err)
-    })
-
-let btn = document.getElementById('btn')
-btn.onclick = function () {
+let reg = /^[0-9]*$/
+changeUserInfo.onclick = function () {
+    // 判断值是否为空
+    if (changeUserName.value == '') {
+        swal('请输入姓名')
+        return
+    }
+    if (changeUserAccount.value == '' || !reg.test(Number(changeUserAccount.value))) {
+        swal('请输入正确的格式的学号或教务账号')
+        return
+    }
+    let obj = {}
+    obj.uId = Number(changeUserId.innerHTML)
+    obj.name = changeUserName.value
+    obj.sex = changeUserSex.value
+    obj.userName = changeUserAccount.value
+    obj.power = changeUserPermission.value
+    if (changeUserHas.value == '有') {
+        obj.academy = changeUseraCademy.value
+        obj.grade = changeUserGrade.value
+        obj.major_class = changeUserClass.value
+    }
+    console.log(obj)
     axios({
-        method: 'GET',
-        url: '/isLogin',
+        method: 'POST',
+        url: '/admin/update.do.userInfo',
+        data: {
+            obj: obj
+        }
     })
         .then((result) => {
             console.log(result.data)
+            bodyTop[0].style.display = 'none'
+            if (result.data.err == 0) {
+                swal('修改成功')
+                GetAll(now_page, per_Page, assignFn())
+            }else{
+                swal(result.data.msg.msg)
+            }
         })
         .catch((err) => {
             console.log(err)
         })
+}
+
+function reviseFn(event) {
+    swal({
+        title: "你确定？",
+        text: "要重置该用户密码",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    }, function (isConfirm) {
+        if (isConfirm) {
+            axios({
+                method: 'POST',
+                url: '/admin/resetUserPass',
+                data: {
+                    id: Number(event.parentElement.lastElementChild.innerHTML)
+                }
+            })
+                .then((result) => {
+                    console.log(result.data)
+                    if (result.data.err == 0) {
+                        swal('已重置')
+                    } else {
+                        swal('重置失败,请重试')
+                    }
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+        } else {
+            swal('已取消')
+        }
+    })
+}
+
+changeUserHas.onclick=function(){
+    if(changeUserHas.value=='有'){
+        bodyTopClu.style.display='block'
+    }else{
+        bodyTopClu.style.display='none'
+    }
 }
