@@ -477,6 +477,36 @@ router.post('/child', (req, res) => {
             res.send({ err: -1, msg: '网络错误' })
         })
 })
+
+//获取学分构成的三级指标
+router.post('/Third',(req,res)=>{
+    if (!jwt.decode(req.session.token)) {
+        res.send({ err: -1, msg: '用户身份非法' })
+        return
+    }
+    let {id}=req.body
+    axios({
+        method: 'GET',
+        url: '/IndicatorOperate/showIndicator',
+        params: {
+            id: id,
+            level: 2
+        },
+        headers: {
+            token: req.session.token
+        }
+    })
+        .then((result) => {
+            if (result.data.msg == 'OK') {
+                // 判断是否有子级目录
+                res.send({ err: 0, msg: result.data.data })
+            }
+        })
+        .catch((err) => {
+            res.send({ err: -1, msg: '网络错误' })
+        })
+})
+
 // 封装的添加二级目录的信息
 function addSecondDir(req, b_first_level, resultData) {
     return new Promise((resolve, resject) => {

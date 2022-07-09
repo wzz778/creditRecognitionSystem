@@ -29,9 +29,9 @@ function limitationFactor() {
     obj.academy = academy.value
     obj.approval_status = 1
     obj.b_Indicator_name = ScopeRecognition.value
-    if(credit.value!=''&&!/(^[1-9]\d*$)/.test(Number(credit.value))){
+    if (credit.value != '' && !/(^[1-9]\d*$)/.test(Number(credit.value))) {
         swal('请输入正确分数')
-        return 
+        return
     }
     obj.b_points_available = credit.value
     obj.beginDate = startDate.value
@@ -50,7 +50,7 @@ function GetAllInfo(page, perpage, obj) {
         data: obj
     })
         .then((result) => {
-            console.log(result.data)
+            // console.log(result.data)
             // 将数据渲染
             WatchApplicationContentContent.innerHTML = ''
             // 判断是否有值
@@ -96,7 +96,7 @@ function GetAllInfo(page, perpage, obj) {
             swal('网络错误')
         })
 }
-GetAllInfo(1, 10,limitationFactor() )
+GetAllInfo(1, 10, limitationFactor())
 
 
 
@@ -187,4 +187,85 @@ reset.onclick = function () {
 selectPerpage.onchange = function () {
     per_Page = selectPerpage.value
     GetAllInfo(now_page, per_Page, limitationFactor())
+}
+
+axios({
+    method: 'GET',
+    url: '/creditTypeOperate/showCreditType',
+})
+    .then((result) => {
+        console.log(result.data)
+        CreditsComposition.innerHTML = ''
+        for (let i = 0; i < result.data.msg.length; i++) {
+            // CreditsComposition.add(new Option(result.data.msg[i].afirstLevel, result.data.msg[i].))
+            CreditsComposition.add(new Option(result.data.msg[i].afirstLevel, result.data.msg[i].aid))
+        }
+        CreditsComposition.add(new Option('请选择...', ''))
+        CreditsComposition.value = ''
+    })
+    .catch((err) => {
+        console.log(err)
+    })
+let CreditsSecondDir = document.getElementById('CreditsSecondDir')
+CreditsComposition.onchange = function () {
+    if (CreditsComposition.value == '') {
+        return
+    }
+    axios({
+        method: 'POST',
+        url: '/child',
+        data: {
+            id: Number(CreditsComposition.value)
+        }
+    })
+        .then((result) => {
+            console.log(result.data)
+            CreditsSecondDir.innerHTML = ''
+            ScopeRecognition.innerHTML = ''
+            CreditsSecondDir.add(new Option('请选择...', ''))
+            ScopeRecognition.add(new Option('请选择...', ''))
+            for (let i = 0; i < result.data.msg.length; i++) {
+                if (!result.data.msg[i].b_points_available) {
+                    // 是目录
+                    CreditsSecondDir.add(new Option(result.data.msg[i].b_Indicator_name, result.data.msg[i].b_id))
+                } else {
+                    ScopeRecognition.add(new Option(result.data.msg[i].b_Indicator_name, result.data.msg[i].b_Indicator_name))
+                }
+            }
+            CreditsSecondDir.value = ''
+            ScopeRecognition.value = ''
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}
+
+CreditsSecondDir.onchange = function () {
+    if (CreditsSecondDir.value == '') {
+        return
+    }
+    axios({
+        method: 'POST',
+        url: '/Third',
+        data: {
+            id: Number(CreditsSecondDir.value)
+        }
+    })
+        .then((result) => {
+            console.log(result.data)
+            ScopeRecognition.innerHTML = ''
+            ScopeRecognition.add(new Option('请选择...', ''))
+            for (let i = 0; i < result.data.msg.length; i++) {
+                ScopeRecognition.add(new Option(result.data.msg[i].b_Indicator_name, result.data.msg[i].b_Indicator_name))
+            }
+            ScopeRecognition.value = ''
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}
+
+let exportForm=document.getElementById('exportForm')
+exportForm.onclick=function(){
+    window.open('http://127.0.0.1:8080/adminExportForm')
 }

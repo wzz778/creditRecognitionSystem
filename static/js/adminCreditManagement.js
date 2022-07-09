@@ -539,6 +539,7 @@ function changeTwoDirFn(event) {
         url: '/creditTypeOperate/showCreditType',
     })
         .then((result) => {
+            changeTwoDirFather.innerHTML=''
             for (let i = 0; i < result.data.msg.length; i++) {
                 changeTwoDirFather.add(new Option(result.data.msg[i].afirstLevel, result.data.msg[i].aid))
             }
