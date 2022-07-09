@@ -49,6 +49,11 @@ $("#testListAction").on("click", function () {
             swal("请输入附件名！");
             return
         }
+        let datastatus=document.getElementsByClassName('datastatus');
+        if(datastatus.length==0){
+            swal("请选择要上传的附件！");
+            return
+        }
         let formData = new FormData()   
         let a=JSON.stringify(files)
         let i=0;
@@ -85,7 +90,7 @@ $("#testListAction").on("click", function () {
                     swal("上传失败！","您提交的文件上传失败！","error")
                 }
             })
-            .then((err)=>{
+            .catch((err)=>{
                 console.log(err)
             })
 });

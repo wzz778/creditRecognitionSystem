@@ -28,6 +28,9 @@ router.get('/makepdf',(req,res)=>{
 router.get('/repassword',(req,res)=>{
     res.render('repassword.html')
 })
+router.get('/examineApplication',(req,res)=>{
+    res.render('examineApplication.html')
+})
 router.get('/submitApplication',(req,res)=>{
     axios.get('/creditTypeOperate/showCreditType',{
         // params:req.query,
@@ -163,32 +166,6 @@ router.get('/api/getpostmessage', (req, res) => {
         res.send(error)
     });
 })
-
-// router.post('/api/UploadAttachment',multipartMiddleware,(req, res) => {
-//     console.log(req.files.file  );
-//     console.log(req.files.file.path);
-//     let form = new FormData();
-//     form.append("application_id", req.body.application_id);
-//     form.append("enclosure_name",req.body.enclosure_name);
-//     form.append("file",fs.createReadStream(req.files.file.path));
-//     axios.post('/user/photo',{
-//         data:form,
-//         header:form.getHeaders(),
-//         ContentType: 'multipart/form-data',
-//         headers:{
-//            ' Content-Type': 'multipart/form-data',
-//             token:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTcwMjM2MTksImV4cCI6MTY1NzAyNzIxOSwidXNlcm5hbWUiOiIxIiwicG93ZXIiOiLotoXnuqfnrqHnkIblkZgifQ.jmuAvfvI487bcb5Qp-5DlYFxEX5BgPjaAZlS9S6ZQVo"
-//         }
-//     }).then(response=>{
-//         console.log("wwwwwwwwwwwwww");
-//         console.log(response.data);
-//         res.send(response.data);
-//     }).catch(function (error) {
-//         console.log("error");
-//         // console.log(error);
-//         res.send(error)
-//     });
-// })
 router.post('/api/UploadAttachment', multipartMiddleware,(req, res) => {
     let formdata = new FormData()
     for (let a in req.files) {
@@ -223,7 +200,7 @@ router.put('/api/uppassword', (req, res) => {
             token:req.session.token
         },
         method: 'put',
-        url: 'http://110.40.205.103:8099/user/password',
+        url: '/user/password',
         params:{
             password:req.query. password,
             prePassword:req.query.prePassword,
@@ -239,5 +216,55 @@ router.put('/api/uppassword', (req, res) => {
     }else{
         res.send('您的密码输入错误！');
     }
+})
+router.get('/api/allapplication', (req, res) => {
+    axios.get('/user/application',{
+        params:req.query,
+        headers:{
+            token:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTczNDUzNDYsImV4cCI6MTY1NzM0ODk0NiwidXNlcm5hbWUiOiIxIiwicG93ZXIiOiLotoXnuqfnrqHnkIblkZgifQ.zIhoxipHH2ReQciofnQa1kjWzc-lIZdL9m5U4o7UCNI"
+        }},
+    ).then(response=>{
+        console.log(response.data);
+        res.send(response.data);
+    }).catch(function (error) {
+        res.send(error)
+    });
+})
+router.put('/api/passpost', (req, res) => {
+        axios({
+        headers: {
+            token:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTczNDUzNDYsImV4cCI6MTY1NzM0ODk0NiwidXNlcm5hbWUiOiIxIiwicG93ZXIiOiLotoXnuqfnrqHnkIblkZgifQ.zIhoxipHH2ReQciofnQa1kjWzc-lIZdL9m5U4o7UCNI"
+        },
+        method: 'put',
+        url: '/admin/auditingApplication',
+        params:req.query
+        }).then(response=>{
+            console.log(response.data);
+            res.send(response.data);
+        }).catch(function (error) {
+            console.log(error);
+            res.send(error)
+        });
+})
+router.post('/api/deletepost',(req, res) => {
+    console.log(req.body);
+    // let allid=JSON.stringify(req.body);
+    // console.log(allid);
+    // let all=allid.replace(/{/g,"").replace(/}/g,"");
+    // console.log(all);
+    axios({
+    headers: {
+        token:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTczNDUzNDYsImV4cCI6MTY1NzM0ODk0NiwidXNlcm5hbWUiOiIxIiwicG93ZXIiOiLotoXnuqfnrqHnkIblkZgifQ.zIhoxipHH2ReQciofnQa1kjWzc-lIZdL9m5U4o7UCNI"
+    },
+    method: 'delete',
+    url: '/admin/application',
+    params:{id:req.body.toString()}
+    }).then(response=>{
+        console.log(response);
+        res.send(response);
+    }).catch(function (error) {
+        console.log(error);
+        res.send(error)
+    });
 })
 module.exports = router
