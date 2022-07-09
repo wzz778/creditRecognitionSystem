@@ -10,7 +10,7 @@
     <div class="">
         <div class="bodyTopItem">
             学分构成:
-            <input type="text" placeholder="请输入学分构成" id="enterComposition" class="clearValue">
+            <input type="text" placeholder="请输入学分构成" id="enterComposition" class="clearValue" autocomplete="off">
             <div class="hintText" style="display: none;">请输入学分构成</div>
         </div>
         <div class="bodyTopItem">
@@ -24,7 +24,7 @@
             <div class="dirItem" style="display: none;">
                 <div class="dirItemI">
                     请输入子级目录:
-                    <input type="text" placeholder="请输入子级目录" class="clearValue subValue">
+                    <input type="text" placeholder="请输入子级目录" class="clearValue subValue" autocomplete="off">
                     <button class="addChildDri" onclick="addCertification(this)">添加</button>
                 </div>
             </div>
@@ -44,7 +44,7 @@
         <div class="bodyTopItem">
             <div id="changeTwoDirId" style="display: none;"></div>
             子级目录:
-            <input type="text" placeholder="请输入二级目录名" id="changeTwoDir">
+            <input type="text" placeholder="请输入二级目录名" id="changeTwoDir" autocomplete="off" />
             <div class="hintText" style="display: none;">请输入学分构成</div>
         </div>
         <div class="bodyTopBottom">
@@ -63,7 +63,7 @@
         <div class="bodyTopItem">
             <div id="CompositionId" style="display: none;"></div>
             学分构成:
-            <input type="text" placeholder="请输入学分构成" id="CompositionName">
+            <input type="text" placeholder="请输入学分构成" id="CompositionName" autocomplete="off">
             <div class="hintText" style="display: none;">请输入学分构成</div>
         </div>
         <div class="bodyTopBottom">
@@ -83,7 +83,7 @@
             <div class="dirItem">
                 <div class="dirItemI">
                     请输入子级目录:
-                    <input type="text" placeholder="请输入子级目录" class="clearValue subValue AddDirValue">
+                    <input type="text" placeholder="请输入子级目录" class="clearValue subValue AddDirValue" autocomplete="off">
                     <button class="addChildDri" onclick="addCertification(this)">添加</button>
                 </div>
             </div>
@@ -106,12 +106,12 @@
         </div>
         <div class="bodyTopItem">
             认定范围:
-            <input type="text" id="reviseRecognize" onclick="clearFn(this)">
+            <input type="text" id="reviseRecognize" onclick="clearFn(this)" autocomplete="off">
             <div class="hintText" style="display: none;">请输入认证范围</div>
         </div>
         <div class="bodyTopItem">
             学分大小:
-            <input type="text" id="reviseCreditNumber" onclick="clearFn(this)">
+            <input type="text" id="reviseCreditNumber" onclick="clearFn(this)" autocomplete="off">
             <div class="hintText" style="display: none;">请输入正确的数字</div>
         </div>
         <div class="bodyTopItem">
@@ -191,15 +191,15 @@
     <div class="selectCondition clearFloat">
         <div class="selectConditionItem">
             最小学分:
-            <input type="text" id="CreditNumberMin" placeholder="学分范围最小学分">
+            <input type="text" id="CreditNumberMin" placeholder="学分范围最小学分" autocomplete="off">
         </div>
         <div class="selectConditionItem">
             最大学分:
-            <input type="text" id="CreditNumberMax" placeholder="学分范围最大学分">
+            <input type="text" id="CreditNumberMax" placeholder="学分范围最大学分" autocomplete="off">
         </div>
         <div class="selectConditionItem">
             学分构成:
-            <input type="text" placeholder="请输入要搜索的认定范围" id="searchIterator">
+            <input type="text" placeholder="请输入要搜索的认定范围" id="searchIterator" autocomplete="off">
         </div>
         <div class="selectConditionItem">
             <button id="sureSearch">查询</button>
@@ -247,7 +247,7 @@
                 <div class="ChildDetailsTop ChildDetailsItem">
                     <ul>
                         <li>
-                            <input type="checkbox" class="childDelAll commonDel" onclick="allChildInputFather(this)">
+                            <input type="checkbox" class="childDelAll commonDel" onclick="allChildInputFather(this)" autocomplete="off">
                         </li>
                         <li>认定范围</li>
                         <li>学分</li>
@@ -261,7 +261,7 @@
                     </div>
                     <ul>
                         <li>
-                            <input type="checkbox" class="childDel commonDel" onclick="judgeChild(this)">
+                            <input type="checkbox" class="childDel commonDel" onclick="judgeChild(this)" autocomplete="off">
                         </li>
                         <li>国际竞赛一等奖(最高奖)</li>
                         <li>6.0</li>
@@ -273,7 +273,7 @@
                     </ul>
                     <ul>
                         <li>
-                            <input type="checkbox" class="childDel commonDel" onclick="judgeChild(this)">
+                            <input type="checkbox" class="childDel commonDel" onclick="judgeChild(this)" autocomplete="off">
                         </li>
                         <li>获全国计算机二级及以上等级证书；非外语专业学生通过英语六级考试；外语专业学生通过专业八级</li>
                         <li>6.0</li>
@@ -296,7 +296,7 @@
     <div class="IndicatorTop clearFloat IndicatorItem">
         <ul>
             <li>
-                <input type="checkbox" class="IndicatorCheckBoxFather" onclick="IndicatorCheckBoxFatherFn(this)">
+                <input type="checkbox" class="IndicatorCheckBoxFather" onclick="IndicatorCheckBoxFatherFn(this)" autocomplete="off">
             </li>
             <li>认定范围</li>
             <li>学分</li>
@@ -307,7 +307,7 @@
         <ul>
             <li>
                 <!-- 点击搜索时要把之前选中的清空 -->
-                <input type="checkbox" class="IndicatorCheckBoxSon commonDel" onclick="IndicatorCheckBoxSonFn(this)">
+                <input type="checkbox" class="IndicatorCheckBoxSon commonDel" onclick="IndicatorCheckBoxSonFn(this)" autocomplete="off">
                 <!-- 存放id -->
                 <div style="display: none;"></div>
             </li>
@@ -323,7 +323,7 @@
         </ul>
         <ul>
             <li>
-                <input type="checkbox" class="IndicatorCheckBoxSon commonDel"  onclick="IndicatorCheckBoxSonFn(this)">
+                <input type="checkbox" class="IndicatorCheckBoxSon commonDel"  onclick="IndicatorCheckBoxSonFn(this)" autocomplete="off">
             </li>
             <li>测试</li>
             <li>6</li>

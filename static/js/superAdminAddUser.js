@@ -1,5 +1,5 @@
 let popUps = document.getElementsByClassName('popUps')
-let msgHint=document.getElementById('msgHint')
+let msgHint = document.getElementById('msgHint')
 
 // 点击是否选择学生的信息
 let studentInformation = document.getElementsByClassName('studentInformation')[0]
@@ -48,52 +48,89 @@ let Remarks = document.getElementById('Remarks')
 let save = document.getElementById('save')
 let cancel = document.getElementById('cancel')
 let sex = document.getElementById('sex')
+
+let organization = document.getElementById('organization')
+let position = document.getElementById('position')
+let OrganizationInformation = document.getElementById('OrganizationInformation')
+let addOrganization = document.getElementById('addOrganization')
+let cancelAddOrganization = document.getElementById('cancelAddOrganization')
+addOrganization.onclick = function () {
+    OrganizationInformation.style.display = 'grid'
+    usPermission.value='普通管理员'
+}
+cancelAddOrganization.onclick = function () {
+    OrganizationInformation.style.display = 'none'
+    usPermission.value=''
+}
+
 // 限制账号,这里限制只能是数字
 let accountTest = /^[0-9]*$/
 save.onclick = function () {
     if (yn) {
         // 看是否填写了年级，院系，专业等
         if (usGrade.value == '') {
-            usGrade.parentElement.lastElementChild.style.display = 'block'
+            // usGrade.parentElement.lastElementChild.style.display = 'block'
+            swal('请选择年级')
         } else if (usCollege.value == '') {
-            usCollege.parentElement.lastElementChild.style.display = 'block'
+            // usCollege.parentElement.lastElementChild.style.display = 'block'
+            swal('请选择学院')
         } else if (usSpecialized.value == '') {
-            usSpecialized.parentElement.lastElementChild.style.display = 'block'
+            // usSpecialized.parentElement.lastElementChild.style.display = 'block'
+            swal('请选择专业')
         } else if (usClass.value == '') {
-            usClass.parentElement.lastElementChild.style.display = 'block'
+            // usClass.parentElement.lastElementChild.style.display = 'block'
+            swal('请选择班级')
         }
     }
     // 判断是否为空
     if (usName.value == '') {
         // 没填写用户名
-        usName.parentElement.lastElementChild.style.display = 'block'
+        // usName.parentElement.lastElementChild.style.display = 'block'
+        swal('请输入用户名')
     } else if (account.value == '' || !accountTest.test(account.value)) {
         // 没填写账号
-        account.parentElement.lastElementChild.style.display = 'block'
+        // account.parentElement.lastElementChild.style.display = 'block'
+        swal('请输入学号/教务账号')
     } else if (usPermission.value == '') {
         // 没选择用户身份
-        usPermission.parentElement.lastElementChild.style.display = 'block'
+        // usPermission.parentElement.lastElementChild.style.display = 'block'
+        swal('请选择用户身份')
     } else if (sex.value == '') {
-        sex.parentElement.lastElementChild.style.display = 'block'
+        // sex.parentElement.lastElementChild.style.display = 'block'
+        swal('请选择性别')
     } else {
+        let obj = {
+            name: usName.value,
+            userName: account.value,
+            power: usPermission.value,
+            sex: sex.value,
+            grade: usGrade.value,
+            academy: usCollege.value,
+            major_class: usClass.value,
+        }
+        console.log(OrganizationInformation.style.display)
+        if (OrganizationInformation.style.display == 'grid') {
+            // 必须填组织信息
+            if (organization.value == '' || position.value == '') {
+                swal('请输入组织信息')
+                return
+            }else{
+                obj.organization= organization.value
+                obj.position=position.value
+                obj.power='普通管理员'
+            }
+        }
+        console.log(obj)
+
         // 发送数据
         axios({
             method: 'POST',
             url: '/admin/User',
-            data: {
-                name: usName.value,
-                userName: account.value,
-                power: usPermission.value,
-                sex: sex.value,
-                grade: usGrade.value,
-                academy: usCollege.value,
-                major_class: usClass.value,
-                // 专业完整值没有用上
-            }
+            data: obj
         })
             .then((result) => {
                 console.log(result.data)
-                if(result.data.err==-1){
+                if (result.data.err == -1) {
                     // 将错误信息显示出来
                     swal(result.data.msg)
                     // msgHint.innerHTML=result.data.msg
@@ -101,7 +138,7 @@ save.onclick = function () {
                     // setTimeout(()=>{
                     //     popUps[2].style.display='none'
                     // },2000)
-                }else{
+                } else {
                     // popUps[0].style.display='block'
                     // setTimeout(()=>{
                     //     popUps[0].style.display='none'
@@ -109,11 +146,11 @@ save.onclick = function () {
                     swal('添加成功')
                 }
                 // 清空数据
-                for(let i=0;i<inputAll.length;i++){
-                    inputAll[i].value=''
+                for (let i = 0; i < inputAll.length; i++) {
+                    inputAll[i].value = ''
                 }
-                for(let i=0;i<selectAll.length;i++){
-                    selectAll[i].value=''
+                for (let i = 0; i < selectAll.length; i++) {
+                    selectAll[i].value = ''
                 }
             })
             .catch((err) => {

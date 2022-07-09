@@ -161,11 +161,13 @@ let reg = /^[+]{0,1}[1-9]\d*$|^[+]{0,1}(0\.\d*[1-9])$|^[+]{0,1}([1-9]\d*\.\d*[1-
 sureRevise.onclick = function () {
     // 判断值是否为空
     if (reviseRecognize.value == '') {
-        reviseRecognize.parentElement.lastElementChild.style.display = 'block'
+        // reviseRecognize.parentElement.lastElementChild.style.display = 'block'
+        swal('请输入修改内容')
         return
     }
     if (reviseCreditNumber.value == '' || !reg.test(Number(reviseCreditNumber.value))) {
-        reviseCreditNumber.parentElement.lastElementChild.style.display = 'block'
+        // reviseCreditNumber.parentElement.lastElementChild.style.display = 'block'
+        swal('请输入合法数字')
     }
     let sendArr = {}
     sendArr.b_Indicator_name = reviseRecognize.value

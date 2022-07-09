@@ -473,7 +473,8 @@ selectHasChild.onclick = function () {
 sureAdd.onclick = function () {
     // 判断值是否为空
     if (enterComposition.value == '') {
-        enterComposition.parentElement.lastElementChild.style.display = 'block'
+        // enterComposition.parentElement.lastElementChild.style.display = 'block'
+        swal('请输入添加内容')
     } else {
         let resultData = []
         if (hasDir) {
@@ -577,7 +578,8 @@ changeTwoDirEle.onclick = function () {
 sureChange.onclick = function () {
     // 判断是否为空
     if (changeTwoDirEle.value == '') {
-        changeTwoDirEle.parentElement.lastElementChild.style.display = 'block'
+        // changeTwoDirEle.parentElement.lastElementChild.style.display = 'block'
+        swal('请输入修改内容')
         return
     }
     axios({
@@ -617,7 +619,8 @@ CompositionName.onclick = function () {
 }
 SurechangeComposition.onclick = function () {
     if (CompositionName.value == '') {
-        CompositionName.parentElement.lastElementChild.style.display = 'block'
+        // CompositionName.parentElement.lastElementChild.style.display = 'block'
+        swal('请输入修改内容')
         return
     }
     axios({

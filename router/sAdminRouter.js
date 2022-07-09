@@ -20,11 +20,7 @@ router.get('/superAdminAdd', (req, res) => {
 router.get('/adminHistory', (req, res) => {
     res.render('adminHistory.html')
 })
-// 查看申请表 ! 
-/* 
-    超级管理员查看的申请表是通过普通管理员的审核的申请表而这个返回的信息是所有的(包含通过不通过)
-    导出学长发到那个图片样式的还没有接口(点击这个页面中的导出跳转至学长发的图片那个完整的页面)
-*/
+// 查看申请表 ! (下载功能)
 router.get('/adminWatchApplication', (req, res) => {
     res.render('adminWatchApplication.html')
 })
@@ -150,7 +146,13 @@ router.post('/admin/User', (req, res) => {
         res.send({ err: -1, msg: '用户身份非法' })
         return
     }
-    let { name, userName, power, sex, grade, academy, major_class } = req.body
+    let { name, userName, power, sex, grade, academy, major_class, organization, position } = req.body
+    if(!organization){
+        organization='无'
+    }
+    if(!position){
+        position='无'
+    }
     // 传数据
     axios({
         method: 'POST',
@@ -162,7 +164,9 @@ router.post('/admin/User', (req, res) => {
             sex: sex,
             grade: grade,
             academy: academy,
-            major_class: major_class
+            major_class: major_class,
+            organization: organization,
+            position: position
         },
         headers: {
             token: req.session.token
@@ -871,8 +875,8 @@ router.get('/show_excel', (req, res) => {
         params: {
             flag: true
         },
-        headers:{
-            token:req.session.token
+        headers: {
+            token: req.session.token
         }
     })
         .then((result) => {
@@ -882,8 +886,8 @@ router.get('/show_excel', (req, res) => {
                 res.send({ err: -1, msg: result.data })
             }
         })
-        .catch((err)=>{
-            res.send({err:-1,msg:err})
+        .catch((err) => {
+            res.send({ err: -1, msg: err })
         })
 })
 

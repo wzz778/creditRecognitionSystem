@@ -82,6 +82,7 @@ function GetAll(page, perPage, obj) {
         data: obj
     })
         .then((result) => {
+            console.log(result.data)
             adminManageUsersContentContent.innerHTML = ''
             adminManageUsersContentContent.style.display = 'block'
             adminHistoryContentNo.style.display = 'none'
@@ -134,10 +135,11 @@ function GetAll(page, perPage, obj) {
         })
         .catch((err) => {
             console.log(err)
-            popUps[1].style.display = 'block'
-            setTimeout(() => {
-                popUps[1].style.display = 'none'
-            }, 2000)
+            // popUps[1].style.display = 'block'
+            // setTimeout(() => {
+            //     popUps[1].style.display = 'none'
+            // }, 2000)
+            swal('网络错误')
         })
 }
 GetAll(1, 10, {})
@@ -165,6 +167,8 @@ sureSearch.onclick = function () {
     if (yn) {
         // 查询数据
         now_page = 1
+        checkDelAll.checked=''
+        nowPage.innerHTML = now_page
         GetAll(now_page, per_Page, assignFn())
     } else {
         // 没有查询的数据
@@ -189,6 +193,7 @@ lastPage.onclick = function () {
         now_page--
         nowPage.innerHTML = now_page
         // 请求数据
+        checkDelAll.checked=''
         GetAll(now_page, 10, assignFn())
     }
 }
@@ -204,6 +209,7 @@ nextPage.onclick = function () {
     } else {
         now_page++
         nowPage.innerHTML = now_page
+        checkDelAll.checked=''
         // 请求数据
         GetAll(now_page, 10, assignFn())
     }
@@ -223,6 +229,7 @@ jump.onclick = function () {
             now_page = jumpPage.value
             nowPage.innerHTML = now_page
             // 请求数据
+            checkDelAll.checked=''
             GetAll(now_page, 10, assignFn())
         }
     } else {
@@ -236,7 +243,7 @@ jump.onclick = function () {
     }
 }
 // 改变一页的条数
-selectPerpage.onclick = function () {
+selectPerpage.onchange = function () {
     per_Page = selectPerpage.value
     GetAll(now_page, per_Page, assignFn())
 }
@@ -487,8 +494,8 @@ function reviseFn(event) {
 
 changeUserHas.onclick=function(){
     if(changeUserHas.value=='有'){
-        bodyTopClu.style.display='block'
+        bodyTopClu[0].style.display='block'
     }else{
-        bodyTopClu.style.display='none'
+        bodyTopClu[0].style.display='none'
     }
 }

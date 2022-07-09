@@ -16,7 +16,6 @@ let per_Page = 10//每页几条
 let now_page = 1//当前请求页数
 
 // 查询条件
-let passFail = document.getElementById('passFail')//审核状态
 let CreditsComposition = document.getElementById('CreditsComposition')//学分构成
 let credit = document.getElementById('credit')//学分
 let academy = document.getElementById('academy')//院系
@@ -28,8 +27,12 @@ let endDate = document.getElementById('endDate')//结束时间
 function limitationFactor() {
     let obj = {}
     obj.academy = academy.value
-    obj.approval_status = passFail.value
+    obj.approval_status = 1
     obj.b_Indicator_name = ScopeRecognition.value
+    if(credit.value!=''&&!/(^[1-9]\d*$)/.test(Number(credit.value))){
+        swal('请输入正确分数')
+        return 
+    }
     obj.b_points_available = credit.value
     obj.beginDate = startDate.value
     obj.endDate = endDate.value
@@ -93,7 +96,7 @@ function GetAllInfo(page, perpage, obj) {
             swal('网络错误')
         })
 }
-GetAllInfo(1, 10, {})
+GetAllInfo(1, 10,limitationFactor() )
 
 
 
@@ -181,7 +184,7 @@ reset.onclick = function () {
     nowPage.innerHTML = now_page
     GetAllInfo(now_page, per_Page, limitationFactor())
 }
-selectPerpage.onclick = function () {
+selectPerpage.onchange = function () {
     per_Page = selectPerpage.value
     GetAllInfo(now_page, per_Page, limitationFactor())
 }

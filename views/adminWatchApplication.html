@@ -66,14 +66,6 @@
     </div>
     <div class="selectCondition">
         <div class="selectConditionItem">
-            申请表类型:<select id="passFail">
-                <option value="">请选择...</option>
-                <option value="">待审核</option>
-                <option value="">通过</option>
-                <option value="">未通过</option>
-            </select>
-        </div>
-        <div class="selectConditionItem">
             学分构成:<select id="CreditsComposition">
                 <option value="">请选择...</option>
                 <option value="">学科竞赛</option>
@@ -90,12 +82,8 @@
             </select>
         </div>
         <div class="selectConditionItem">
-            学分:<select id="credit">
-                <option value="">请选择...</option>
-                <option value="">8分</option>
-                <option value="">6分</option>
-                <option value="">4分</option>
-            </select>
+            学分:
+            <input type="text" id="credit" autocomplete="off">
         </div>
         <div class="selectConditionItem">
             申请人院系:<select id="academy">
@@ -115,7 +103,7 @@
             </select>
         </div>
     </div>
-    <div class="selectConditionItemChange">
+    <div class="selectConditionItemChange clearFloat">
         <div class="selectConditionItem">
             <div class="layui-form-item">
                 <div class="layui-inline">
@@ -132,9 +120,9 @@
                 </div>
             </div>
         </div>
-        <div class="operator">
+        <div class="operator floatRight">
             <button id="sureSearch">查询</button>
-            <button id="exportForm">导出申请表(学长发的图片)</button>
+            <button id="exportForm">导出汇总表</button>
             <!-- <button id="importForm">导入管理员信息</button> -->
             <button id="reset">重置</button>
         </div>
@@ -185,7 +173,7 @@
         </select>
         <button id="lastPage">上一页</button>
         <span id="nowPage">1</span>
-        跳转到:<input type="text" id="jumpPage"> 页
+        跳转到:<input type="text" id="jumpPage" autocomplete="off"> 页
         <button id="jump">跳转</button>
         <button id="nextPage">下一页</button>
     </div>

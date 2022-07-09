@@ -103,6 +103,11 @@ function judgeHas(){
     }
 }
 
+selectPerpage.onchange=function(){
+    per_Page=selectPerpage.value
+    GetAllInfo(now_page, per_Page, limitationFactor())
+}
+
 let adminHistoryContentContent = document.getElementsByClassName('adminHistoryContentContent')[0]
 let adminHistoryContentNo = document.getElementById('adminHistoryContentNo')
 //获取数据
@@ -141,7 +146,7 @@ function GetAllInfo(page, perpage, obj) {
                 adminHistoryContentContent.innerHTML += `
                 <ul>
                     <li>
-                        <div style='display:none'>${result.data.msg[i].application.id}</div>
+                        <div style='display:none'>${result.data.msg[i].applicationId}</div>
                         <input type="checkbox" class="checkDel delAllBox" onclick='checkDelFn(this)'>
                     </li>
                     <li>${result.data.msg[i].application.user.name}</li>
@@ -152,7 +157,7 @@ function GetAllInfo(page, perpage, obj) {
                     <li>${time}</li>
                     <li>${status}</li>
                     <li>
-                        <div style='display:none'>${result.data.msg[i].application.id}</div>
+                        <div style='display:none'>${result.data.msg[i].applicationId}</div>
                         <button onclick="removePopup(this)" class="operatorBtnSty">删除</button>
                         <button onclick="" class="operatorBtnSty">详情</button>
                     </li>
@@ -168,10 +173,11 @@ function GetAllInfo(page, perpage, obj) {
         })
         .catch((err) => {
             console.log(err)
-            popUps[1].style.display = 'block'
-            setTimeout(() => {
-                popUps[1].style.display = 'none'
-            }, 2000)
+            // popUps[1].style.display = 'block'
+            // setTimeout(() => {
+            //     popUps[1].style.display = 'none'
+            // }, 2000)
+            swal('网络错误')
         })
 }
 GetAllInfo(1, 10, {})
@@ -188,6 +194,7 @@ lastPage.onclick = function () {
     } else {
         now_page--
         nowPage.innerHTML = now_page
+        checkDelAll.checked=''
         // 请求数据
         GetAllInfo(now_page, per_Page, limitationFactor())
     }
@@ -204,6 +211,7 @@ nextPage.onclick = function () {
     } else {
         now_page++
         nowPage.innerHTML = now_page
+        checkDelAll.checked=''
         // 请求数据
         GetAllInfo(now_page, per_Page, limitationFactor())
     }
@@ -214,23 +222,26 @@ jump.onclick = function () {
         // 数据合法判断是否大于最大页数
         if (Number(jumpPage.value) > all_Page) {
             jumpPage.value = ''
-            popUps[6].style.display = 'block'
-            setTimeout(() => {
-                popUps[6].style.display = 'none'
-            }, 2000)
+            // popUps[6].style.display = 'block'
+            // setTimeout(() => {
+            //     popUps[6].style.display = 'none'
+            // }, 2000)
+            swal('大于最大页数')
         } else {
             now_page = jumpPage.value
             nowPage.innerHTML = now_page
+            checkDelAll.checked=''
             // 请求数据
             GetAllInfo(now_page, per_Page, limitationFactor())
         }
     } else {
         jumpPage.value = ''
         // 数据不合法
-        popUps[5].style.display = 'block'
-        setTimeout(() => {
-            popUps[5].style.display = 'none'
-        }, 2000)
+        // popUps[5].style.display = 'block'
+        // setTimeout(() => {
+        //     popUps[5].style.display = 'none'
+        // }, 2000)
+        swal('请输入合法数据')
     }
 }
 
