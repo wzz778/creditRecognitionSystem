@@ -9,6 +9,10 @@ function watchFather() {
         url: '/getCreditsComposition',
     })
         .then((result) => {
+            if (result.data.err != 0) {
+                swal('网络错误,请重试!')
+                return
+            }
             item.innerHTML = ''
             for (let i = 0; i < result.data.msg.length; i++) {
                 item.innerHTML += `
@@ -51,6 +55,7 @@ function watchFather() {
             </div>
             `
             }
+            swal('获取成功')
         })
         .catch((err) => {
             console.log(err)
@@ -78,6 +83,10 @@ function watchChild(event) {
     })
         .then((result) => {
             // console.log(result.data)
+            if (result.data.err != 0) {
+                swal('网络错误,请重试!')
+                return
+            }
             ele.innerHTML = ''
             if (result.data.msg == '没有指标信息') {
                 // 没有指标信息
@@ -275,10 +284,11 @@ function delFnAll() {
             }
         })
     } else {
-        popUps[3].style.display = 'block'
-        setTimeout(() => {
-            popUps[3].style.display = 'none'
-        }, 2000)
+        // popUps[3].style.display = 'block'
+        // setTimeout(() => {
+        //     popUps[3].style.display = 'none'
+        // }, 2000)
+        swal('请选择删除内容')
         // 未选删除元素
         return false
     }
@@ -330,7 +340,7 @@ function delFnOne(event) {
     })
 }
 // 删除当个元素(是目录但是没有子级指标)
-function delFnOneNo(event){
+function delFnOneNo(event) {
     // 获取id值
     swal({
         title: "你确定？",
@@ -485,6 +495,11 @@ sureAdd.onclick = function () {
             }
         })
             .then((result) => {
+                if (result.data.err != 0) {
+                    swal('网络错误,请重试!')
+                    return
+                }
+                swal('添加成功')
                 console.log(result.data)
             })
             .catch((err) => {

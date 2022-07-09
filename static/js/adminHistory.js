@@ -68,10 +68,11 @@ function limitationFactor() {
 // 查询函数
 sureSearch.onclick = function () {
     if (passFail.value == '' && startDate.value == '') {
-        popUps[2].style.display = 'block'
-        setTimeout(() => {
-            popUps[2].style.display = 'none'
-        }, 2000)
+        // popUps[2].style.display = 'block'
+        // setTimeout(() => {
+        //     popUps[2].style.display = 'none'
+        // }, 2000)
+        swal('请输入查询内容')
         return
     }
     GetAllInfo(now_page, per_Page, limitationFactor())
@@ -87,6 +88,20 @@ resetSearch.onclick = function () {
     GetAllInfo(now_page, per_Page, limitationFactor())
 }
 
+// 判断是否需要请求上一页
+function judgeHas(){
+    let adminHistoryContentContent =document.getElementsByClassName('adminHistoryContentContent ')[0]
+    let allUls = adminHistoryContentContent.getElementsByTagName('ul')
+    // console.log('函数',allUls)
+    if (allUls.length == 0 && now_page != 1) {
+        // 请求上一页
+        now_page--
+        nowPage.innerHTML = nowPage
+        GetAllInfo(now_page, per_Page, limitationFactor())
+        checkDelAll.checked = ''
+        return
+    }
+}
 
 let adminHistoryContentContent = document.getElementsByClassName('adminHistoryContentContent')[0]
 let adminHistoryContentNo = document.getElementById('adminHistoryContentNo')
@@ -114,9 +129,15 @@ function GetAllInfo(page, perpage, obj) {
                 return
             }
             adminHistoryContentContent.innerHTML = ''
-            // 修改(i从1开始了)
             for (let i = 0; i < result.data.msg.length; i++) {
                 let time = result.data.msg[i].application.application_time.split(' ')[0]
+                let status = '审核中'
+                if (result.data.msg[i].application.approval_status == '1') {
+                    status = '审核通过'
+                }
+                if (result.data.msg[i].application.approval_status == '-1') {
+                    status = '审核未通过'
+                }
                 adminHistoryContentContent.innerHTML += `
                 <ul>
                     <li>
@@ -129,7 +150,7 @@ function GetAllInfo(page, perpage, obj) {
                     <li>${result.data.msg[i].application.classify.b_Indicator_name}</li>
                     <li>${result.data.msg[i].application.classify.b_points_available}</li>
                     <li>${time}</li>
-                    <li>通过普通管理员</li>
+                    <li>${status}</li>
                     <li>
                         <div style='display:none'>${result.data.msg[i].application.id}</div>
                         <button onclick="removePopup(this)" class="operatorBtnSty">删除</button>
@@ -138,10 +159,12 @@ function GetAllInfo(page, perpage, obj) {
                 </ul>
                 `
             }
-            popUps[0].style.display = 'block'
-            setTimeout(() => {
-                popUps[0].style.display = 'none'
-            }, 2000)
+            // popUps[0].style.display = 'block'
+            // setTimeout(() => {
+            //     popUps[0].style.display = 'none'
+            // }, 2000)
+            judgeHas()
+            swal('查询成功')
         })
         .catch((err) => {
             console.log(err)
@@ -157,10 +180,11 @@ lastPage.onclick = function () {
     // 点击上一页
     if (now_page == 1) {
         // 当前是第一页
-        popUps[8].style.display = 'block'
-        setTimeout(() => {
-            popUps[8].style.display = 'none'
-        }, 2000)
+        // popUps[8].style.display = 'block'
+        // setTimeout(() => {
+        //     popUps[8].style.display = 'none'
+        // }, 2000)
+        swal('当前是第一页')
     } else {
         now_page--
         nowPage.innerHTML = now_page
@@ -172,10 +196,11 @@ nextPage.onclick = function () {
     // 下一页
     if (now_page == all_Page) {
         // 最后一页
-        popUps[7].style.display = 'block'
-        setTimeout(() => {
-            popUps[7].style.display = 'none'
-        }, 2000)
+        // popUps[7].style.display = 'block'
+        // setTimeout(() => {
+        //     popUps[7].style.display = 'none'
+        // }, 2000)
+        swal('当前是最后一页')
     } else {
         now_page++
         nowPage.innerHTML = now_page
@@ -237,6 +262,7 @@ function removePopup(event) {
                 .then((result) => {
                     console.log(result.data)
                     if (result.data.err == 0) {
+                        GetAllInfo(now_page, per_Page, limitationFactor())
                         swal('删除成功')
                     } else {
                         swal('删除失败,请重试')
@@ -291,6 +317,7 @@ del.onclick = function () {
                         console.log(result.data)
                         if (result.data.err == 0) {
                             swal('删除成功')
+                            GetAllInfo(now_page, per_Page, limitationFactor())
                         } else {
                             swal('删除失败,请重试')
                         }

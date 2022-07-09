@@ -54,7 +54,7 @@ function GetAllInfo(page, perpage, obj) {
             WatchApplicationContentContent.style.display = 'block'
             WatchApplicationNo.style.display = 'none'
             allNumber.innerHTML = `共${result.data.AllPages}页`
-            all_Page=result.data.AllPages
+            all_Page = result.data.AllPages
             if (result.data.msg.length == 0) {
                 WatchApplicationContentContent.style.display = 'none'
                 WatchApplicationNo.style.display = 'block'
@@ -78,17 +78,19 @@ function GetAllInfo(page, perpage, obj) {
                 </ul>
                 `
             }
-            popUps[0].style.display = 'block'
-            setTimeout(() => {
-                popUps[0].style.display = 'none'
-            }, 2000)
+            // popUps[0].style.display = 'block'
+            // setTimeout(() => {
+            //     popUps[0].style.display = 'none'
+            // }, 2000)
+            swal('查询成功')
         })
         .catch((err) => {
             console.log(err)
-            popUps[1].style.display = 'block'
-            setTimeout(() => {
-                popUps[1].style.display = 'none'
-            }, 2000)
+            // popUps[1].style.display = 'block'
+            // setTimeout(() => {
+            //     popUps[1].style.display = 'none'
+            // }, 2000)
+            swal('网络错误')
         })
 }
 GetAllInfo(1, 10, {})
@@ -99,28 +101,32 @@ lastPage.onclick = function () {
     // 点击上一页
     if (now_page == 1) {
         // 当前是第一页
-        popUps[8].style.display = 'block'
-        setTimeout(() => {
-            popUps[8].style.display = 'none'
-        }, 2000)
+        // popUps[8].style.display = 'block'
+        // setTimeout(() => {
+        //     popUps[8].style.display = 'none'
+        // }, 2000)
+        swal('当前是第一页')
     } else {
         now_page--
         nowPage.innerHTML = now_page
         // 请求数据
+        GetAllInfo(now_page, per_Page, limitationFactor())
     }
 }
 nextPage.onclick = function () {
     // 下一页
     if (now_page == all_Page) {
         // 最后一页
-        popUps[7].style.display = 'block'
-        setTimeout(() => {
-            popUps[7].style.display = 'none'
-        }, 2000)
+        // popUps[7].style.display = 'block'
+        // setTimeout(() => {
+        //     popUps[7].style.display = 'none'
+        // }, 2000)
+        swal('当前是最后一页')
     } else {
         now_page++
         nowPage.innerHTML = now_page
         // 请求数据
+        GetAllInfo(now_page, per_Page, limitationFactor())
     }
 }
 jump.onclick = function () {
@@ -129,22 +135,25 @@ jump.onclick = function () {
         // 数据合法判断是否大于最大页数
         if (Number(jumpPage.value) > all_Page) {
             jumpPage.value = ''
-            popUps[6].style.display = 'block'
-            setTimeout(() => {
-                popUps[6].style.display = 'none'
-            }, 2000)
+            // popUps[6].style.display = 'block'
+            // setTimeout(() => {
+            //     popUps[6].style.display = 'none'
+            // }, 2000)
+            swal('超过最大页数')
         } else {
             now_page = jumpPage.value
             nowPage.innerHTML = now_page
             // 请求数据
+            GetAllInfo(now_page, per_Page, limitationFactor())
         }
     } else {
         jumpPage.value = ''
         // 数据不合法
-        popUps[5].style.display = 'block'
-        setTimeout(() => {
-            popUps[5].style.display = 'none'
-        }, 2000)
+        // popUps[5].style.display = 'block'
+        // setTimeout(() => {
+        //     popUps[5].style.display = 'none'
+        // }, 2000)
+        swal('请输入正确页数')
     }
 }
 
@@ -167,12 +176,12 @@ reset.onclick = function () {
     for (let i = 0; i < allSelect.length; i++) {
         allSelect[i].value = ''
     }
-    selectPerpage.value=10
+    selectPerpage.value = 10
     now_page = 1
     nowPage.innerHTML = now_page
     GetAllInfo(now_page, per_Page, limitationFactor())
 }
-selectPerpage.onclick=function(){
-    per_Page=selectPerpage.value
+selectPerpage.onclick = function () {
+    per_Page = selectPerpage.value
     GetAllInfo(now_page, per_Page, limitationFactor())
 }

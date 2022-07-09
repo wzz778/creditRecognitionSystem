@@ -16,7 +16,7 @@ var mult = multipart()
 router.get('/superAdminAdd', (req, res) => {
     res.render('superAdminAddUser.html')
 })
-// 提交历史记录 !(删除功能)
+// 提交历史记录 !
 router.get('/adminHistory', (req, res) => {
     res.render('adminHistory.html')
 })
@@ -32,11 +32,11 @@ router.get('/adminWatchApplication', (req, res) => {
 router.get('/adminManageUsers', (req, res) => {
     res.render('adminManageUsers.html')
 })
-// 学分构成管理 !(分类查询)
+// 学分构成管理 !
 router.get('/adminCreditManagement', (req, res) => {
     res.render('adminCreditManagement.html')
 })
-// 添加学分构成
+// 添加学分构成 !
 router.get('/addNewIndicator', (req, res) => {
     res.render('addNewIndicator.html')
 })
@@ -73,7 +73,11 @@ router.post('/admin/records', (req, res) => {
     })
         .then((result) => {
             // console.log(result.data)
-            res.send({ err: 0, msg: result.data.data.pageInfo, allPage: result.data.data.allPages,allRecords:result.data.data.allRecords})
+            if (result.data.msg == 'OK') {
+                res.send({ err: 0, msg: result.data.data.pageInfo, allPage: result.data.data.allPages, allRecords: result.data.data.allRecords })
+            } else {
+                res.send({ err: -1, msg: result.data })
+            }
         })
         .catch((err) => {
             res.send({ err: -1, msg: '网络错误' })
@@ -123,7 +127,11 @@ router.post('/admin/application', (req, res) => {
     })
         .then((result) => {
             console.log(result.data)
-            res.send({ err: 0, msg: result.data.data.pageInfo, AllPages: result.data.data.allPage })
+            if (result.data.msg == 'OK') {
+                res.send({ err: 0, msg: result.data.data.pageInfo, AllPages: result.data.data.allPage })
+            } else {
+                res.send({ err: -1, msg: result.data })
+            }
         })
         .catch((err) => {
             res.send({ err: -1, msg: '错误' })
@@ -180,7 +188,11 @@ router.get('/creditTypeOperate/showCreditType', (req, res) => {
         }
     })
         .then((result) => {
-            res.send({ err: 0, msg: result.data.data })
+            if (result.data.msg == 'OK') {
+                res.send({ err: 0, msg: result.data.data })
+            } else {
+                res.send({ err: -1, msg: result.data })
+            }
         })
         .catch((err) => {
             res.send('错误')
@@ -189,10 +201,10 @@ router.get('/creditTypeOperate/showCreditType', (req, res) => {
 
 // 用户管理
 router.post('/admin/getUserByClass', (req, res) => {
-    // if (!jwt.decode(req.session.token)) {
-    //     res.send({ err: -1, msg: '用户身份非法' })
-    //     return
-    // }
+    if (!jwt.decode(req.session.token)) {
+        res.send({ err: -1, msg: '用户身份非法' })
+        return
+    }
     let { beginIndex, size, academy, name, major_class, sex, power, userName } = req.body
     let obj = {}
     obj.beginIndex = beginIndex
@@ -316,6 +328,10 @@ router.get('/IndicatorOperate/showAllIndicator', (req, res) => {
 })
 
 router.get('/getCreditsComposition', (req, res) => {
+    if (!jwt.decode(req.session.token)) {
+        res.send({ err: -1, msg: '用户身份非法' })
+        return
+    }
     axios({
         method: 'GET',
         url: '/creditTypeOperate/showCreditType',
@@ -383,6 +399,10 @@ function getInfo(sendResult, req) {
 
 // 通过学分构成获得其子级目录及学分构成
 router.post('/IndicatorOperate/showIndicator', (req, res) => {
+    if (!jwt.decode(req.session.token)) {
+        res.send({ err: -1, msg: '用户身份非法' })
+        return
+    }
     let { id } = req.body
     axios({
         method: 'GET',
@@ -421,6 +441,10 @@ router.post('/IndicatorOperate/showIndicator', (req, res) => {
 
 // 获取学分构成的子级目录
 router.post('/child', (req, res) => {
+    if (!jwt.decode(req.session.token)) {
+        res.send({ err: -1, msg: '用户身份非法' })
+        return
+    }
     let { id } = req.body
     axios({
         method: 'GET',
@@ -470,6 +494,10 @@ function addSecondDir(req, b_first_level, resultData) {
 
 // 添加学分构成及其子目录
 router.post('/addCreditAll', (req, res) => {
+    if (!jwt.decode(req.session.token)) {
+        res.send({ err: -1, msg: '用户身份非法' })
+        return
+    }
     // 添加身份判断
     let { AFirstLevel, resultData } = req.body
     // 添加学分构成
@@ -486,8 +514,8 @@ router.post('/addCreditAll', (req, res) => {
         .then((result) => {
             return addSecondDir(req, result.data.data, resultData)
         })
-        .then((result)=>{
-            res.send({err:0,msg:result.data})
+        .then((result) => {
+            res.send({ err: 0, msg: result.data })
         })
         .catch((err) => {
             res.send({ err: -1, msg: '网络错误' })
@@ -496,6 +524,10 @@ router.post('/addCreditAll', (req, res) => {
 
 // 添加认定范围
 router.post('/IndicatorOperate/addIndicator', (req, res) => {
+    if (!jwt.decode(req.session.token)) {
+        res.send({ err: -1, msg: '用户身份非法' })
+        return
+    }
     let { arrSend } = req.body
     axios({
         method: 'POST',
@@ -507,7 +539,11 @@ router.post('/IndicatorOperate/addIndicator', (req, res) => {
         }
     })
         .then((result) => {
-            res.send({ err: 0, msg: result.data })
+            if (result.data.msg == 'OK') {
+                res.send({ err: 0, msg: result.data })
+            } else {
+                res.send({ err: -1, msg: result.data })
+            }
         })
         .catch((err) => {
             res.send({ err: -1, msg: '网络错误' })
@@ -546,6 +582,10 @@ router.post('/fileUplo', mult, (req, res) => {
 
 // 删除指标(多个)
 router.post('/IndicatorOperate/deleteIndicator', (req, res) => {
+    if (!jwt.decode(req.session.token)) {
+        res.send({ err: -1, msg: '用户身份非法' })
+        return
+    }
     let { arrId } = req.body
     let urlStr = `http://110.40.205.103:8099/IndicatorOperate/deleteIndicator?ids=${arrId[0]}`
     for (let i = 1; i < arrId.length; i++) {
@@ -571,6 +611,10 @@ router.post('/IndicatorOperate/deleteIndicator', (req, res) => {
 
 // 删除学分构成
 router.post('/creditTypeOperate/deleteCreditType', (req, res) => {
+    if (!jwt.decode(req.session.token)) {
+        res.send({ err: -1, msg: '用户身份非法' })
+        return
+    }
     let { ids } = req.body
     let urlStr = `http://110.40.205.103:8099/creditTypeOperate/deleteCreditType?ids=${ids}`
     axios({
@@ -594,162 +638,221 @@ router.post('/creditTypeOperate/deleteCreditType', (req, res) => {
 })
 
 // 修改二级目录
-router.post('/changeTwoDir',(req,res)=>{
-    let {b_id,b_Indicator_name,b_superior_id,b_first_level}=req.body
+router.post('/changeTwoDir', (req, res) => {
+    if (!jwt.decode(req.session.token)) {
+        res.send({ err: -1, msg: '用户身份非法' })
+        return
+    }
+    let { b_id, b_Indicator_name, b_superior_id, b_first_level } = req.body
     axios({
-        method:'PUT',
-        url:'/IndicatorOperate/updateIndicator',
-        params:{
-            b_id:b_id,
-            b_Indicator_name:b_Indicator_name,
-            b_superior_id:b_superior_id,
-            b_first_level:b_first_level,
-            id:0
+        method: 'PUT',
+        url: '/IndicatorOperate/updateIndicator',
+        params: {
+            b_id: b_id,
+            b_Indicator_name: b_Indicator_name,
+            b_superior_id: b_superior_id,
+            b_first_level: b_first_level,
+            id: 0
         },
-        headers:{
-            token:req.session.token
+        headers: {
+            token: req.session.token
         }
     })
-    .then((result)=>{
-        res.send({err:0,msg:result.data})
-    })
-    .catch((err)=>{
-        res.send({err:-1,msg:err})
-    })
+        .then((result) => {
+            if (result.data.msg == 'OK') {
+                res.send({ err: 0, msg: result.data })
+            } else {
+                res.send({ err: -1, msg: result.data })
+            }
+        })
+        .catch((err) => {
+            res.send({ err: -1, msg: err })
+        })
 })
 
 // 修改学分构成
-router.post('/creditTypeOperate/updateCreditType',(req,res)=>{
+router.post('/creditTypeOperate/updateCreditType', (req, res) => {
+    if (!jwt.decode(req.session.token)) {
+        res.send({ err: -1, msg: '用户身份非法' })
+        return
+    }
     axios({
-        method:'PUT',
-        url:'/creditTypeOperate/updateCreditType',
+        method: 'PUT',
+        url: '/creditTypeOperate/updateCreditType',
+        params: req.body,
+        headers: {
+            token: req.session.token
+        }
+    })
+        .then((result) => {
+            if (result.data.msg == 'OK') {
+                res.send({ err: 0, msg: result.data })
+            } else {
+                res.send({ err: -1, msg: result.data })
+            }
+        })
+        .catch((err) => {
+            res.send({ err: -1, msg: err })
+        })
+})
+
+// 修改指标信息
+router.post('/changeIndicator', (req, res) => {
+    if (!jwt.decode(req.session.token)) {
+        res.send({ err: -1, msg: '用户身份非法' })
+        return
+    }
+    let { sendArr } = req.body
+    axios({
+        method: 'PUT',
+        url: '/IndicatorOperate/updateIndicator',
+        params: sendArr,
+        headers: {
+            token: req.session.token
+        }
+    })
+        .then((result) => {
+            if (result.data.msg == 'OK') {
+                res.send({ err: 0, msg: result.data })
+            } else {
+                res.send({ err: -1, msg: result.data })
+            }
+        })
+        .catch((err) => {
+            res.send({ err: -1, msg: err })
+        })
+})
+
+// 修改用户信息
+router.post('/admin/update.do.userInfo', (req, res) => {
+    if (!jwt.decode(req.session.token)) {
+        res.send({ err: -1, msg: '用户身份非法' })
+        return
+    }
+    let { obj } = req.body
+    axios({
+        method: 'PUT',
+        url: '/admin/update.do.userInfo',
+        params: obj,
+        headers: {
+            token: req.session.token
+        }
+    })
+        .then((result) => {
+            console.log('修改用户信息', result.data)
+            if (result.data.msg == 'OK') {
+                res.send({ err: 0, msg: result.data })
+            } else {
+                res.send({ err: -1, msg: result.data })
+            }
+        })
+        .catch((err) => {
+            res.send({ err: -1, msg: err })
+        })
+})
+// 重置密码
+router.post('/admin/resetUserPass', (req, res) => {
+    if (!jwt.decode(req.session.token)) {
+        res.send({ err: -1, msg: '用户身份非法' })
+        return
+    }
+    let { id } = req.body
+    axios({
+        method: 'PUT',
+        url: '/admin/resetUserPass',
+        params: {
+            id: id
+        },
+        headers: {
+            token: req.session.token
+        }
+    })
+        .then((result) => {
+            if (result.data.msg == 'OK') {
+                res.send({ err: 0, msg: result.data })
+            } else {
+                res, send({ err: -1, msg: result.data })
+            }
+        })
+        .catch((err) => {
+            res.send({ err: -1, msg: err })
+        })
+})
+
+// 封装的删除2历史记录函数
+function delRecord(req, id) {
+    return new Promise((resolve, resject) => {
+        axios({
+            method: 'DELETE',
+            url: '/admin/records',
+            params: {
+                id: id
+            },
+            headers: {
+                token: req.session.token
+            }
+        })
+            .then((result) => {
+                console.log('封装的删除函数里边的结果', result.data)
+                if (result.data.msg == 'OK') {
+                    resolve(result.data)
+                } else {
+                    throw new Error(result.data)
+                }
+            })
+            .catch((err) => {
+                resject(err)
+            })
+    })
+}
+
+// 删除历史记录
+router.post('/del/admin/records', (req, res) => {
+    if (!jwt.decode(req.session.token)) {
+        res.send({ err: -1, msg: '用户身份非法' })
+        return
+    }
+    let { idArr } = req.body
+    let strUrl = `http://110.40.205.103:8099/admin/records?id=${idArr[0]}`
+    for (let i = 1; i < idArr.length; i++) {
+        strUrl += `&id=${idArr[i]}`
+    }
+    // console.log(strUrl)
+    axios.delete(strUrl, {
+        headers: {
+            token: req.session.token
+        }
+    })
+        .then((result) => {
+            console.log('删除接口的数据', result.data)
+            if (result.data.msg == 'OK') {
+                res.send({ err: 0, msg: result.data })
+            } else {
+                res.send({ err: -1, msg: result.data })
+            }
+        })
+        .catch((err) => {
+            console.log(err)
+            res.send({ err: -1, msg: err })
+        })
+})
+
+// 查询指定指标
+router.post('/IndicatorOperate/searshIndicator',(req,res)=>{
+    // console.log(req.body)
+    axios({
+        method:'GET',
+        url:'/IndicatorOperate/searshIndicator',
         params:req.body,
         headers:{
             token:req.session.token
         }
     })
     .then((result)=>{
-        if(result.data.msg=='OK'){
-            res.send({err:0,msg:result.data})
-        }else{
-            res.send({err:-1,msg:result.data})
-        }
+        // console.log(result.data)
+        res.send({err:0,msg:result.data.data})
     })
     .catch((err)=>{
-        res.send({err:-1,msg:err})
-    })
-})
-
-// 修改指标信息
-router.post('/changeIndicator',(req,res)=>{
-    let {sendArr}=req.body
-    axios({
-        method:'PUT',
-        url:'/IndicatorOperate/updateIndicator',
-        params:sendArr,
-        headers:{
-            token:req.session.token
-        }
-    })
-    .then((result)=>{
-        res.send({err:0,msg:result.data})
-    })
-    .catch((err)=>{
-        res.send({err:-1,msg:err})
-    })
-})
-
-// 修改用户信息
-router.post('/admin/update.do.userInfo',(req,res)=>{
-    let {obj}=req.body
-    axios({
-        method:'PUT',
-        url:'/admin/update.do.userInfo',
-        params:obj,
-        headers:{
-            token:req.session.token
-        }
-    })
-    .then((result)=>{
-        console.log('修改用户信息',result.data)
-        if(result.data.msg=='OK'){
-            res.send({err:0,msg:result.data})
-        }else{
-            res.send({err:-1,msg:result.data})
-        }
-    })
-    .catch((err)=>{
-        res.send({err:-1,msg:err})
-    })
-})
-// 重置密码
-router.post('/admin/resetUserPass',(req,res)=>{
-    let {id}=req.body
-    axios({
-        method:'PUT',
-        url:'/admin/resetUserPass',
-        params:{
-            id:id
-        },
-        headers:{
-            token:req.session.token
-        }
-    })
-    .then((result)=>{
-        if(result.data.msg=='OK'){
-            res.send({err:0,msg:result.data})
-        }else{
-            res,send({err:-1,msg:result.data})
-        }
-    })
-    .catch((err)=>{
-        res.send({err:-1,msg:err})
-    })
-})
-
-// 封装的删除2历史记录函数
-function delRecord(req,id){
-    return new Promise((resolve,resject)=>{
-        axios({
-            method:'DELETE',
-            url:'/admin/records',
-            params:{
-                id:id
-            },
-            headers:{
-                token:req.session.token
-            }
-        })
-        .then((result)=>{
-            console.log('封装的删除函数里边的结果',result.data)
-            if(result.data.msg=='OK'){
-                resolve(result.data)
-            }else{
-                throw new Error(result.data)
-            }
-        })
-        .catch((err)=>{
-            resject(err)
-        })
-    })
-}
-
-// 删除历史记录
-router.post('/del/admin/records',(req,res)=>{
-    console.log(123)
-    let {idArr}=req.body
-    console.log('传的数据',req.body)
-    let sendArr=[]
-    for(let i=0;i<idArr.length;i++){
-        sendArr.push(delRecord(req,idArr[i]))
-    }
-    Promise.all(sendArr)
-    .then((result)=>{
-        console.log('删除接口的数据',result)
-        res.send({err:0,msg:result})
-    })
-    .catch((err)=>{
-        console.log(err)
         res.send({err:-1,msg:err})
     })
 })

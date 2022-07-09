@@ -89,7 +89,7 @@
             </div>
         </div>
         <div class="bodyTopBottom">
-            <button id="SureaddDir">修改</button>
+            <button id="SureaddDir">添加</button>
             <button id="CancelAddDir">取消</button>
         </div>
     </div>
@@ -190,24 +190,21 @@
     </div>
     <div class="selectCondition clearFloat">
         <div class="selectConditionItem">
-            学分大小:<select>
-                <option value="">请选择...</option>
-            </select>
+            最小学分:
+            <input type="text" id="CreditNumberMin" placeholder="学分范围最小学分">
         </div>
         <div class="selectConditionItem">
-            学分构成:<select>
-                <option value="">请选择...</option>
-            </select>
+            最大学分:
+            <input type="text" id="CreditNumberMax" placeholder="学分范围最大学分">
         </div>
         <div class="selectConditionItem">
-            认定范围<select>
-                <option value="">请选择...</option>
-            </select>
+            学分构成:
+            <input type="text" placeholder="请输入要搜索的认定范围" id="searchIterator">
         </div>
         <div class="selectConditionItem">
             <button id="sureSearch">查询</button>
             <button id="resetSearch">重置</button>
-            <button id="add">新增</button>
+            <button id="add">新增学分构成</button>
         </div>
     </div>
 </div>
@@ -291,25 +288,57 @@
         </div>
     </div>
 </div>
-<div class="adminCredManagementBottom clearFloat" style="display: none;">
-    每页<select name="" id="selectPerpage">
-        <option value="10">10条</option>
-        <option value="15">15条</option>
-        <option value="20">20条</option>
-        <option value="25">25条</option>
-    </select>
-    <span id="allPages">共1页</span>
-    <button id="lastPage">上一页</button>
-    <span id="nowPage">1</span>
-    跳转到:<input type="text" id="jumpPage"> 页
-    <button id="jump">跳转</button>
-    <button id="nextPage">下一页</button>
+<div class="Indicator clearFloat" style="display: none;">
+    <div class="operation">
+        <button id="del" onclick="delFnAll()">删除</button>
+    </div>
+    <div style="text-align: right;" id="IndicatorSum">共1条</div>
+    <div class="IndicatorTop clearFloat IndicatorItem">
+        <ul>
+            <li>
+                <input type="checkbox" class="IndicatorCheckBoxFather" onclick="IndicatorCheckBoxFatherFn(this)">
+            </li>
+            <li>认定范围</li>
+            <li>学分</li>
+            <li>操作框</li>
+        </ul>
+    </div>
+    <div class="IndicatorCnotent IndicatorItem">
+        <ul>
+            <li>
+                <!-- 点击搜索时要把之前选中的清空 -->
+                <input type="checkbox" class="IndicatorCheckBoxSon commonDel" onclick="IndicatorCheckBoxSonFn(this)">
+                <!-- 存放id -->
+                <div style="display: none;"></div>
+            </li>
+            <li>测试</li>
+            <li>6</li>
+            <li>
+                <!-- 存放备注 -->
+                <div style="display: none;"></div>
+                <button onclick="delFnOne(this)">删除</button>
+                <button>修改</button>
+                <button onclick="watchRemark(this)">查看备注</button>
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <input type="checkbox" class="IndicatorCheckBoxSon commonDel"  onclick="IndicatorCheckBoxSonFn(this)">
+            </li>
+            <li>测试</li>
+            <li>6</li>
+            <li>
+                <button>删除</button>
+                <button>修改</button>
+                <button>查看备注</button>
+            </li>
+        </ul>
+    </div>
 </div>
-</div>
-<div id="adminHistoryContentNo" style="display: none;">
-    对不起没有该内容
-</div>
+
+<!-- 存放学分构成 -->
 {{/block}}
+
 {{block 'bottom'}}
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="/public/js/adminCreditManagementTwo.js"></script>

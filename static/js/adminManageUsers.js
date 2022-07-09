@@ -126,10 +126,11 @@ function GetAll(page, perPage, obj) {
             </ul>
                 `
             }
-            popUps[0].style.display = 'block'
-            setTimeout(() => {
-                popUps[0].style.display = 'none'
-            }, 2000)
+            // popUps[0].style.display = 'block'
+            // setTimeout(() => {
+            //     popUps[0].style.display = 'none'
+            // }, 2000)
+            swal('查询成功')
         })
         .catch((err) => {
             console.log(err)
@@ -167,10 +168,11 @@ sureSearch.onclick = function () {
         GetAll(now_page, per_Page, assignFn())
     } else {
         // 没有查询的数据
-        popUps[2].style.display = 'block'
-        setTimeout(() => {
-            popUps[2].style.display = 'none'
-        }, 2000)
+        // popUps[2].style.display = 'block'
+        // setTimeout(() => {
+        //     popUps[2].style.display = 'none'
+        // }, 2000)
+        swal('请输入查询数据')
     }
 }
 
@@ -178,10 +180,11 @@ lastPage.onclick = function () {
     // 点击上一页
     if (now_page == 1) {
         // 当前是第一页
-        popUps[8].style.display = 'block'
-        setTimeout(() => {
-            popUps[8].style.display = 'none'
-        }, 2000)
+        // popUps[8].style.display = 'block'
+        // setTimeout(() => {
+        //     popUps[8].style.display = 'none'
+        // }, 2000)
+        swal('当前是第一页')
     } else {
         now_page--
         nowPage.innerHTML = now_page
@@ -193,10 +196,11 @@ nextPage.onclick = function () {
     // 下一页
     if (now_page == all_Page) {
         // 最后一页
-        popUps[7].style.display = 'block'
-        setTimeout(() => {
-            popUps[7].style.display = 'none'
-        }, 2000)
+        // popUps[7].style.display = 'block'
+        // setTimeout(() => {
+        //     popUps[7].style.display = 'none'
+        // }, 2000)
+        swal('当前是最后一页')
     } else {
         now_page++
         nowPage.innerHTML = now_page
@@ -210,10 +214,11 @@ jump.onclick = function () {
         // 数据合法判断是否大于最大页数
         if (Number(jumpPage.value) > all_Page) {
             jumpPage.value = ''
-            popUps[6].style.display = 'block'
-            setTimeout(() => {
-                popUps[6].style.display = 'none'
-            }, 2000)
+            // popUps[6].style.display = 'block'
+            // setTimeout(() => {
+            //     popUps[6].style.display = 'none'
+            // }, 2000)
+            swal('大于最大页数')
         } else {
             now_page = jumpPage.value
             nowPage.innerHTML = now_page
@@ -223,10 +228,11 @@ jump.onclick = function () {
     } else {
         jumpPage.value = ''
         // 数据不合法
-        popUps[5].style.display = 'block'
-        setTimeout(() => {
-            popUps[5].style.display = 'none'
-        }, 2000)
+        // popUps[5].style.display = 'block'
+        // setTimeout(() => {
+        //     popUps[5].style.display = 'none'
+        // }, 2000)
+        swal('请输入正确数据')
     }
 }
 // 改变一页的条数

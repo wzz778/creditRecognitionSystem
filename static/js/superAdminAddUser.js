@@ -95,16 +95,18 @@ save.onclick = function () {
                 console.log(result.data)
                 if(result.data.err==-1){
                     // 将错误信息显示出来
-                    msgHint.innerHTML=result.data.msg
-                    popUps[2].style.display='block'
-                    setTimeout(()=>{
-                        popUps[2].style.display='none'
-                    },2000)
+                    swal(result.data.msg)
+                    // msgHint.innerHTML=result.data.msg
+                    // popUps[2].style.display='block'
+                    // setTimeout(()=>{
+                    //     popUps[2].style.display='none'
+                    // },2000)
                 }else{
-                    popUps[0].style.display='block'
-                    setTimeout(()=>{
-                        popUps[0].style.display='none'
-                    },2000)
+                    // popUps[0].style.display='block'
+                    // setTimeout(()=>{
+                    //     popUps[0].style.display='none'
+                    // },2000)
+                    swal('添加成功')
                 }
                 // 清空数据
                 for(let i=0;i<inputAll.length;i++){
@@ -117,10 +119,11 @@ save.onclick = function () {
             .catch((err) => {
                 console.log(err)
                 // 提示错误
-                popUps[1].style.display = 'block'
-                setTimeout(() => {
-                    popUps[1].style.display = 'none'
-                }, 2000)
+                // popUps[1].style.display = 'block'
+                // setTimeout(() => {
+                //     popUps[1].style.display = 'none'
+                // }, 2000)
+                swal('网络错误')
             })
     }
 }
