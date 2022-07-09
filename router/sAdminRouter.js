@@ -40,6 +40,12 @@ router.get('/adminCreditManagement', (req, res) => {
 router.get('/addNewIndicator', (req, res) => {
     res.render('addNewIndicator.html')
 })
+
+// 导出excel表格(下载功能还没有写)
+router.get('/adminExportForm', (req, res) => {
+    res.render('adminExportForm.html')
+})
+
 axios.defaults.baseURL = 'http://110.40.205.103:8099'
 
 // 解析kwt函数
@@ -739,7 +745,7 @@ router.post('/admin/update.do.userInfo', (req, res) => {
         }
     })
         .then((result) => {
-            console.log('修改用户信息', result.data)
+            // console.log('修改用户信息', result.data)
             if (result.data.msg == 'OK') {
                 res.send({ err: 0, msg: result.data })
             } else {
@@ -824,7 +830,7 @@ router.post('/del/admin/records', (req, res) => {
         }
     })
         .then((result) => {
-            console.log('删除接口的数据', result.data)
+            // console.log('删除接口的数据', result.data)
             if (result.data.msg == 'OK') {
                 res.send({ err: 0, msg: result.data })
             } else {
@@ -838,23 +844,47 @@ router.post('/del/admin/records', (req, res) => {
 })
 
 // 查询指定指标
-router.post('/IndicatorOperate/searshIndicator',(req,res)=>{
+router.post('/IndicatorOperate/searshIndicator', (req, res) => {
     // console.log(req.body)
     axios({
-        method:'GET',
-        url:'/IndicatorOperate/searshIndicator',
-        params:req.body,
+        method: 'GET',
+        url: '/IndicatorOperate/searshIndicator',
+        params: req.body,
+        headers: {
+            token: req.session.token
+        }
+    })
+        .then((result) => {
+            // console.log(result.data)
+            res.send({ err: 0, msg: result.data.data })
+        })
+        .catch((err) => {
+            res.send({ err: -1, msg: err })
+        })
+})
+
+// 汇总申请表样式
+router.get('/show_excel', (req, res) => {
+    axios({
+        method: 'GET',
+        url: '/show_excel',
+        params: {
+            flag: true
+        },
         headers:{
             token:req.session.token
         }
     })
-    .then((result)=>{
-        // console.log(result.data)
-        res.send({err:0,msg:result.data.data})
-    })
-    .catch((err)=>{
-        res.send({err:-1,msg:err})
-    })
+        .then((result) => {
+            if (result.data.msg == 'OK') {
+                res.send({ err: 0, msg: result.data })
+            } else {
+                res.send({ err: -1, msg: result.data })
+            }
+        })
+        .catch((err)=>{
+            res.send({err:-1,msg:err})
+        })
 })
 
 module.exports = router

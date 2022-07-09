@@ -1,0 +1,33 @@
+body {
+    font-size: 14px;
+}
+
+.adminExportFormItem {
+    width: 1500px;
+    margin: 0px auto;
+}
+
+li {
+    border: 1px solid black;
+    text-align: center;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.adminExportFormItem>ul {
+    display: flex;
+}
+
+.adminExportFormCredit {
+    display: flex;
+}
+
+.dieWidth {
+    width: 100px;
+}
+
+.dieWidthTwo {
+    width: 80px;
+}
