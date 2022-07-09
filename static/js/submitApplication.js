@@ -4,21 +4,6 @@ layui.use(['form', 'layedit', 'laydate'], function () {
     , layedit = layui.layedit
     , laydate = layui.laydate;
   //自定义验证规则
-
-  //监听指定开关
-  //监听提交
-  // form.on('submit(demo1)', function(data){
-  //   layer.alert(JSON.stringify(data.field), {
-  //     title: '最终的提交信息'
-  //   })
-  //   return false;
-  // });
-  //表单取值
-  // layui.$('#LAY-component-form-getval').on('click', function(){
-  //   var data = form.val('example');
-  //   alert(JSON.stringify(data));
-  // });
-
 });
 $.fn.serializeObject = function () {
   var ct = this.serializeArray();
@@ -46,7 +31,7 @@ let credittypesonson = document.getElementById('credittypesonson');
 
 $('#postbutton').on('click', function () {
   var o = $('#form').serializeObject();
-  console.log(o);
+  // console.log(o);
   if (o.remarks == '') {
     swal("请填写实践内容说明！");
     return
@@ -97,7 +82,7 @@ $('#postbutton').on('click', function () {
       }
     })
   } else {
-    o.specific_information = o.specific_information[0];
+    console.log(o);
     swal({
       title: "你确定提交该申请表？",
       text: "你将没有机会修改该部分数据！",

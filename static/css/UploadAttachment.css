@@ -36,3 +36,7 @@
   max-width: 400px;
   min-width: 300px;
 }
+
+.layui-upload-table {
+  min-height: 300px;
+}

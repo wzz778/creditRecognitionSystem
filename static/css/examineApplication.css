@@ -1,0 +1,235 @@
+#Application {
+  width: 100%;
+  background-color: white;
+}
+
+#Application .Application_top {
+  padding: 8px 0;
+  padding-left: 10px;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  line-height: 34px;
+  background-color: white;
+  border-bottom: solid 2px #1890FF;
+}
+
+#Application .Application_top i {
+  padding-right: 5px;
+}
+
+#Application .Application_top button {
+  height: 34px;
+  width: 100px;
+  font-size: 15px;
+  cursor: pointer;
+  margin-left: 10px;
+  border-radius: 4px;
+  transition: .2s;
+}
+
+#Application .Application_top button:hover {
+  color: white;
+}
+
+#Application .Application_top #Application_delete {
+  opacity: .8;
+  background-color: #FFEDED;
+  color: #ec4c4c;
+  border: #e9a4a4 1px solid;
+}
+
+#Application .Application_top #Application_delete:hover {
+  background-color: #ec4c4c;
+  color: white;
+}
+
+#Application .Application_top select {
+  outline: none;
+  padding: 5px;
+  width: 150px;
+  border: 1px solid #DDDDDD;
+  color: #999999;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: .3s;
+}
+
+#Application .Application_top select:hover {
+  border: 1px solid #999999;
+  color: #676767;
+}
+
+#Application .Application_main {
+  margin-top: 10px;
+  margin-left: 10px;
+  width: 100%;
+  min-height: 250px;
+  font-size: 15px;
+}
+
+#Application .Application_main tr {
+  width: 98%;
+  padding: 10px;
+  height: 40px;
+  display: flex;
+  border-bottom: 1px #DFE6EC solid;
+}
+
+#Application .Application_main tr:hover {
+  background-color: #e8eaf0;
+}
+
+#Application .Application_main .tmt {
+  background-color: #F8F8F9;
+}
+
+#Application .Application_main .tmt:hover {
+  background-color: #F8F8F9;
+}
+
+#Application .Application_main .ms {
+  width: 10%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#Application .Application_main .ml {
+  width: 20%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#Application .Application_main th {
+  color: gray;
+  width: 20%;
+}
+
+#Application .Application_main td {
+  text-align: center;
+  width: 0px;
+  color: #9b9b9b;
+}
+
+#Application .Application_main td a {
+  color: #63a5f7;
+}
+
+#Application .Application_main td a:hover {
+  color: #0771f3;
+}
+
+#Application .Application_main td a i {
+  padding: 0 3px;
+}
+
+#Application .Application_main input {
+  margin-top: 3px;
+  width: 30px;
+}
+
+#Application .Application_b {
+  color: #5c5a5a;
+  margin-top: 5px;
+  padding-left: 20px;
+  width: 100%;
+  display: flex;
+  font-size: 15px;
+}
+
+#Application .Application_b #Application_b_left {
+  padding-top: 10px;
+  padding-right: 20px;
+}
+
+#Application .Application_b #Application_b_left select {
+  margin: 0 10px;
+  outline: none;
+  padding: 5px;
+  width: 100px;
+  border: 1px solid #DDDDDD;
+  color: #999999;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: .3s;
+}
+
+#Application .Application_b #Application_b_left select:hover {
+  border: 1px solid #999999;
+  color: #676767;
+}
+
+#Application .Application_b #Application_b_left span {
+  line-height: 30px;
+}
+
+#Application .Application_b #Application_b_left span input {
+  width: 60px;
+  padding: 11px 0px;
+  text-align: center;
+  border: 1px solid #DDDDDD;
+  color: #999999;
+  border-radius: 2px;
+  transition: 0.3s all;
+}
+
+#Application .Application_b #Application_b_left span input:hover {
+  border: 1px solid #999999;
+  color: #676767;
+}
+
+#Application .Application_b #Application_b_left a {
+  width: 30px;
+  height: 30px;
+  display: block;
+  line-height: 30px;
+  text-align: center;
+  border-radius: 5px;
+  color: #77787c;
+  margin: 0 5px;
+  background-color: gainsboro;
+  transition: 0.3s all;
+}
+
+#Application .Application_b #Application_b_left a:hover {
+  background-color: #3097f8;
+  color: white;
+}
+
+#Application .Application_b #Application_b_left a span {
+  margin: 0 10px;
+  display: block;
+}
+
+#Application .Application_b #Application_b_left a input {
+  border: 1px #DFE6EC solid;
+  border-radius: 5px;
+}
+
+#Application .Application_b #Application_b_left button {
+  margin-left: 10px;
+  opacity: .8;
+  cursor: pointer;
+  width: 50px;
+  height: 30px;
+  background-color: #63a5f7;
+  color: white;
+  border-radius: 2px;
+  border: #63a5f7 1px solid;
+  transition: 0.3s all;
+}
+
+#Application .Application_b #Application_b_left button:hover {
+  opacity: 1;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+input[type='number'] {
+  -moz-appearance: textfield;
+}

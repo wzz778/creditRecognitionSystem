@@ -14,7 +14,7 @@ font-family: NSimSun;
 }
 
 td {
-border: 1.5px black solid;
+border: 1px black solid;
 }
 
 table:first-child td {
@@ -27,15 +27,15 @@ padding: 10px;
 }
 
 #zmtd #zm {
-width: 750px;
-height: 300px;
+width: 600px;
+height: 200px;
 }
 
 #schoolform {
-width: 900px;
+width: 710px;   
 margin: 0px auto;
 padding: 0 50px;
-padding-top: 100px;
+/* padding-top: 100px; */
 }
 
 .biaoti {

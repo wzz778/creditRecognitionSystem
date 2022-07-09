@@ -13,7 +13,7 @@
   z-index: 100;
   min-width: 180px;
   max-width: 180px;
-  margin-top: 58px;
+  margin-top: 55px;
 }
 
 #nav a {
@@ -84,7 +84,7 @@
 
 #head #Projecttitle {
   float: left;
-  font-size: 26px;
+  font-size: 22px;
   font-weight: 400;
   line-height: 55px;
   color: white;
