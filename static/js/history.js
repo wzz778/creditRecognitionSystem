@@ -1,20 +1,3 @@
-
-
-// layui.use('laypage',function (){
-//     var laypage = layui.laypage;
-//
-//     laypage.render({
-//         elem:'page',
-//         count:100,
-//         jump:function (obj,first){
-//             console.log(obj.curr);
-//             console.log(obj.limit)
-//             if(!first){
-//
-//             }
-//         }
-//     })
-// })
 layui.use('laydate',function () {
     var laydate = layui.laydate;
 
@@ -32,9 +15,6 @@ layui.use('laydate',function () {
     laydate.render({
         elem: '#endTime',
         position:'fixed',
-        // ready:function (){
-        //     document.getElementById('layui-laydate1').classList.add('modal');
-        // }
     })
 })
 
@@ -84,6 +64,25 @@ function pading(sum){
 
 }
 
+function applicationType() {
+    axios({
+        method:'get',
+        url:'/creditTypeOperate/showCreditType',
+    }).then((data)=>{
+        console.log(data.data.msg);
+        let all = `<option value="">所有</option>`;
+        for(let i=0;i<data.data.msg.length;i++){
+            all += `<option value="${data.data.msg[i].afirstLevel}">${data.data.msg[i].afirstLevel}</option>`
+        }
+        search_type[0].innerHTML = all;
+    }).catch((err)=>{
+        console.log(err);
+    })
+}
+applicationType()
+
+
+
 function rendering(){
     let index1 = search_type[1].selectedIndex;
     let index = search_type[0].selectedIndex;
@@ -116,16 +115,16 @@ function rendering(){
     if(end == ''){
         delete  his.endDate
     }
-    console.log(typeName);
-    console.log(typeStatus);
     console.log(his);
     axios({
         method:'get',
         url:'/users/records',
-        params:{},
+        params:his,
     }).then((data)=>{
         console.log(data.data.data);
-        let date = data.data.data.allRecords;
+        console.log(data.data.data);
+        let date = data.data.data.pageInfo;
+        console.log(date);
         let all = "";
         for(let i=0;i<date.length;i++){
             if(date[i].application.approval_status == 0){
@@ -139,7 +138,7 @@ function rendering(){
                         <li class="student-name lis">${date[i].application.user.name}</li>
                         <li class="student-major lis">${date[i].application.user.academy}</li>
                         <li class="student-class lis">${date[i].application.user.major_class}</li>
-                        <li class="student-apply lis">${date[i].application.application_credit_type}</li>
+                        <li class="student-apply lis">${date[i].application.creditType.afirstLevel}</li>
                         <li class="student-time lis">${date[i].application.application_time}</li>
                         <li class="student-state lis">${approval_status}</li>
                         <li class="student-apply-credit lis">${date[i].application.classify.b_points_available}</li>
@@ -147,9 +146,11 @@ function rendering(){
                     </ul>`
         }
         main_content[0].innerHTML = all;
+        let pages = data.data.data.allPages * 10;
+        pading(pages);
         let index = 0;
         for(let i=0;i<check.length;i++) {
-            check[i].ids = date[i].application.id;
+            check[i].ids = date[i].applicationId;
             check[i].onclick = function () {
 
 
@@ -206,8 +207,8 @@ function render(numbers){
         url:'/users/records',
         params:his,
     }).then((data)=>{
-        console.log(data.data.data.allRecords);
-        let date = data.data.data.allRecords;
+        console.log(data.data.data.pageInfo);
+        let date = data.data.data.pageInfo;
         let all = "";
         for(let i=0;i<date.length;i++){
             if(date[i].application.approval_status == 0){
@@ -231,11 +232,12 @@ function render(numbers){
         main_content[0].innerHTML = all;
         let index = 0;
         for(let i=0;i<check.length;i++) {
-            check[i].ids = date[i].application.id;
+            check[i].applicationId = date[i].applicationId;
+            check[i].ids = date[i].id;
             check[i].onclick = function () {
 
 
-                window.location.href = 'particulars?id=' + check[i].ids;
+                window.location.href = 'particulars?applicationId=' + check[i].applicationId ;
             }
         }
     })
@@ -245,7 +247,7 @@ function render(numbers){
 
 
 btn[0].onclick = function (){
-    render(1);
+    rendering();
 }
 btn[1].onclick = function (){
     search_type[0].value = "";
@@ -253,7 +255,7 @@ btn[1].onclick = function (){
     search[0].value = "";
     startTime.value = "";
     endTime.value = "";
-    render(1);
+    rendering();
 }
 
 
