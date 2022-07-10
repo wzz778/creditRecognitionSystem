@@ -1,6 +1,7 @@
 const express = require('express');
 const axios = require("axios");
 const jwt = require("jsonwebtoken");
+const {response} = require("express");
 const router = express.Router();
 axios.default.baseURL = 'http://110.40.205.103:8099/';
 router.get('/history',(req,res)=>{
@@ -155,6 +156,21 @@ router.get('/admin/getUserByClass',(req,res)=>{
         }
     }).then((date)=>{
         res.send(date.data);
+    }).catch((err)=>{
+        res.send(err);
+    })
+})
+
+router.get('/user/getEnclosure',(req,res)=>{
+    axios({
+        method:'get',
+        url:'/user/getEnclosure',
+        params:req.query,
+        headers:{
+            token:req.session.token
+        }
+    }).then((data)=>{
+        res.send(data.data);
     }).catch((err)=>{
         res.send(err);
     })

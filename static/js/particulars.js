@@ -10,14 +10,18 @@ function pic(){
             height:'300px',
             indicator:'none',
             anim:'default',
-            autoplay:'false',
+            autoplay:false,
         })
     })
 }
 
+
 let id = window.location.search.split("=")[1];
 console.log(id);
-let history_details = document.getElementsByClassName('history-details')
+let history_details = document.getElementsByClassName('history-details');
+let application_message = document.getElementsByClassName('application-message');
+let attchment = document.getElementsByClassName('attchment');
+let carousel_item = document.getElementsByClassName('carousel-item');
 
 function package(method,url,args,callback){
     if(method == "post"){
@@ -48,7 +52,7 @@ function render(id){
         console.log(data.data.data);
         let date = data.data.data;
         // let html = template('details',data);
-        let all = `<div class="application-message">
+        let all = `
                         <ul class="messages">
                             <li>
                                 姓名：
@@ -76,31 +80,33 @@ function render(id){
                                 是否为集体项目：
                                 <span>否</span>
                             </li>
-                            <li class="parctice-content">
-                                实践内容说明：
-                                <div>
-
-                                </div>
-                            </li>
+                            
                         </ul>
-                    </div>
-
-                    <div class="attchment">
-                        <div class="attchment-title">附件</div>
-                        <div class="layui-carousel" id="attchment-pic">
-                            <div carousel-item>
-                                <div class="attchment-everyOne"><img src='/public/img/loginback.png' class="attchment-imgs"></div>
-                                <div class="attchment-everyOne"><img src='/public/img/loginback.png' class="attchment-imgs"></div>
-                                <div class="attchment-everyOne"><img src='/public/img/loginback.png' class="attchment-imgs"></div>
-                                <div class="attchment-everyOne"><img src='/public/img/loginback.png' class="attchment-imgs"></div>
-                                <div class="attchment-everyOne"><img src='/public/img/loginback.png' class="attchment-imgs"></div>
+                        <div class="parctice-content">
+                            <span>实践内容说明：</span>
+                            <div>
+                                <textarea name="" id="textarea" readonly style="resize: none">${date.remarks}</textarea>
                             </div>
-                        </div>
-                    </div>`
-        history_details[0].innerHTML = all;
+                        </div>`
+        application_message[0].innerHTML = all;
         pic();
     }).catch((err)=>{
         console.log(err);
+    })
+
+    axios({
+        method: 'get',
+        url: '/user/getEnclosure',
+        params: {
+            id:id,
+        }
+    }).then((date)=>{
+        console.log(date.data.data);
+        let all = '';
+        for(let i=0;i<date.data.data.length;i++){
+            all +=`<div class="attchment-everyOne"><img src='${date.data.data[i].address}' class="attchment-imgs"></div>`
+        }
+        carousel_item[0].innerHTML = all;
     })
 }
 render(id);

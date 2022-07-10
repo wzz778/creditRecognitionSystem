@@ -21,6 +21,7 @@ let warn = document.getElementsByClassName('warn');
 let radios = document.getElementsByClassName('radios');
 let layer_submit = document.getElementsByClassName('layer-submit');
 let layer_btn_primary = document.getElementsByClassName('layer-btn-primary');
+let check_out = document.getElementsByClassName('check-out');
 
 checkbox_all[0].numbers = 0;
 
@@ -50,13 +51,12 @@ function rendering() {
         method:'get',
         url:'/admin/commonUserPage',
         params:{
-            "nodePage":1,
-            "pageSize": 10,
+            nodePage:1,
+            pageSize: 10,
         },
     }).then((date)=>{
-
-        let all = date.data.data.pageInfo;
         console.log(date.data);
+        let all = date.data.data.pageInfo;
         console.log(all);
         let html = "";
         for(let i=0;i<all.length;i++){
@@ -83,10 +83,6 @@ function rendering() {
         main_content[0].innerHTML = html;
         let sum = date.data.data.allPages;
         console.log(sum);
-        // let nodepage = parseInt((all.length / 10));
-        // let allLength = all.length % 10 ==0 ? nodepage : nodepage + 1;
-        // console.log(nodepage)
-        // console.log(allLength * 10);
         btn_new[0].allLength = sum * 10;
         page(btn_new[0].allLength);
         console.log(checkbox_list.length)
@@ -124,6 +120,24 @@ function rendering() {
                     btn_update[0].style.pointerEvents = 'none';
                 }
             }
+            check_out[i].onclick = function () {
+                let id = checkbox_list[i].ids;
+                axios({
+                    method:'get',
+                    url:'/admin/getUserByClass',
+                    params:{
+                        UId:id,
+                        beginIndex:1,
+                        size:1,
+                    }
+                }).then((date)=>{
+                    console.log(date.data);
+                }).catch((err)=>{
+                    console.log(err);
+                })
+            }
+            
+            
             check[i].onclick = function (){
                 cover_layer[0].style.display = 'block'
                 layer_submit[0].numbers = 1;

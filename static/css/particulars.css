@@ -37,6 +37,12 @@
 .parctice-content{
     width: 100%;
 }
+.parctice-content span{
+    display: block;
+    color: black;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
 .attchment-title{
     text-align: left;
     font-weight: 700;
@@ -55,4 +61,14 @@
     width: 100%;
     height: 300px;
     object-fit: contain;
+    cursor: pointer;
+}
+#textarea{
+    width: 100%;
+    min-height: 100px;
+    font-size: 15px;
+    padding: 6px 10px;
+    color: rgba(0,0,0,0.85);
+    border: 1px solid rgb(238 238 238);
+    border-radius: 3px;
 }
