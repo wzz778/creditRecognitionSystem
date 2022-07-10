@@ -11,6 +11,15 @@ const { send } = require('process')
 const { url } = require('inspector')
 var mult = multipart()
 
+router.get('*', (req, res, next) => {
+    let obj = jwt.decode(req.session.token)
+    console.log(obj)
+    if (obj.power == '超级管理员') {
+        return next()
+    }
+    res.send('对不起您没有权限访问该页面')
+})
+
 // 请求页面
 // 添加用户 !
 router.get('/superAdminAdd', (req, res) => {
@@ -41,7 +50,7 @@ router.get('/adminExportForm', (req, res) => {
     res.render('adminExportForm.html')
 })
 // 学院信息管理
-router.get('/InstituteInformationManagement',(req,res)=>{
+router.get('/InstituteInformationManagement', (req, res) => {
     res.render('InstituteInformationManagement.html')
 })
 
@@ -150,11 +159,11 @@ router.post('/admin/User', (req, res) => {
         return
     }
     let { name, userName, power, sex, grade, academy, major_class, organization, position } = req.body
-    if(!organization){
-        organization='无'
+    if (!organization) {
+        organization = '无'
     }
-    if(!position){
-        position='无'
+    if (!position) {
+        position = '无'
     }
     // 传数据
     axios({
@@ -481,12 +490,12 @@ router.post('/child', (req, res) => {
 })
 
 //获取学分构成的三级指标
-router.post('/Third',(req,res)=>{
+router.post('/Third', (req, res) => {
     if (!jwt.decode(req.session.token)) {
         res.send({ err: -1, msg: '用户身份非法' })
         return
     }
-    let {id}=req.body
+    let { id } = req.body
     axios({
         method: 'GET',
         url: '/IndicatorOperate/showIndicator',
