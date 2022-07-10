@@ -1,0 +1,147 @@
+select{
+    padding: 7px;
+}
+
+button{
+    color: #806A84;
+}
+
+.bodyTop{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .4);
+    position: fixed;
+    z-index: 999;
+}
+
+.bodyTop>div{
+    padding: 30px;
+    margin: 150px auto;
+    width: 425px;
+    min-height: 150px;
+    background-color: white;
+}
+
+.bodyTopItem{
+    margin-bottom: 10px;
+    /* display: inline-block; */
+}
+
+.bodyTopItem>input{
+    width: 70%;
+    height: 30px;
+}
+
+.bodyTopItem>select{
+    width: 70%;
+    height: 30px;
+}
+
+.bodyTopBottom{
+    margin-left: 130px;
+}
+
+.cancel{
+    background-color: #ED5565;
+    color: white;
+}
+
+#changeUserInfo{
+    background-color: #1AB394;
+    color: white;
+}
+
+.InfoTopText{
+    color: #368AE2;
+}
+
+.SelectSearch{
+    margin: 10px 0px;
+}
+
+.InfoTopSelect{
+    border-bottom: 1px solid #DDDDDD;
+    padding: 5px;
+    padding-bottom: 20px;
+}
+
+.InfoTopSelectItem{
+    margin: 0px 20px;
+}
+
+.topOperator>button{
+    margin: 0px 5px;
+}
+
+.addBtnSty{
+    background-color: #1C84C6;
+    color: white;
+}
+
+.delBtnSty{
+    color: white;
+    background-color: #F59DA6;
+}
+
+.reviseBtnSty{
+    background-color: #F8AC59;
+    color: white;
+}
+
+.InfoContent{
+    margin-top: 20px;
+}
+
+.InfoContentTop>ul{
+    background-color: #EFF3F8;
+}
+
+.InfoContentItem>ul{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    text-align: center;
+    justify-items: center;
+    border-bottom: 1px solid #DDDDDD;
+    padding: 5px 0px;
+}
+
+.InfoContentItem>ul>li>button{
+    padding: 0px;
+}
+
+.constituteSty{
+    display: grid;
+    grid-template-columns: 30px 200px;
+    text-align: center;
+    justify-content: center;
+}
+
+.expandItem {
+    position: relative;
+    margin-left: 56px;
+    margin-right: 5px;
+    padding-right: 7px;
+    top: 3px;
+    display: inline-block;
+    width: 30px;
+    height: 20px;
+}
+
+.expandItem>span {
+    display: inline-block;
+    width: 3px;
+    height: 14px;
+    background-color: #a8a5a5;
+}
+
+.expandItem>span:nth-child(1) {
+    position: relative;
+    left: -3px;
+    right: 10px;
+}
+
+.expandItem>span:nth-child(2) {
+    position: relative;
+    right: 10px;
+    transform: rotate(90deg);
+}

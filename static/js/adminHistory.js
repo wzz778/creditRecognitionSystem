@@ -135,7 +135,7 @@ function GetAllInfo(page, perpage, obj) {
             }
             adminHistoryContentContent.innerHTML = ''
             for (let i = 0; i < result.data.msg.length; i++) {
-                let time = result.data.msg[i].application.application_time.split(' ')[0]
+                let time = result.data.msg[i].createTime.split(' ')[0]
                 let status = '审核中'
                 if (result.data.msg[i].application.approval_status == '1') {
                     status = '审核通过'

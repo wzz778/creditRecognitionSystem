@@ -25,10 +25,12 @@ app.use('/node_modules',express.static(path.join(__dirname,'./node_modules')));
 const sAdminRouter=require('./router/sAdminRouter')
 const wzzRouter=require('./router/wzzRouter')
 const userRouter = require('./router/userRouter')
+const errRouter=require('./router/errorRouter')
 // 配置路由
 app.use(sAdminRouter)
 app.use(wzzRouter)
 app.use(userRouter);
+app.use(errRouter)
 // 启动服务器
 app.listen(8080,()=>{
     console.log('服务器已启动,端口号:8080')

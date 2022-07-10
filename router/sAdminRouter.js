@@ -36,10 +36,13 @@ router.get('/adminCreditManagement', (req, res) => {
 router.get('/addNewIndicator', (req, res) => {
     res.render('addNewIndicator.html')
 })
-
 // 导出excel表格(下载功能还没有写)
 router.get('/adminExportForm', (req, res) => {
     res.render('adminExportForm.html')
+})
+// 学院信息管理
+router.get('/InstituteInformationManagement',(req,res)=>{
+    res.render('InstituteInformationManagement.html')
 })
 
 axios.defaults.baseURL = 'http://110.40.205.103:8099'
@@ -208,7 +211,6 @@ router.get('/creditTypeOperate/showCreditType', (req, res) => {
             res.send('错误')
         })
 })
-
 // 用户管理
 router.post('/admin/getUserByClass', (req, res) => {
     if (!jwt.decode(req.session.token)) {
@@ -310,7 +312,6 @@ router.post('/delAllUser', (req, res) => {
             res.send({ err: -1, msg: '网络错误' })
         })
 })
-
 // 获取学分构成的指标
 router.get('/IndicatorOperate/showAllIndicator', (req, res) => {
     // 请求所有指标
@@ -336,6 +337,7 @@ router.get('/IndicatorOperate/showAllIndicator', (req, res) => {
             res.send({ err: -1, msg: '网络错误' })
         })
 })
+
 
 router.get('/getCreditsComposition', (req, res) => {
     if (!jwt.decode(req.session.token)) {
