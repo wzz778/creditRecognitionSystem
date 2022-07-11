@@ -1,3 +1,5 @@
+// const { default: axios } = require("axios")
+
 let popUps = document.getElementsByClassName('popUps')
 let msgHint = document.getElementById('msgHint')
 
@@ -56,11 +58,11 @@ let addOrganization = document.getElementById('addOrganization')
 let cancelAddOrganization = document.getElementById('cancelAddOrganization')
 addOrganization.onclick = function () {
     OrganizationInformation.style.display = 'grid'
-    usPermission.value='普通管理员'
+    usPermission.value = '普通管理员'
 }
 cancelAddOrganization.onclick = function () {
     OrganizationInformation.style.display = 'none'
-    usPermission.value=''
+    usPermission.value = ''
 }
 
 // 限制账号,这里限制只能是数字
@@ -99,25 +101,30 @@ save.onclick = function () {
         // sex.parentElement.lastElementChild.style.display = 'block'
         swal('请选择性别')
     } else {
+        var indexGrade = usGrade.selectedIndex // 选中索引
+        var textGrade = usGrade.options[indexGrade].text
+        var indexusCollege = usCollege.selectedIndex; // 选中索引
+        var textusCollege = usCollege.options[indexusCollege].text
+        var indexusClass = usClass.selectedIndex; // 选中索引
+        var textusClass = usClass.options[indexusClass].text;
         let obj = {
             name: usName.value,
             userName: account.value,
             power: usPermission.value,
             sex: sex.value,
-            grade: usGrade.value,
-            academy: usCollege.value,
-            major_class: usClass.value,
+            grade: textGrade,
+            academy: textusCollege,
+            major_class: textusClass,
         }
-        console.log(OrganizationInformation.style.display)
         if (OrganizationInformation.style.display == 'grid') {
             // 必须填组织信息
             if (organization.value == '' || position.value == '') {
                 swal('请输入组织信息')
                 return
-            }else{
-                obj.organization= organization.value
-                obj.position=position.value
-                obj.power='普通管理员'
+            } else {
+                obj.organization = organization.value
+                obj.position = position.value
+                obj.power = '普通管理员'
             }
         }
         console.log(obj)
@@ -164,7 +171,72 @@ save.onclick = function () {
             })
     }
 }
-
+// 获取一级的目录,传入要显示年级的元素
+function GetFirstLevel(ele) {
+    axios({
+        method: 'GET',
+        url: '/admin/showOrganization',
+    })
+        .then((result) => {
+            console.log(result.data)
+            ele.innerHTML = ''
+            ele.add(new Option('请选择...', ''))
+            for (let i = 0; i < result.data.msg.length; i++) {
+                ele.add(new Option(result.data.msg[i].name, result.data.msg[i].id))
+            }
+            ele.value = ''
+        })
+        .catch((err) => {
+            console.log(err)
+            swal('网络错误')
+        })
+}
+GetFirstLevel(usGrade)
+// 需要添加的元素，上一级的id，级别
+function GetOtherLevel(ele, id) {
+    axios({
+        method: 'POST',
+        url: '/admin/selectOrganization',
+        data: {
+            id: id
+        }
+    })
+        .then((result) => {
+            console.log(result.data)
+            // 将结果添加到ele上
+            ele.innerHTML = ''
+            ele.add(new Option('请选择...', ''))
+            for (let i = 0; i < result.data.msg.length; i++) {
+                ele.add(new Option(result.data.msg[i].name, result.data.msg[i].id))
+            }
+            ele.value = ''
+        })
+        .catch((err) => {
+            console.log(err)
+            swal('网络错误')
+        })
+}
+usGrade.onchange = function () {
+    // 显示学院
+    if(usGrade.value==''){
+        return
+    }
+    GetOtherLevel(usCollege, usGrade.value)
+}
+usCollege.onchange = function () {
+    // 显示专业
+    if(usCollege.value==''){
+        return
+    }
+    GetOtherLevel(usSpecialized, usCollege.value)
+}
+usSpecialized.onchange = function () {
+    if(usSpecialized.value==''){
+        return
+    }
+    // 显示班级
+    GetOtherLevel(usClass, usSpecialized.value)
+}
 
 // 渲染三级联动数据
 // 1.创建三维数组

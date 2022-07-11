@@ -32,7 +32,7 @@ app.get('*', (req, res, next) => {
   if (jwt.decode(req.session.token)) {
     return next()
   }
-  res.render('login.html')``
+  res.render('login.html')
 })
 
 // 配置路由

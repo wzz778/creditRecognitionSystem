@@ -45,7 +45,7 @@ router.get('/adminCreditManagement', (req, res) => {
 router.get('/addNewIndicator', (req, res) => {
     res.render('addNewIndicator.html')
 })
-// 导出excel表格(下载功能还没有写)
+// 导出excel表格 !
 router.get('/adminExportForm', (req, res) => {
     res.render('adminExportForm.html')
 })
@@ -113,9 +113,6 @@ router.post('/admin/application', (req, res) => {
     if (academy) {
         obj.academy = academy
     }
-    if (approval_status) {
-        obj.approval_status = approval_status
-    }
     if (b_Indicator_name) {
         obj.b_Indicator_name = b_Indicator_name
     }
@@ -131,6 +128,8 @@ router.post('/admin/application', (req, res) => {
     if (major_class) {
         obj.major_class = major_class
     }
+    obj.approval_status = approval_status = 1
+    console.log('查看申请表', obj)
     axios({
         method: 'GET',
         url: '/admin/application',
@@ -226,7 +225,7 @@ router.post('/admin/getUserByClass', (req, res) => {
         res.send({ err: -1, msg: '用户身份非法' })
         return
     }
-    let { beginIndex, size, academy, name, major_class, sex, power, userName } = req.body
+    let { beginIndex, size, academy, name, major_class, sex, power, userName, grade } = req.body
     let obj = {}
     obj.beginIndex = beginIndex
     obj.size = size
@@ -247,6 +246,9 @@ router.post('/admin/getUserByClass', (req, res) => {
     }
     if (userName) {
         obj.userName = userName
+    }
+    if (grade) {
+        obj.grade = grade
     }
     axios({
         method: 'GET',
@@ -909,13 +911,14 @@ router.post('/IndicatorOperate/searshIndicator', (req, res) => {
 })
 
 // 汇总申请表样式
-router.get('/show_excel', (req, res) => {
+router.post('/showExcel', (req, res) => {
+    // console.log('数据',req.body)
+    let { sendResult } = req.body
+    console.log(sendResult)
     axios({
         method: 'GET',
         url: '/show_excel',
-        params: {
-            flag: true
-        },
+        params: sendResult,
         headers: {
             token: req.session.token
         }
@@ -925,6 +928,51 @@ router.get('/show_excel', (req, res) => {
                 res.send({ err: 0, msg: result.data })
             } else {
                 res.send({ err: -1, msg: result.data })
+            }
+        })
+        .catch((err) => {
+            res.send({ err: -1, msg: err })
+        })
+})
+
+// 获取一级信息
+router.get('/admin/showOrganization', (req, res) => {
+    axios({
+        method: 'GET',
+        url: '/admin/showOrganization',
+        headers: {
+            token: req.session.token
+        }
+    })
+        .then((result) => {
+            if (result.data.msg == 'OK') {
+                res.send({ err: 0, msg: result.data.data })
+            } else {
+                res.send({ err: -1, msg: result.data.data })
+            }
+        })
+        .catch((err) => {
+            res.send({ err: -1, msg: err })
+        })
+})
+// 获取其他级别信息
+router.post('/admin/selectOrganization', (req, res) => {
+    let { id } = req.body
+    axios({
+        method: 'GET',
+        url: '/admin/selectOrganization',
+        params: {
+            id: id
+        },
+        headers: {
+            token: req.session.token
+        }
+    })
+        .then((result) => {
+            if (result.data.msg == 'OK') {
+                res.send({ err: 0, msg: result.data.data })
+            } else {
+                res.send({ err: -1, msg: result.data.data })
             }
         })
         .catch((err) => {

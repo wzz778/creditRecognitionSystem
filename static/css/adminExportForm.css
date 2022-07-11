@@ -7,7 +7,12 @@ body {
     margin: 0px auto;
 }
 
-li {
+table{
+    border-collapse: collapse
+}
+
+
+td {
     border: 1px solid black;
     text-align: center;
     padding: 5px;
@@ -16,8 +21,8 @@ li {
     justify-content: center;
 }
 
-.adminExportFormItem>ul {
-    display: flex;
+.adminExportFormItem>table>tbody>tr {
+    display: inline-flex;
 }
 
 .adminExportFormCredit {
@@ -25,7 +30,7 @@ li {
 }
 
 .dieWidth {
-    width: 100px;
+    width: 95px;
 }
 
 .dieWidthTwo {
@@ -39,4 +44,32 @@ li {
     margin-bottom: 20px;
     margin-right: 20px;
     margin-top: 20px;
+}
+
+.top{
+    width: 1500px;
+    margin: 0px auto;
+    display: grid;
+    grid-template-columns: 275px repeat(4,265px) 155px; 
+    justify-content: center;
+    align-items: center;
+}
+
+#reserve{
+    background-color: #F8AC59;
+    color: white;
+}
+
+#search{
+    background-color: #1AB394;
+    color: white;
+}
+
+.tdSty>tr>td{
+    height: 55px;
+}
+
+.adminExportFormCredit{
+    padding: 0px;
+    border: 0px;
 }

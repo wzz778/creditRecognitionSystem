@@ -501,7 +501,9 @@ sureAdd.onclick = function () {
                     return
                 }
                 swal('添加成功')
+                bodyTop[0].style.display='none'
                 console.log(result.data)
+                watchFather()
             })
             .catch((err) => {
                 console.log(err)

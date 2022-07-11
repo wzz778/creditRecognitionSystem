@@ -136,14 +136,32 @@
             </select>
         </div>
         <div class="">
+            年级:
+            <select id="USGrade" class="searchValue">
+                <option value="">请选择...</option>
+            </select>
+        </div>
+        <div class="">
             院系:
-            <input type="text" class="searchValue" id="Faculty" autocomplete="off" placeholder="院系,例如:信息工程学院">
+            <select id="Faculty" class="searchValue">
+                <option value="">请选择...</option>
+            </select>
+            <!-- <input type="text" class="searchValue" id="Faculty" autocomplete="off" placeholder="院系,例如:信息工程学院"> -->
+        </div>
+        <div class="">
+            专业:
+            <select id="specialized" class="searchValueNo">
+                <option value="">请选择...</option>
+            </select>
         </div>
         <div class="">
             班级:
-            <input type="text" id="major_class" class="searchValue" placeholder="班级,例如:计科214" autocomplete="off">
+            <select id="major_class" class="searchValue">
+                <option value="">请选择...</option>
+            </select>
+            <!-- <input type="text" id="major_class" class="searchValue" placeholder="班级,例如:计科214" autocomplete="off"> -->
         </div>
-        <div class="">
+        <div class="" style="display: none;">
             姓名:
             <input type="text" placeholder="请输入姓名" id="name" class="searchValue" autocomplete="off">
         </div>
