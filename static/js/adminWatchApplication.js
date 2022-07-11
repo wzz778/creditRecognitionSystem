@@ -224,6 +224,11 @@ CreditsComposition.onchange = function () {
             ScopeRecognition.innerHTML = ''
             CreditsSecondDir.add(new Option('请选择...', ''))
             ScopeRecognition.add(new Option('请选择...', ''))
+            if (result.data.msg == "下边没有指标了") {
+                CreditsSecondDir.value = ''
+                ScopeRecognition.value = ''
+                return
+            }
             for (let i = 0; i < result.data.msg.length; i++) {
                 if (!result.data.msg[i].b_points_available) {
                     // 是目录
@@ -265,7 +270,7 @@ CreditsSecondDir.onchange = function () {
         })
 }
 
-let exportForm=document.getElementById('exportForm')
-exportForm.onclick=function(){
+let exportForm = document.getElementById('exportForm')
+exportForm.onclick = function () {
     window.open('http://127.0.0.1:8080/adminExportForm')
 }
