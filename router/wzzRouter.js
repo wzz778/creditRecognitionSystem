@@ -6,12 +6,13 @@ const FormData=require('form-data');
 const fs=require('fs');
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
-
 var multiparty = require('multiparty');
 const { log } = require('console');
 // 请求页面
-router.get('/',(req,res)=>{
-    res.render('index.html')
+router.get('/layout',(req,res)=>{
+    res.render('layout.html',{
+        user:req.session.user
+    })
 })
 router.get('/login',(req,res)=>{
     res.render('login.html')
@@ -21,6 +22,9 @@ router.get('/EndApplication',(req,res)=>{
 })
 router.get('/UploadAttachment',(req,res)=>{
     res.render('UploadAttachment.html')
+})
+router.get('/superAdminAddUser',(req,res)=>{
+    res.render('superAdminAddUser.html')
 })
 router.get('/makepdf',(req,res)=>{
     res.render('makepdf.html')
@@ -35,14 +39,14 @@ router.get('/submitApplication',(req,res)=>{
     axios.get('/creditTypeOperate/showCreditType',{
         // params:req.query,
         headers:{
-            token: req.session.token
-        }},
-    ).then(response=>{
+            token: req.session.token,
+        }
+    }).then(response=>{
         req.session.credittype=response.data.data;
-        // console.log(req.session.user);
+        console.log(req.session.user);
         res.render('submitApplication.html',{
             credittype: req.session.credittype,
-            // user:req.session.user
+            user:req.session.user
         })
     }).catch(function (error) {
         // res.send(error)
@@ -66,6 +70,10 @@ router.post('/api/login', (req, res) => {
     });
 })
 router.get('/api/getmymessage', (req, res) => {
+    if (!jwt.decode(req.session.token)) {
+        res.send({ err: -1, msg: '用户身份非法' })
+        return
+    }
     axios({
         url:'user/userInfo',
         method:'get',
@@ -96,6 +104,10 @@ router.get('/api/outlogin', (req, res) => {
     });
 })
 router.get('/api/getcreditmessage', (req, res) => {
+    if (!jwt.decode(req.session.token)) {
+        res.send({ err: -1, msg: '用户身份非法' })
+        return
+    }
     axios.get('/creditTypeOperate/showCreditType',{
         headers:{
             token:req.session.token
@@ -109,6 +121,10 @@ router.get('/api/getcreditmessage', (req, res) => {
     });
 })
 router.post('/api/getpost', (req, res) => {
+    if (!jwt.decode(req.session.token)) {
+        res.send({ err: -1, msg: '用户身份非法' })
+        return
+    }
     console.log(req.body);
     axios({
         url:'user/application',
@@ -126,6 +142,10 @@ router.post('/api/getpost', (req, res) => {
     });
 })
 router.get('/api/getcreditson', (req, res) => {
+    if (!jwt.decode(req.session.token)) {
+        res.send({ err: -1, msg: '用户身份非法' })
+        return
+    }
     axios.get('/IndicatorOperate/searshIndicator',{
         params:req.query,
         headers:{
@@ -139,6 +159,10 @@ router.get('/api/getcreditson', (req, res) => {
     });
 })
 router.get('/api/getsonson', (req, res) => {
+    if (!jwt.decode(req.session.token)) {
+        res.send({ err: -1, msg: '用户身份非法' })
+        return
+    }
     axios.get('/IndicatorOperate/showIndicator',{
         params:req.query,
         headers:{
@@ -152,6 +176,10 @@ router.get('/api/getsonson', (req, res) => {
     });
 })
 router.get('/api/getpostmessage', (req, res) => {
+    if (!jwt.decode(req.session.token)) {
+        res.send({ err: -1, msg: '用户身份非法' })
+        return
+    }
     axios.get('/user/oneApplication/{id}',{
         params:req.query,
         headers:{
@@ -168,11 +196,14 @@ router.get('/api/getpostmessage', (req, res) => {
 })
 router.post('/api/UploadAttachment', multipartMiddleware,(req, res) => {
     let formdata = new FormData()
+    //建立FormData()对象，注意：node中使用要先下载formdata中间件
     for (let a in req.files) {
         formdata.append('file', fs.createReadStream(req.files[a].path),req.files[a].originalFilename)//第二个参数试上传的文件名
     }
+    //循环传递file文件对象，req.files[a].path是该文件的本地地址， 用fs.createReadStream(req.files[a].path)进行读取创作，req.files[a].originalFilename是文件本名，用来传出文件名称
     formdata.append('enclosure_name',req.body.enclosure_name)
     formdata.append('application_id',req.body.application_id)
+    //req.body中传递非文件数据， req.files是文件数据
     axios({
         method: 'POST',
         url: 'http://110.40.205.103:8099/user/photo',
@@ -180,8 +211,8 @@ router.post('/api/UploadAttachment', multipartMiddleware,(req, res) => {
         // headers: formdata.getHeaders(),
         headers:{
             token:req.session.token,
-            formdata:formdata.getHeaders(),
-            maxBodyLength:1000000000
+            formdata:formdata.getHeaders(),//传递formdata数据
+            maxBodyLength:10000000
         }
     })
         .then((result) => {
@@ -218,10 +249,14 @@ router.put('/api/uppassword', (req, res) => {
     }
 })
 router.get('/api/allapplication', (req, res) => {
+    if (!jwt.decode(req.session.token)) {
+        res.send({ err: -1, msg: '用户身份非法' })
+        return
+    }
     axios.get('/user/application',{
         params:req.query,
         headers:{
-            token:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTczNDUzNDYsImV4cCI6MTY1NzM0ODk0NiwidXNlcm5hbWUiOiIxIiwicG93ZXIiOiLotoXnuqfnrqHnkIblkZgifQ.zIhoxipHH2ReQciofnQa1kjWzc-lIZdL9m5U4o7UCNI"
+            token:req.session.token
         }},
     ).then(response=>{
         console.log(response.data);
@@ -231,9 +266,13 @@ router.get('/api/allapplication', (req, res) => {
     });
 })
 router.put('/api/passpost', (req, res) => {
+        if (!jwt.decode(req.session.token)) {
+            res.send({ err: -1, msg: '用户身份非法' })
+            return
+        }
         axios({
         headers: {
-            token:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTczNDUzNDYsImV4cCI6MTY1NzM0ODk0NiwidXNlcm5hbWUiOiIxIiwicG93ZXIiOiLotoXnuqfnrqHnkIblkZgifQ.zIhoxipHH2ReQciofnQa1kjWzc-lIZdL9m5U4o7UCNI"
+            token:req.session.token
         },
         method: 'put',
         url: '/admin/auditingApplication',
@@ -246,25 +285,25 @@ router.put('/api/passpost', (req, res) => {
             res.send(error)
         });
 })
-router.post('/api/deletepost',(req, res) => {
-    console.log(req.body);
-    // let allid=JSON.stringify(req.body);
-    // console.log(allid);
-    // let all=allid.replace(/{/g,"").replace(/}/g,"");
-    // console.log(all);
-    axios({
-    headers: {
-        token:"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTczNDUzNDYsImV4cCI6MTY1NzM0ODk0NiwidXNlcm5hbWUiOiIxIiwicG93ZXIiOiLotoXnuqfnrqHnkIblkZgifQ.zIhoxipHH2ReQciofnQa1kjWzc-lIZdL9m5U4o7UCNI"
-    },
-    method: 'delete',
-    url: '/admin/application',
-    params:{id:req.body.toString()}
-    }).then(response=>{
-        console.log(response);
-        res.send(response);
-    }).catch(function (error) {
-        console.log(error);
-        res.send(error)
-    });
-})
+// router.post('/api/deletepost',(req, res) => {
+//     console.log(req.body);
+//     // let allid=JSON.stringify(req.body);
+//     // console.log(allid);
+//     // let all=allid.replace(/{/g,"").replace(/}/g,"");
+//     // console.log(all);
+//     axios({
+//     headers: {
+//         token:req.session.token
+//     },
+//     method: 'delete',
+//     url: '/admin/application',
+//     params:{id:req.body.toString()}
+//     }).then(response=>{
+//         console.log(response);
+//         res.send(response);
+//     }).catch(function (error) {
+//         console.log(error);
+//         res.send(error)
+//     });
+// })
 module.exports = router

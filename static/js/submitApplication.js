@@ -187,20 +187,20 @@ function setsonson() {
     }
   }
 }
-$.get(`http://127.0.0.1:8080/api/getmymessage`,
-  function (data) {
-    console.log(data);
-    usermessage[0].innerHTML = data.name;
-    usermessage[1].innerHTML = data.sex;
-    usermessage[2].innerHTML = data.userName;
-    usermessage[3].innerHTML = data.academy;
-    usermessage[4].innerHTML = data.major_class;
-    sessionStorage.setItem('username', data.name);
-    sessionStorage.setItem('usersex', data.sex);
-    sessionStorage.setItem('userName', data.userName);
-    sessionStorage.setItem('useracademy', data.academy);
-    sessionStorage.setItem('userclass', data.major_class);
-  })
+// $.get(`http://127.0.0.1:8080/api/getmymessage`,
+//   function (data) {
+//     console.log(data);
+//     usermessage[0].innerHTML = data.name;
+//     usermessage[1].innerHTML = data.sex;
+//     usermessage[2].innerHTML = data.userName;
+//     usermessage[3].innerHTML = data.academy;
+//     usermessage[4].innerHTML = data.major_class;
+//     sessionStorage.setItem('username', data.name);
+//     sessionStorage.setItem('usersex', data.sex);
+//     sessionStorage.setItem('userName', data.userName);
+//     sessionStorage.setItem('useracademy', data.academy);
+//     sessionStorage.setItem('userclass', data.major_class);
+//   })
 // function getclass(event){
 //   let dd=event.parentNode.getElementsByTagName('dd');
 //   let text=event.parentNode.parentNode.getElementsByTagName('input')[0];

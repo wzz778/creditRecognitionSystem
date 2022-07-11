@@ -30,6 +30,15 @@
   <legend>申请表提交</legend>
 </fieldset>
 <form action="" id="form">
+  {{ if user}}
+  <div class="layui-form-item">
+    <label class="usermessage-type">姓名：<span class="usermessage">{{user.name}}</span></label>
+    <label class="usermessage-type">性别：<span class="usermessage">{{user.sex}}</span></label>
+    <label class="usermessage-type">学号：<span class="usermessage">{{user.userName}}</span></label>
+    <label class="usermessage-type">所属学院：<span class="usermessage">{{user.academy}}</span></label>
+    <label class="usermessage-type">班级：<span class="usermessage">{{user.major_class}}</span></label>
+  </div>
+  {{else}}
   <div class="layui-form-item">
     <label class="usermessage-type">姓名：<span class="usermessage"></span></label>
     <label class="usermessage-type">性别：<span class="usermessage"></span></label>
@@ -37,6 +46,7 @@
     <label class="usermessage-type">所属学院：<span class="usermessage"></span></label>
     <label class="usermessage-type">班级：<span class="usermessage"></span></label>
   </div>
+  {{/if}}
   <div class="layui-form-item">
     <label class="layui-form-label">学分类型</label>
     <div class="layui-input-block">
@@ -65,21 +75,6 @@
       </select>
     </div>
   </div>
-  <!-- <div class="layui-form-item" id="credittypeson2">
-      <label class="layui-form-label">获奖指标</label>
-      <div class="layui-input-block">
-        <select name="specific_information2" lay-filter="aihao">
-          <option value="0">请选择</option>
-        </select>
-      </div>
-    </div>  -->
-  <!-- <div class="layui-form-item">
-      <label class="layui-form-label">是否为集体项目</label>
-      <div class="layui-input-block">
-        <input type="radio" name="team" value="不是" title="不是" checked="">
-        <input type="radio" name="team" value="是" title="是">
-      </div>
-    </div> -->
   <div class="layui-form-item layui-form-text">
     <label class="layui-form-label">实践内容说明</label>
     <div class="layui-input-block">

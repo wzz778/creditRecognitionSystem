@@ -42,3 +42,50 @@ layui.use('element', function(){
       layer.msg(elem.text());
     });
 });
+let navul=document.getElementById('navul');
+function opennav(event){
+    if(event.parentNode.classList.contains('nav-itemed')){
+        event.getElementsByTagName('i')[0].style.transform=("rotate(0deg)");
+        event.parentNode.classList.remove('nav-itemed');
+    }else{
+        event.getElementsByTagName('i')[0].style.transform=("rotate(180deg)");
+        event.parentNode.classList.add('nav-itemed');
+    }
+
+}
+if(sessionStorage.getItem('power')=='超级管理员'){
+    navul.innerHTML+=`
+    <li class="nav-item "  style="transition: 0.3s all;">
+        <a class="item_top" href="javascript:;" onclick="opennav(this)">管理员<i class="fa fa-chevron-up" aria-hidden="true"></i></a>
+        <div class="nav-child">
+            <a href="adminUsers">用户管理</a>
+            <a href="examineApplication">审核申请表</a>
+            <a href="history">提交历史</a>
+        </div>
+    </li>
+    <li class="nav-item"  style="transition: 0.3s all;">
+        <a class="item_top" href="javascript:;" onclick="opennav(this)">超级管理员<i class="fa fa-chevron-up" aria-hidden="true"></i></a>
+        <div class="nav-child">
+            <a href="adminManageUsers">用户管理</a>
+            <a href="adminHistory">提交历史</a>
+            <a href="superAdminAddUser">添加用户</a>
+            <a href="addNewIndicator">添加指标</a>
+            <a href="adminCreditManagement">学分构成管理</a>
+            <a href="adminWatchApplication">细查申请表</a>
+        </div>
+    </li>
+
+    `
+
+}else if(sessionStorage.getItem('power')=='普通管理员'){
+    navul.innerHTML+=`
+    <li class="nav-item ">
+        <a class="item_top" href="javascript:;" onclick="opennav(this)">超级管理员<i class="fa fa-chevron-up" aria-hidden="true"></i></a>
+        <div class="nav-child">
+            <a href="adminUsers">用户管理</a>
+            <a href="examineApplication">审核申请表</a>
+            <a href="adminHistory">提交记录</a>
+        </div>
+    </li>
+    `
+}
