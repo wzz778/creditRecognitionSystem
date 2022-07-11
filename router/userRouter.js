@@ -20,6 +20,9 @@ router.get('/progress',(req,res)=>{
 router.get('/particulars',(req,res)=>{
     res.render('particulars.html');
 })
+router.get('/404',(req,res)=>{
+    res.render('404.html');
+})
 
 
 router.get('/users/records',(req,res)=>{

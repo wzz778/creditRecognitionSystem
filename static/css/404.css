@@ -1,0 +1,33 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.box{
+    width: 100%;
+    min-height: 100px;
+}
+.logo{
+    width: 400px;
+    margin: 0 auto;
+}
+.logo-404{
+    width: 400px;
+}
+.logo-return{
+    width: 150px;
+    margin: 10px auto;
+}
+.btn-return{
+    display: inline-block;
+    width: 150px;
+    height: 50px;
+    border-radius: 3px;
+    border: none;
+    cursor: pointer;
+    background-color: rgba(54,138,226);
+    color: white;
+    font-weight: 700;
+    font-size: 16px;
+}
