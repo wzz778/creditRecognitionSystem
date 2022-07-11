@@ -21,8 +21,8 @@ axios({
 //声明一个变量用于记录返回的学分构成的结果
 // 请求学分构成
 let obj = {}
-let addResult=document.getElementById('addResult')
-let resultStr=`<td style="width: 30px; height: 38px;">序号</td>
+let addResult = document.getElementById('addResult')
+let resultStr = `<td style="width: 30px; height: 38px;">序号</td>
 <td class="dieWidthTwo">姓名</td>
 <td class="dieWidth">学号</td>
 <td class="dieWidthTwo">年级</td>
@@ -36,18 +36,18 @@ axios({
     .then((result) => {
         // console.log(result.data)
         obj = result.data.msg
-        let str=''
+        let str = ''
         for (let i = 0; i < result.data.msg.length; i++) {
-            str+=`<td class="dieWidth" style="height: 38px;">${result.data.msg[i].afirstLevel}</td>`
+            str += `<td class="dieWidth" style="height: 38px;">${result.data.msg[i].afirstLevel}</td>`
         }
-        resultStr+=str
-        resultStr+=`
+        resultStr += str
+        resultStr += `
         <td class="dieWidth">申请学分合计</td>
                     <td class="dieWidth">所在学院审核结果</td>
                     <td class="dieWidth">教务处认定结果</td>
                     <td class="dieWidthTwo">备注</td>
         `
-        addResult.innerHTML=resultStr
+        addResult.innerHTML = resultStr
         fn(obj)
     })
     .catch((err) => {
@@ -187,31 +187,32 @@ function GetOtherLevel(ele, id) {
         })
 }
 usGrade.onchange = function () {
-    if(usGrade==''){
+    if (usGrade == '') {
         return
     }
     // 显示学院
     GetOtherLevel(academy, usGrade.value)
 }
 academy.onchange = function () {
-    if(academy.value==''){
+    if (academy.value == '') {
         return
     }
     // 显示专业
     GetOtherLevel(specialized, academy.value)
 }
 specialized.onchange = function () {
-    if(specialized.value==''){
+    if (specialized.value == '') {
         return
     }
     // 显示班级
     GetOtherLevel(usClass, specialized.value)
 }
 
-$("#download").click(function(){
+$("#download").click(function () {
     $("#export").tableExport({
         type:"xlsx",
         escape:"false",
-        name:'创新创业学分表'
-    });
+        // Excel文件的名称
+        fileName: "表格-创新创业学分表.xls",
+    })
 });
