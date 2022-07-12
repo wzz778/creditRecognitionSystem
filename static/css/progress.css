@@ -54,7 +54,6 @@
 }
 .nav-step a:after{
     content: "\f12c";
-    /*font-family: "Material Design Icons";*/
     width: 0;
     height: 0;
     text-align: center;
@@ -63,17 +62,20 @@
     border-radius: 50%;
     background-color: transparent;
     color: transparent;
-    /*-webkit-transform: translate(14.5px, 14.5px);*/
     transform: translate(14.5px, 14.5px);
-    /*-webkit-transition: .5s;*/
     transition: .5s;
     z-index: 1;
-    /*display: -webkit-inline-box;*/
     display: inline-block;
-    /*-webkit-box-align: center;*/
     align-items: center;
-    /*-webkit-box-pack: center;*/
     justify-content: center;
+}
+.nav-step-item.complete a::after{
+    width: 29px;
+    height: 29px;
+    /*-webkit-transform: translateX(0);*/
+    transform: translateX(0);
+    color: #fff;
+    margin-top: 0;
 }
 .nav-step .uncomplete:before{
     content: '';

@@ -445,6 +445,12 @@ input[type=radio]{
     color: rgb(95 95 95);
     margin-left: 10px;
 }
+.layer-primary{
+    border-color: rgb(210 210 210);
+    background: 0 0;
+    color: rgb(95 95 95);
+    margin-left: 10px;
+}
 .search-type{
     border: 1px solid rgb(221 221 221);
     border-radius: 4px;
