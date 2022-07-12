@@ -127,10 +127,14 @@ function watchChild(event) {
                         </li>
                     </ul>
                 `
-                } else {
+                }
+            }
+            for (let i = 0; i < result.data.msg.length; i++) {
+                // console.log(result.data)
+                if (!result.data.msg[i].b_points_available) {
                     // 有子级目录判断下面有没有值
                     if (result.data.msg[i].child == '下边没有指标了') {
-                        console.log(123)
+                        // console.log(123)
                         // 这里是目录但是没有指标
                         ele.innerHTML += `
                     <div class="SecondDir clearFloat">
@@ -181,9 +185,7 @@ function watchChild(event) {
                         }
                         divEle.className = 'ChildDetailsContent ChildDetailsItem new'
                         ele.append(divEle)
-
                     }
-
                 }
             }
         })
@@ -501,7 +503,7 @@ sureAdd.onclick = function () {
                     return
                 }
                 swal('添加成功')
-                bodyTop[0].style.display='none'
+                bodyTop[0].style.display = 'none'
                 console.log(result.data)
                 watchFather()
             })
@@ -541,7 +543,7 @@ function changeTwoDirFn(event) {
         url: '/creditTypeOperate/showCreditType',
     })
         .then((result) => {
-            changeTwoDirFather.innerHTML=''
+            changeTwoDirFather.innerHTML = ''
             for (let i = 0; i < result.data.msg.length; i++) {
                 changeTwoDirFather.add(new Option(result.data.msg[i].afirstLevel, result.data.msg[i].aid))
             }
