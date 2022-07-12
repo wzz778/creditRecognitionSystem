@@ -244,7 +244,7 @@ input[type=checkbox]{
     right: 0;
     bottom: 0;
     background-color: rgba(0,0,0,0.5);
-    z-index: 10000000;
+    z-index: 2;
 }
 .cover-main{
     position: relative;
@@ -444,4 +444,12 @@ input[type=radio]{
     background: 0 0;
     color: rgb(95 95 95);
     margin-left: 10px;
+}
+.search-type{
+    border: 1px solid rgb(221 221 221);
+    border-radius: 4px;
+    background: transparent;
+    outline: 0;
+    height: 30px;
+    width: 200px;
 }

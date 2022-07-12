@@ -1,0 +1,23 @@
+.logo{
+    width: 600px;
+    margin: 50px auto;
+}
+.logo-404{
+    width: 600px;
+}
+.logo-return{
+    width: 150px;
+    margin: 25px auto;
+}
+.btn-return{
+    display: inline-block;
+    width: 150px;
+    height: 50px;
+    border-radius: 3px;
+    border: none;
+    cursor: pointer;
+    background-color: rgba(54,138,226);
+    color: white;
+    font-weight: 700;
+    font-size: 16px;
+}
