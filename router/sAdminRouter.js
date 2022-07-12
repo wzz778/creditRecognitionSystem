@@ -17,7 +17,7 @@ router.get('*', (req, res, next) => {
     if (obj.power == '超级管理员') {
         return next()
     }
-    res.send('对不起您没有权限访问该页面')
+    res.render('403.html')
 })
 
 // 请求页面
