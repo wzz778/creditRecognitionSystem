@@ -144,7 +144,7 @@ function rendering(){
                         <li class="student-time lis">${date[i].application.application_time}</li>
                         <li class="student-state lis">${approval_status}</li>
                         <li class="student-apply-credit lis">${date[i].application.classify.b_points_available}</li>
-                        <li class="student-operator lis"><span class="check">查看</span><span class="schedule">进度</span></li>
+                        <li class="student-operator lis"><span class="check">查看</span></li>
                     </ul>`
         }
         main_content[0].innerHTML = all;
