@@ -21,6 +21,7 @@ function outland(){
             console.log(data);
             // if(data.msg=='OK'){
                 swal('退出成功',"退出账号成功","success");
+                sessionStorage.clear();
                 setTimeout(function () {
                     window.location.assign("http://127.0.0.1:8080/login");
                 }, 1000)
@@ -79,12 +80,12 @@ if(sessionStorage.getItem('power')=='超级管理员'){
 
 }else if(sessionStorage.getItem('power')=='普通管理员'){
     navul.innerHTML+=`
-    <li class="nav-item ">
-        <a class="item_top" href="javascript:;" onclick="opennav(this)">超级管理员<i class="fa fa-chevron-up" aria-hidden="true"></i></a>
+    <li class="nav-item "  style="transition: 0.3s all;">
+        <a class="item_top" href="javascript:;" onclick="opennav(this)">管理员<i class="fa fa-chevron-up" aria-hidden="true"></i></a>
         <div class="nav-child">
             <a href="adminUsers">用户管理</a>
             <a href="examineApplication">审核申请表</a>
-            <a href="adminHistory">提交记录</a>
+            <a href="history">提交历史</a>
         </div>
     </li>
     `
