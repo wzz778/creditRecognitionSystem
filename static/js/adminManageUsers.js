@@ -150,15 +150,15 @@ function assignFn() {
     let obj = {}
     var indexFaculty = Faculty.selectedIndex; // 选中索引
     var textFaculty = Faculty.options[indexFaculty].text
-    if(textFaculty=='请选择...'){
-        textFaculty=''
+    if (textFaculty == '请选择...') {
+        textFaculty = ''
     }
     obj.academy = textFaculty
     obj.name = usname.value
     var indexmajor_class = major_class.selectedIndex; // 选中索引
     var textmajor_class = major_class.options[indexmajor_class].text
-    if(textmajor_class=='请选择...'){
-        textmajor_class=''
+    if (textmajor_class == '请选择...') {
+        textmajor_class = ''
     }
     obj.major_class = textmajor_class
     obj.sex = sex.value
@@ -166,8 +166,8 @@ function assignFn() {
     obj.userName = account.value
     var indexGrade = usGrade.selectedIndex; // 选中索引
     var textGrade = usGrade.options[indexGrade].text;
-    if(textGrade=='请选择...'){
-        textGrade=''
+    if (textGrade == '请选择...') {
+        textGrade = ''
     }
     obj.grade = textGrade
     console.log(obj)
@@ -268,10 +268,6 @@ selectPerpage.onchange = function () {
 }
 // 删除弹窗显现函数(只删除一个)
 function removePopup(event) {
-    // 判断删除的是否是自己
-    // if(){
-    //     swal('您不能删除您自己')
-    // }
     swal({
         title: "你确定？",
         text: "要删除该条历史记录",
@@ -294,6 +290,10 @@ function removePopup(event) {
             })
                 .then((result) => {
                     console.log(result)
+                    if (result.data.err == -2) {
+                        swal('您不能删除您自己!')
+                        return
+                    }
                     if (result.data.err != -1) {
                         // 删除成功
                         swal('删除成功')
@@ -351,6 +351,10 @@ del.onclick = function () {
                     }
                 })
                     .then((result) => {
+                        if (result.data.err == -2) {
+                            swal('您不能删除您自己!')
+                            return
+                        }
                         if (result.data.err != -1) {
                             // 删除成功
                             swal('删除成功')
@@ -388,15 +392,15 @@ reset.onclick = function () {
     specialized.value = ''
     usGrade.value = ''
     now_page = 1
-    Faculty.innerHTML=''
-    Faculty.add(new Option('请选择...',''))
-    Faculty.value=''
-    specialized.innerHTML=''
-    specialized.add(new Option('请选择...',''))
-    specialized.value=''
-    major_class.innerHTML=''
-    major_class.add(new Option('请选择...',''))
-    major_class.value=''
+    Faculty.innerHTML = ''
+    Faculty.add(new Option('请选择...', ''))
+    Faculty.value = ''
+    specialized.innerHTML = ''
+    specialized.add(new Option('请选择...', ''))
+    specialized.value = ''
+    major_class.innerHTML = ''
+    major_class.add(new Option('请选择...', ''))
+    major_class.value = ''
     nowPage.innerHTML = now_page
     GetAll(now_page, per_Page, assignFn())
 }
@@ -577,21 +581,21 @@ function GetOtherLevel(ele, id) {
         })
 }
 usGrade.onchange = function () {
-    if(usGrade.value==''){
+    if (usGrade.value == '') {
         return
     }
     // 显示学院
     GetOtherLevel(Faculty, usGrade.value)
 }
 Faculty.onchange = function () {
-    if(Faculty.value==''){
+    if (Faculty.value == '') {
         return
     }
     // 显示专业
     GetOtherLevel(specialized, Faculty.value)
 }
 specialized.onchange = function () {
-    if(specialized.value==''){
+    if (specialized.value == '') {
         return
     }
     // 显示班级

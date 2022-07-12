@@ -276,6 +276,12 @@ router.post('/admin/delete.doUserInfo', (req, res) => {
         return
     }
     let idArray = req.body.idArray
+    console.log('存的session', req.session.user.uid)
+    console.log('删除上传得东西', idArray)
+    if (idArray == req.session.user.uid) {
+        res.send({ err: -2, msg: '您不能删除您自己' })
+        return
+    }
     axios({
         method: 'DELETE',
         url: '/admin/delete.doUserInfo',
@@ -286,6 +292,7 @@ router.post('/admin/delete.doUserInfo', (req, res) => {
             token: req.session.token
         }
     }).then((result) => {
+        console.log('删除用户的结果', result.data)
         if (result.data.msg == 'OK') {
             res.send({ err: 0, msg: '删除成功' })
         } else {
@@ -303,6 +310,13 @@ router.post('/delAllUser', (req, res) => {
         return
     }
     let user = req.body.arrId
+    console.log('批量删除传得数据', user)
+    for (let i = 0; i < user.length; i++) {
+        if (user[i] == req.session.user.uid) {
+            res.send({ err: -2, msg: '您不能删除您自己' })
+            return
+        }
+    }
     let urlStr = `http://110.40.205.103:8099/admin/delete.doUserInfo?user=${user[0]}`
     for (let i = 1; i < user.length; i++) {
         urlStr += `&user=${user[i]}`
