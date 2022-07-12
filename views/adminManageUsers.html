@@ -41,11 +41,18 @@
         <div class="bodyTopClu">
             <div class="bodyTopItem">
                 所在年级:
-                <input type="text" id="changeUserGrade" placeholder="年级,例如:2018">
+                <!-- <input type="text" id="changeUserGrade" placeholder="年级,例如:2018"> -->
+                <select id="changeUserGrade">
+                    <option value="">请选择...</option>
+                </select>
             </div>
             <div class="bodyTopItem">
+                <!-- <input type="text" id="changeUseraCademy" placeholder="学院,例如:信息工程学院" autocomplete="off"> -->
                 所在学院:
-                <input type="text" id="changeUseraCademy" placeholder="学院,例如:信息工程学院" autocomplete="off">
+                <select id="changeUseraCademy">
+                    <option value="">请选择...</option>
+                </select>
+                <div class="hintText" style="display: none;">请选择所在学院</div>
             </div>
             <div class="bodyTopItem">
                 所在班级:
@@ -233,6 +240,7 @@
 </div>
 {{/block}}
 {{block 'bottom'}}
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="/public/js/adminManageUsers.js"></script>
 {{/block}}
