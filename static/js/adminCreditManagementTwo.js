@@ -1,7 +1,13 @@
 let AddDirFatherName = document.getElementById('AddDirFatherName')
 let AddDirFatherId = document.getElementById('AddDirFatherId')
+let addCreditDefaul = document.getElementById('addCreditDefaul')
 function addDirFn(event) {
     bodyTop[3].style.display = 'block'
+    addCreditDefaul.innerHTML = `
+    请输入子级目录:
+    <input type="text" placeholder="请输入子级目录" class="clearValue subValue AddDirValue" autocomplete="off">
+    <button class="addChildDri" onclick="addCertification(this)">添加</button>
+    `
     AddDirFatherName.innerHTML = event.parentElement.firstElementChild.innerHTML
     AddDirFatherId.innerHTML = event.parentElement.lastElementChild.innerHTML
 }
@@ -117,7 +123,7 @@ function getChild(id, hasDir) {
         }
     })
         .then((result) => {
-            console.log(result.data)
+            // console.log(result.data)
             reviseChildDir.innerHTML = ''
             // console.log(result.data)
             if (result.data.msg == '下边没有指标了') {
@@ -177,14 +183,16 @@ sureRevise.onclick = function () {
     if (reviseChildDir.value == '') {
         console.log('空')
         secondId = reviseCreComposition.value
+        sendArr.b_Indicator_level=2
     } else {
         secondId = reviseChildDir.value
+        sendArr.b_Indicator_level=3
     }
     console.log('二级目录的id', secondId)
     sendArr.b_superior_id = Number(secondId)
     sendArr.b_points_available = Number(reviseCreditNumber.value)
     sendArr.b_remark = reviseText.value
-    console.log(sendArr)
+    console.log('传的数据',sendArr)
     axios({
         method: 'POST',
         url: '/changeIndicator',
@@ -351,12 +359,12 @@ function IndicatorRevise(event) {
     let ele = event.parentElement.parentElement.firstElementChild
     selfId.innerHTML = ele.lastElementChild.innerHTML
     reviseCreComposition.value = event.parentElement.lastElementChild.firstElementChild.innerHTML
-    let second=false
-    if(event.parentElement.lastElementChild.firstElementChild.innerHTML!=event.parentElement.lastElementChild.lastElementChild.innerHTML){
-        second=event.parentElement.lastElementChild.lastElementChild.innerHTML
+    let second = false
+    if (event.parentElement.lastElementChild.firstElementChild.innerHTML != event.parentElement.lastElementChild.lastElementChild.innerHTML) {
+        second = event.parentElement.lastElementChild.lastElementChild.innerHTML
     }
     getChild(Number(reviseCreComposition.value), second)
-    reviseChildDir.value=second
+    reviseChildDir.value = second
     reviseRecognize.value = ele.nextElementSibling.innerHTML
     reviseCreditNumber.value = Number(ele.nextElementSibling.nextElementSibling.innerHTML)
     let test = ''

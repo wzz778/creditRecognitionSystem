@@ -6,61 +6,102 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>导出excel表</title>
+    <link rel="stylesheet" href="public/css/moudel/sweetalert.css">
     <link rel="stylesheet" href="/public/css/LiUniversal.css">
     <link rel="stylesheet" href="/public/css/adminExportForm.css">
 </head>
 
 <body>
-    <div class="clearFloat">
-        <button class="floatRight" id="download">下载</button>
+    <div class="clearFloat top">
+        <div class="">
+            学分构成:
+            <select id="CreditsComposition">
+                <option value="">请选择...</option>
+            </select>
+        </div>
+        <div class="selectConditionItem">
+            年级:
+            <select id="usGrade">
+                <option value="">请选择...</option>
+            </select>
+        </div>
+        <div class="selectConditionItem">
+            院系:
+            <select id="academy">
+                <option value="">请选择...</option>
+            </select>
+            <!-- <input type="text" id="academy" autocomplete="off"  placeholder="学院,例如:信息工程学院"> -->
+        </div>
+        <div class="selectConditionItem">
+            专业:
+            <select id="specialized">
+                <option value="">请选择...</option>
+            </select>
+        </div>
+        <div class="selectConditionItem">
+            班级:
+            <select id="usClass">
+                <option value="">请选择...</option>
+            </select>
+            <!-- <input type="text" id="usClass" autocomplete="off" placeholder="班级,例如:计科214"> -->
+        </div>
+        <div class="">
+            <button id="reserve">重置</button>
+            <button id="search">查询</button>
+            <button id="download">下载</button>
+        </div>
     </div>
     <!-- 限制条件 -->
-    <div class="adminExportFormTop adminExportFormItem">
-        <ul>
-            <li style="width: 30px;">序号</li>
-            <li class="dieWidthTwo">姓名</li>
-            <li class="dieWidth">学号</li>
-            <li class="dieWidthTwo">年级</li>
-            <li class="dieWidth">所在学院</li>
-            <li class="dieWidthTwo">所在班级</li>
-            <!-- 存放学分类型的盒子 -->
-            <div class="adminExportFormCredit">
-                <li class="dieWidth">科技创新学分</li>
-                <li class="dieWidth">学科竞赛学分</li>
-                <li class="dieWidth">创业实践学分</li>
-                <li class="dieWidth">社会实践学分</li>
-                <li class="dieWidth">职业技能学分</li>
-            </div>
-            <li class="dieWidth">申请学分合计</li>
-            <li class="dieWidth">所在学院审核结果</li>
-            <li class="dieWidth">教务处认定结果</li>
-            <li class="dieWidthTwo">备注</li>
-        </ul>
+    <div class="" id="export">
+        <div class="adminExportFormTop adminExportFormItem">
+            <table>
+                <tbody class="tdsty" id="addResult">
+                    <td style="width: 30px; height: 38px;">序号</td>
+                    <td class="dieWidthTwo">姓名</td>
+                    <td class="dieWidth">学号</td>
+                    <td class="dieWidthTwo">年级</td>
+                    <td class="dieWidth">所在学院</td>
+                    <td class="dieWidthTwo">所在班级</td>
+                    <!-- 存放学分类型的盒子 -->
+                    <td class="adminExportFormCredit"></td>
+                    <td class="dieWidth">申请学分合计</td>
+                    <td class="dieWidth">所在学院审核结果</td>
+                    <td class="dieWidth">教务处认定结果</td>
+                    <td class="dieWidthTwo">备注</td>
+                </tbody>
+            </table>
+        </div>
+        <div class="adminExportFormBottom adminExportFormItem">
+            <ul>
+                <td style="width: 30px;">1</td>
+                <td class="dieWidthTwo">郑世杰</td>
+                <td class="dieWidth">20180514109</td>
+                <td class="dieWidthTwo">2018</td>
+                <td class="dieWidthTwo">植物保护</td>
+                <td class="dieWidthTwo">植保181</td>
+                <!-- 存放学分类型的盒子 -->
+                <div class="adminExportFormCredit">
+                    <td class="dieWidth"></td>
+                    <td class="dieWidth">4.5</td>
+                    <td class="dieWidth"></td>
+                    <td class="dieWidth"></td>
+                    <td class="dieWidth"></td>
+                </div>
+                <td class="dieWidth">5.0</td>
+                <td class="dieWidth">5.0</td>
+                <td class="dieWidth"></td>
+                <td class="dieWidthTwo"></td>
+            </ul>
+        </div>
     </div>
-    <div class="adminExportFormBottom adminExportFormItem">
-        <ul>
-            <li style="width: 30px;">1</li>
-            <li class="dieWidthTwo">郑世杰</li>
-            <li class="dieWidth">20180514109</li>
-            <li class="dieWidthTwo">2018</li>
-            <li class="dieWidthTwo">植物保护</li>
-            <li class="dieWidthTwo">植保181</li>
-            <!-- 存放学分类型的盒子 -->
-            <div class="adminExportFormCredit">
-                <li class="dieWidth"></li>
-                <li class="dieWidth">4.5</li>
-                <li class="dieWidth"></li>
-                <li class="dieWidth"></li>
-                <li class="dieWidth"></li>
-            </div>
-            <li class="dieWidth">5.0</li>
-            <li class="dieWidth">5.0</li>
-            <li class="dieWidth"></li>
-            <li class="dieWidthTwo"></li>
-        </ul>
-    </div>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="/public/js/adminExportForm.js"></script>
 </body>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+<script src="https://cdn.bootcss.com/sweetalert/1.1.3/sweetalert.min.js"></script>
+<!--引入相关插件,注意jquery插件的版本号要大于等于1.9.1-->
+<script src="/public/lib/FileSaver.min.js"></script>
+<script src="/public/lib/xlsx.core.min.js"></script>
+<script src="/public/lib/tableExport.min.js"></script>
+<script src="/public/js/adminExportForm.js"></script>
 
 </html>

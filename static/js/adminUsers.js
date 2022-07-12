@@ -22,6 +22,12 @@ let radios = document.getElementsByClassName('radios');
 let layer_submit = document.getElementsByClassName('layer-submit');
 let layer_btn_primary = document.getElementsByClassName('layer-btn-primary');
 let check_out = document.getElementsByClassName('check-out');
+let search_type = document.getElementsByClassName('search-type');
+let btn_primay = document.getElementsByClassName('btn-primay');
+let btn_warning = document.getElementsByClassName('btn-warning');
+let layer_check = document.getElementsByClassName('layer-check');
+let layer_radio = document.getElementsByClassName('layer-radio');
+let layer_primary = document.getElementsByClassName('layer-primary');
 
 checkbox_all[0].numbers = 0;
 
@@ -35,11 +41,12 @@ function page(numbers){
         laypage.render({
             elem:'page',
             count:numbers,
+            layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
             jump:function (obj,first){
                 console.log(obj.curr);
                 console.log(obj.limit)
                 if(!first){
-                    render(obj.curr);
+                    render(obj.curr,obj.limit);
                 }
             }
         })
@@ -82,9 +89,10 @@ function rendering() {
         }
         main_content[0].innerHTML = html;
         let sum = date.data.data.allPages;
+        let allPages = date.data.data.allRecords;
         console.log(sum);
         btn_new[0].allLength = sum * 10;
-        page(btn_new[0].allLength);
+        page(allPages);
         console.log(checkbox_list.length)
         for(let i=0;i<checkbox_list.length;i++){
             checkbox_list[i].ids = all[i].uid;
@@ -132,6 +140,19 @@ function rendering() {
                     }
                 }).then((date)=>{
                     console.log(date.data);
+                    let user = date.data.data.records;
+                    layer_check[0].value = user[0].name;
+                    layer_check[1].value = user[0].userName;
+                    layer_check[2].value = user[0].grade;
+                    layer_check[3].value = user[0].academy;
+                    layer_check[4].value = user[0].major_class;
+                    for(let i=0;i<layer_radio.length;i++){
+                        if(layer_radio[i].value == user[0].sex){
+                            let cla = 'layer-form-radioed';
+                            switchover(layer_form_radio,i+2,cla);
+                        }
+                    }
+                    cover_layer[1].style.display = 'block';
                 }).catch((err)=>{
                     console.log(err);
                 })
@@ -215,17 +236,35 @@ rendering();
 checkbox_all[0].ids = new Array();
 
 let index = -1;
-function render(numbers){
+function render(numbers,size){
+    let index = search_type[0].selectedIndex;
+    let index_one = search_type[1].selectedIndex;
+    let index_two = search_type[2].selectedIndex;
+    let his = {
+        beginIndex:numbers,
+        size:size,
+        grade:search_type[0].options[index].value,
+        academy:search_type[1].options[index_one].value,
+        major_class:search_type[2].options[index_two].value,
+        power:'普通用户'
+    }
+    if(search_type[0].options[index].value == ''){
+        delete his.grade
+    }
+    if(search_type[1].options[index_one].value == ''){
+        delete  his.academy
+    }
+    if(search_type[2].options[index_one].value == ''){
+        delete  his.major_class
+    }
+    console.log(his);
     axios({
         method:'get',
-        url:'/admin/commonUserPage',
-        params:{
-            "nodePage":numbers,
-            "pageSize": 10,
-        },
+        url:'/admin/getUserByClass',
+        params:his,
     }).then((date)=>{
-
-        let all = date.data.data.pageInfo;
+        console.log(date.data);
+        let all = date.data.data.records;
         console.log(all);
         let html = "";
         for(let i=0;i<all.length;i++){
@@ -250,14 +289,10 @@ function render(numbers){
                     </ul>`
         }
         main_content[0].innerHTML = html;
-        let sum = date.data.data.allPages;
-        console.log(sum);
-        // let nodepage = parseInt((all.length / 10));
-        // let allLength = all.length % 10 ==0 ? nodepage : nodepage + 1;
-        // console.log(nodepage)
-        // console.log(allLength * 10);
-        btn_new[0].allLength = sum * 10;
-        console.log(checkbox_list.length)
+        // let sum = date.data.data.allPages;
+        // console.log(sum);
+        // btn_new[0].allLength = sum * 10;
+        // console.log(checkbox_list.length)
         for(let i=0;i<checkbox_list.length;i++){
             checkbox_list[i].ids = all[i].uid;
             checkbox_list[i].numbers = i;
@@ -323,6 +358,35 @@ function render(numbers){
                         checke(j);
                     }
                 }
+            };
+            check_out[i].onclick = function () {
+                let id = checkbox_list[i].ids;
+                axios({
+                    method:'get',
+                    url:'/admin/getUserByClass',
+                    params:{
+                        UId:id,
+                        beginIndex:1,
+                        size:1,
+                    }
+                }).then((date)=>{
+                    console.log(date.data);
+                    let user = date.data.data.records;
+                    layer_check[0].value = user[0].name;
+                    layer_check[1].value = user[0].userName;
+                    layer_check[2].value = user[0].grade;
+                    layer_check[3].value = user[0].academy;
+                    layer_check[4].value = user[0].major_class;
+                    for(let i=0;i<layer_radio.length;i++){
+                        if(layer_radio[i].value == user[0].sex){
+                            let cla = 'layer-form-radioed';
+                            switchover(layer_form_radio,i+2,cla);
+                        }
+                    }
+                    cover_layer[1].style.display = 'block';
+                }).catch((err)=>{
+                    console.log(err);
+                })
             }
             reset[i].onclick = function (){
                 axios({
@@ -354,19 +418,17 @@ function render(numbers){
                 })
             }
         }
+        checkbox_all[0].removeAttribute('checked');
+        checkbox_all[0].ids.splice(0,checkbox_all[0].ids.length);
+        for(let i=0;i<checkbox_list.length;i++){
+            checkbox_list[i].removeAttribute('checked');
+        }
     }).catch((err)=>{
         console.log(err);
     })
 }
 
 
-// new Promise((resolve,reject)=>{
-//     render(1);
-// }).then((data)=>{
-//     page(btn_new[0].allLength);
-// })
-
-// page(btn_new[0].allLength);
 
 
 btn_del[0].onclick = function (){
@@ -531,17 +593,23 @@ layer_submit[0].onclick = function (){
             warn[0].innerHTML = `<span class="warning">输入的格式不对</span>`
         }else{
             warn[0].innerHTML = '';
-            axios({
-                method:'post',
-                url:'/admin/User',
-                data:users,
-            }).then((date)=>{
-                console.log(date.data);
-                cover_layer[0].style.display = 'none';
-                render(1);
-            }).catch((err)=>{
-                console.log(err);
-            })
+            if(layer_input[0].value != '' && layer_input[2].value != '' && layer_input[3].value != '' && layer_input[4].value != ''){
+                axios({
+                    method:'post',
+                    url:'/admin/User',
+                    data:users,
+                }).then((date)=>{
+                    console.log(date.data);
+
+                    cover_layer[0].style.display = 'none';
+                    swal('添加成功','成功添加','success');
+                    render(1);
+                }).catch((err)=>{
+                    console.log(err);
+                })
+            }else{
+                swal('请把信息填写完整','','error');
+            }
         }
     }else{
         let users ={
@@ -578,6 +646,18 @@ layer_submit[0].onclick = function (){
 }
 
 layer_btn_primary[1].onclick = function (){
+    layer_input[0].value = "";
+    layer_input[1].value = "";
+    layer_input[2].value = '';
+    layer_input[3].value = "";
+    layer_input[4].value = "";
+    let clist = 'layer-this';
+    switchover(startTime,0,clist);
+    switchover(academy,0,clist);
+    switchover(grade,0,clist);
+    let cla = 'layer-form-radioed';
+    switchover(layer_form_radio,1,cla);
+    checke(1);
     cover_layer[0].style.display = 'none';
 }
 
@@ -609,4 +689,61 @@ layer_btn_primary[0].onclick = function (){
     // }).catch((err)=>{
     //     console.log(err);
     // })
+}
+
+// layer_btn_primary[2].oncick = function (){
+//
+//     layer_check[0].value = '';
+//     layer_check[1].value = '';
+//     layer_check[2].value = '';
+//     layer_check[3].value = '';
+//     layer_check[4].value = '';
+//     cover_layer[1].style.display = 'none';
+// }
+
+console.log(layer_btn_primary.length);
+
+btn_primay[0].onclick = function (){
+    render(1);
+    swal('搜索成功','','success');
+}
+btn_warning[0].onclick = function (){
+    search_type[0].value = "";
+    search_type[1].value = "";
+    search_type[2].value = "";
+    render(1);
+}
+
+function batch(name){
+    for(let i=0;i<name.length;i++){
+        if(name[i].checked){
+            checkbox_all[0].ids.push(checkbox_list[i].ids);
+        }else{
+            checkbox_all[0].ids.splice(i,name.length);
+        }
+    }
+}
+
+
+checkbox_all[0].onclick = function (){
+    if(this.checked){
+        for(let i=0;i<checkbox_list.length;i++){
+            checkbox_list[i].setAttribute('checked','checked');
+        }
+        batch(checkbox_list);
+        console.log(checkbox_all[0].ids);
+    }else{
+        for(let i=0;i<checkbox_list.length;i++){
+            checkbox_list[i].removeAttribute('checked');
+            console.log(checkbox_list[i].hasAttribute('checked'));
+        }
+        batch(checkbox_list);
+        console.log(checkbox_all[0].ids);
+
+    }
+}
+
+
+layer_primary[0].onclick = function (){
+    cover_layer[1].style.display = 'none';
 }

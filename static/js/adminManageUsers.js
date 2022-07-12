@@ -58,6 +58,7 @@ let sureSearch = document.getElementById('sureSearch')
 let searchValue = document.getElementsByClassName('searchValue')
 let adminManageUsersContentContent = document.getElementsByClassName('adminManageUsersContentContent')[0]
 let adminHistoryContentNo = document.getElementById('adminHistoryContentNo')
+let usGrade = document.getElementById('USGrade')
 
 // 判断是否需要请求上一页
 function judgeHas() {
@@ -147,14 +148,32 @@ GetAll(1, 10, {})
 // 赋值函数(并不判断是否又搜索值就全部加入)
 function assignFn() {
     let obj = {}
-    obj.academy = Faculty.value
+    var indexFaculty = Faculty.selectedIndex; // 选中索引
+    var textFaculty = Faculty.options[indexFaculty].text
+    if (textFaculty == '请选择...') {
+        textFaculty = ''
+    }
+    obj.academy = textFaculty
     obj.name = usname.value
-    obj.major_class = major_class.value
+    var indexmajor_class = major_class.selectedIndex; // 选中索引
+    var textmajor_class = major_class.options[indexmajor_class].text
+    if (textmajor_class == '请选择...') {
+        textmajor_class = ''
+    }
+    obj.major_class = textmajor_class
     obj.sex = sex.value
     obj.power = useriDentity.value
     obj.userName = account.value
+    var indexGrade = usGrade.selectedIndex; // 选中索引
+    var textGrade = usGrade.options[indexGrade].text;
+    if (textGrade == '请选择...') {
+        textGrade = ''
+    }
+    obj.grade = textGrade
+    console.log(obj)
     return obj
 }
+
 // 点击查询
 sureSearch.onclick = function () {
     // 判断查询内容是否全是空
@@ -167,7 +186,7 @@ sureSearch.onclick = function () {
     if (yn) {
         // 查询数据
         now_page = 1
-        checkDelAll.checked=''
+        checkDelAll.checked = ''
         nowPage.innerHTML = now_page
         GetAll(now_page, per_Page, assignFn())
     } else {
@@ -176,7 +195,7 @@ sureSearch.onclick = function () {
         // setTimeout(() => {
         //     popUps[2].style.display = 'none'
         // }, 2000)
-        swal('请输入查询数据')
+        swal('请输入查询数据(不能只输入专业查询)')
     }
 }
 
@@ -193,7 +212,7 @@ lastPage.onclick = function () {
         now_page--
         nowPage.innerHTML = now_page
         // 请求数据
-        checkDelAll.checked=''
+        checkDelAll.checked = ''
         GetAll(now_page, 10, assignFn())
     }
 }
@@ -209,7 +228,7 @@ nextPage.onclick = function () {
     } else {
         now_page++
         nowPage.innerHTML = now_page
-        checkDelAll.checked=''
+        checkDelAll.checked = ''
         // 请求数据
         GetAll(now_page, 10, assignFn())
     }
@@ -229,7 +248,7 @@ jump.onclick = function () {
             now_page = jumpPage.value
             nowPage.innerHTML = now_page
             // 请求数据
-            checkDelAll.checked=''
+            checkDelAll.checked = ''
             GetAll(now_page, 10, assignFn())
         }
     } else {
@@ -249,10 +268,6 @@ selectPerpage.onchange = function () {
 }
 // 删除弹窗显现函数(只删除一个)
 function removePopup(event) {
-    // 判断删除的是否是自己
-    // if(){
-    //     swal('您不能删除您自己')
-    // }
     swal({
         title: "你确定？",
         text: "要删除该条历史记录",
@@ -275,6 +290,10 @@ function removePopup(event) {
             })
                 .then((result) => {
                     console.log(result)
+                    if (result.data.err == -2) {
+                        swal('您不能删除您自己!')
+                        return
+                    }
                     if (result.data.err != -1) {
                         // 删除成功
                         swal('删除成功')
@@ -332,6 +351,10 @@ del.onclick = function () {
                     }
                 })
                     .then((result) => {
+                        if (result.data.err == -2) {
+                            swal('您不能删除您自己!')
+                            return
+                        }
                         if (result.data.err != -1) {
                             // 删除成功
                             swal('删除成功')
@@ -366,7 +389,18 @@ reset.onclick = function () {
     for (let i = 0; i < searchValue.length; i++) {
         searchValue[i].value = ''
     }
+    specialized.value = ''
+    usGrade.value = ''
     now_page = 1
+    Faculty.innerHTML = ''
+    Faculty.add(new Option('请选择...', ''))
+    Faculty.value = ''
+    specialized.innerHTML = ''
+    specialized.add(new Option('请选择...', ''))
+    specialized.value = ''
+    major_class.innerHTML = ''
+    major_class.add(new Option('请选择...', ''))
+    major_class.value = ''
     nowPage.innerHTML = now_page
     GetAll(now_page, per_Page, assignFn())
 }
@@ -446,7 +480,7 @@ changeUserInfo.onclick = function () {
             if (result.data.err == 0) {
                 swal('修改成功')
                 GetAll(now_page, per_Page, assignFn())
-            }else{
+            } else {
                 swal(result.data.msg.msg)
             }
         })
@@ -492,10 +526,78 @@ function reviseFn(event) {
     })
 }
 
-changeUserHas.onclick=function(){
-    if(changeUserHas.value=='有'){
-        bodyTopClu[0].style.display='block'
-    }else{
-        bodyTopClu[0].style.display='none'
+changeUserHas.onclick = function () {
+    if (changeUserHas.value == '有') {
+        bodyTopClu[0].style.display = 'block'
+    } else {
+        bodyTopClu[0].style.display = 'none'
     }
+}
+
+
+// 获取一级的目录,传入要显示年级的元素
+function GetFirstLevel(ele) {
+    axios({
+        method: 'GET',
+        url: '/admin/showOrganization',
+    })
+        .then((result) => {
+            // console.log(result.data)
+            ele.innerHTML = ''
+            ele.add(new Option('请选择...', ''))
+            for (let i = 0; i < result.data.msg.length; i++) {
+                ele.add(new Option(result.data.msg[i].name, result.data.msg[i].id))
+            }
+            ele.value = ''
+        })
+        .catch((err) => {
+            console.log(err)
+            swal('网络错误')
+        })
+}
+GetFirstLevel(usGrade)
+// 需要添加的元素，上一级的id，级别
+function GetOtherLevel(ele, id) {
+    axios({
+        method: 'POST',
+        url: '/admin/selectOrganization',
+        data: {
+            id: id
+        }
+    })
+        .then((result) => {
+            // console.log(result.data)
+            // 将结果添加到ele上
+            ele.innerHTML = ''
+            ele.add(new Option('请选择...', ''))
+            for (let i = 0; i < result.data.msg.length; i++) {
+                ele.add(new Option(result.data.msg[i].name, result.data.msg[i].id))
+            }
+            ele.value = ''
+        })
+        .catch((err) => {
+            console.log(err)
+            swal('网络错误')
+        })
+}
+usGrade.onchange = function () {
+    if (usGrade.value == '') {
+        return
+    }
+    // 显示学院
+    GetOtherLevel(Faculty, usGrade.value)
+}
+Faculty.onchange = function () {
+    if (Faculty.value == '') {
+        return
+    }
+    // 显示专业
+    GetOtherLevel(specialized, Faculty.value)
+}
+specialized.onchange = function () {
+    if (specialized.value == '') {
+        return
+    }
+    // 显示班级
+    GetOtherLevel(major_class, specialized.value)
 }

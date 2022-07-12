@@ -29,7 +29,8 @@ let startTime = document.getElementById('startTime');
 let endTime = document.getElementById('endTime');
 let check = document.getElementsByClassName('check');
 let layui_btn = document.getElementsByClassName('layui-btn');
-let cover_layer = document.getElementsByClassName('cover-layer')
+let cover_layer = document.getElementsByClassName('cover-layer');
+let schedule = document.getElementsByClassName('schedule');
 
 function package(method,url,args,callback){
     if(method == "post"){
@@ -51,12 +52,13 @@ function pading(sum){
         laypage.render({
             elem:'page',
             count:sum,
+            layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
             jump:function (obj,first){
                 console.log(obj.curr);
 
                 console.log(obj.limit)
                 if(!first){
-                    render(obj.curr);
+                    render(obj.curr,obj.limit);
                 }
             }
         })
@@ -128,7 +130,7 @@ function rendering(){
         let all = "";
         for(let i=0;i<date.length;i++){
             if(date[i].application.approval_status == 0){
-                var approval_status = '未审核';
+                var approval_status = '审核中';
             }else if(date[i].application.approval_status == 1){
                 var approval_status = '通过';
             }else{
@@ -147,7 +149,8 @@ function rendering(){
         }
         main_content[0].innerHTML = all;
         let pages = data.data.data.allPages * 10;
-        pading(pages);
+        let allPages = data.data.data.allRecords;
+        pading(allPages);
         let index = 0;
         for(let i=0;i<check.length;i++) {
             check[i].ids = date[i].applicationId;
@@ -155,6 +158,9 @@ function rendering(){
 
 
                 window.location.href = 'particulars?id=' + check[i].ids;
+            }
+            schedule[i].onclick = function (){
+                window.location.href = 'progress?id=' + check[i].ids;
             }
         }
     })
@@ -167,7 +173,7 @@ rendering()
 
 
 
-function render(numbers){
+function render(numbers,size){
     let index1 = search_type[1].selectedIndex;
     let index = search_type[0].selectedIndex;
     let his = {approval_status:search_type[1].options[index1].value,
@@ -176,7 +182,7 @@ function render(numbers){
         beginDate:startTime.value,
         endDate: endTime.value,
         nodePage:numbers,
-        pageSize:10,
+        pageSize:size,
     }
     let typeName = search_type[0].options[index].value;
     if(typeName == ''){
@@ -212,7 +218,7 @@ function render(numbers){
         let all = "";
         for(let i=0;i<date.length;i++){
             if(date[i].application.approval_status == 0){
-                var approval_status = '未审核';
+                var approval_status = '审核中';
             }else if(date[i].application.approval_status == 1){
                 var approval_status = '通过';
             }else{
@@ -226,7 +232,7 @@ function render(numbers){
                         <li class="student-time lis">${date[i].application.application_time}</li>
                         <li class="student-state lis">${approval_status}</li>
                         <li class="student-apply-credit lis">${date[i].application.classify.b_points_available}</li>
-                        <li class="student-operator lis"><span class="check">查看</span></li>
+                        <li class="student-operator lis"><span class="check">查看</span><span class="schedule">进度</span></li>
                     </ul>`
         }
         main_content[0].innerHTML = all;
@@ -239,6 +245,9 @@ function render(numbers){
 
                 window.location.href = 'particulars?applicationId=' + check[i].applicationId ;
             }
+            schedule[i].onclick = function (){
+                window.location.href = 'progress?id=' + check[i].applicationId;
+            }
         }
     })
 }
@@ -248,6 +257,7 @@ function render(numbers){
 
 btn[0].onclick = function (){
     rendering();
+    swal('搜索成功','','success');
 }
 btn[1].onclick = function (){
     search_type[0].value = "";
@@ -264,6 +274,8 @@ btn[1].onclick = function (){
 // })
 
 
+for(let i=0;i<header.length;i++){
 
+}
 
 
