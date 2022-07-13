@@ -31,7 +31,7 @@ let layer_primary = document.getElementsByClassName('layer-primary');
 let major = document.getElementsByClassName('major');
 let changes = document.getElementsByClassName('changes');
 let layer_this = document.getElementsByClassName('layer-this');
-
+let cover_main = document.getElementsByClassName('cover-main');
 checkbox_all[0].numbers = 0;
 
 
@@ -194,6 +194,7 @@ function rendering() {
                 }
             }
             check_out[i].onclick = function () {
+                cover_main[1].style.height = '500px'
                 let id = checkbox_list[i].ids;
                 axios({
                     method:'get',
@@ -226,6 +227,7 @@ function rendering() {
             
             check[i].onclick = function (){
                 cover_layer[0].style.display = 'block'
+                cover_main[0].style.height = '500px'
                 changes[0].innerHTML = `<div class="layer-form-item">
                 <label class="layer-form-label">班级</label>
                 <div class="layer-input-block">
@@ -422,6 +424,7 @@ function render(numbers,size){
             }
             check[i].onclick = function (){
                 cover_layer[0].style.display = 'block'
+                cover_main[0].style.height = '500px'
                 changes[0].innerHTML = `<div class="layer-form-item">
                 <label class="layer-form-label">班级</label>
                 <div class="layer-input-block">
@@ -466,6 +469,7 @@ function render(numbers,size){
                 }
             };
             check_out[i].onclick = function () {
+
                 let id = checkbox_list[i].ids;
                 axios({
                     method:'get',
@@ -490,6 +494,7 @@ function render(numbers,size){
                         }
                     }
                     cover_layer[1].style.display = 'block';
+                    cover_main[1].style.height = '500px'
                 }).catch((err)=>{
                     console.log(err);
                 })
@@ -607,7 +612,8 @@ btn_del[0].onclick = function (){
 
 
 btn_update[0].onclick =function () {
-    cover_layer[0].style.display = 'block'
+    cover_layer[0].style.display = 'block';
+    cover_main[0].style.height = '500px'
     layer_submit[0].numbers = 1;
     changes[0].innerHTML = `<div class="layer-form-item">
                 <label class="layer-form-label">班级</label>
@@ -777,6 +783,7 @@ btn_new[0].onclick = function (){
                 </div>
             </div>`
     cover_layer[0].style.display = 'block'
+    cover_main[0].style.height = '550px';
     layer_btn_primary[1].sums = 1;
     layer_submit[0].numbers = 0;
 }
