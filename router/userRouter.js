@@ -182,7 +182,7 @@ router.get('/user/getEnclosure',(req,res)=>{
     })
 })
 
-router.get('/admin/selectOrganization',(req,res)=>{
+router.get('/admins/selectOrganization',(req,res)=>{
     axios({
         method:'get',
         url:'/admin/selectOrganization',
@@ -197,7 +197,7 @@ router.get('/admin/selectOrganization',(req,res)=>{
     })
 })
 
-router.get('/admin/showOrganization',(req,res)=>{
+router.get('/admins/showOrganization',(req,res)=>{
     axios({
         method:'get',
         url:'/admin/showOrganization',
