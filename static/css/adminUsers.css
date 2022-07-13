@@ -244,13 +244,13 @@ input[type=checkbox]{
     right: 0;
     bottom: 0;
     background-color: rgba(0,0,0,0.5);
-    z-index: 2;
+    z-index: 999;
 }
 .cover-main{
     position: relative;
     display: inline-block;
     width: 500px;
-    height: 500px;
+    height: 550px;
     background-color: white;
     padding: 10px;
     left: 50%;
