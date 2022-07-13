@@ -9,7 +9,7 @@
 {{block 'bodytop'}}
 <!-- 删除年级 -->
 <div class="bodyTop" style="display: none;">
-    <div class="">
+    <div class="fadediv">
         <div class="bodyTopItem">
             删除的年级:
             <select class="grade"  id="delgradein">
@@ -24,7 +24,7 @@
 </div>
 <!-- 修改年级 -->
 <div class="bodyTop" style="display: none;">
-    <div class="" id="regrade">
+    <div class="fadediv" id="regrade">
         <div class="bodyTopItem">
             原年级:
             <select class="grade">
@@ -44,7 +44,7 @@
 </div>
 <!-- 添加年级 -->
 <div class="bodyTop" style="display: none;">
-    <div class="">
+    <div class="fadediv">
         <div class="bodyTopItem">
             年级:
             <input type="text" placeholder="年级,例如:2018" autocomplete="off">
@@ -57,7 +57,7 @@
 </div>
 <!-- 删除学院 -->
 <div class="bodyTop" style="display: none;">
-    <div class="">
+    <div class="fadediv">
         <div class="bodyTopItem" onclick="getacademy1(this)">
             年级:&nbsp&nbsp&nbsp&nbsp
             <select class="grade">
@@ -78,7 +78,7 @@
 </div>
 <!-- 修改学院 -->
 <div class="bodyTop" style="display: none;">
-    <div class="">
+    <div class="fadediv">
         <div class="bodyTopItem">
             年级:&nbsp&nbsp&nbsp&nbsp
             <select class="grade" onclick="getacademy1(this)">
@@ -103,7 +103,7 @@
 </div>
 <!-- 添加学院 -->
 <div class="bodyTop" style="display: none;">
-    <div class="">
+    <div class="fadediv">
         <div class="bodyTopItem">
             年级:
             <select id="addacamacy1" class="grade">
@@ -122,7 +122,7 @@
 </div>
 <!-- 添加专业 -->
 <div class="bodyTop" style="display: none;">
-    <div class="">
+    <div class="fadediv">
         <div class="bodyTopItem">
             年级:
             <select class="grade"  onclick="getacademy1(this)">
@@ -148,7 +148,7 @@
 </div>
 <!-- 修改专业 -->
 <div class="bodyTop" style="display: none;" id="remajordiv">
-    <div class="">
+    <div class="fadediv">
         <div class="bodyTopItem">
             原专业:
             <select>
@@ -167,7 +167,7 @@
 </div>
 <!-- 添加班级 -->
 <div class="bodyTop" style="display: none;" id="addclassdiv">
-    <div>
+    <div class="fadediv">
         <div class="bodyTopItem">
             所在专业:
             <select>
@@ -186,7 +186,7 @@
 </div>
 <!-- 修改班级 -->
 <div class="bodyTop" style="display: none;" id="reclassdiv">
-    <div class="">
+    <div class="fadediv">
         <div class="bodyTopItem">
             原专业:
             <select>
@@ -221,9 +221,6 @@
                 <option value="0">请选择...</option>
             </select>
         </div>
-        <!-- <div class="floatLeft">
-            <button class="addBtnSty">检索</button>
-        </div> -->
         <div class="InfoTopSelectItem topOperator floatLeft">
             <button class="delBtnSty">删除年级</button>
             <button class="reviseBtnSty">修改年级</button>
