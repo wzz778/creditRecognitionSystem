@@ -32,8 +32,9 @@ let major = document.getElementsByClassName('major');
 let changes = document.getElementsByClassName('changes');
 let layer_this = document.getElementsByClassName('layer-this');
 let cover_main = document.getElementsByClassName('cover-main');
+let inner = document.getElementsByName('inner');
 checkbox_all[0].numbers = 0;
-
+let checkbox_flag = true;
 
 function page(numbers){
     console.log(numbers);
@@ -119,6 +120,7 @@ function chect(){
 
 
 function rendering() {
+    // inner[0].innerHTML = `<input type="checkbox" class="checkbox-all" >`;
     axios({
         method:'get',
         url:'/admin/commonUserPage',
@@ -330,9 +332,13 @@ rendering();
 
 
 checkbox_all[0].ids = new Array();
-
+let newEvent = document.createEvent("HTMLEvents");
+newEvent.initEvent("myEvent",true,true);
 let index = -1;
 function render(numbers,size){
+    if(checkbox_all[0].checked){
+        checkbox_all[0].click();
+    }
     let index = search_type[0].selectedIndex;
     let index_one = search_type[1].selectedIndex;
     let index_two = search_type[2].selectedIndex;
@@ -953,6 +959,7 @@ function batch(name){
 }
 
 
+
 checkbox_all[0].onclick = function (){
     if(this.checked){
         for(let i=0;i<checkbox_list.length;i++){
@@ -967,7 +974,6 @@ checkbox_all[0].onclick = function (){
         }
         batch(checkbox_list);
         console.log(checkbox_all[0].ids);
-
     }
 }
 
