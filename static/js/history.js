@@ -159,9 +159,6 @@ function rendering(){
 
                 window.location.href = 'particulars?id=' + check[i].ids;
             }
-            schedule[i].onclick = function (){
-                window.location.href = 'progress?id=' + check[i].ids;
-            }
         }
     })
 }
@@ -232,7 +229,7 @@ function render(numbers,size){
                         <li class="student-time lis">${date[i].application.application_time}</li>
                         <li class="student-state lis">${approval_status}</li>
                         <li class="student-apply-credit lis">${date[i].application.classify.b_points_available}</li>
-                        <li class="student-operator lis"><span class="check">查看</span><span class="schedule">进度</span></li>
+                        <li class="student-operator lis"><span class="check">查看</span></li>
                     </ul>`
         }
         main_content[0].innerHTML = all;
@@ -244,9 +241,6 @@ function render(numbers,size){
 
 
                 window.location.href = 'particulars?applicationId=' + check[i].applicationId ;
-            }
-            schedule[i].onclick = function (){
-                window.location.href = 'progress?id=' + check[i].applicationId;
             }
         }
     })
