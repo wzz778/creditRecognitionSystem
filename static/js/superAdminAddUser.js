@@ -161,13 +161,13 @@ save.onclick = function () {
                 //     popUps[0].style.display='none'
                 // },2000)
                 swal('添加成功')
-            }
-            // 清空数据
-            for (let i = 0; i < inputAll.length; i++) {
-                inputAll[i].value = ''
-            }
-            for (let i = 0; i < selectAll.length; i++) {
-                selectAll[i].value = ''
+                // 清空数据
+                for (let i = 0; i < inputAll.length; i++) {
+                    inputAll[i].value = ''
+                }
+                for (let i = 0; i < selectAll.length; i++) {
+                    selectAll[i].value = ''
+                }
             }
         })
         .catch((err) => {
@@ -287,3 +287,6 @@ usSpecialized.onchange = function () {
 //         }
 //     }
 // }
+cancel,onclick=function(){
+    window.location.href='http://127.0.0.1:8080/adminManageUsers'
+}

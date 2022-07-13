@@ -193,4 +193,7 @@ sureAdd.onclick = function () {
         })
 }
 
-// 判断是修改还是添加
+let sureCancel=document.getElementById('sureCancel')
+sureCancel.onclick=function(){
+    window.location.href='http://127.0.0.1:8080/adminCreditManagement'
+}
