@@ -60,7 +60,7 @@ function page(numbers){
 function selectOrganization(id,className,numbers){
     axios({
         method:'get',
-        url:'/admin/selectOrganization',
+        url:'/admins/selectOrganization',
         params:{
             id:id,
         }
@@ -89,7 +89,7 @@ function selectOrganization(id,className,numbers){
 function selectYear(){
     axios({
         method:'get',
-        url:'/admin/showOrganization',
+        url:'/admins/showOrganization',
         params:{},
     }).then((date)=>{
         console.log(date.data);
@@ -100,12 +100,6 @@ function selectYear(){
         }
         layer_list[0].innerHTML = html;
         selectTitle(layer_click,startTime,0);
-        // for(let i=0;i<startTime.length;i++){
-        //     startTime[i].ids = all[i].id;
-        //     // startTime[i].onclick = function () {
-        //     //     console.log(this.ids);
-        //     // }
-        // }
     }).catch((err)=>{
         console.log(err);
     })
@@ -120,7 +114,6 @@ function chect(){
 
 
 function rendering() {
-    // inner[0].innerHTML = `<input type="checkbox" class="checkbox-all" >`;
     axios({
         method:'get',
         url:'/admin/commonUserPage',
@@ -332,8 +325,6 @@ rendering();
 
 
 checkbox_all[0].ids = new Array();
-let newEvent = document.createEvent("HTMLEvents");
-newEvent.initEvent("myEvent",true,true);
 let index = -1;
 function render(numbers,size){
     if(checkbox_all[0].checked){
@@ -391,10 +382,6 @@ function render(numbers,size){
                     </ul>`
         }
         main_content[0].innerHTML = html;
-        // let sum = date.data.data.allPages;
-        // console.log(sum);
-        // btn_new[0].allLength = sum * 10;
-        // console.log(checkbox_list.length)
         for(let i=0;i<checkbox_list.length;i++){
             checkbox_list[i].ids = all[i].uid;
             checkbox_list[i].numbers = i;
@@ -599,21 +586,6 @@ btn_del[0].onclick = function (){
             swal("取消!", "用户没有被删除！", "error")
         }
     })
-    // for(let i = 0;i<checkbox_all[0].ids.length;i++){
-    //     axios({
-    //         method:'delete',
-    //         url:'/admin/delete.doUserInfo',
-    //         params:{
-    //             user:checkbox_all[0].ids[i],
-    //         }
-    //     }).then((date)=>{
-    //         console.log(date.data);
-    //         if(date.data.msg == 'OK'){
-    //             swal('删除成功', "删除成功", "success");
-    //             render(1);
-    //         }
-    //     })
-    // }
 }
 
 
@@ -715,10 +687,6 @@ function selectTitle(clickName,listName,numbers){
     }
 }
 
-// selectTitle(layer_click,startTime,0);
-// selectTitle(layer_click,academy,1);
-// selectTitle(layer_click,grade,2);
-// layer-this
 
 
 let index1 = 0
@@ -909,31 +877,7 @@ layer_btn_primary[0].onclick = function (){
     switchover(layer_form_radio,1,cla);
     checke(1);
 
-    // axios({
-    //     method:'get',
-    //     url:'/admin/getUserByClass',
-    //     params:{
-    //         grade:'2018',
-    //         power:'普通用户',
-    //         beginIndex:1,
-    //         size:10,
-    //     }
-    // }).then((date)=>{
-    //     console.log(date.data.data);
-    // }).catch((err)=>{
-    //     console.log(err);
-    // })
 }
-
-// layer_btn_primary[2].oncick = function (){
-//
-//     layer_check[0].value = '';
-//     layer_check[1].value = '';
-//     layer_check[2].value = '';
-//     layer_check[3].value = '';
-//     layer_check[4].value = '';
-//     cover_layer[1].style.display = 'none';
-// }
 
 console.log(layer_btn_primary.length);
 
