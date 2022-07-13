@@ -182,6 +182,35 @@ router.get('/user/getEnclosure',(req,res)=>{
     })
 })
 
+router.get('/admin/selectOrganization',(req,res)=>{
+    axios({
+        method:'get',
+        url:'/admin/selectOrganization',
+        params:req.query,
+        headers:{
+            token:req.session.token
+        }
+    }).then((data)=>{
+        res.send(data.data);
+    }).catch((err)=>{
+        res.send(err);
+    })
+})
+
+router.get('/admin/showOrganization',(req,res)=>{
+    axios({
+        method:'get',
+        url:'/admin/showOrganization',
+        params:req.query,
+        headers:{
+            token:req.session.token
+        }
+    }).then((data)=>{
+        res.send(data.data);
+    }).catch((err)=>{
+        res.send(err);
+    })
+})
 
 
 
