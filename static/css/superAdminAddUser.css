@@ -7,9 +7,15 @@
 input {
     outline: none;
     /* padding-left: 15px; */
-    padding: 5px 0px 5px 15px;
+    padding: 5px 9px 5px 15px;
     border: 1px solid #DDDDDD;
     margin-left: 10px;
+    color: #999999;
+}
+
+#usName{
+    padding: 5px 9px 5px 15px;
+    color: #999999;
 }
 
 a {
