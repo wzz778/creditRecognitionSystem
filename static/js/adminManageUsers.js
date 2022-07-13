@@ -83,6 +83,7 @@ function GetAll(page, perPage, obj) {
         data: obj
     })
         .then((result) => {
+            checkDelAll.checked=''
             // console.log(result.data)
             adminManageUsersContentContent.innerHTML = ''
             adminManageUsersContentContent.style.display = 'block'
@@ -574,7 +575,7 @@ function GetOtherLevel(ele, id) {
         }
     })
         .then((result) => {
-            // console.log(result.data)
+            console.log(result.data)
             // 将结果添加到ele上
             ele.innerHTML = ''
             ele.add(new Option('请选择...', ''))
