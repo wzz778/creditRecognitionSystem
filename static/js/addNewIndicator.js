@@ -122,10 +122,10 @@ sureAdd.onclick = function () {
     for (let i = 0; i < b_Indicator_name.length; i++) {
         // 判断是否全部为空
         if (b_Indicator_name[i].value != '' && b_points_available[i].value != '') {
-            // if(!reg.test(b_points_available[i])){
-            //     swal('请输入正确学分')
-            //     return
-            // }
+            if(!reg.test(b_points_available[i].value)){
+                swal('请输入正确学分')
+                return
+            }
             if (b_remark[i].value == '') {
                 arrSend.push({ b_Indicator_name: b_Indicator_name[i].value, b_points_available: Number(b_points_available[i].value) })
             } else {
@@ -135,6 +135,7 @@ sureAdd.onclick = function () {
     }
     if (arrSend.length == 0) {
         // 没有传入数据
+        swal('请输入要添加的数据')
         console.log('没有传入数据')
         return
     }

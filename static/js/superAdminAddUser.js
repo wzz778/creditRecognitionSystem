@@ -68,39 +68,49 @@ cancelAddOrganization.onclick = function () {
 // 限制账号,这里限制只能是数字
 let accountTest = /^[0-9]*$/
 save.onclick = function () {
-    if (yn) {
-        // 看是否填写了年级，院系，专业等
-        if (usGrade.value == '') {
-            // usGrade.parentElement.lastElementChild.style.display = 'block'
-            swal('请选择年级')
-        } else if (usCollege.value == '') {
-            // usCollege.parentElement.lastElementChild.style.display = 'block'
-            swal('请选择学院')
-        } else if (usSpecialized.value == '') {
-            // usSpecialized.parentElement.lastElementChild.style.display = 'block'
-            swal('请选择专业')
-        } else if (usClass.value == '') {
-            // usClass.parentElement.lastElementChild.style.display = 'block'
-            swal('请选择班级')
-        }
-    }
+    console.log(yn)
+
     // 判断是否为空
     if (usName.value == '') {
         // 没填写用户名
         // usName.parentElement.lastElementChild.style.display = 'block'
         swal('请输入用户名')
+        return
     } else if (account.value == '' || !accountTest.test(account.value)) {
         // 没填写账号
         // account.parentElement.lastElementChild.style.display = 'block'
         swal('请输入学号/教务账号')
+        return
     } else if (usPermission.value == '') {
         // 没选择用户身份
         // usPermission.parentElement.lastElementChild.style.display = 'block'
         swal('请选择用户身份')
+        return
     } else if (sex.value == '') {
         // sex.parentElement.lastElementChild.style.display = 'block'
         swal('请选择性别')
-    } else {
+        return
+    } else if (yn) {
+        // 看是否填写了年级，院系，专业等
+        if (usGrade.value == '') {
+            // usGrade.parentElement.lastElementChild.style.display = 'block'
+            swal('请选择年级')
+            return
+        } else if (usCollege.value == '') {
+            // usCollege.parentElement.lastElementChild.style.display = 'block'
+            swal('请选择学院')
+            return
+        } else if (usSpecialized.value == '') {
+            // usSpecialized.parentElement.lastElementChild.style.display = 'block'
+            swal('请选择专业')
+            return
+        } else if (usClass.value == '') {
+            // usClass.parentElement.lastElementChild.style.display = 'block'
+            swal('请选择班级')
+            return
+        }
+    }
+    else {
         var indexGrade = usGrade.selectedIndex // 选中索引
         var textGrade = usGrade.options[indexGrade].text
         var indexusCollege = usCollege.selectedIndex; // 选中索引
@@ -218,20 +228,20 @@ function GetOtherLevel(ele, id) {
 }
 usGrade.onchange = function () {
     // 显示学院
-    if(usGrade.value==''){
+    if (usGrade.value == '') {
         return
     }
     GetOtherLevel(usCollege, usGrade.value)
 }
 usCollege.onchange = function () {
     // 显示专业
-    if(usCollege.value==''){
+    if (usCollege.value == '') {
         return
     }
     GetOtherLevel(usSpecialized, usCollege.value)
 }
 usSpecialized.onchange = function () {
-    if(usSpecialized.value==''){
+    if (usSpecialized.value == '') {
         return
     }
     // 显示班级

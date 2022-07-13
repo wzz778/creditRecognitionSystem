@@ -439,8 +439,8 @@ function changeUserInfoFn(event) {
         changeUserHas.value = '有'
         bodyTopClu[0].style.display = 'block'
         changeUserGrade.value = ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML
+        GetOtherLevelTwo(changeUseraCademy, changeUserGrade.value,ele.lastElementChild.innerHTML)
         changeUserClass.value = ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML
-        changeUseraCademy.value = ele.lastElementChild.innerHTML
     }
 }
 
@@ -453,6 +453,14 @@ changeUserInfo.onclick = function () {
     }
     if (changeUserAccount.value == '' || !reg.test(Number(changeUserAccount.value))) {
         swal('请输入正确的格式的学号或教务账号')
+        return
+    }
+    if(changeUseraCademy.value==''){
+        swal('请输入学院')
+        return
+    }
+    if(changeUserClass.value==''){
+        swal('请输入班级')
         return
     }
     let obj = {}
@@ -600,4 +608,72 @@ specialized.onchange = function () {
     }
     // 显示班级
     GetOtherLevel(major_class, specialized.value)
+}
+
+
+let ResultObj = {}
+function GetFirstLevelOne(ele) {
+    axios({
+        method: 'GET',
+        url: '/admin/showOrganization',
+    })
+        .then((result) => {
+            // console.log(result.data)
+            ele.innerHTML = ''
+            for (let i = 0; i < result.data.msg.length; i++) {
+                ele.add(new Option(result.data.msg[i].name, result.data.msg[i].name))
+            }
+            ResultObj = result.data
+            ele.value = ''
+        })
+        .catch((err) => {
+            console.log(err)
+            swal('网络错误')
+        })
+}
+
+function GetOtherLevelTwo(ele, id,show) {
+    let idResult = 1
+    for (let i = 0; i < ResultObj.length; i++) {
+        if (ResultObj[i].name == id) {
+            idResult = ResultObj[i].id
+        }
+    }
+    axios({
+        method: 'POST',
+        url: '/admin/selectOrganization',
+        data: {
+            id: idResult
+        }
+    })
+        .then((result) => {
+            // console.log(result.data)
+            // 将结果添加到ele上
+            ele.innerHTML = ''
+            ele.add(new Option('请选择...', ''))
+            for (let i = 0; i < result.data.msg.length; i++) {
+                ele.add(new Option(result.data.msg[i].name, result.data.msg[i].name))
+            }
+            changeUseraCademy.value=show||''
+        })
+        .catch((err) => {
+            console.log(err)
+            swal('网络错误')
+        })
+}
+
+GetFirstLevelOne(changeUserGrade)
+changeUserGrade.onchange = function () {
+    // 显示学院
+    if (changeUserGrade.value == '') {
+        return
+    }
+
+    let id = 1
+    for (let i = 0; i < ResultObj.length; i++) {
+        if (ResultObj[i].name == changeUserGrade.value) {
+            id = ResultObj[i].id
+        }
+    }
+    GetOtherLevelTwo(changeUseraCademy, id)
 }
