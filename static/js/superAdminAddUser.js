@@ -69,7 +69,6 @@ cancelAddOrganization.onclick = function () {
 let accountTest = /^[0-9]*$/
 save.onclick = function () {
     // console.log(yn)
-
     // 判断是否为空
     if (usName.value == '') {
         // 没填写用户名
@@ -79,7 +78,7 @@ save.onclick = function () {
     } else if (account.value == '' || !accountTest.test(account.value)) {
         // 没填写账号
         // account.parentElement.lastElementChild.style.display = 'block'
-        swal('请输入学号/教务账号')
+        swal('请输入正确的学号/教务账号')
         return
     } else if (usPermission.value == '') {
         // 没选择用户身份
@@ -90,7 +89,8 @@ save.onclick = function () {
         // sex.parentElement.lastElementChild.style.display = 'block'
         swal('请选择性别')
         return
-    } else if (yn) {
+    }
+    if (yn) {
         // 看是否填写了年级，院系，专业等
         if (usGrade.value == '') {
             // usGrade.parentElement.lastElementChild.style.display = 'block'
@@ -110,76 +110,75 @@ save.onclick = function () {
             return
         }
     }
-    else {
-        var indexGrade = usGrade.selectedIndex // 选中索引
-        var textGrade = usGrade.options[indexGrade].text
-        var indexusCollege = usCollege.selectedIndex; // 选中索引
-        var textusCollege = usCollege.options[indexusCollege].text
-        var indexusClass = usClass.selectedIndex; // 选中索引
-        var textusClass = usClass.options[indexusClass].text;
-        let obj = {
-            name: usName.value,
-            userName: account.value,
-            power: usPermission.value,
-            sex: sex.value,
-            grade: textGrade,
-            academy: textusCollege,
-            major_class: textusClass,
-        }
-        if (OrganizationInformation.style.display == 'grid') {
-            // 必须填组织信息
-            if (organization.value == '' || position.value == '') {
-                swal('请输入组织信息')
-                return
-            } else {
-                obj.organization = organization.value
-                obj.position = position.value
-                obj.power = '普通管理员'
-            }
-        }
-        // console.log(obj)
-
-        // 发送数据
-        axios({
-            method: 'POST',
-            url: '/admin/User',
-            data: obj
-        })
-            .then((result) => {
-                // console.log(result.data)
-                if (result.data.err == -1) {
-                    // 将错误信息显示出来
-                    swal(result.data.msg)
-                    // msgHint.innerHTML=result.data.msg
-                    // popUps[2].style.display='block'
-                    // setTimeout(()=>{
-                    //     popUps[2].style.display='none'
-                    // },2000)
-                } else {
-                    // popUps[0].style.display='block'
-                    // setTimeout(()=>{
-                    //     popUps[0].style.display='none'
-                    // },2000)
-                    swal('添加成功')
-                }
-                // 清空数据
-                for (let i = 0; i < inputAll.length; i++) {
-                    inputAll[i].value = ''
-                }
-                for (let i = 0; i < selectAll.length; i++) {
-                    selectAll[i].value = ''
-                }
-            })
-            .catch((err) => {
-                console.log(err)
-                // 提示错误
-                // popUps[1].style.display = 'block'
-                // setTimeout(() => {
-                //     popUps[1].style.display = 'none'
-                // }, 2000)
-                swal('网络错误')
-            })
+    var indexGrade = usGrade.selectedIndex // 选中索引
+    var textGrade = usGrade.options[indexGrade].text
+    var indexusCollege = usCollege.selectedIndex; // 选中索引
+    var textusCollege = usCollege.options[indexusCollege].text
+    var indexusClass = usClass.selectedIndex; // 选中索引
+    var textusClass = usClass.options[indexusClass].text;
+    let obj = {
+        name: usName.value,
+        userName: account.value,
+        power: usPermission.value,
+        sex: sex.value
     }
+    if (yn) {
+        obj.grade = textGrade
+        obj.academy = textusCollege
+        obj.major_class = textusClass
+    }
+    if (OrganizationInformation.style.display == 'grid') {
+        // 必须填组织信息
+        if (organization.value == '' || position.value == '') {
+            swal('请输入组织信息')
+            return
+        } else {
+            obj.organization = organization.value
+            obj.position = position.value
+            obj.power = '普通管理员'
+        }
+    }
+    console.log(obj)
+    // 发送数据
+    axios({
+        method: 'POST',
+        url: '/admin/User',
+        data: obj
+    })
+        .then((result) => {
+            console.log(result.data)
+            if (result.data.err == -1) {
+                // 将错误信息显示出来
+                swal(result.data.msg)
+                // msgHint.innerHTML=result.data.msg
+                // popUps[2].style.display='block'
+                // setTimeout(()=>{
+                //     popUps[2].style.display='none'
+                // },2000)
+            } else {
+                // popUps[0].style.display='block'
+                // setTimeout(()=>{
+                //     popUps[0].style.display='none'
+                // },2000)
+                swal('添加成功')
+            }
+            // 清空数据
+            for (let i = 0; i < inputAll.length; i++) {
+                inputAll[i].value = ''
+            }
+            for (let i = 0; i < selectAll.length; i++) {
+                selectAll[i].value = ''
+            }
+        })
+        .catch((err) => {
+            console.log(err)
+            // 提示错误
+            // popUps[1].style.display = 'block'
+            // setTimeout(() => {
+            //     popUps[1].style.display = 'none'
+            // }, 2000)
+            swal('网络错误')
+        })
 }
 // 获取一级的目录,传入要显示年级的元素
 function GetFirstLevel(ele) {
