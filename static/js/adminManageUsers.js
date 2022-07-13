@@ -83,7 +83,7 @@ function GetAll(page, perPage, obj) {
         data: obj
     })
         .then((result) => {
-            console.log(result.data)
+            // console.log(result.data)
             adminManageUsersContentContent.innerHTML = ''
             adminManageUsersContentContent.style.display = 'block'
             adminHistoryContentNo.style.display = 'none'
@@ -170,7 +170,7 @@ function assignFn() {
         textGrade = ''
     }
     obj.grade = textGrade
-    console.log(obj)
+    // console.log(obj)
     return obj
 }
 
@@ -289,7 +289,7 @@ function removePopup(event) {
                 }
             })
                 .then((result) => {
-                    console.log(result)
+                    // console.log(result)
                     if (result.data.err == -2) {
                         swal('您不能删除您自己!')
                         return
@@ -474,7 +474,7 @@ changeUserInfo.onclick = function () {
         obj.grade = changeUserGrade.value
         obj.major_class = changeUserClass.value
     }
-    console.log(obj)
+    // console.log(obj)
     axios({
         method: 'POST',
         url: '/admin/update.do.userInfo',
@@ -483,7 +483,7 @@ changeUserInfo.onclick = function () {
         }
     })
         .then((result) => {
-            console.log(result.data)
+            // console.log(result.data)
             bodyTop[0].style.display = 'none'
             if (result.data.err == 0) {
                 swal('修改成功')
@@ -518,7 +518,7 @@ function reviseFn(event) {
                 }
             })
                 .then((result) => {
-                    console.log(result.data)
+                    // console.log(result.data)
                     if (result.data.err == 0) {
                         swal('已重置')
                     } else {

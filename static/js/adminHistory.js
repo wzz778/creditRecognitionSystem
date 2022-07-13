@@ -1,3 +1,5 @@
+
+
 // 提示弹窗
 let popUps = document.getElementsByClassName('popUps')
 
@@ -89,8 +91,8 @@ resetSearch.onclick = function () {
 }
 
 // 判断是否需要请求上一页
-function judgeHas(){
-    let adminHistoryContentContent =document.getElementsByClassName('adminHistoryContentContent ')[0]
+function judgeHas() {
+    let adminHistoryContentContent = document.getElementsByClassName('adminHistoryContentContent ')[0]
     let allUls = adminHistoryContentContent.getElementsByTagName('ul')
     // console.log('函数',allUls)
     if (allUls.length == 0 && now_page != 1) {
@@ -103,8 +105,8 @@ function judgeHas(){
     }
 }
 
-selectPerpage.onchange=function(){
-    per_Page=selectPerpage.value
+selectPerpage.onchange = function () {
+    per_Page = selectPerpage.value
     GetAllInfo(now_page, per_Page, limitationFactor())
 }
 
@@ -160,6 +162,8 @@ function GetAllInfo(page, perpage, obj) {
                         <div style='display:none'>${result.data.msg[i].applicationId}</div>
                         <button onclick="removePopup(this)" class="operatorBtnSty">删除</button>
                         <button onclick="" class="operatorBtnSty">详情</button>
+                        <button onclick="changeStatus(this)" class="operatorBtnSty changeConment">修改</button>
+                        <div style='display:none'>${result.data.msg[i].application.approval_status}</div>
                     </li>
                 </ul>
                 `
@@ -169,6 +173,15 @@ function GetAllInfo(page, perpage, obj) {
             //     popUps[0].style.display = 'none'
             // }, 2000)
             judgeHas()
+            // 判断是否需要显示修改功能
+            let changeConment = document.getElementsByClassName('changeConment')
+            // console.log(changeConment)
+            if (window.localStorage.getItem("power") != '普通管理员') {
+                for (let i = 0; i < changeConment.length; i++) {
+                    // console.log(i)
+                    changeConment[i].style.display='none'
+                }
+            }
             swal('查询成功')
         })
         .catch((err) => {
@@ -194,7 +207,7 @@ lastPage.onclick = function () {
     } else {
         now_page--
         nowPage.innerHTML = now_page
-        checkDelAll.checked=''
+        checkDelAll.checked = ''
         // 请求数据
         GetAllInfo(now_page, per_Page, limitationFactor())
     }
@@ -211,7 +224,7 @@ nextPage.onclick = function () {
     } else {
         now_page++
         nowPage.innerHTML = now_page
-        checkDelAll.checked=''
+        checkDelAll.checked = ''
         // 请求数据
         GetAllInfo(now_page, per_Page, limitationFactor())
     }
@@ -230,7 +243,7 @@ jump.onclick = function () {
         } else {
             now_page = jumpPage.value
             nowPage.innerHTML = now_page
-            checkDelAll.checked=''
+            checkDelAll.checked = ''
             // 请求数据
             GetAllInfo(now_page, per_Page, limitationFactor())
         }
@@ -348,4 +361,46 @@ del.onclick = function () {
             popUps[3].style.display = 'none'
         }, 2000)
     }
+}
+
+let ExportApplicationform = document.getElementById('ExportApplicationform')
+ExportApplicationform.onclick = function () {
+    window.open('http://127.0.0.1:8080/adminExportForm')
+}
+let bodyTop=document.getElementsByClassName('bodyTop')
+let selectStatus=document.getElementById('selectStatus')
+let applicationId=''
+function changeStatus(event){
+    applicationId=event.parentElement.firstElementChild.innerHTML
+    bodyTop[0].style.display='block'
+    selectStatus.value=event.parentElement.lastElementChild.innerHTML
+}
+let changeUserInfo=document.getElementById('changeUserInfo')
+changeUserInfo.onclick=function(){
+    bodyTop[0].style.display='none'
+    axios({
+        method:'POST',
+        url:'/admin/auditingApplication',
+        data:{
+            id:Number(applicationId),
+            status:selectStatus.value
+        }
+    })
+    .then((result)=>{
+        console.log(result.data)
+        if(result.data.err==-1){
+            swal('网络错误')
+            return
+        }
+        swal('修改成功')
+        GetAllInfo(now_page, per_Page, limitationFactor())
+    })
+    .catch((err)=>{
+        swal('修改失败')
+        console.log(err)
+    })
+}
+let cancel=document.getElementById('cancel')
+cancel.onclick=function(){
+    bodyTop[0].style.display='none'
 }

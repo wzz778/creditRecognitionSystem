@@ -77,7 +77,7 @@ function getChild(id) {
     })
         .then((result) => {
             childDir.innerHTML = ''
-            console.log(result.data)
+            // console.log(result.data)
             if (result.data.msg == '下边没有指标了') {
                 childDir.add(new Option('没有子级目录', ''))
                 return
@@ -93,7 +93,7 @@ function getChild(id) {
                     childDir.add(new Option(result.data.msg[i].b_Indicator_name, result.data.msg[i].b_id))
                 }
             }
-            console.log(yn)
+            // console.log(yn)
             if (!yn) {
                 childDir.add(new Option('没有子级目录', ''))
             }
@@ -136,7 +136,7 @@ sureAdd.onclick = function () {
     if (arrSend.length == 0) {
         // 没有传入数据
         swal('请输入要添加的数据')
-        console.log('没有传入数据')
+        // console.log('没有传入数据')
         return
     }
     // 为其添加父类id
@@ -155,7 +155,7 @@ sureAdd.onclick = function () {
             arrSend[i].b_Indicator_level = 3
         }
     }
-    console.log('传给后端的数据', arrSend)
+    // console.log('传给后端的数据', arrSend)
     axios({
         method: 'POST',
         url: '/IndicatorOperate/addIndicator',
@@ -164,7 +164,7 @@ sureAdd.onclick = function () {
         }
     })
         .then((result) => {
-            console.log(result.data)
+            // console.log(result.data)
             if (result.data.err == 0) {
                 swal('添加成功')
                 // 将值清空

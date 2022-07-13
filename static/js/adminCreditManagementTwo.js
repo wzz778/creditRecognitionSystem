@@ -188,11 +188,11 @@ sureRevise.onclick = function () {
         secondId = reviseChildDir.value
         sendArr.b_Indicator_level=3
     }
-    console.log('二级目录的id', secondId)
+    // console.log('二级目录的id', secondId)
     sendArr.b_superior_id = Number(secondId)
     sendArr.b_points_available = Number(reviseCreditNumber.value)
     sendArr.b_remark = reviseText.value
-    console.log('传的数据',sendArr)
+    // console.log('传的数据',sendArr)
     axios({
         method: 'POST',
         url: '/changeIndicator',

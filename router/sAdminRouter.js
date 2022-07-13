@@ -11,14 +11,14 @@ const { send } = require('process')
 const { url } = require('inspector')
 var mult = multipart()
 
-router.get('*', (req, res, next) => {
-    let obj = jwt.decode(req.session.token)
-    console.log(obj)
-    if (obj.power == '超级管理员') {
-        return next()
-    }
-    res.render('403.html')
-})
+// router.get('*', (req, res, next) => {
+//     let obj = jwt.decode(req.session.token)
+//     console.log(obj)
+//     if (obj.power == '超级管理员') {
+//         return next()
+//     }
+//     res.render('403.html')
+// })
 
 // 请求页面
 // 添加用户 !
@@ -991,6 +991,31 @@ router.post('/admin/selectOrganization', (req, res) => {
         })
         .catch((err) => {
             res.send({ err: -1, msg: err })
+        })
+})
+// 修改审核状态
+router.post('/admin/auditingApplication', (req, res) => {
+    let { id, status } = req.body
+    axios({
+        method: 'PUT',
+        url: '/admin/auditingApplication',
+        params: {
+            id: id,
+            status: status
+        },
+        headers:{
+            token:req.session.token
+        }
+    })
+        .then((result) => {
+            if (result.data.msg == 'OK') {
+                res.send({ err: 0, msg: result.data.data })
+            } else {
+                res.send({ err: -1, msg: result.data.data })
+            }
+        })
+        .catch((err)=>{
+            res.send({err:-1,msg:err})
         })
 })
 

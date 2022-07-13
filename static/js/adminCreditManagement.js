@@ -191,6 +191,7 @@ function watchChild(event) {
         })
         .catch((err) => {
             console.log(err)
+            // swal('操作失败')
         })
 }
 // 查看备注
@@ -322,7 +323,7 @@ function delFnOne(event) {
                 }
             })
                 .then((result) => {
-                    console.log(result.data)
+                    // console.log(result.data)
                     if (result.data.err == 0) {
                         swal('删除成功')
                         // 重新获取数据
@@ -367,7 +368,7 @@ function delFnOneNo(event) {
                 }
             })
                 .then((result) => {
-                    console.log(result.data)
+                    // console.log(result.data)
                     if (result.data.err == 0) {
                         swal('删除成功')
                         // 重新获取数据
@@ -504,7 +505,7 @@ sureAdd.onclick = function () {
                 }
                 swal('添加成功')
                 bodyTop[0].style.display = 'none'
-                console.log(result.data)
+                // console.log(result.data)
                 watchFather()
             })
             .catch((err) => {

@@ -68,7 +68,7 @@ cancelAddOrganization.onclick = function () {
 // 限制账号,这里限制只能是数字
 let accountTest = /^[0-9]*$/
 save.onclick = function () {
-    console.log(yn)
+    // console.log(yn)
 
     // 判断是否为空
     if (usName.value == '') {
@@ -137,7 +137,7 @@ save.onclick = function () {
                 obj.power = '普通管理员'
             }
         }
-        console.log(obj)
+        // console.log(obj)
 
         // 发送数据
         axios({
@@ -146,7 +146,7 @@ save.onclick = function () {
             data: obj
         })
             .then((result) => {
-                console.log(result.data)
+                // console.log(result.data)
                 if (result.data.err == -1) {
                     // 将错误信息显示出来
                     swal(result.data.msg)
@@ -188,7 +188,7 @@ function GetFirstLevel(ele) {
         url: '/admin/showOrganization',
     })
         .then((result) => {
-            console.log(result.data)
+            // console.log(result.data)
             ele.innerHTML = ''
             ele.add(new Option('请选择...', ''))
             for (let i = 0; i < result.data.msg.length; i++) {
@@ -212,7 +212,7 @@ function GetOtherLevel(ele, id) {
         }
     })
         .then((result) => {
-            console.log(result.data)
+            // console.log(result.data)
             // 将结果添加到ele上
             ele.innerHTML = ''
             ele.add(new Option('请选择...', ''))

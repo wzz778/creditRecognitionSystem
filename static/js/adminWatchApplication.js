@@ -1,3 +1,5 @@
+// const bodyParser = require("body-parser")
+
 let popUps = document.getElementsByClassName('popUps')
 
 // 分页
@@ -47,7 +49,7 @@ function limitationFactor() {
         textusClass = ''
     }
     obj.major_class = textusClass
-    console.log(obj)
+    // console.log(obj)
     return obj
 }
 // 请求函数
@@ -86,8 +88,9 @@ function GetAllInfo(page, perpage, obj) {
                     <li>${result.data.msg[i].creditType.afirstLevel}</li>
                     <li>${result.data.msg[i].classify.b_points_available}</li>
                     <li>
-                        <button class="watchDetails" onclick="">下载</button>
+                        <button class="watchDetails" onclick="downLoad(this)">下载</button>
                         <button class="watchDetails" onclick="">查看</button>
+                        <div style="display: none;">${result.data.msg[i].id}</div>
                     </li>
                 </ul>
                 `
@@ -214,7 +217,7 @@ axios({
     url: '/creditTypeOperate/showCreditType',
 })
     .then((result) => {
-        console.log(result.data)
+        // console.log(result.data)
         CreditsComposition.innerHTML = ''
         for (let i = 0; i < result.data.msg.length; i++) {
             // CreditsComposition.add(new Option(result.data.msg[i].afirstLevel, result.data.msg[i].))
@@ -239,7 +242,7 @@ CreditsComposition.onchange = function () {
         }
     })
         .then((result) => {
-            console.log(result.data)
+            // console.log(result.data)
             CreditsSecondDir.innerHTML = ''
             ScopeRecognition.innerHTML = ''
             CreditsSecondDir.add(new Option('请选择...', ''))
@@ -277,7 +280,7 @@ CreditsSecondDir.onchange = function () {
         }
     })
         .then((result) => {
-            console.log(result.data)
+            // console.log(result.data)
             ScopeRecognition.innerHTML = ''
             ScopeRecognition.add(new Option('请选择...', ''))
             for (let i = 0; i < result.data.msg.length; i++) {
@@ -362,4 +365,11 @@ specialized.onchange = function () {
     }
     // 显示班级
     GetOtherLevel(usClass, specialized.value)
+}
+
+function downLoad(event){
+    // academy.parentElement.lastElementChild.innerHTML
+    // console.log(event.parentElement.lastElementChild.innerHTML)
+    sessionStorage.setItem('Applicationid', event.parentElement.lastElementChild.innerHTML)
+    window.open('http://127.0.0.1:8080/makepdf')
 }
