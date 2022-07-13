@@ -474,6 +474,10 @@ changeUserInfo.onclick = function () {
         obj.academy = changeUseraCademy.value
         obj.grade = changeUserGrade.value
         obj.major_class = changeUserClass.value
+    }else{
+        obj.academy = ''
+        obj.grade = ''
+        obj.major_class = ''
     }
     // console.log(obj)
     axios({
