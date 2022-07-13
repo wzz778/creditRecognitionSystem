@@ -13,40 +13,6 @@ function look(event){
 function pass(event){
     let oneid=event.parentNode.parentNode.children[0].innerHTML;
     swal({
-        title: "你确定驳回该申请表？",
-        text: "你确定驳回该申请表？",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        closeOnConfirm: false,
-        closeOnCancel: false
-      }, function (isConfirm) {
-        if (isConfirm) {
-            swal('驳回成功', "您所选择的申请表已驳回！", "success");
-            axios({
-                method: 'put',
-                url: 'http://127.0.0.1:8080/api/passpost',
-                params:{
-                    id: oneid,
-                    status:'1'
-                }
-                }).then(response=>{
-                    console.log(response.data);
-                    
-                }).catch(function (error) {
-                    console.log(error);
-            });
-            changepage(pageinput.value,"1");
-        } else{
-            swal("您已取消操作")
-        }
-      })
-}
-function refuse(event){
-    let oneid=event.parentNode.parentNode.children[0].innerHTML;
-    swal({
         title: "你确定通过该申请表？",
         text: "你确定通过该申请表？",
         type: "warning",
@@ -64,15 +30,50 @@ function refuse(event){
                 url: 'http://127.0.0.1:8080/api/passpost',
                 params:{
                     id: oneid,
-                    status:'-1'
+                    status:'1'
                 }
                 }).then(response=>{
                     console.log(response.data);
+                    changepage(pageinput.value,"1");
                     
                 }).catch(function (error) {
                     console.log(error);
             });
-            changepage(pageinput.value,"1");
+
+        } else{
+            swal("您已取消操作")
+        }
+      })
+}
+function refuse(event){
+    let oneid=event.parentNode.parentNode.children[0].innerHTML;
+    swal({
+        title: "你确定驳回该申请表？",
+        text: "你确定驳回该申请表？",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      }, function (isConfirm) {
+        if (isConfirm) {
+            swal('驳回成功', "您所选择的申请表已驳回！", "success");
+            axios({
+                method: 'put',
+                url: 'http://127.0.0.1:8080/api/passpost',
+                params:{
+                    id: oneid,
+                    status:'-1'
+                }
+                }).then(response=>{
+                    console.log(response.data);
+                    changepage(pageinput.value,"1");
+                    
+                }).catch(function (error) {
+                    console.log(error);
+            });
         } else{
             swal("您已取消操作")
         }
@@ -112,9 +113,16 @@ function changepage(page,set) {
         if(set=='1'){
             setlayui(apage,redata.records);
         }
+        if(redata.pageInfo.length==0){
+            Tbody.innerHTML =`
+            <div id="emptymeaage" style="padding-top: 200px;width: 100%;height: 200px;text-align: center;font-size: 16px;">
+                <i class="fa fa-files-o" aria-hidden="true" style="padding-bottom: 10px;color: #68b0f3;font-size: 40px;"></i></br>
+                什么都没有呢 . . .
+            </div>
+            `
+            return
+        }
         for (let n = 0; n < redata.pageInfo.length; n++) {
-            // let learnn= date.data[n].learn;
-            // let learn=learnn ==0? '前端':"后端";
             Tbody.innerHTML +=`
             <tr>
                 <td class="ms" style='display:none'>${redata.pageInfo[n].id}</td>

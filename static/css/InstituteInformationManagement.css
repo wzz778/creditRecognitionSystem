@@ -4,8 +4,13 @@ select{
 
 button{
     color: #806A84;
+    cursor: pointer;
+    border-radius: 3px;
 }
-
+select{
+    cursor: pointer;
+    border-radius: 3px;
+}
 .bodyTop{
     width: 100%;
     height: 100%;
@@ -13,7 +18,9 @@ button{
     position: fixed;
     z-index: 999;
 }
-
+.fadediv{
+    border-radius: 2px;
+}
 .bodyTop>div{
     padding: 30px;
     margin: 150px auto;
@@ -66,7 +73,7 @@ button{
 }
 
 .InfoTopSelectItem{
-    margin: 0px 20px;
+    margin:5px;
 }
 
 .topOperator>button{

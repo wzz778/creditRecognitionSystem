@@ -30,13 +30,15 @@ function getgrade(){
             console.log(response.data);
             let date=response.data.data;
             for(let n in grades){
-                grades[n].innerHTML='<option value="0">请选择...</option>';
+                grades[n].innerHTML='';
+                // grades[n].innerHTML='<option value="0">请选择...</option>';
                 for(let i of date){
                     grades[n].innerHTML+=`
                         <option value="${i.id}">${i.name}</option>
                     `
                 }
             }
+            getacademy()
         }).catch(function (error) {
             console.log(error);
     });
@@ -53,11 +55,13 @@ function getacademy(){
             }).then(response=>{
                 console.log(response.data);
                 let date=response.data.data;
-                academy.innerHTML='<option value="0">请选择...</option>';
+                academy.innerHTML='';
+                // academy.innerHTML='<option value="0">请选择...</option>';
                 for(let i of date){
                     academy.innerHTML+=`
                         <option value="${i.id}">${i.name}</option>
                     `
+                    getmajor()
                 }
             }).catch(function (error) {
                 console.log(error);
@@ -66,6 +70,7 @@ function getacademy(){
       }
     }
 }
+// getacademy()
 function getmajor(){
     let option=academy.getElementsByTagName('option');
     for (let n of option) {
@@ -78,6 +83,15 @@ function getmajor(){
                 console.log(response.data);
                 let date=response.data.data;
                 body.innerHTML='';
+                if(date.length==0){
+                    body.innerHTML=`
+                <div id="emptymeaage" style="padding-top: 100px;width: 100%;height: 200px;text-align: center;font-size: 16px;">
+                    <i class="fa fa-files-o" aria-hidden="true" style="padding-bottom: 10px;color: #68b0f3;font-size: 40px;"></i></br>
+                    什么都没有呢 . . .
+                </div>
+                    `
+                    return
+                }
                 for(let i in date){
                     body.innerHTML+=`
                         <div class="InfoContentItem">
@@ -111,69 +125,6 @@ function getmajor(){
       }
     }
 }
-
-// function getclass(){
-//     let option=academy.getElementsByTagName('option');
-//     for (let n of option) {
-//       if (n.selected) {
-//         axios({
-//             method: 'get',
-//             url: 'http://127.0.0.1:8080/api/getacademy',
-//             params:{id:n.value},
-//             }).then(response=>{
-//                 console.log(response.data);
-//                 let date=response.data.data;
-//                 body.innerHTML='';
-//                 for(let i of date){
-//                     body.innerHTML+=`
-//                         <div class="InfoContentItem">
-//                             <ul>
-//                                 <li class="id">${i.id}</li>
-//                                 <li class="constituteSty">
-//                                     <span class="expandItem" onclick='watchChild(this)'>
-//                                         <span class="remove"></span>
-//                                         <span onclick="" class=""></span>
-//                                     </span>
-//                                     <span>${i.name}</span>
-//                                 </li>
-//                                 <li>1</li>
-//                                 <li>
-//                                     <button>添加班级</button>
-//                                     <button>修改</button>
-//                                     <button>删除</button>
-//                                 </li>
-//                             </ul>
-//                             <!-- 存放班级的盒子 -->
-//                             <div class="InfoContentItemson" style="display: none;">
-//                                 <ul>
-//                                     <li class="id">12</li>
-//                                     <li>计科211</li>
-//                                     <li>1</li>
-//                                     <li>
-//                                         <button>修改</button>
-//                                         <button>删除</button>
-//                                     </li>
-//                                 </ul>
-//                                 <ul>
-//                                     <li class="id">21</li>
-//                                     <li>计科211</li>
-//                                     <li>1</li>
-//                                     <li>
-//                                         <button>修改</button>
-//                                         <button>删除</button>
-//                                     </li>
-//                                 </ul>
-//                             </div>
-//                         </div>
-//                     `
-//                 }
-//             }).catch(function (error) {
-//                 console.log(error);
-//         });
-//         break;
-//       }
-//     }
-// }
 function watchChild(event) {
     let faid=event.parentElement.parentElement.firstElementChild.innerHTML;
     console.log(faid);
@@ -186,6 +137,15 @@ function watchChild(event) {
             console.log(response.data);
             let date=response.data.data;
             son.innerHTML=''
+            if(date.length==0){
+                son.innerHTML=`
+                <div id="emptymeaage" style="border-bottom: 1px solid #242424; background-color:#DDDDDD;pading:10px 0;width: 100%;height: 70px;text-align: center;font-size: 16px;">
+                    <i class="fa fa-files-o" aria-hidden="true" style="padding: 10px 0;color: #68b0f3;font-size: 28px;"></i></br>
+                    什么都没有呢 . . .
+                </div>
+                `
+                return
+            }
             for(let i in date){
                 son.innerHTML+=`
                     <ul>
@@ -216,24 +176,41 @@ function addgrade(event){
     if(input.value==''){
         swal("请填写内容！");
     }else{
-        axios({
-            url:'http://127.0.0.1:8080/api/addorgin',
-            method:'post',
-            data:{
-                'level':'1',
-                'name':input.value,
-                'super_id':'0'
-            },  
-        }).then(response=>{
-            console.log(response.data);
-            getgrade();
-        }).catch(function (error) {
-            console.log(error);
-        });
+        swal({
+            title: "你确定添加该组织？",
+            text: "你确定添加该组织？",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            closeOnConfirm: false,
+            closeOnCancel: false
+          }, function (isConfirm) {
+            if (isConfirm) {
+                  swal('提交成功', '您所填写的组织添加成功', 'success');
+                  axios({
+                      url:'http://127.0.0.1:8080/api/addorgin',
+                      method:'post',
+                      data:{
+                          'level':'1',
+                          'name':input.value,
+                          'super_id':'0'
+                      },  
+                  }).then(response=>{
+                      console.log(response.data);
+                      getgrade();
+                  }).catch(function (error) {
+                      console.log(error);
+                  });
+
+            } else {
+              swal("您已经取消提交")
+            }
+          })
     }
 }
 function delgrade(event){
-    console.log(event.innerHTML);
     let option=document.getElementById('delgradein').getElementsByTagName('option');
     let ptag_ids = new Array();
     for (let n of option) {
@@ -242,18 +219,35 @@ function delgrade(event){
           break;
         }
     }  
-    axios({
-        method: 'POST',
-        url: 'http://127.0.0.1:8080/api/deleteorganization',
-        data: ptag_ids,
-    })
-    .then((result) => {
-        console.log(result)
-        getgrade();
-    })
-    .catch((err)=>{
-        console.log(err)
-    })
+    swal({
+        title: "你确定删除该组织？",
+        text: "你确定删除该组织？",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      }, function (isConfirm) {
+        if (isConfirm) {
+              swal('删除成功', '您所选的组织删除成功', 'success');
+              axios({
+                  method: 'POST',
+                  url: 'http://127.0.0.1:8080/api/deleteorganization',
+                  data: ptag_ids,
+              })
+              .then((result) => {
+                  console.log(result)
+                  getgrade();
+              })
+              .catch((err)=>{
+                  console.log(err)
+              })
+        } else {
+          swal("您已经取消提交")
+        }
+      })
 }
 function regrade(event){
     let option=document.getElementById('regrade').getElementsByTagName('option');
@@ -273,20 +267,37 @@ function regrade(event){
         swal("请填写组织名称！");
         return
     }
-    axios({
-        method: 'put',
-        url: 'http://127.0.0.1:8080/api/uploador',
-        params:{
-            level:'1',
-            id: reid,
-            name:input.value
+    swal({
+        title: "你确定修改该组织？",
+        text: "你确定修改该组织？",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      }, function (isConfirm) {
+        if (isConfirm) {
+              swal('修改成功', '您所选的组织修改成功', 'success');
+              axios({
+                method: 'put',
+                url: 'http://127.0.0.1:8080/api/uploador',
+                params:{
+                    level:'1',
+                    id: reid,
+                    name:input.value
+                }
+                }).then(response=>{
+                    console.log(response.data);
+                    getgrade();
+                }).catch(function (error) {
+                    console.log(error);
+            });
+        } else {
+          swal("您已经取消提交")
         }
-        }).then(response=>{
-            console.log(response.data);
-            getgrade();
-        }).catch(function (error) {
-            console.log(error);
-    });
+      })
 }
 function addacamacy(event){
     let input=event.parentNode.parentNode.getElementsByTagName('input')[0];
@@ -306,20 +317,38 @@ function addacamacy(event){
         swal("请填写组织名称！");
         return
     }
-    axios({
-        url:'http://127.0.0.1:8080/api/addorgin',
-        method:'post',
-        data:{
-            'level':'2',
-            'name':input.value,
-            'super_id':reid
-        },  
-    }).then(response=>{
-        console.log(response.data);
-        getgrade();
-    }).catch(function (error) {
-        console.log(error);
-    });
+    swal({
+        title: "你确定添加该组织？",
+        text: "你确定添加该组织？",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      }, function (isConfirm) {
+        if (isConfirm) {
+              swal('提交成功', '您所填写的组织添加成功', 'success');
+              axios({
+                url:'http://127.0.0.1:8080/api/addorgin',
+                method:'post',
+                data:{
+                    'level':'2',
+                    'name':input.value,
+                    'super_id':reid
+                },  
+            }).then(response=>{
+                console.log(response.data);
+                getgrade();
+            }).catch(function (error) {
+                console.log(error);
+            });
+
+        } else {
+          swal("您已经取消提交")
+        }
+      })
 }
 function delacademy(event){
     let option=document.getElementById('delac').getElementsByTagName('option');
@@ -330,17 +359,34 @@ function delacademy(event){
           break;
         }
     }  
-    axios({
-        method: 'POST',
-        url: 'http://127.0.0.1:8080/api/deleteorganization',
-        data: ptag_ids,
-    })
-    .then((result) => {
-        console.log(result)
-    })
-    .catch((err)=>{
-        console.log(err)
-    })
+    swal({
+        title: "你确定删除该组织？",
+        text: "你确定删除该组织？",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      }, function (isConfirm) {
+        if (isConfirm) {
+              swal('删除成功', '您所选的组织删除成功', 'success');
+              axios({
+                method: 'POST',
+                url: 'http://127.0.0.1:8080/api/deleteorganization',
+                data: ptag_ids,
+            })
+            .then((result) => {
+                console.log(result)
+            })
+            .catch((err)=>{
+                console.log(err)
+            })
+        } else {
+          swal("您已经取消提交")
+        }
+      })
 }
 function getacademy1(event){
     let option = event.getElementsByTagName('option');
@@ -385,19 +431,36 @@ function reacamacy(event){
         swal("请填写组织名称！");
         return
     }
-    axios({
-        method: 'put',
-        url: 'http://127.0.0.1:8080/api/uploador',
-        params:{
-            level:'2',
-            id: reid,
-            name:input.value
+    swal({
+        title: "你确定修改该组织？",
+        text: "你确定修改该组织？",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      }, function (isConfirm) {
+        if (isConfirm) {
+              swal('修改成功', '您所选的组织修改成功', 'success');
+              axios({
+                method: 'put',
+                url: 'http://127.0.0.1:8080/api/uploador',
+                params:{
+                    level:'2',
+                    id: reid,
+                    name:input.value
+                }
+                }).then(response=>{
+                    console.log(response.data);
+                }).catch(function (error) {
+                    console.log(error);
+            });
+        } else {
+          swal("您已经取消提交")
         }
-        }).then(response=>{
-            console.log(response.data);
-        }).catch(function (error) {
-            console.log(error);
-    });
+      })
 }
 function addmajor(event){
     let input=event.parentNode.parentNode.getElementsByTagName('input')[0];
@@ -417,38 +480,74 @@ function addmajor(event){
         swal("请填写组织名称！");
         return
     }
-        axios({
-            url:'http://127.0.0.1:8080/api/addorgin',
-            method:'post',
-            data:{
-                'level':'3',
-                'name':input.value,
-                'super_id':reid
-            },  
-        }).then(response=>{
-            console.log(response.data);
-        }).catch(function (error) {
-            console.log(error);
-        });
+    swal({
+        title: "你确定添加该组织？",
+        text: "你确定添加该组织？",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      }, function (isConfirm) {
+        if (isConfirm) {
+              swal('添加成功', '您所填写的组织添加成功', 'success');
+              axios({
+                url:'http://127.0.0.1:8080/api/addorgin',
+                method:'post',
+                data:{
+                    'level':'3',
+                    'name':input.value,
+                    'super_id':reid
+                },  
+            }).then(response=>{
+                console.log(response.data);
+            }).catch(function (error) {
+                console.log(error);
+            });
+
+        } else {
+          swal("您已经取消提交")
+        }
+      })
+
 }
 function delmajor(event){
     let id=event.parentElement.parentElement.firstElementChild.innerHTML;
     let name=event.parentElement.parentElement.getElementsByClassName('majorname')[0].innerHTML;
-    
-    let ptag_ids = new Array();
-    ptag_ids.push(id); 
-    axios({
-        method: 'POST',
-        url: 'http://127.0.0.1:8080/api/deleteorganization',
-        data: ptag_ids,
-    })
-    .then((result) => {
-        console.log(result)
-        getmajor()
-    })
-    .catch((err)=>{
-        console.log(err)
-    })
+    swal({
+        title: `你确定删除该${name}的组织？`,
+        text: "你确定删除该组织？",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      }, function (isConfirm) {
+        if (isConfirm) {
+              swal('删除成功', '您所选的组织删除成功', 'success');
+              let ptag_ids = new Array();
+              ptag_ids.push(id); 
+              axios({
+                  method: 'POST',
+                  url: 'http://127.0.0.1:8080/api/deleteorganization',
+                  data: ptag_ids,
+              })
+              .then((result) => {
+                  console.log(result)
+                  getmajor()
+              })
+              .catch((err)=>{
+                  console.log(err)
+              })
+        } else {
+          swal("您已经取消提交")
+        }
+      })
+  
 }
 function toremajor(event){
     remajordiv.style.display="";
@@ -463,20 +562,37 @@ function remajor(event){
     if(rename.value==''){
         swal("请填写完整内容！");
     }
-    axios({
-        method: 'put',
-        url: 'http://127.0.0.1:8080/api/uploador',
-        params:{
-            level:'3',
-            id:faid,
-            name:rename
+    swal({
+        title: "你确定修改该组织？",
+        text: "你确定修改该组织？",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      }, function (isConfirm) {
+        if (isConfirm) {
+              swal('修改成功', '您所选的组织修改成功', 'success');
+              axios({
+                method: 'put',
+                url: 'http://127.0.0.1:8080/api/uploador',
+                params:{
+                    level:'3',
+                    id:faid,
+                    name:rename
+                }
+                }).then(response=>{
+                    console.log(response.data);
+                    getmajor();
+                }).catch(function (error) {
+                    console.log(error);
+            });
+        } else {
+          swal("您已经取消提交")
         }
-        }).then(response=>{
-            console.log(response.data);
-            getmajor();
-        }).catch(function (error) {
-            console.log(error);
-    });
+      })
 }
 var previousevent;
 function toaddclass(event){
@@ -493,39 +609,77 @@ function addclass(event){
         swal("请填写组织名称！");
         return
     }
-        axios({
-            url:'http://127.0.0.1:8080/api/addorgin',
-            method:'post',
-            data:{
-                'level':'4',
-                'name':rename,
-                'super_id':newclassfa.value
-            },  
-        }).then(response=>{
-            console.log(response.data);
-            watchChild( previousevent)
-        }).catch(function (error) {
-            console.log(error);
-        });
+    swal({
+        title: "你确定添加该组织？",
+        text: "你确定添加该组织？",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      }, function (isConfirm) {
+        if (isConfirm) {
+              swal('添加成功', '您所填写的组织添加成功', 'success');
+              axios({
+                url:'http://127.0.0.1:8080/api/addorgin',
+                method:'post',
+                data:{
+                    'level':'4',
+                    'name':rename,
+                    'super_id':newclassfa.value
+                },  
+            }).then(response=>{
+                console.log(response.data);
+                watchChild( previousevent)
+            }).catch(function (error) {
+                console.log(error);
+            });
+        } else {
+          swal("您已经取消提交")
+        }
+      })
 }
 var sonevent;
 function delclass(event){
     sonevent=event.parentElement.parentElement.parentElement.parentElement.getElementsByClassName('expandItem')[0];
     let id=event.parentElement.parentElement.firstElementChild.innerHTML;
+    let name=event.parentElement.parentElement.getElementsByClassName('majorname')[0].innerHTML;
     let ptag_ids = new Array();
     ptag_ids.push(id); 
-    axios({
-        method: 'POST',
-        url: 'http://127.0.0.1:8080/api/deleteorganization',
-        data: ptag_ids,
-    })
-    .then((result) => {
-        console.log(result)
-        watchChild(sonevent)
-    })
-    .catch((err)=>{
-        console.log(err)
-    })
+    swal({
+        title: `你确定删除该${name}的组织？`,
+        text: "你确定删除该组织？",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      }, function (isConfirm) {
+        if (isConfirm) {
+              swal('删除成功', '您所选的组织删除成功', 'success');
+              let ptag_ids = new Array();
+              ptag_ids.push(id); 
+              axios({
+                method: 'POST',
+                url: 'http://127.0.0.1:8080/api/deleteorganization',
+                data: ptag_ids,
+            })
+            .then((result) => {
+                console.log(result)
+                watchChild(sonevent)
+            })
+            .catch((err)=>{
+                console.log(err)
+            })
+        } else {
+          swal("您已经取消提交")
+        }
+      })
+
 }
 function toreclass(event){
     reclassdiv.style.display='';
@@ -541,18 +695,35 @@ function reclass(event){
     if(rename.value==''){
         swal("请填写完整内容！");
     }
-    axios({
-        method: 'put',
-        url: 'http://127.0.0.1:8080/api/uploador',
-        params:{
-            level:'4',
-            id:faid,
-            name:rename
+    swal({
+        title: "你确定修改该组织？",
+        text: "你确定修改该组织？",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      }, function (isConfirm) {
+        if (isConfirm) {
+              swal('修改成功', '您所选的组织修改成功', 'success');
+              axios({
+                method: 'put',
+                url: 'http://127.0.0.1:8080/api/uploador',
+                params:{
+                    level:'4',
+                    id:faid,
+                    name:rename
+                }
+                }).then(response=>{
+                    console.log(response.data);
+                    watchChild(sonevent)
+                }).catch(function (error) {
+                    console.log(error);
+            });
+        } else {
+          swal("您已经取消提交")
         }
-        }).then(response=>{
-            console.log(response.data);
-            watchChild(sonevent)
-        }).catch(function (error) {
-            console.log(error);
-    });
+      })
 }

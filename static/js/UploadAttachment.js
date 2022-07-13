@@ -95,6 +95,11 @@ $("#testListAction").on("click", function () {
             })
 });
 document.getElementById('toend').onclick=function(){
+    let datastatus=document.getElementsByClassName('datastatus');
+    if(datastatus.length==0){
+        swal("请选择要上传的附件！");
+        return
+    }
     swal({
         title: "你确定完成该申请表？",
         text: "你将没有机会修改该申请表！",
