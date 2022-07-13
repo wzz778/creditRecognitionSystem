@@ -7,41 +7,27 @@
 {{/block}}
 
 {{block 'bodytop'}}
-<!-- 添加年级 -->
-<div class="bodyTop" style="display: none;">
-    <div class="">
-        <div class="bodyTopItem">
-            年级:
-            <input type="text" placeholder="年级,例如:2018" autocomplete="off">
-        </div>
-        <div class="bodyTopBottom">
-            <button class="addBtnSty">添加</button>
-            <button class="cancel">取消</button>
-        </div>
-    </div>
-</div>
 <!-- 删除年级 -->
 <div class="bodyTop" style="display: none;">
     <div class="">
         <div class="bodyTopItem">
             删除的年级:
-            <select>
+            <select class="grade"  id="delgradein">
                 <option value="">请选择</option>
-                <option value="2018">2018</option>
             </select>
         </div>
         <div class="bodyTopBottom">
-            <button class="delBtnSty">删除此年级</button>
+            <button class="delBtnSty" onclick="delgrade(this)">删除此年级</button>
             <button class="cancel">取消</button>
         </div>
     </div>
 </div>
 <!-- 修改年级 -->
 <div class="bodyTop" style="display: none;">
-    <div class="">
+    <div class="" id="regrade">
         <div class="bodyTopItem">
             原年级:
-            <select>
+            <select class="grade">
                 <option value="">请选择</option>
                 <option value="2018">2018</option>
             </select>
@@ -51,7 +37,66 @@
             <input type="text" placeholder="请输入新年级" autocomplete="off">
         </div>
         <div class="bodyTopBottom">
-            <button class="reviseBtnSty">修改</button>
+            <button class="reviseBtnSty" onclick="regrade(this)">修改</button>
+            <button class="cancel">取消</button>
+        </div>
+    </div>
+</div>
+<!-- 添加年级 -->
+<div class="bodyTop" style="display: none;">
+    <div class="">
+        <div class="bodyTopItem">
+            年级:
+            <input type="text" placeholder="年级,例如:2018" autocomplete="off">
+        </div>
+        <div class="bodyTopBottom">
+            <button class="addBtnSty" onclick="addgrade(this)">添加</button>
+            <button class="cancel">取消</button>
+        </div>
+    </div>
+</div>
+<!-- 删除学院 -->
+<div class="bodyTop" style="display: none;">
+    <div class="">
+        <div class="bodyTopItem" onclick="getacademy1(this)">
+            年级:&nbsp&nbsp&nbsp&nbsp
+            <select class="grade">
+                <option value="">请选择</option>
+            </select>
+        </div>
+        <div class="bodyTopItem">
+            要删除的学院:
+            <select id="delac">
+                <option value="0">请选择</option>
+            </select>
+        </div>
+        <div class="bodyTopBottom">
+            <button class="delBtnSty" onclick="delacademy(this)">删除此学院</button>
+            <button class="cancel">取消</button>
+        </div>
+    </div>
+</div>
+<!-- 修改学院 -->
+<div class="bodyTop" style="display: none;">
+    <div class="">
+        <div class="bodyTopItem">
+            年级:&nbsp&nbsp&nbsp&nbsp
+            <select class="grade" onclick="getacademy1(this)">
+                <option value="0">请选择</option>
+            </select>
+        </div>
+        <div class="bodyTopItem">
+            原学院:
+            <select id="getac">
+                <option value="0">请选择</option>
+            </select>
+        </div>
+        <div class="bodyTopItem">
+            修改为:
+            <input type="text" placeholder="请输入新学院" autocomplete="off">
+        </div>
+        <div class="bodyTopBottom">
+            <button class="reviseBtnSty"  onclick="reacamacy(this)">修改</button>
             <button class="cancel">取消</button>
         </div>
     </div>
@@ -61,7 +106,7 @@
     <div class="">
         <div class="bodyTopItem">
             年级:
-            <select id="">
+            <select id="addacamacy1" class="grade">
                 <option value="">请选择...</option>
             </select>
         </div>
@@ -70,43 +115,7 @@
             <input type="text" placeholder="请输入学院名" autocomplete="off">
         </div>
         <div class="bodyTopBottom">
-            <button class="addBtnSty">添加</button>
-            <button class="cancel">取消</button>
-        </div>
-    </div>
-</div>
-<!-- 删除学院 -->
-<div class="bodyTop" style="display: none;">
-    <div class="">
-        <div class="bodyTopItem">
-            删除的年级:
-            <select>
-                <option value="">请选择</option>
-                <option value="2018">2018</option>
-            </select>
-        </div>
-        <div class="bodyTopBottom">
-            <button class="delBtnSty">删除此年级</button>
-            <button class="cancel">取消</button>
-        </div>
-    </div>
-</div>
-<!-- 修改学院 -->
-<div class="bodyTop" style="display: none;">
-    <div class="">
-        <div class="bodyTopItem">
-            原学院:
-            <select>
-                <option value="">请选择</option>
-                <option value="2018">2018</option>
-            </select>
-        </div>
-        <div class="bodyTopItem">
-            修改为:
-            <input type="text" placeholder="请输入新学院" autocomplete="off">
-        </div>
-        <div class="bodyTopBottom">
-            <button class="reviseBtnSty">修改</button>
+            <button class="addBtnSty" onclick="addacamacy(this)">添加</button>
             <button class="cancel">取消</button>
         </div>
     </div>
@@ -116,14 +125,14 @@
     <div class="">
         <div class="bodyTopItem">
             年级:
-            <select>
+            <select class="grade"  onclick="getacademy1(this)">
                 <option value="">请选择...</option>
                 <option value="2018">2018</option>
             </select>
         </div>
         <div class="bodyTopItem">
             学院:
-            <select id="">
+            <select id="addmajerid">
                 <option value="">请选择...</option>
             </select>
         </div>
@@ -132,58 +141,37 @@
             <input type="text" placeholder="请输入专业名" autocomplete="off">
         </div>
         <div class="bodyTopBottom">
-            <button class="addBtnSty">添加</button>
+            <button class="addBtnSty" onclick="addmajor(this)">添加</button>
             <button class="cancel">取消</button>
         </div>
     </div>
 </div>
 <!-- 修改专业 -->
-<div class="bodyTop" style="display: none;">
+<div class="bodyTop" style="display: none;" id="remajordiv">
     <div class="">
         <div class="bodyTopItem">
-            年级:
+            原专业:
             <select>
-                <option value="">请选择...</option>
-                <option value="2018">2018</option>
+                <option id="newmagor" value="">请选择...</option>
             </select>
         </div>
         <div class="bodyTopItem">
-            学院:
-            <select id="">
-                <option value="">请选择...</option>
-            </select>
-        </div>
-        <div class="bodyTopItem">
-            专业:
+            改专业:
             <input type="text" placeholder="请输入修改专业名" autocomplete="off">
         </div>
         <div class="bodyTopBottom">
-            <button class="addBtnSty">添加</button>
+            <button class="addBtnSty" onclick="remajor(this)">修改</button>
             <button class="cancel">取消</button>
         </div>
     </div>
 </div>
 <!-- 添加班级 -->
-<div class="bodyTop" style="display: none;">
+<div class="bodyTop" style="display: none;" id="addclassdiv">
     <div>
         <div class="bodyTopItem">
-            年级:
+            所在专业:
             <select>
-                <option value="">请选择</option>
-                <option value="2018">2018</option>
-            </select>
-        </div>
-        <div class="bodyTopItem">
-            学院:
-            <select>
-                <option value="">请选择...</option>
-                <option value="">信息工程学院</option>
-            </select>
-        </div>
-        <div class="bodyTopItem">
-            专业:
-            <select>
-                <option value="">请选择...</option>
+                <option id="newclassfa" value="">请选择...</option>
             </select>
         </div>
         <div class="bodyTopItem">
@@ -191,59 +179,46 @@
             <input type="text" placeholder="班级,例如:计科214" autocomplete="off">
         </div>
         <div class="bodyTopBottom">
-            <button class="addBtnSty">添加</button>
+            <button class="addBtnSty" onclick="addclass(this)">添加</button>
             <button class="cancel">取消</button>
         </div>
     </div>
 </div>
 <!-- 修改班级 -->
-<div class="bodyTop" style="display: none;">
+<div class="bodyTop" style="display: none;" id="reclassdiv">
     <div class="">
         <div class="bodyTopItem">
-            年级:
+            原专业:
             <select>
-                <option value="">请选择...</option>
-                <option value="2018">2018</option>
+                <option id="reclassop" value="0">请选择...</option>
             </select>
         </div>
         <div class="bodyTopItem">
-            学院:
-            <select id="">
-                <option value="">请选择...</option>
-            </select>
-        </div>
-        <div class="bodyTopItem">
-            专业:
-            <select id="">
-                <option value="">请选择...</option>
-            </select>
-        </div>
-        <div class="bodyTopItem">
-            班级:
-            <input type="text" placeholder="请输入班级" autocomplete="off">
+            改专业:
+            <input type="text" placeholder="请输入修改专业名" autocomplete="off">
         </div>
         <div class="bodyTopBottom">
-            <button class="addBtnSty">添加</button>
+            <button class="addBtnSty" onclick="reclass(this)">修改</button>
             <button class="cancel">取消</button>
         </div>
     </div>
 </div>
 {{/block}}
 
-{{block 'body'}}
+{{block 'body'}}    
 <div class="InfoTopText">学院信息管理</div>
 <div class="InfoTopSelect clearFloat">
     <div class="SelectSearch">
         <div class="InfoTopSelectItem floatLeft">
             年级:
-            <select id="">
-                <option value="">请选择...</option>
+            <select id="grade" class="grade" onchange="getacademy()">
+                <option value="0">请选择...</option>
             </select>
         </div>
         <div class="InfoTopSelectItem floatLeft">
             学院:
-            <select id="">
-                <option value="">请选择...</option>
+            <select id="academy" onchange="getmajor()">
+                <option value="0">请选择...</option>
             </select>
         </div>
         <!-- <div class="floatLeft">
@@ -252,6 +227,7 @@
         <div class="InfoTopSelectItem topOperator floatLeft">
             <button class="delBtnSty">删除年级</button>
             <button class="reviseBtnSty">修改年级</button>
+            <button class="addBtnSty">添加年级</button>
             <button class="delBtnSty">删除学院</button>
             <button class="reviseBtnSty">修改学院</button>
             <button class="addBtnSty">添加学院</button>
@@ -262,14 +238,53 @@
 <div class="InfoContent">
     <div class="InfoContentTop InfoContentItem">
         <ul>
-            <li>专业</li>
+            <li>专业(班级)</li>
             <li>排序</li>
             <li>操作框</li>
         </ul>
     </div>
     <div class="InfoContentItem InfoContentContent">
-        <div class="InfoContentContentContentItem">
-            <div class="InfoContentItem">
+        <div class="InfoContentContentContentItem" id="Contentbody">
+            <!-- <div class="InfoContentItem">
+                <ul>
+                    <li class="id"></li>
+                    <li class="constituteSty">
+                        <span class="expandItem" onclick='watchChild(this)'>
+                            <span class="remove"></span>
+                            <span onclick="" class=""></span>
+                        </span>
+                        <span>计算机科学与技术</span>
+                    </li>
+                    <li>1</li>
+                    <li>
+                        <button>添加班级</button>
+                        <button>修改</button>
+                        <button>删除</button>
+                    </li>
+                </ul> -->
+                <!-- 存放班级的盒子 -->
+                <!-- <div class="InfoContentItemson" style="display: none;">
+                    <ul>
+                        <li class="id">12</li>
+                        <li>计科211</li>
+                        <li>1</li>
+                        <li>
+                            <button>修改</button>
+                            <button>删除</button>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li class="id">21</li>
+                        <li>计科211</li>
+                        <li>1</li>
+                        <li>
+                            <button>修改</button>
+                            <button>删除</button>
+                        </li>
+                    </ul>
+                </div>
+            </div> -->
+            <!-- <div class="InfoContentItem">
                 <ul>
                     <li class="constituteSty">
                         <span class="expandItem" onclick='watchChild(this)'>
@@ -285,7 +300,6 @@
                         <button>删除</button>
                     </li>
                 </ul>
-                <!-- 存放班级的盒子 -->
                 <div class="InfoContentItem" style="display: none;">
                     <ul>
                         <li>计科211</li>
@@ -295,8 +309,16 @@
                             <button>删除</button>
                         </li>
                     </ul>
+                    <ul>
+                        <li>计科211</li>
+                        <li>1</li>
+                        <li>
+                            <button>修改</button>
+                            <button>删除</button>
+                        </li>
+                    </ul>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>

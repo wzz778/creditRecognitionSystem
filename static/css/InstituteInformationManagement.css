@@ -102,20 +102,33 @@ button{
     text-align: center;
     justify-items: center;
     border-bottom: 1px solid #DDDDDD;
-    padding: 5px 0px;
+    padding: 10px 0px;
 }
 
 .InfoContentItem>ul>li>button{
     padding: 0px;
 }
-
+.InfoContentItemson>ul{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    text-align: center;
+    justify-items: center;
+    border-bottom: 1px solid #242424;
+    padding: 5px 0px;
+    background-color: #e0e0e0;
+}
+.InfoContentItemson>ul>li>button{
+    padding: 0px;
+}
 .constituteSty{
     display: grid;
     grid-template-columns: 30px 200px;
     text-align: center;
     justify-content: center;
 }
-
+.id{
+    display: none;
+}
 .expandItem {
     position: relative;
     margin-left: 56px;

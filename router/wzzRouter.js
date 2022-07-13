@@ -14,27 +14,35 @@ router.get('/layout',(req,res)=>{
         user:req.session.user
     })
 })
+//登录页面
 router.get('/login',(req,res)=>{
     res.render('login.html')
 })
+//结束申请表
 router.get('/EndApplication',(req,res)=>{
     res.render('EndApplication.html')
 })
+//上传附件
 router.get('/UploadAttachment',(req,res)=>{
     res.render('UploadAttachment.html')
 })
+//添加用户
 router.get('/superAdminAddUser',(req,res)=>{
     res.render('superAdminAddUser.html')
 })
+//制作pdf表格
 router.get('/makepdf',(req,res)=>{
     res.render('makepdf.html')
 })
+//修改密码
 router.get('/repassword',(req,res)=>{
     res.render('repassword.html')
 })
+//审核申请表
 router.get('/examineApplication',(req,res)=>{
     res.render('examineApplication.html')
 })
+//提交申请表
 router.get('/submitApplication',(req,res)=>{
     axios.get('/creditTypeOperate/showCreditType',{
         // params:req.query,
@@ -52,7 +60,10 @@ router.get('/submitApplication',(req,res)=>{
         // res.send(error)
     });
 })
+
 axios.defaults.baseURL='http://110.40.205.103:8099/';
+
+//登录
 router.post('/api/login', (req, res) => {
     console.log(req.body);
     axios({
@@ -69,6 +80,7 @@ router.post('/api/login', (req, res) => {
         res.send(error)
     });
 })
+//获取个人信息
 router.get('/api/getmymessage', (req, res) => {
     if (!jwt.decode(req.session.token)) {
         res.send({ err: -1, msg: '用户身份非法' })
@@ -125,7 +137,6 @@ router.post('/api/getpost', (req, res) => {
         res.send({ err: -1, msg: '用户身份非法' })
         return
     }
-    console.log(req.body);
     axios({
         url:'user/application',
         method:'post',
@@ -238,7 +249,6 @@ router.put('/api/uppassword', (req, res) => {
             username:req.query.username,
         }
         }).then(response=>{
-            console.log(response.data);
             res.send(response.data);
         }).catch(function (error) {
             console.log(error);
@@ -278,7 +288,6 @@ router.put('/api/passpost', (req, res) => {
         url: '/admin/auditingApplication',
         params:req.query
         }).then(response=>{
-            console.log(response.data);
             res.send(response.data);
         }).catch(function (error) {
             console.log(error);
@@ -306,4 +315,96 @@ router.put('/api/passpost', (req, res) => {
 //         res.send(error)
 //     });
 // })
+//获取全部的年级
+router.get('/api/getgrade', (req, res) => {
+    axios.get('/admin/showOrganization',{
+        headers:{
+            token:req.session.token
+        }},
+    ).then(response=>{
+        res.send(response.data);
+    }).catch(function (error) {
+        res.send(error)
+    });
+})
+//根据id查询下级
+router.get('/api/getacademy', (req, res) => {
+    axios.get('/admin/selectOrganization',{ 
+        headers:{
+            token:req.session.token
+        },
+        params:req.query,
+    }).then(response=>{
+        console.log(response.data);
+        res.send(response.data);
+    }).catch(function (error) {
+        res.send(error)
+    });
+})
+//删除组织
+router.post('/api/deleteorganization',(req, res) => {
+    console.log(req.body);
+    // let allid=JSON.stringify(req.body);
+    // console.log(allid);
+    // let all=allid.replace(/{/g,"").replace(/}/g,"");
+    // console.log(all);
+    axios({
+    headers: {
+        token:req.session.token
+    },
+    method: 'delete',
+    url: '/admin/deleteOrganization',
+    params:{ids:req.body.toString()}
+    }).then(response=>{
+        console.log(response.data);
+        res.send(response);
+    }).catch(function (error) {
+        console.log(error);
+        res.send(error)
+    });
+})
+//修改组织
+router.put('/api/uploador', (req, res) => {
+    if (!jwt.decode(req.session.token)) {
+        res.send({ err: -1, msg: '用户身份非法' })
+        return
+    }
+    axios({
+    headers: {
+        token:req.session.token
+    },
+    method: 'put',
+    url: '/admin/updateOrganization',
+    params:req.query
+    }).then(response=>{
+        console.log(response.data);
+        res.send(response.data);
+    }).catch(function (error) {
+        console.log(error);
+        res.send(error)
+    });
+})
+//添加组织
+router.post('/api/addorgin', (req, res) => {
+    if (!jwt.decode(req.session.token)) {
+        res.send({ err: -1, msg: '用户身份非法' })
+        return
+    }
+    console.log(req.body);
+    console.log(req.body.level);
+    axios({
+        url:'/admin/organization.add',
+        method:'POST',
+        params:req.body,    
+        headers:{
+            token:req.session.token
+        },
+    }).then(response=>{
+        console.log(response.data);
+        res.send(response.data);
+    }).catch(function (error) {
+        console.log(error);
+        res.send(error)
+    });
+})
 module.exports = router
