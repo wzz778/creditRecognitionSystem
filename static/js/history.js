@@ -263,13 +263,5 @@ btn[1].onclick = function (){
 }
 
 
-// layui_btn[0].addEventListener('click',function (){
-//     cover_layer[0].style.display = 'none';
-// })
-
-
-for(let i=0;i<header.length;i++){
-
-}
 
 

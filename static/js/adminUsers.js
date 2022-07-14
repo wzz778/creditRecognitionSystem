@@ -33,9 +33,15 @@ let changes = document.getElementsByClassName('changes');
 let layer_this = document.getElementsByClassName('layer-this');
 let cover_main = document.getElementsByClassName('cover-main');
 let inner = document.getElementsByName('inner');
+let header_grade = document.getElementsByClassName('header_grade');
+let header_academy = document.getElementsByClassName('header_academy');
+let header_class = document.getElementsByClassName('header_class');
 checkbox_all[0].numbers = 0;
-let checkbox_flag = true;
+checkbox_all[0].changes = -1;
 
+
+
+// 用了layui的分页处理
 function page(numbers){
     console.log(numbers);
     console.log(btn_new[0].allLength)
@@ -57,6 +63,8 @@ function page(numbers){
     })
 }
 
+
+// 弹出层中的下来选择框 获取下一级的信息
 function selectOrganization(id,className,numbers){
     axios({
         method:'get',
@@ -67,9 +75,9 @@ function selectOrganization(id,className,numbers){
     }).then((date)=>{
         console.log(date.data);
         let all = date.data.data;
-        let html = `<dd class="layer-select-tips layer-this ${className}" >请选择</dd>`
+        let html = `<dd class="layer-select-tips layer-this ${className}" >请选择</dd>`;
         for(let i=0;i<all.length;i++){
-            html += `<dd class="layer-select-tips ${className}" value="${all[i].name}" id="${all[i].id}">${all[i].name}</dd>`
+            html += `<dd class="layer-select-tips ${className}" value="${all[i].name}" id="${all[i].id}">${all[i].name}</dd>`;
         }
         layer_list[numbers].innerHTML = html;
         if(numbers == 1){
@@ -85,7 +93,7 @@ function selectOrganization(id,className,numbers){
 }
 
 
-
+// 获取第一级的信息
 function selectYear(){
     axios({
         method:'get',
@@ -94,25 +102,76 @@ function selectYear(){
     }).then((date)=>{
         console.log(date.data);
         let all = date.data.data;
-        let html = `<dd class="layer-select-tips layer-this startTimes" >请选择</dd>`
+        let html = `<dd class="layer-select-tips layer-this startTimes" >请选择</dd>`;
+        let html_one = `<option value="" class="header_grade">所有</option>`
         for(let i=0;i<all.length;i++){
-            html += `<dd class="layer-select-tips startTimes" value="${all[i].name}" id="${all[i].id}">${all[i].name}</dd>`
+            html += `<dd class="layer-select-tips startTimes" value="${all[i].name}" id="${all[i].id}">${all[i].name}</dd>`;
+            html_one += `<option value="${all[i].name}" id="${all[i].id}" class="header_grade">${all[i].name}</option>`
         }
         layer_list[0].innerHTML = html;
+        search_type[0].innerHTML = html_one;
         selectTitle(layer_click,startTime,0);
+
     }).catch((err)=>{
         console.log(err);
     })
 }
 selectYear()
 
+search_type[0].onchange = function (){
+    // console.log(this.value);
+    // console.log(header_grade.length);
+    for(let j=0;j<header_grade.length;j++){
+        if(header_grade[j].value == this.value){
+            // console.log(header_grade[j].id);
+            headerOrganization(header_grade[j].id,"header_academy",1);
+        }
+            // console.log(this.id)
+    }
+}
 
-function chect(){
-    console.log(this.id);
+search_type[1].onchange = function (){
+    // console.log(this.value);
+    // console.log(header_academy.length);
+    for(let j=0;j<header_academy.length;j++){
+        if(header_academy[j].value == this.value){
+            // console.log(header_academy[j].id);
+            headerOrganization(header_academy[j].id,"header_class",2);
+        }
+        // console.log(this.id)
+    }
 }
 
 
 
+
+// 搜索框的下拉选择框的信息
+function headerOrganization(id,className,numbers){
+    axios({
+        method:'get',
+        url:'/admins/selectOrganization',
+        params:{
+            id:id,
+        }
+    }).then((date)=>{
+        console.log(date.data);
+        let all = date.data.data;
+        let html = `<option value="" class="${className}">所有</option>`;
+        for(let i=0;i<all.length;i++){
+            html += `<option value="${all[i].name}" id="${all[i].id}" class="${className}">${all[i].name}</option>`;
+        }
+        search_type[numbers].innerHTML = html;
+
+    }).catch((err)=>{
+        console.log(err);
+    })
+}
+
+
+
+
+
+// 初始化页面
 function rendering() {
     axios({
         method:'get',
@@ -150,10 +209,11 @@ function rendering() {
         main_content[0].innerHTML = html;
         let sum = date.data.data.allPages;
         let allPages = date.data.data.allRecords;
-        console.log(sum);
+        // console.log(sum);
         btn_new[0].allLength = sum * 10;
         page(allPages);
-        console.log(checkbox_list.length)
+        // console.log(btn_primay[0].pageSize)
+        // console.log(checkbox_list.length)
         for(let i=0;i<checkbox_list.length;i++){
             checkbox_list[i].ids = all[i].uid;
             checkbox_list[i].numbers = i;
@@ -167,18 +227,18 @@ function rendering() {
                     checkbox_all[0].academy = all[i].academy;
                     checkbox_all[0].major_class = all[i].major_class;
                     checkbox_all[0].sex = all[i].sex;
-                    console.log(checkbox_all[0].numbers);
+                    // console.log(checkbox_all[0].numbers);
                     index = this.numbers;
                     checkbox_all[0].ids.push(checkbox_list[index].ids);
-                    console.log(checkbox_all[0].ids);
+                    // console.log(checkbox_all[0].ids);
                 }else {
                     checkbox_all[0].numbers -= 1;
-                    console.log(checkbox_all[0].numbers);
+                    // console.log(checkbox_all[0].numbers);
                     index = this.numbers;
                     for(let j=0;j<checkbox_all[0].ids.length;j++){
                         if(checkbox_all[0].ids[j] == checkbox_list[index].ids){
                             checkbox_all[0].ids.splice(j,1);
-                            console.log(checkbox_all[0].ids);
+                            // console.log(checkbox_all[0].ids);
                         }
                     }
                 }
@@ -252,8 +312,8 @@ function rendering() {
                         selectOrganization(layer_this[0].id,'academy',1);
                         for(let j=0;j<academy.length;j++) {
                             if (academy[j].innerHTML == layer_input[3].value) {
-                                console.log(academy[j].innerHTML)
-                                console.log(layer_input[3].value)
+                                // console.log(academy[j].innerHTML)
+                                // console.log(layer_input[3].value)
                                 switchover(academy, j, clist);
                             }
                         }
@@ -301,9 +361,10 @@ function rendering() {
                             }
                         }).then((date)=>{
                             console.log(date.data);
+                            console.log(btn_primay[0].pageSize);
                             if(date.data.msg == 'OK'){
                                 swal('删除成功', "删除成功", "success");
-                                render(1);
+                                render(1,10);
                             }
                         })
                         swal("删除!", "该用户已被删除！", "success")
@@ -324,9 +385,14 @@ rendering();
 
 
 
+
 checkbox_all[0].ids = new Array();
 let index = -1;
+
+
+// 分页切换渲染页面
 function render(numbers,size){
+    console.log(btn_primay[0].pageSize);
     if(checkbox_all[0].checked){
         checkbox_all[0].click();
     }
@@ -529,7 +595,7 @@ function render(numbers,size){
                             console.log(date.data);
                             if(date.data.msg == 'OK'){
                                 swal('删除成功', "删除成功", "success");
-                                render(1);
+                                render(1,10);
                             }
                         })
                         swal("删除!", "您的虚构文件已被删除！", "success")
@@ -551,7 +617,7 @@ function render(numbers,size){
 
 
 
-
+// 单个或多个删除
 btn_del[0].onclick = function (){
     console.log(checkbox_all[0].ids)
     swal({
@@ -577,7 +643,7 @@ btn_del[0].onclick = function (){
                     console.log(date.data);
                     if(date.data.msg == 'OK'){
                         swal('删除成功', "删除成功", "success");
-                        render(1);
+                        render(1,10);
                     }
                 })
             }
@@ -588,7 +654,7 @@ btn_del[0].onclick = function (){
     })
 }
 
-
+// 修改个人信息
 btn_update[0].onclick =function () {
     cover_layer[0].style.display = 'block';
     cover_main[0].style.height = '500px'
@@ -640,7 +706,7 @@ btn_update[0].onclick =function () {
 
 
 
-
+// 改变弹出层下拉选择框里面的样式
 function switchover(listName,numbers,clList){
     for(let i=0;i<listName.length;i++){
         listName[i].classList.remove(clList);
@@ -649,17 +715,29 @@ function switchover(listName,numbers,clList){
 }
 
 
+// 点击选择框改变样式
 function selectTitle(clickName,listName,numbers){
     let flag = true;
     let index2 = 0;
     clickName[numbers].onclick = function (){
+        console.log(numbers);
         if(flag == true){
+            checkbox_all[0].changes = numbers;
             layer_list[numbers].style.display = 'block';
             layer_unselect[numbers].classList.add('layer-form-selected');
+            // console.log(layer_unselect[numbers].getAttribute('class').indexOf('layer-form-selected') > -1);
             flag = false;
+            for(let j=0;j<layer_click.length;j++){
+                if( j != checkbox_all[0].changes){
+                    if(layer_unselect[j].getAttribute('class').indexOf('layer-form-selected') > -1){
+                        layer_click[j].click();
+                    }
+                }
+            }
         }else{
             layer_list[numbers].style.display = 'none';
             layer_unselect[numbers].classList.remove('layer-form-selected');
+            // console.log(layer_unselect[numbers].getAttribute('class').indexOf('layer-form-selected') > -1);
             flag = true;
         }
     }
@@ -668,7 +746,7 @@ function selectTitle(clickName,listName,numbers){
     for(let i=0;i<listName.length;i++){
         listName[i].numbers = i;
         listName[i].onclick = function () {
-            console.log(this.id);
+            // console.log(this.id);
             layer_unselect[numbers].classList.remove('layer-form-selected');
             layer_list[numbers].style.display = 'none';
             flag = true;
@@ -691,6 +769,7 @@ function selectTitle(clickName,listName,numbers){
 
 let index1 = 0
 
+// 改变单选框的样式
 function checke(numbers){
     for(let i=0;i<radios.length;i++){
         radios[i].removeAttribute('checked');
@@ -708,6 +787,8 @@ for(let i=0;i<layer_form_radio.length;i++){
     }
 }
 
+
+// 提示学号输入的格式不正确
 layer_input[1].onblur = function (){
     let patrn = /^[0-9]{11}$/
     if(!patrn.exec(this.value)){
@@ -718,7 +799,7 @@ layer_input[1].onblur = function (){
 }
 
 
-
+// 添加用户
 btn_new[0].onclick = function (){
     changes[0].innerHTML = `<div class="layer-form-item">
                 <label class="layer-form-label">专业</label>
@@ -762,6 +843,8 @@ btn_new[0].onclick = function (){
     layer_submit[0].numbers = 0;
 }
 
+
+// 新增的提交和修改的提交
 layer_submit[0].onclick = function (){
     let index = 0;
     if(radios[0].hasAttribute('checked')){
@@ -843,6 +926,8 @@ layer_submit[0].onclick = function (){
 
 }
 
+
+// 关闭弹出层
 layer_btn_primary[1].onclick = function (){
     layer_input[0].value = "";
     layer_input[1].value = "";
@@ -861,6 +946,7 @@ layer_btn_primary[1].onclick = function (){
     cover_layer[0].style.display = 'none';
 }
 
+// 重置弹出层里面的数据
 layer_btn_primary[0].onclick = function (){
     layer_input[0].value = "";
     layer_input[1].value = "";
@@ -881,10 +967,14 @@ layer_btn_primary[0].onclick = function (){
 
 console.log(layer_btn_primary.length);
 
+
+// 搜索
 btn_primay[0].onclick = function (){
     render(1,10);
     swal('搜索成功','','success');
 }
+
+// 重置搜索
 btn_warning[0].onclick = function (){
     search_type[0].value = "";
     search_type[1].value = "";
@@ -892,6 +982,8 @@ btn_warning[0].onclick = function (){
     render(1,10);
 }
 
+
+// 删除的数组里面添加数据和删除数据
 function batch(name){
     for(let i=0;i<name.length;i++){
         if(name[i].checked){
@@ -903,7 +995,7 @@ function batch(name){
 }
 
 
-
+// 全选
 checkbox_all[0].onclick = function (){
     if(this.checked){
         for(let i=0;i<checkbox_list.length;i++){
@@ -921,7 +1013,7 @@ checkbox_all[0].onclick = function (){
     }
 }
 
-
+// 弹出层的关闭
 layer_primary[0].onclick = function (){
     cover_layer[1].style.display = 'none';
 }
