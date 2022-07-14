@@ -200,6 +200,7 @@ function addgrade(event){
                   }).then(response=>{
                       console.log(response.data);
                       getgrade();
+                      input.value=''
                       bodyTop[2].style.display='none';
                   }).catch(function (error) {
                       console.log(error);
@@ -293,6 +294,7 @@ function regrade(event){
                 }).then(response=>{
                     console.log(response.data);
                     getgrade();
+                    input.value=''
                     bodyTop[1].style.display='none';
                 }).catch(function (error) {
                     console.log(error);
@@ -344,6 +346,7 @@ function addacamacy(event){
             }).then(response=>{
                 console.log(response.data);
                 getgrade();
+                input.value=''
                 bodyTop[5].style.display='none';
             }).catch(function (error) {
                 console.log(error);
@@ -459,6 +462,7 @@ function reacamacy(event){
                 }
                 }).then(response=>{
                     console.log(response.data);
+                    input.value=''
                     bodyTop[4].style.display='none';
                 }).catch(function (error) {
                     console.log(error);
@@ -509,6 +513,7 @@ function addmajor(event){
                 },  
             }).then(response=>{
                 console.log(response.data);
+                input.value=''
                 bodyTop[6].style.display='none';
             }).catch(function (error) {
                 console.log(error);
@@ -593,6 +598,7 @@ function remajor(event){
                 }).then(response=>{
                     console.log(response.data);
                     getmajor();
+                    event.parentElement.parentElement.getElementsByTagName('input')[0].value=''
                     bodyTop[7].style.display='none';
                 }).catch(function (error) {
                     console.log(error);
@@ -643,6 +649,7 @@ function addclass(event){
                 watchChild( previousevent)
                 previousevent.parentElement.parentElement.parentElement.lastElementChild.style.display = ''
                 previousevent.firstElementChild.style.display = 'none'
+                event.parentElement.parentElement.getElementsByTagName('input')[0].value=''
                 bodyTop[8].style.display='none';
             }).catch(function (error) {
                 console.log(error);

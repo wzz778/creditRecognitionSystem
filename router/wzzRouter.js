@@ -95,6 +95,7 @@ router.get('/api/getmymessage', (req, res) => {
         }
     }).then(user=>{
         req.session.user=user.data.data;
+        console.log(req.session.user);
         res.send(req.session.user)
     }).catch(function (error) {
         console.log(error);
@@ -236,6 +237,10 @@ router.post('/api/UploadAttachment', multipartMiddleware,(req, res) => {
         })
 })  
 router.put('/api/uppassword', (req, res) => {
+    if (!jwt.decode(req.session.token)) {
+        res.send({ err: -1, msg: '用户身份非法' })
+        return
+    }
     if(req.query.mypassword==req.session.password){
         axios({
         headers: {
@@ -244,11 +249,12 @@ router.put('/api/uppassword', (req, res) => {
         method: 'put',
         url: '/user/password',
         params:{
-            password:req.query. password,
+            password:req.query.password,
             prePassword:req.query.prePassword,
-            username:req.query.username,
+            username:req.session.user.userName,
         }
         }).then(response=>{
+            req.session=null;
             res.send(response.data);
         }).catch(function (error) {
             console.log(error);
