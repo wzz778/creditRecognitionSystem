@@ -89,14 +89,14 @@ function rendering(){
     let index1 = search_type[1].selectedIndex;
     let index = search_type[0].selectedIndex;
     let his = {approval_status:search_type[1].options[index1].value,
-        b_Indicator_name:search_type[0].options[index].value,
+        b_Indicator_name:search_type[0].value,
         b_points_available:search[0].value,
         beginDate:startTime.value,
         endDate: endTime.value,
         nodePage:1,
         pageSize:10,
     }
-    let typeName = search_type[0].options[index].value;
+    let typeName = search_type[0].value;
     if(typeName == ''){
         delete  his.b_Indicator_name
     }
@@ -262,6 +262,22 @@ btn[1].onclick = function (){
     rendering();
 }
 
+// let search_type = document.getElementsByClassName('search-type');
 
+
+axios({
+    method:'get',
+    url:'/creditTypeOperates/showCreditType',
+}).then((date)=>{
+    console.log(date.data);
+    let all = date.data.data;
+    let html = `<option value="">所有</option>`
+    for(let i=0;i<all.length;i++){
+        html += `<option value="${all[i].afirstLevel}">${all[i].afirstLevel}</option>`
+    }
+    search_type[0].innerHTML = html;
+}).catch((err)=>{
+    console.log(err);
+})
 
 

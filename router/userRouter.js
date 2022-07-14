@@ -213,5 +213,19 @@ router.get('/admins/showOrganization',(req,res)=>{
 })
 
 
+router.get('/creditTypeOperates/showCreditType',(req,res)=>{
+    axios({
+        method:'get',
+        url:'/creditTypeOperate/showCreditType',
+        headers:{
+            token:req.session.token
+        }
+    }).then((data)=>{
+        res.send(data.data);
+    }).catch((err)=>{
+        res.send(err);
+    })
+})
+
 
 module.exports = router;
