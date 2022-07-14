@@ -57,6 +57,7 @@ let OrganizationInformation = document.getElementById('OrganizationInformation')
 let addOrganization = document.getElementById('addOrganization')
 let cancelAddOrganization = document.getElementById('cancelAddOrganization')
 addOrganization.onclick = function () {
+    console.log(1234)
     OrganizationInformation.style.display = 'grid'
     usPermission.value = '普通管理员'
 }
@@ -287,6 +288,6 @@ usSpecialized.onchange = function () {
 //         }
 //     }
 // }
-cancel,onclick=function(){
+cancel.onclick=function(){
     window.location.href='http://127.0.0.1:8080/adminManageUsers'
 }

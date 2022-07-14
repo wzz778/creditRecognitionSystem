@@ -98,7 +98,7 @@ function judgeHas() {
     if (allUls.length == 0 && now_page != 1) {
         // 请求上一页
         now_page--
-        nowPage.innerHTML = nowPage
+        nowPage.innerHTML = now_page
         GetAllInfo(now_page, per_Page, limitationFactor())
         checkDelAll.checked = ''
         return
