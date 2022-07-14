@@ -77,7 +77,7 @@ if(sessionStorage.getItem('power')=='超级管理员'){
         <div class="nav-child">
             <a href="adminUsers">用户管理</a>
             <a href="examineApplication">审核申请表</a>
-            <a href="history">提交历史</a>
+            <a href="adminHistory">提交历史</a>
         </div>
     </li>
     `

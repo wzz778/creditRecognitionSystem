@@ -85,7 +85,7 @@ function getmajor(){
                 body.innerHTML='';
                 if(date.length==0){
                     body.innerHTML=`
-                <div id="emptymeaage" style="padding-top: 100px;width: 100%;height: 200px;text-align: center;font-size: 16px;">
+                <div class="emptymeaage" style="padding-top: 100px;width: 100%;height: 200px;text-align: center;font-size: 16px;">
                     <i class="fa fa-files-o" aria-hidden="true" style="padding-bottom: 10px;color: #68b0f3;font-size: 40px;"></i></br>
                     什么都没有呢 . . .
                 </div>
@@ -200,6 +200,7 @@ function addgrade(event){
                   }).then(response=>{
                       console.log(response.data);
                       getgrade();
+                      bodyTop[2].style.display='none';
                   }).catch(function (error) {
                       console.log(error);
                   });
@@ -240,6 +241,7 @@ function delgrade(event){
               .then((result) => {
                   console.log(result)
                   getgrade();
+                  bodyTop[0].style.display='none';
               })
               .catch((err)=>{
                   console.log(err)
@@ -291,6 +293,7 @@ function regrade(event){
                 }).then(response=>{
                     console.log(response.data);
                     getgrade();
+                    bodyTop[1].style.display='none';
                 }).catch(function (error) {
                     console.log(error);
             });
@@ -341,6 +344,7 @@ function addacamacy(event){
             }).then(response=>{
                 console.log(response.data);
                 getgrade();
+                bodyTop[5].style.display='none';
             }).catch(function (error) {
                 console.log(error);
             });
@@ -379,6 +383,7 @@ function delacademy(event){
             })
             .then((result) => {
                 console.log(result)
+                bodyTop[3].style.display='none';
             })
             .catch((err)=>{
                 console.log(err)
@@ -454,6 +459,7 @@ function reacamacy(event){
                 }
                 }).then(response=>{
                     console.log(response.data);
+                    bodyTop[4].style.display='none';
                 }).catch(function (error) {
                     console.log(error);
             });
@@ -503,6 +509,7 @@ function addmajor(event){
                 },  
             }).then(response=>{
                 console.log(response.data);
+                bodyTop[6].style.display='none';
             }).catch(function (error) {
                 console.log(error);
             });
@@ -586,6 +593,7 @@ function remajor(event){
                 }).then(response=>{
                     console.log(response.data);
                     getmajor();
+                    bodyTop[7].style.display='none';
                 }).catch(function (error) {
                     console.log(error);
             });
@@ -633,6 +641,9 @@ function addclass(event){
             }).then(response=>{
                 console.log(response.data);
                 watchChild( previousevent)
+                previousevent.parentElement.parentElement.parentElement.lastElementChild.style.display = ''
+                previousevent.firstElementChild.style.display = 'none'
+                bodyTop[8].style.display='none';
             }).catch(function (error) {
                 console.log(error);
             });
@@ -671,6 +682,8 @@ function delclass(event){
             .then((result) => {
                 console.log(result)
                 watchChild(sonevent)
+                previousevent.parentElement.parentElement.parentElement.lastElementChild.style.display = ''
+                previousevent.firstElementChild.style.display = 'none'
             })
             .catch((err)=>{
                 console.log(err)
@@ -719,6 +732,9 @@ function reclass(event){
                 }).then(response=>{
                     console.log(response.data);
                     watchChild(sonevent)
+                    previousevent.parentElement.parentElement.parentElement.lastElementChild.style.display = ''
+                    previousevent.firstElementChild.style.display = 'none'
+                    bodyTop[9].style.display='none';
                 }).catch(function (error) {
                     console.log(error);
             });
