@@ -161,7 +161,7 @@ function GetAllInfo(page, perpage, obj) {
                     <li>
                         <div style='display:none'>${result.data.msg[i].applicationId}</div>
                         <button onclick="removePopup(this)" class="operatorBtnSty">删除</button>
-                        <button onclick="" class="operatorBtnSty">详情</button>
+                        <button onclick="watchInfo(this)" class="operatorBtnSty">详情</button>
                         <button onclick="changeStatus(this)" class="operatorBtnSty changeConment">修改</button>
                         <div style='display:none'>${result.data.msg[i].application.approval_status}</div>
                     </li>
@@ -403,4 +403,8 @@ changeUserInfo.onclick=function(){
 let cancel=document.getElementById('cancel')
 cancel.onclick=function(){
     bodyTop[0].style.display='none'
+}
+// 查看详情
+function watchInfo(event){
+    window.location.href = 'particulars?id=' + event.parentElement.firstElementChild.innerHTML
 }

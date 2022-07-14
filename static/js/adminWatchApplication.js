@@ -89,7 +89,7 @@ function GetAllInfo(page, perpage, obj) {
                     <li>${result.data.msg[i].classify.b_points_available}</li>
                     <li>
                         <button class="watchDetails" onclick="downLoad(this)">下载</button>
-                        <button class="watchDetails" onclick="">查看</button>
+                        <button class="watchDetails" onclick="watchInfo(this)">查看</button>
                         <div style="display: none;">${result.data.msg[i].id}</div>
                     </li>
                 </ul>
@@ -372,4 +372,8 @@ function downLoad(event){
     // console.log(event.parentElement.lastElementChild.innerHTML)
     sessionStorage.setItem('Applicationid', event.parentElement.lastElementChild.innerHTML)
     window.open('http://127.0.0.1:8080/makepdf')
+}
+// 查看详情
+function watchInfo(event){
+    window.location.href = 'particulars?id=' + event.parentElement.lastElementChild.innerHTML
 }
