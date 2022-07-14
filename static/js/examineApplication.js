@@ -108,14 +108,14 @@ function changepage(page,set) {
         console.log(data.data);
         let redata=data.data.data;
         Tbody.innerHTML='';
-        page_number.innerHTML=`共有${redata.records}条，<span>${redata.allPage}</span>页数据  `
+        page_number.innerHTML=`共有${redata.allRecords}条，<span>${redata.allPage}</span>页数据  `
         console.log(redata);
         if(set=='1'){
-            setlayui(apage,redata.records);
+            setlayui(apage,redata.allRecords);
         }
         if(redata.pageInfo.length==0){
             Tbody.innerHTML =`
-            <div id="emptymeaage" style="padding-top: 200px;width: 100%;height: 200px;text-align: center;font-size: 16px;">
+            <div id="emptymeaage" style="padding-top: 50px;width: 100%;height: 200px;text-align: center;font-size: 16px;">
                 <i class="fa fa-files-o" aria-hidden="true" style="padding-bottom: 10px;color: #68b0f3;font-size: 40px;"></i></br>
                 什么都没有呢 . . .
             </div>
@@ -200,24 +200,24 @@ function allover() {
         }
     }
 }
-Application_delete.onmousemove = function () {
-    let a=document.getElementsByName("team_a");
-    let c = false;
-    for (let i of a) {
-        if (i.checked) {
-            c = true;
-        }
-    }
-    if (!c) {
-        Application_delete.style.cursor = "not-allowed";
-        Application_delete.onclick = () => {
-            swal("请勾选你要删除的对象！");
-        };
-    } else {
-        Application_delete.style.cursor = "pointer";
-        Application_delete.onclick = deleteall;
-    }
-}
+// Application_delete.onmousemove = function () {
+//     let a=document.getElementsByName("team_a");
+//     let c = false;
+//     for (let i of a) {
+//         if (i.checked) {
+//             c = true;
+//         }
+//     }
+//     if (!c) {
+//         Application_delete.style.cursor = "not-allowed";
+//         Application_delete.onclick = () => {
+//             swal("请勾选你要删除的对象！");
+//         };
+//     } else {
+//         Application_delete.style.cursor = "pointer";
+//         Application_delete.onclick = deleteall;
+//     }
+// }
 function deleteall(){
     let a=document.getElementsByName("team_a");
     swal({

@@ -263,7 +263,7 @@ router.get('/api/allapplication', (req, res) => {
         res.send({ err: -1, msg: '用户身份非法' })
         return
     }
-    axios.get('/user/application',{
+    axios.get('/admin/application',{
         params:req.query,
         headers:{
             token:req.session.token
