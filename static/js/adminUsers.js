@@ -747,6 +747,9 @@ function selectTitle(clickName,listName,numbers){
         listName[i].numbers = i;
         listName[i].onclick = function () {
             // console.log(this.id);
+            if(layer_click[numbers].value != this.value){
+                emptys(numbers,layer_click);
+            }
             layer_unselect[numbers].classList.remove('layer-form-selected');
             layer_list[numbers].style.display = 'none';
             flag = true;
@@ -786,6 +789,17 @@ for(let i=0;i<layer_form_radio.length;i++){
         switchover(layer_form_radio,index1,cla);
     }
 }
+
+// 清空选择
+function emptys(numbers,name){
+    for(let i=0;i<name.length;i++){
+        if(i >numbers){
+            name[i].value = '';
+        }
+    }
+}
+
+
 
 
 // 提示学号输入的格式不正确
