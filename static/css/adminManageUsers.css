@@ -42,7 +42,17 @@ input{
     color: white;
 }
 
+#cancelOrganization{
+    background-color: #ED5565;
+    color: white;
+}
+
 #changeUserInfo{
+    background-color: #1AB394;
+    color: white;
+}
+
+#OrganizationSure{
     background-color: #1AB394;
     color: white;
 }

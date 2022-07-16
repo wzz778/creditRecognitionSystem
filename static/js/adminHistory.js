@@ -1,7 +1,7 @@
 
 
 // 提示弹窗
-let popUps = document.getElementsByClassName('popUps')
+// let popUps = document.getElementsByClassName('popUps')
 
 
 // 点击勾选删除的将所有的勾选框选中
@@ -122,7 +122,7 @@ function GetAllInfo(page, perpage, obj) {
         data: obj
     })
         .then((result) => {
-            console.log(result.data)
+            // console.log(result.data)
             all_Page = result.data.allPage
             allNumber.innerHTML = `共${result.data.allRecords}条`
             //删除的判断
@@ -185,7 +185,7 @@ function GetAllInfo(page, perpage, obj) {
             swal('查询成功')
         })
         .catch((err) => {
-            console.log(err)
+            // console.log(err)
             // popUps[1].style.display = 'block'
             // setTimeout(() => {
             //     popUps[1].style.display = 'none'
@@ -275,7 +275,7 @@ function removePopup(event) {
             let idArr = []
             idArr.push(Number(event.parentElement.firstElementChild.innerHTML))
             // 发送删除请求
-            console.log(idArr)
+            // console.log(idArr)
             axios({
                 method: 'POST',
                 url: '/del/admin/records',
@@ -284,7 +284,7 @@ function removePopup(event) {
                 }
             })
                 .then((result) => {
-                    console.log(result.data)
+                    // console.log(result.data)
                     if (result.data.err == 0) {
                         GetAllInfo(now_page, per_Page, limitationFactor())
                         swal('删除成功')
@@ -293,7 +293,7 @@ function removePopup(event) {
                     }
                 })
                 .catch((err) => {
-                    console.log(err)
+                    // console.log(err)
                     swal('网络错误')
                 })
         } else {
@@ -338,7 +338,7 @@ del.onclick = function () {
                     }
                 })
                     .then((result) => {
-                        console.log(result.data)
+                        // console.log(result.data)
                         if (result.data.err == 0) {
                             swal('删除成功')
                             GetAllInfo(now_page, per_Page, limitationFactor())
@@ -347,7 +347,7 @@ del.onclick = function () {
                         }
                     })
                     .catch((err) => {
-                        console.log(err)
+                        // console.log(err)
                         swal('网络错误')
                     })
             } else {
@@ -387,7 +387,7 @@ changeUserInfo.onclick=function(){
         }
     })
     .then((result)=>{
-        console.log(result.data)
+        // console.log(result.data)
         if(result.data.err==-1){
             swal('网络错误')
             return
@@ -397,7 +397,7 @@ changeUserInfo.onclick=function(){
     })
     .catch((err)=>{
         swal('修改失败')
-        console.log(err)
+        // console.log(err)
     })
 }
 let cancel=document.getElementById('cancel')

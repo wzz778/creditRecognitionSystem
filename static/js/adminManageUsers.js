@@ -1,4 +1,4 @@
-let popUps = document.getElementsByClassName('popUps')
+// let popUps = document.getElementsByClassName('popUps')
 
 // 点击勾选删除的将所有的勾选框选中
 let checkDelAll = document.getElementById('checkDelAll')
@@ -83,7 +83,7 @@ function GetAll(page, perPage, obj) {
         data: obj
     })
         .then((result) => {
-            checkDelAll.checked=''
+            checkDelAll.checked = ''
             // console.log(result.data)
             adminManageUsersContentContent.innerHTML = ''
             adminManageUsersContentContent.style.display = 'block'
@@ -103,6 +103,17 @@ function GetAll(page, perPage, obj) {
                 let userClass = '未知'
                 if (result.data.msg[i].major_class) {
                     userClass = result.data.msg[i].major_class
+                }
+                let str = `<button onclick="authorizeCom(this)" class="operatorBtnSty">授权</button>`
+                if (result.data.msg[i].power == '普通用户') {
+                    // 普通用户的授权
+                    str = `<button onclick="authorizeCom(this)" class="operatorBtnSty">授权</button>`
+                } else if (result.data.msg[i].power == '普通管理员') {
+                    // 一键授权
+                    str = `<button onclick="authorizeSuper(this)" class="operatorBtnSty">授权</button>`
+                } else {
+                    // 超级管理员
+                    str = `<button class="operatorBtnSty" onclick="swal('超级管理员无需授权')" >授权</button>`
                 }
                 adminManageUsersContentContent.innerHTML += `
             <ul>
@@ -124,6 +135,7 @@ function GetAll(page, perPage, obj) {
                     <div style='display:none'>${result.data.msg[i].uid}</div>
                     <button onclick="removePopup(this)" class="operatorBtnSty">删除</button>
                     <button onclick="changeUserInfoFn(this)" class="operatorBtnSty">修改</button>
+                    ${str}
                     <div style='display:none'>${result.data.msg[i].sex}</div>
                 </li>
             </ul>
@@ -136,7 +148,7 @@ function GetAll(page, perPage, obj) {
             swal('查询成功')
         })
         .catch((err) => {
-            console.log(err)
+            // console.log(err)
             // popUps[1].style.display = 'block'
             // setTimeout(() => {
             //     popUps[1].style.display = 'none'
@@ -304,11 +316,12 @@ function removePopup(event) {
                     }
                 })
                 .catch((err) => {
-                    console.log(err)
-                    popUps[1].style.display = 'block'
-                    setTimeout(() => {
-                        popUps[1].style.display = 'none'
-                    }, 2000)
+                    // console.log(err)
+                    // popUps[1].style.display = 'block'
+                    // setTimeout(() => {
+                    //     popUps[1].style.display = 'none'
+                    // }, 2000)
+                    swal('网络错误')
                 })
         } else {
             swal('已取消')
@@ -365,11 +378,12 @@ del.onclick = function () {
                         }
                     })
                     .catch((err) => {
-                        console.log(err)
-                        popUps[1].style.display = 'block'
-                        setTimeout(() => {
-                            popUps[1].style.display = 'none'
-                        }, 2000)
+                        // console.log(err)
+                        // popUps[1].style.display = 'block'
+                        // setTimeout(() => {
+                        //     popUps[1].style.display = 'none'
+                        // }, 2000)
+                        swal('网络错误')
                     })
                 swal('删除成功')
             } else {
@@ -378,10 +392,11 @@ del.onclick = function () {
         })
     } else {
         // 显示请选择删除信息
-        popUps[3].style.display = 'block'
-        setTimeout(() => {
-            popUps[3].style.display = 'none'
-        }, 2000)
+        // popUps[3].style.display = 'block'
+        // setTimeout(() => {
+        //     popUps[3].style.display = 'none'
+        // }, 2000)
+        swal('请选择删除信息')
     }
 }
 // 重置按钮
@@ -440,7 +455,7 @@ function changeUserInfoFn(event) {
         changeUserHas.value = '有'
         bodyTopClu[0].style.display = 'block'
         changeUserGrade.value = ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML
-        GetOtherLevelTwo(changeUseraCademy, changeUserGrade.value,ele.lastElementChild.innerHTML)
+        GetOtherLevelTwo(changeUseraCademy, changeUserGrade.value, ele.lastElementChild.innerHTML)
         changeUserClass.value = ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML
     }
 }
@@ -456,11 +471,11 @@ changeUserInfo.onclick = function () {
         swal('请输入正确的格式的学号或教务账号')
         return
     }
-    if(changeUseraCademy.value==''){
+    if (changeUseraCademy.value == '') {
         swal('请输入学院')
         return
     }
-    if(changeUserClass.value==''){
+    if (changeUserClass.value == '') {
         swal('请输入班级')
         return
     }
@@ -474,7 +489,7 @@ changeUserInfo.onclick = function () {
         obj.academy = changeUseraCademy.value
         obj.grade = changeUserGrade.value
         obj.major_class = changeUserClass.value
-    }else{
+    } else {
         obj.academy = ''
         obj.grade = ''
         obj.major_class = ''
@@ -498,7 +513,8 @@ changeUserInfo.onclick = function () {
             }
         })
         .catch((err) => {
-            console.log(err)
+            // console.log(err)
+            swal('网络错误')
         })
 }
 
@@ -531,7 +547,8 @@ function reviseFn(event) {
                     }
                 })
                 .catch((err) => {
-                    console.log(err)
+                    // console.log(err)
+                    swal('网络错误')
                 })
         } else {
             swal('已取消')
@@ -564,7 +581,7 @@ function GetFirstLevel(ele) {
             ele.value = ''
         })
         .catch((err) => {
-            console.log(err)
+            // console.log(err)
             swal('网络错误')
         })
 }
@@ -579,7 +596,7 @@ function GetOtherLevel(ele, id) {
         }
     })
         .then((result) => {
-            console.log(result.data)
+            // console.log(result.data)
             // 将结果添加到ele上
             ele.innerHTML = ''
             ele.add(new Option('请选择...', ''))
@@ -589,7 +606,7 @@ function GetOtherLevel(ele, id) {
             ele.value = ''
         })
         .catch((err) => {
-            console.log(err)
+            // console.log(err)
             swal('网络错误')
         })
 }
@@ -632,12 +649,12 @@ function GetFirstLevelOne(ele) {
             ele.value = ''
         })
         .catch((err) => {
-            console.log(err)
+            // console.log(err)
             swal('网络错误')
         })
 }
 
-function GetOtherLevelTwo(ele, id,show) {
+function GetOtherLevelTwo(ele, id, show) {
     let idResult = 1
     for (let i = 0; i < ResultObj.length; i++) {
         if (ResultObj[i].name == id) {
@@ -659,10 +676,10 @@ function GetOtherLevelTwo(ele, id,show) {
             for (let i = 0; i < result.data.msg.length; i++) {
                 ele.add(new Option(result.data.msg[i].name, result.data.msg[i].name))
             }
-            changeUseraCademy.value=show||''
+            changeUseraCademy.value = show || ''
         })
         .catch((err) => {
-            console.log(err)
+            // console.log(err)
             swal('网络错误')
         })
 }
@@ -681,4 +698,92 @@ changeUserGrade.onchange = function () {
         }
     }
     GetOtherLevelTwo(changeUseraCademy, id)
+}
+
+// 普通管理员的授权
+function authorizeSuper(event) {
+    swal({
+        title: "你确定？",
+        text: "要授权",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    }, function (isConfirm) {
+        if (isConfirm) {
+            axios({
+                method: 'POST',
+                url: '/superAdmin/givePower',
+                data: {
+                    id: event.parentElement.firstElementChild.innerHTML
+                }
+            })
+                .then((result) => {
+                    console.log(result.data)
+                    if (result.data.err == 0) {
+                        swal('授权成功')
+                    } else {
+                        swal('授权失败,请重试')
+                    }
+                })
+                .catch((err) => {
+                    console.log(err)
+                    swal('网络错误')
+                })
+        } else {
+            swal('已取消')
+        }
+    })
+
+}
+
+function authorizeCom(event) {
+    bodyTop[1].style.display = 'block'
+    changeUserNameOrganization.innerHTML = event.parentElement.parentElement.firstElementChild.nextElementSibling.nextElementSibling.innerHTML
+}
+// 授权普通用户
+let cancelOrganization = document.getElementById('cancelOrganization')
+cancelOrganization.onclick = function () {
+    bodyTop[1].style.display = 'none'
+}
+let OrganizationSure = document.getElementById('OrganizationSure')
+let changeUserNameOrganization = document.getElementById('changeUserNameOrganization')
+let OrganizationPosition = document.getElementById('OrganizationPosition')
+let OrganizationName = document.getElementById('OrganizationName')
+// 普通用户授权
+OrganizationSure.onclick = function () {
+    // 判断是否为空
+    if (OrganizationName.value == '') {
+        swal('请输入组织名')
+        return
+    }
+    if (OrganizationPosition.value == '') {
+        swal('请输入职位')
+        return
+    }
+    axios({
+        method: 'POST',
+        url: '/admin/updatePower',
+        data: {
+            organization: OrganizationName.value,
+            positions: OrganizationPosition.value,
+            usernames: changeUserNameOrganization.innerHTML
+        }
+    })
+        .then((result) => {
+            console.log(result.data)
+            bodyTop[1].style.display = 'none'
+            if (result.data.err == 0) {
+                swal('授权成功')
+                GetAll(now_page, per_Page, assignFn())
+            } else {
+                swal('授权失败')
+            }
+        })
+        .catch((err) => {
+            swal('网络错误')
+        })
 }

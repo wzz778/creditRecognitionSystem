@@ -129,7 +129,7 @@ router.post('/admin/application', (req, res) => {
         obj.major_class = major_class
     }
     obj.approval_status = approval_status = 1
-    console.log('查看申请表', obj)
+    // console.log('查看申请表', obj)
     axios({
         method: 'GET',
         url: '/admin/application',
@@ -139,7 +139,7 @@ router.post('/admin/application', (req, res) => {
         }
     })
         .then((result) => {
-            console.log(result.data)
+            // console.log(result.data)
             if (result.data.msg == 'OK') {
                 res.send({ err: 0, msg: result.data.data.pageInfo, AllPages: result.data.data.allPage })
             } else {
@@ -276,8 +276,8 @@ router.post('/admin/delete.doUserInfo', (req, res) => {
         return
     }
     let idArray = req.body.idArray
-    console.log('存的session', req.session.user.uid)
-    console.log('删除上传得东西', idArray)
+    // console.log('存的session', req.session.user.uid)
+    // console.log('删除上传得东西', idArray)
     if (idArray == req.session.user.uid) {
         res.send({ err: -2, msg: '您不能删除您自己' })
         return
@@ -292,7 +292,7 @@ router.post('/admin/delete.doUserInfo', (req, res) => {
             token: req.session.token
         }
     }).then((result) => {
-        console.log('删除用户的结果', result.data)
+        // console.log('删除用户的结果', result.data)
         if (result.data.msg == 'OK') {
             res.send({ err: 0, msg: '删除成功' })
         } else {
@@ -310,7 +310,7 @@ router.post('/delAllUser', (req, res) => {
         return
     }
     let user = req.body.arrId
-    console.log('批量删除传得数据', user)
+    // console.log('批量删除传得数据', user)
     for (let i = 0; i < user.length; i++) {
         if (user[i] == req.session.user.uid) {
             res.send({ err: -2, msg: '您不能删除您自己' })
@@ -860,7 +860,7 @@ function delRecord(req, id) {
             }
         })
             .then((result) => {
-                console.log('封装的删除函数里边的结果', result.data)
+                // console.log('封装的删除函数里边的结果', result.data)
                 if (result.data.msg == 'OK') {
                     resolve(result.data)
                 } else {
@@ -899,7 +899,7 @@ router.post('/del/admin/records', (req, res) => {
             }
         })
         .catch((err) => {
-            console.log(err)
+            // console.log(err)
             res.send({ err: -1, msg: err })
         })
 })
@@ -928,7 +928,7 @@ router.post('/IndicatorOperate/searshIndicator', (req, res) => {
 router.post('/showExcel', (req, res) => {
     // console.log('数据',req.body)
     let { sendResult } = req.body
-    console.log(sendResult)
+    // console.log(sendResult)
     axios({
         method: 'GET',
         url: '/show_excel',
@@ -1003,8 +1003,8 @@ router.post('/admin/auditingApplication', (req, res) => {
             id: id,
             status: status
         },
-        headers:{
-            token:req.session.token
+        headers: {
+            token: req.session.token
         }
     })
         .then((result) => {
@@ -1014,8 +1014,66 @@ router.post('/admin/auditingApplication', (req, res) => {
                 res.send({ err: -1, msg: result.data.data })
             }
         })
-        .catch((err)=>{
-            res.send({err:-1,msg:err})
+        .catch((err) => {
+            res.send({ err: -1, msg: err })
+        })
+})
+// 给普通管理员授权
+router.post('/superAdmin/givePower', (req, res) => {
+    if (!jwt.decode(req.session.token)) {
+        res.send({ err: -1, msg: '用户身份非法' })
+        return
+    }
+    let { id } = req.body
+    // console.log(id)
+    axios({
+        method: 'PUT',
+        url: '/superAdmin/givePower',
+        params: {
+            id: id,
+            superPower: '是'
+        },
+        headers: {
+            token: req.session.token
+        }
+    })
+        .then((result) => {
+            console.log('普通管理员授权',result.data)
+            if (result.data.msg == 'OK') {
+                res.send({ err: 0, msg: result.data })
+            } else {
+                res.send({ err: -1, msg: result.data })
+            }
+        })
+        .catch((err) => {
+            res.send({ err: -1, msg: err })
+        })
+})
+// 给普通用户授权
+router.post('/admin/updatePower', (req, res) => {
+    if (!jwt.decode(req.session.token)) {
+        res.send({ err: -1, msg: '用户身份非法' })
+        return
+    }
+    console.log(req.body)
+    axios({
+        method: 'PUT',
+        url: '/admin/updatePower',
+        params: req.body,
+        headers: {
+            token: req.session.token
+        }
+    })
+        .then((result) => {
+            console.log('普通用户授权',result)
+            if (result.data.msg == 'OK') {
+                res.send({ err: 0, msg: result.data })
+            } else {
+                res.send({ err: -1, msg: result.data })
+            }
+        })
+        .catch((err) => {
+            res.send({ err: -1, msg: err })
         })
 })
 

@@ -1,4 +1,4 @@
-let popUps = document.getElementsByClassName('popUps')
+// let popUps = document.getElementsByClassName('popUps')
 // 提示弹窗
 let expandItem = document.getElementsByClassName('expandItem')
 
@@ -58,7 +58,8 @@ function watchFather() {
             swal('获取成功')
         })
         .catch((err) => {
-            console.log(err)
+            // console.log(err)
+            swal('网络错误')
         })
 }
 watchFather()
@@ -190,8 +191,8 @@ function watchChild(event) {
             }
         })
         .catch((err) => {
-            console.log(err)
-            // swal('操作失败')
+            // console.log(err)
+            swal('网络错误')
         })
 }
 // 查看备注
@@ -333,7 +334,7 @@ function delFnOne(event) {
                     }
                 })
                 .catch((err) => {
-                    console.log(err)
+                    // console.log(err)
                     swal('网络错误')
                 })
         } else {
@@ -378,7 +379,7 @@ function delFnOneNo(event) {
                     }
                 })
                 .catch((err) => {
-                    console.log(err)
+                    // console.log(err)
                     swal('网络错误')
                 })
         } else {
@@ -509,7 +510,8 @@ sureAdd.onclick = function () {
                 watchFather()
             })
             .catch((err) => {
-                console.log(err)
+                // console.log(err)
+                swal('网络错误')
             })
     }
 }
@@ -551,7 +553,8 @@ function changeTwoDirFn(event) {
             changeTwoDirFather.value = event.parentElement.parentElement.parentElement.parentElement.parentElement.firstElementChild.firstElementChild.lastElementChild.innerHTML
         })
         .catch((err) => {
-            console.log(err)
+            // console.log(err)
+            swal('网络错误')
         })
     changeTwoDirEle.value = event.parentElement.firstElementChild.innerHTML
     changeTwoDirId.innerHTML = event.parentElement.lastElementChild.innerHTML
@@ -571,7 +574,8 @@ function changeOneDirFn(event) {
             changeTwoDirFather.value = event.parentElement.parentElement.parentElement.parentElement.firstElementChild.firstElementChild.lastElementChild.innerHTML
         })
         .catch((err) => {
-            console.log(err)
+            // console.log(err)
+            swal('网络错误')
         })
     changeTwoDirEle.value = event.parentElement.firstElementChild.innerHTML
     changeTwoDirId.innerHTML = event.parentElement.lastElementChild.innerHTML
@@ -603,7 +607,8 @@ sureChange.onclick = function () {
             watchFather()
         })
         .catch((err) => {
-            console.log(err)
+            // console.log(err)
+            swal('网络错误')
         })
 }
 

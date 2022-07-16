@@ -1,7 +1,7 @@
 // const { default: axios } = require("axios")
 
-let popUps = document.getElementsByClassName('popUps')
-let msgHint = document.getElementById('msgHint')
+// let popUps = document.getElementsByClassName('popUps')
+// let msgHint = document.getElementById('msgHint')
 
 // 点击是否选择学生的信息
 let studentInformation = document.getElementsByClassName('studentInformation')[0]
@@ -57,7 +57,7 @@ let OrganizationInformation = document.getElementById('OrganizationInformation')
 let addOrganization = document.getElementById('addOrganization')
 let cancelAddOrganization = document.getElementById('cancelAddOrganization')
 addOrganization.onclick = function () {
-    console.log(1234)
+    // console.log(1234)
     OrganizationInformation.style.display = 'grid'
     usPermission.value = '普通管理员'
 }
@@ -139,7 +139,7 @@ save.onclick = function () {
             obj.power = '普通管理员'
         }
     }
-    console.log(obj)
+    // console.log(obj)
     // 发送数据
     axios({
         method: 'POST',
@@ -147,7 +147,7 @@ save.onclick = function () {
         data: obj
     })
         .then((result) => {
-            console.log(result.data)
+            // console.log(result.data)
             if (result.data.err == -1) {
                 // 将错误信息显示出来
                 swal(result.data.msg)
@@ -172,7 +172,7 @@ save.onclick = function () {
             }
         })
         .catch((err) => {
-            console.log(err)
+            // console.log(err)
             // 提示错误
             // popUps[1].style.display = 'block'
             // setTimeout(() => {
@@ -197,7 +197,7 @@ function GetFirstLevel(ele) {
             ele.value = ''
         })
         .catch((err) => {
-            console.log(err)
+            // console.log(err)
             swal('网络错误')
         })
 }
@@ -222,7 +222,7 @@ function GetOtherLevel(ele, id) {
             ele.value = ''
         })
         .catch((err) => {
-            console.log(err)
+            // console.log(err)
             swal('网络错误')
         })
 }

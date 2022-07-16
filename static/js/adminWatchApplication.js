@@ -1,6 +1,6 @@
 // const bodyParser = require("body-parser")
 
-let popUps = document.getElementsByClassName('popUps')
+// let popUps = document.getElementsByClassName('popUps')
 
 // 分页
 let allNumber = document.getElementById('allNumber')//总条数
@@ -102,7 +102,7 @@ function GetAllInfo(page, perpage, obj) {
             swal('查询成功')
         })
         .catch((err) => {
-            console.log(err)
+            // console.log(err)
             // popUps[1].style.display = 'block'
             // setTimeout(() => {
             //     popUps[1].style.display = 'none'
@@ -227,7 +227,8 @@ axios({
         CreditsComposition.value = ''
     })
     .catch((err) => {
-        console.log(err)
+        // console.log(err)
+        swal('网络错误')
     })
 let CreditsSecondDir = document.getElementById('CreditsSecondDir')
 CreditsComposition.onchange = function () {
@@ -264,7 +265,8 @@ CreditsComposition.onchange = function () {
             ScopeRecognition.value = ''
         })
         .catch((err) => {
-            console.log(err)
+            // console.log(err)
+            swal('网络错误')
         })
 }
 
@@ -289,7 +291,8 @@ CreditsSecondDir.onchange = function () {
             ScopeRecognition.value = ''
         })
         .catch((err) => {
-            console.log(err)
+            // console.log(err)
+            swal('网络错误')
         })
 }
 
@@ -316,7 +319,7 @@ function GetFirstLevel(ele) {
             ele.value = ''
         })
         .catch((err) => {
-            console.log(err)
+            // console.log(err)
             swal('网络错误')
         })
 }
@@ -341,7 +344,7 @@ function GetOtherLevel(ele, id) {
             ele.value = ''
         })
         .catch((err) => {
-            console.log(err)
+            // console.log(err)
             swal('网络错误')
         })
 }

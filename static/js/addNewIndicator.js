@@ -52,7 +52,8 @@ axios({
         getChild(CreditsComposition.value)
     })
     .catch((err) => {
-        console.log(err)
+        // console.log(err)
+        swal('网络错误')
     })
 
 CreditsComposition.onclick = function () {
@@ -100,7 +101,8 @@ function getChild(id) {
             childDir.value = ''
         })
         .catch((err) => {
-            console.log(err)
+            // console.log(err)
+            swal('网络错误')
         })
 }
 
@@ -175,7 +177,6 @@ sureAdd.onclick = function () {
                         认证范围:<input type="text" placeholder="请输入认证范围" class='b_Indicator_name' />
                         学分:<input type="text" placeholder="请输入学分大小" class='b_points_available' />
                         <button class="addScopeCertification" onclick="addNewIndicator(this)">添加</button>
-                        <button class="cancel" onclick="removeEle(this)">取消</button>
                         <div class="remarksText">备注:
                             <div class="remarksBottom">
                                 <textarea class="b_remark"></textarea>
@@ -189,7 +190,7 @@ sureAdd.onclick = function () {
         })
         .catch((err) => {
             swal('网络错误')
-            console.log(err)
+            // console.log(err)
         })
 }
 
