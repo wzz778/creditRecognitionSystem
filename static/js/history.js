@@ -1,3 +1,5 @@
+
+// layui日期插件
 layui.use('laydate',function () {
     var laydate = layui.laydate;
 
@@ -32,18 +34,8 @@ let layui_btn = document.getElementsByClassName('layui-btn');
 let cover_layer = document.getElementsByClassName('cover-layer');
 let schedule = document.getElementsByClassName('schedule');
 
-function package(method,url,args,callback){
-    if(method == "post"){
-        $.post(url,args,function (data,status){
-            callback(data,status);
-        })
-    }else{
-        $.get(url,args,function (data,status){
-            callback(data,status);
-        })
-    }
-}
 
+// layui分页
 function pading(sum){
 
     layui.use('laypage',function (){
@@ -66,15 +58,17 @@ function pading(sum){
 
 }
 
+//获取学分类型
 function applicationType() {
     axios({
         method:'get',
-        url:'/creditTypeOperate/showCreditType',
+        url:'/IndicatorOperates/showAllIndicator',
     }).then((data)=>{
+        console.log(data.data);
         console.log(data.data.msg);
         let all = `<option value="">所有</option>`;
-        for(let i=0;i<data.data.msg.length;i++){
-            all += `<option value="${data.data.msg[i].afirstLevel}">${data.data.msg[i].afirstLevel}</option>`
+        for(let i=0;i<data.data.data.length;i++){
+            all += `<option value="${data.data.data[i].classfiy.b_Indicator_name}">${data.data.data[i].classfiy.b_Indicator_name}</option>`
         }
         search_type[0].innerHTML = all;
     }).catch((err)=>{
@@ -84,7 +78,7 @@ function applicationType() {
 applicationType()
 
 
-
+//初始渲染页面
 function rendering(){
     let index1 = search_type[1].selectedIndex;
     let index = search_type[0].selectedIndex;
@@ -128,23 +122,29 @@ function rendering(){
         let date = data.data.data.pageInfo;
         console.log(date);
         let all = "";
-        for(let i=0;i<date.length;i++){
-            if(date[i].application.approval_status == 0){
-                var approval_status = '审核中';
-            }else if(date[i].application.approval_status == 1){
-                var approval_status = '通过';
-            }else{
-                var approval_status = '未通过';
-            }
-            all +=`<ul class="header">
+        if(date.length != 0){
+            for(let i=0;i<date.length;i++){
+                if(date[i].application.approval_status == 0){
+                    var approval_status = '审核中';
+                }else if(date[i].application.approval_status == 1){
+                    var approval_status = '通过';
+                }else{
+                    var approval_status = '未通过';
+                }
+                all +=`<ul class="header">
                         <li class="student-name lis">${date[i].application.user.name}</li>
                         <li class="student-major lis">${date[i].application.user.academy}</li>
                         <li class="student-class lis">${date[i].application.user.major_class}</li>
-                        <li class="student-apply lis">${date[i].application.creditType.afirstLevel}</li>
+                        <li class="student-apply lis">${date[i].application.classify.b_Indicator_name}</li>
                         <li class="student-time lis">${date[i].application.application_time}</li>
                         <li class="student-state lis">${approval_status}</li>
                         <li class="student-apply-credit lis">${date[i].application.classify.b_points_available}</li>
                         <li class="student-operator lis"><span class="check">查看</span></li>
+                    </ul>`
+            }
+        }else{
+            all += `<ul class="header">
+                        <li class="search-nothing">没有找到匹配的记录</li>
                     </ul>`
         }
         main_content[0].innerHTML = all;
@@ -169,7 +169,7 @@ rendering()
 
 
 
-
+//分页渲染页面
 function render(numbers,size){
     let index1 = search_type[1].selectedIndex;
     let index = search_type[0].selectedIndex;
@@ -213,23 +213,29 @@ function render(numbers,size){
         console.log(data.data.data.pageInfo);
         let date = data.data.data.pageInfo;
         let all = "";
-        for(let i=0;i<date.length;i++){
-            if(date[i].application.approval_status == 0){
-                var approval_status = '审核中';
-            }else if(date[i].application.approval_status == 1){
-                var approval_status = '通过';
-            }else{
-                var approval_status = '未通过';
-            }
-            all +=`<ul class="header">
+        if(date.length != 0){
+            for(let i=0;i<date.length;i++){
+                if(date[i].application.approval_status == 0){
+                    var approval_status = '审核中';
+                }else if(date[i].application.approval_status == 1){
+                    var approval_status = '通过';
+                }else{
+                    var approval_status = '未通过';
+                }
+                all +=`<ul class="header">
                         <li class="student-name lis">${date[i].application.user.name}</li>
                         <li class="student-major lis">${date[i].application.user.academy}</li>
                         <li class="student-class lis">${date[i].application.user.major_class}</li>
-                        <li class="student-apply lis">${date[i].application.creditType.afirstLevel}</li>
+                        <li class="student-apply lis">${date[i].application.classify.b_Indicator_name}</li>
                         <li class="student-time lis">${date[i].application.application_time}</li>
                         <li class="student-state lis">${approval_status}</li>
                         <li class="student-apply-credit lis">${date[i].application.classify.b_points_available}</li>
                         <li class="student-operator lis"><span class="check">查看</span></li>
+                    </ul>`
+            }
+        }else{
+            all += `<ul class="header">
+                        <li class="search-nothing">没有找到匹配的记录</li>
                     </ul>`
         }
         main_content[0].innerHTML = all;
@@ -248,11 +254,12 @@ function render(numbers,size){
 // render(1);
 
 
-
+//搜索
 btn[0].onclick = function (){
     rendering();
     swal('搜索成功','','success');
 }
+//重置
 btn[1].onclick = function (){
     search_type[0].value = "";
     search_type[1].value = "";
@@ -264,20 +271,7 @@ btn[1].onclick = function (){
 
 // let search_type = document.getElementsByClassName('search-type');
 
+//
 
-axios({
-    method:'get',
-    url:'/creditTypeOperates/showCreditType',
-}).then((date)=>{
-    console.log(date.data);
-    let all = date.data.data;
-    let html = `<option value="">所有</option>`
-    for(let i=0;i<all.length;i++){
-        html += `<option value="${all[i].afirstLevel}">${all[i].afirstLevel}</option>`
-    }
-    search_type[0].innerHTML = html;
-}).catch((err)=>{
-    console.log(err);
-})
 
 
