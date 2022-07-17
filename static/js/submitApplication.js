@@ -132,6 +132,7 @@ function getson1(father) {
       "indicator": father,
     },
   }).then(data => {
+    console.log(data.data);
     son.innerHTML = `<option value="0">请选择</option>`;
     for (let n of data.data.data.childlist[0].childlist) {
       son.innerHTML += `<option value="${n.classfiy.b_id}">${n.classfiy.b_Indicator_name}</option>`

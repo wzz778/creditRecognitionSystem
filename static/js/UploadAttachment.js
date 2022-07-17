@@ -8,7 +8,7 @@ layui.use('upload', function () {
         elem: '#testList'
         , accept: 'file'
         , multiple: true
-        ,number: 3
+        ,number: 2
         , auto: false
         // , bindAction: '#testListAction'
         , choose: function (obj) {
@@ -52,6 +52,10 @@ $("#testListAction").on("click", function () {
         let datastatus=document.getElementsByClassName('datastatus');
         if(datastatus.length==0){
             swal("请选择要上传的附件！");
+            return
+        }
+        if(datastatus.length>4){
+            swal("附件附件不能超过4个！");
             return
         }
         let formData = new FormData()   
@@ -100,6 +104,12 @@ document.getElementById('toend').onclick=function(){
         swal("请选择要上传的附件！");
         return
     }
+    for(let i of datastatus){
+        if( i.innerHTML=='等待上传'){
+         swal("你还有附件未上传成功！");
+         return
+        }
+     }
     swal({
         title: "你确定完成该申请表？",
         text: "你将没有机会修改该申请表！",
