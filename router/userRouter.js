@@ -4,14 +4,19 @@ const jwt = require("jsonwebtoken");
 const {response} = require("express");
 const router = express.Router();
 axios.default.baseURL = 'http://110.40.205.103:8099/';
+router.get('*',(req,res,next)=>{
+    let user = jwt.decode(req.session.token);
+    if(user != '普通用户'){
+        return next();
+    }else{
+            res.render('403.html');
+    }
+})
 router.get('/history',(req,res)=>{
-    console.log(req.session.token);
-    // let {nodePage,pageSize} = req.query;
     res.render('history.html')
 })
 router.get('/adminUsers',(req,res)=>{
-
-    res.render('adminUsers.html');
+    res.render('adminUsers.html',);
 })
 
 router.get('/progress',(req,res)=>{
@@ -227,5 +232,14 @@ router.get('/creditTypeOperates/showCreditType',(req,res)=>{
     })
 })
 
+
+router.get('/judgeUser',(req,res)=>{
+    let superPower = req.session.user.superPower;
+    if(superPower == '是'){
+        res.send({err:0,msg:'被授权'});
+    }else{
+        res.send({err:-1,msg:'没有权限'});
+    }
+})
 
 module.exports = router;

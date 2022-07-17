@@ -36,9 +36,23 @@ let inner = document.getElementsByName('inner');
 let header_grade = document.getElementsByClassName('header_grade');
 let header_academy = document.getElementsByClassName('header_academy');
 let header_class = document.getElementsByClassName('header_class');
+let identity = document.getElementsByClassName('identity');
 checkbox_all[0].numbers = 0;
 checkbox_all[0].changes = -1;
 
+
+axios({
+    method:'get',
+    url:'/judgeUser',
+}).then((data)=>{
+    console.log(data.data);
+    btn_new[0].superPower = data.data.err;
+    // if(data.data.err == 0){
+    //     selectTitle(layer_click,'identity',4);
+    // }
+}).catch((err)=>{
+    console.log(err);
+})
 
 
 // 用了layui的分页处理
@@ -770,6 +784,8 @@ function selectTitle(clickName,listName,numbers){
 
 
 
+
+
 let index1 = 0
 
 // 改变单选框的样式
@@ -793,7 +809,7 @@ for(let i=0;i<layer_form_radio.length;i++){
 // 清空选择
 function emptys(numbers,name){
     for(let i=0;i<name.length;i++){
-        if(i >numbers){
+        if(i >numbers && i<4){
             name[i].value = '';
         }
     }
@@ -815,7 +831,16 @@ layer_input[1].onblur = function (){
 
 // 添加用户
 btn_new[0].onclick = function (){
-    changes[0].innerHTML = `<div class="layer-form-item">
+    cover_layer[0].style.display = 'block'
+
+    layer_btn_primary[1].sums = 1;
+    layer_submit[0].numbers = 0;
+    layer_input[0].value = '';
+    layer_input[1].value = '';
+    layer_input[2].value = '';
+    layer_input[3].value = '';
+    if(btn_new[0].superPower == 0){
+        changes[0].innerHTML = `<div class="layer-form-item">
                 <label class="layer-form-label">专业</label>
                 <div class="layer-input-block">
                     <div class="layer-unselect layer-form-select ">
@@ -850,11 +875,67 @@ btn_new[0].onclick = function (){
                         </dl>
                     </div>
                 </div>
-            </div>`
-    cover_layer[0].style.display = 'block'
-    cover_main[0].style.height = '550px';
-    layer_btn_primary[1].sums = 1;
-    layer_submit[0].numbers = 0;
+            </div>
+            <div class="layer-form-item">
+                <label class="layer-form-label">用户身份</label>
+                <div class="layer-input-block">
+                    <div class="layer-unselect layer-form-select ">
+                        <div class="layer-select-title">
+                            <input type="text" name=""  placeholder="请选择" class="layer-input layer-click" readonly>
+                            <i class="layer-edge"></i>
+                        </div>
+                        <dl class="layer-list">
+                            <dd class="layer-select-tips layer-this identity" >请选择</dd>
+                            <dd class="layer-select-tips identity" >普通用户</dd>
+                            <dd class="layer-select-tips identity" >普通管理员</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+            `;
+
+        selectTitle(layer_click,identity,4);
+        cover_main[0].style.height = '600px';
+    }else{
+        changes[0].innerHTML = `<div class="layer-form-item">
+                <label class="layer-form-label">专业</label>
+                <div class="layer-input-block">
+                    <div class="layer-unselect layer-form-select ">
+                        <div class="layer-select-title">
+                            <input type="text" name=""  placeholder="请选择" class="layer-input layer-click" readonly>
+                            <i class="layer-edge"></i>
+                        </div>
+                        <dl class="layer-list">
+                            <dd class="layer-select-tips layer-this major" >请选择</dd>
+                            <dd class="layer-select-tips major" >信工212</dd>
+                            <dd class="layer-select-tips major" >计科214</dd>
+                            <dd class="layer-select-tips major" >通信212</dd>
+                            <dd class="layer-select-tips major" >物联212</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+            <div class="layer-form-item">
+                <label class="layer-form-label">班级</label>
+                <div class="layer-input-block">
+                    <div class="layer-unselect layer-form-select ">
+                        <div class="layer-select-title">
+                            <input type="text" name=""  placeholder="请选择" class="layer-input layer-click" readonly>
+                            <i class="layer-edge"></i>
+                        </div>
+                        <dl class="layer-list">
+                            <dd class="layer-select-tips layer-this grade" >请选择</dd>
+                            <dd class="layer-select-tips grade" >信工212</dd>
+                            <dd class="layer-select-tips grade" >计科214</dd>
+                            <dd class="layer-select-tips grade" >通信212</dd>
+                            <dd class="layer-select-tips grade" >物联212</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>`;
+        cover_main[0].style.height = '550px';
+    }
+
 }
 
 
@@ -867,16 +948,30 @@ layer_submit[0].onclick = function (){
         index = 1;
     }
     if(layer_submit[0].numbers == 0){
-        let users ={
-            "name":layer_input[0].value,
-            "userName":layer_input[1].value,
-            "grade":layer_input[2].value,
-            "academy":layer_input[3].value,
-            "major_class":layer_input[5].value,
-            "sex": radios[index].value,
-            "power":'普通用户',
-            "password": "111111",
+        if(btn_new[0].superPower == 0){
+            var users ={
+                "name":layer_input[0].value,
+                "userName":layer_input[1].value,
+                "grade":layer_input[2].value,
+                "academy":layer_input[3].value,
+                "major_class":layer_input[5].value,
+                "sex": radios[index].value,
+                "power":layer_input[6].value,
+                "password": "111111",
+            }
+        }else{
+            var users ={
+                "name":layer_input[0].value,
+                "userName":layer_input[1].value,
+                "grade":layer_input[2].value,
+                "academy":layer_input[3].value,
+                "major_class":layer_input[5].value,
+                "sex": radios[index].value,
+                "power":'普通用户',
+                "password": "111111",
+            }
         }
+
         console.log(users);
         let patrn = /^[0-9]{11}$/
         if(!patrn.exec(layer_input[1].value)){
