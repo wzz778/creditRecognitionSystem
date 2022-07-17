@@ -82,10 +82,6 @@ router.post('/api/login', (req, res) => {
 })
 //获取个人信息
 router.get('/api/getmymessage', (req, res) => {
-    if (!jwt.decode(req.session.token)) {
-        res.send({ err: -1, msg: '用户身份非法' })
-        return
-    }
     axios({
         url:'user/userInfo',
         method:'get',
@@ -117,10 +113,6 @@ router.get('/api/outlogin', (req, res) => {
     });
 })
 router.get('/api/getcreditmessage', (req, res) => {
-    if (!jwt.decode(req.session.token)) {
-        res.send({ err: -1, msg: '用户身份非法' })
-        return
-    }
     axios.get('/creditTypeOperate/showCreditType',{
         headers:{
             token:req.session.token
@@ -134,10 +126,6 @@ router.get('/api/getcreditmessage', (req, res) => {
     });
 })
 router.post('/api/getpost', (req, res) => {
-    if (!jwt.decode(req.session.token)) {
-        res.send({ err: -1, msg: '用户身份非法' })
-        return
-    }
     axios({
         url:'user/application',
         method:'post',
@@ -154,10 +142,6 @@ router.post('/api/getpost', (req, res) => {
     });
 })
 router.get('/api/getcreditson', (req, res) => {
-    if (!jwt.decode(req.session.token)) {
-        res.send({ err: -1, msg: '用户身份非法' })
-        return
-    }
     axios.get('/IndicatorOperate/searshIndicator',{
         params:req.query,
         headers:{
@@ -171,10 +155,6 @@ router.get('/api/getcreditson', (req, res) => {
     });
 })
 router.get('/api/getsonson', (req, res) => {
-    if (!jwt.decode(req.session.token)) {
-        res.send({ err: -1, msg: '用户身份非法' })
-        return
-    }
     axios.get('/IndicatorOperate/showIndicator',{
         params:req.query,
         headers:{
@@ -188,10 +168,6 @@ router.get('/api/getsonson', (req, res) => {
     });
 })
 router.get('/api/getpostmessage', (req, res) => {
-    if (!jwt.decode(req.session.token)) {
-        res.send({ err: -1, msg: '用户身份非法' })
-        return
-    }
     axios.get('/user/oneApplication/{id}',{
         params:req.query,
         headers:{
@@ -224,7 +200,7 @@ router.post('/api/UploadAttachment', multipartMiddleware,(req, res) => {
         headers:{
             token:req.session.token,
             formdata:formdata.getHeaders(),//传递formdata数据
-            maxBodyLength:10000000
+            maxBodyLength:1000000000    
         }
     })
         .then((result) => {
@@ -265,10 +241,6 @@ router.put('/api/uppassword', (req, res) => {
     }
 })
 router.get('/api/allapplication', (req, res) => {
-    if (!jwt.decode(req.session.token)) {
-        res.send({ err: -1, msg: '用户身份非法' })
-        return
-    }
     axios.get('/admin/application',{
         params:req.query,
         headers:{
@@ -282,10 +254,6 @@ router.get('/api/allapplication', (req, res) => {
     });
 })
 router.put('/api/passpost', (req, res) => {
-        if (!jwt.decode(req.session.token)) {
-            res.send({ err: -1, msg: '用户身份非法' })
-            return
-        }
         axios({
         headers: {
             token:req.session.token
@@ -371,10 +339,6 @@ router.post('/api/deleteorganization',(req, res) => {
 })
 //修改组织
 router.put('/api/uploador', (req, res) => {
-    if (!jwt.decode(req.session.token)) {
-        res.send({ err: -1, msg: '用户身份非法' })
-        return
-    }
     axios({
     headers: {
         token:req.session.token
@@ -392,10 +356,6 @@ router.put('/api/uploador', (req, res) => {
 })
 //添加组织
 router.post('/api/addorgin', (req, res) => {
-    if (!jwt.decode(req.session.token)) {
-        res.send({ err: -1, msg: '用户身份非法' })
-        return
-    }
     console.log(req.body);
     console.log(req.body.level);
     axios({
