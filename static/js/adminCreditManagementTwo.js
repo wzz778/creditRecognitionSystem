@@ -1,12 +1,17 @@
 let AddDirFatherName = document.getElementById('AddDirFatherName')
 let AddDirFatherId = document.getElementById('AddDirFatherId')
 let addCreditDefaul = document.getElementById('addCreditDefaul')
+let addCreditDefaulFather=document.getElementById('addCreditDefaulFather')
 function addDirFn(event) {
     bodyTop[3].style.display = 'block'
-    addCreditDefaul.innerHTML = `
-    请输入子级目录:
-    <input type="text" placeholder="请输入子级目录" class="clearValue subValue AddDirValue" autocomplete="off">
-    <button class="addChildDri" onclick="addCertification(this)">添加</button>
+    addCreditDefaulFather.innerHTML = `
+    <div class="dirItem">
+                <div class="dirItemI" id="addCreditDefaul">
+                    请输入子级目录:
+                    <input type="text" placeholder="请输入子级目录" class="clearValue subValue AddDirValue" autocomplete="off">
+                    <button class="addChildDri" onclick="addCertification(this)">添加</button>
+                </div>
+            </div>
     `
     AddDirFatherName.innerHTML = event.parentElement.firstElementChild.innerHTML
     AddDirFatherId.innerHTML = event.parentElement.lastElementChild.innerHTML
@@ -26,10 +31,11 @@ SureaddDir.onclick = function () {
     }
     if (resultData.length == 0) {
         // 没有输入数据
-        console.log('没有选择数据')
+        // console.log('没有选择数据')
+        swal('请填写内容')
         return
     }
-    console.log('传给后端的数据', resultData)
+    // console.log('传给后端的数据', resultData)
     axios({
         method: 'POST',
         url: '/IndicatorOperate/addIndicator',
@@ -44,7 +50,8 @@ SureaddDir.onclick = function () {
             watchFather()
         })
         .catch((err) => {
-            console.log(err)
+            // console.log(err)
+            swal('网络错误')
         })
 }
 
@@ -87,7 +94,7 @@ function IndicatorThree(event) {
     let secondId = ele.firstElementChild.lastElementChild.innerHTML
     let fatherId = ele.parentElement.parentElement.parentElement.firstElementChild.firstElementChild.lastElementChild.innerHTML
     reviseCreComposition.value = fatherId
-    console.log(secondId)
+    // console.log(secondId)
     getChild(Number(reviseCreComposition.value), secondId)
     reviseRecognize.value = event.parentElement.parentElement.firstElementChild.nextElementSibling.innerHTML
     reviseCreditNumber.value = event.parentElement.parentElement.firstElementChild.nextElementSibling.nextElementSibling.innerHTML
@@ -104,7 +111,8 @@ axios({
         }
     })
     .catch((err) => {
-        console.log(err)
+        // console.log(err)
+        swal('网络错误')
     })
 
 // 通过学分构成获取子级目录
@@ -154,7 +162,8 @@ function getChild(id, hasDir) {
             }
         })
         .catch((err) => {
-            console.log(err)
+            // console.log(err)
+            swal('网络错误')
         })
 }
 
@@ -181,12 +190,12 @@ sureRevise.onclick = function () {
     sendArr.b_first_level = Number(reviseCreComposition.value)
     let secondId = ''
     if (reviseChildDir.value == '') {
-        console.log('空')
+        // console.log('空')
         secondId = reviseCreComposition.value
-        sendArr.b_Indicator_level=2
+        sendArr.b_Indicator_level = 2
     } else {
         secondId = reviseChildDir.value
-        sendArr.b_Indicator_level=3
+        sendArr.b_Indicator_level = 3
     }
     // console.log('二级目录的id', secondId)
     sendArr.b_superior_id = Number(secondId)
@@ -201,7 +210,7 @@ sureRevise.onclick = function () {
         }
     })
         .then((result) => {
-            console.log(result.data)
+            // console.log(result.data)
             bodyTop[4].style.display = 'none'
             swal('修改成功')
             watchFather()
@@ -335,7 +344,8 @@ sureSearch.onclick = function () {
 
         })
         .catch((err) => {
-            console.log(err)
+            // console.log(err)
+            swal('网络错误')
         })
 }
 

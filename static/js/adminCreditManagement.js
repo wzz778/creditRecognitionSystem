@@ -199,7 +199,7 @@ function watchChild(event) {
 function watchRemark(event) {
     // 奖备注显示在弹窗中
     let str = '没有备注信息'
-    if (event.parentElement.firstElementChild.innerHTML != 'null') {
+    if (event.parentElement.firstElementChild.innerHTML != 'null'&&event.parentElement.firstElementChild.innerHTML!='') {
         str = event.parentElement.firstElementChild.innerHTML
     }
     swal(str)
