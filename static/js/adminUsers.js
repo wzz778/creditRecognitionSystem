@@ -440,8 +440,9 @@ function render(numbers,size){
         let all = date.data.data.records;
         console.log(all);
         let html = "";
-        for(let i=0;i<all.length;i++){
-            html +=`<ul class="header">
+        if(all.length != 0){
+            for(let i=0;i<all.length;i++){
+                html +=`<ul class="header">
                         <li class="checkbox lis">
                             <div class="inner">
                                 <input type="checkbox" class="checkbox-list" >
@@ -459,6 +460,11 @@ function render(numbers,size){
                             <span class="opertor-list reset">重置</span>
                             <span class="opertor-list deletes">删除</span>
                         </li>
+                    </ul>`
+            }
+        }else{
+            html +=`<ul class="header">
+                        <li class="search-nothing">没有找到匹配的记录</li>
                     </ul>`
         }
         main_content[0].innerHTML = html;

@@ -1,4 +1,6 @@
 
+
+// 使用layui轮播图
 function pic(){
     layui.use('carousel',function () {
         var carousel = layui.carousel;
@@ -26,6 +28,8 @@ let download = document.getElementsByClassName('download');
 let attchment_imgs = document.getElementsByClassName('attchment-imgs');
 
 
+
+//渲染页面
 function render(id){
     axios({
         method:'get',
@@ -96,7 +100,7 @@ function render(id){
 }
 render(id);
 
-// 图片下载
+// 点击下载图片
 download[0].onclick = function (){
     console.log(attchment_imgs[0].src);
     for(let i=0;i<attchment_imgs.length;i++){

@@ -12,27 +12,35 @@ router.get('*',(req,res,next)=>{
             res.render('403.html');
     }
 })
+
+//查看历史记录的页面
 router.get('/history',(req,res)=>{
     res.render('history.html')
 })
+
+//管理员管理用户的页面
 router.get('/adminUsers',(req,res)=>{
     res.render('adminUsers.html',);
 })
 
-router.get('/progress',(req,res)=>{
-    res.render('progress.html');
-})
+// 历史记录的详情页面
 router.get('/particulars',(req,res)=>{
     res.render('particulars.html');
 })
+
+//404页面
 router.get('/404',(req,res)=>{
     res.render('404.html');
 })
+
+//403页面
 router.get('/403',(req,res)=>{
     res.render('403.html');
 })
 
 
+
+//用户查看历史记录
 router.get('/users/records',(req,res)=>{
     // let {nodePage,pageSize} = req.body;
     axios({
@@ -49,6 +57,9 @@ router.get('/users/records',(req,res)=>{
     })
 })
 
+
+
+// 上传申请表
 router.get('/user/application',(req,res)=>{
     axios({
         method:'get',
@@ -64,6 +75,8 @@ router.get('/user/application',(req,res)=>{
     })
 })
 
+
+//普通用户分页
 router.get('/admin/commonUserPage',(req,res)=>{
     axios({
         method:'get',
@@ -81,7 +94,7 @@ router.get('/admin/commonUserPage',(req,res)=>{
 
 })
 
-
+//获取单个申请表
 router.get('/admin/oneApplication',(req,res)=>{
     axios({
         method:'get',
@@ -97,6 +110,7 @@ router.get('/admin/oneApplication',(req,res)=>{
     })
 })
 
+//重置密码  密码是111111
 router.put('/admin/resetUserPass',(req,res)=>{
     axios({
         method:'put',
@@ -112,6 +126,8 @@ router.put('/admin/resetUserPass',(req,res)=>{
     })
 })
 
+
+//修改用户信息
 router.put('/admin/update.do.userInfo',(req,res)=>{
     axios({
         method:'put',
@@ -127,6 +143,8 @@ router.put('/admin/update.do.userInfo',(req,res)=>{
     })
 })
 
+
+//删除用户
 router.delete('/admin/delete.doUserInfo',(req,res)=>{
     axios({
         method:'delete',
@@ -142,6 +160,8 @@ router.delete('/admin/delete.doUserInfo',(req,res)=>{
     })
 })
 
+
+//添加用户
 router.post('/admin/addUsers',(req,res)=>{
     axios({
         method:'post',
@@ -157,6 +177,8 @@ router.post('/admin/addUsers',(req,res)=>{
     })
 })
 
+
+//根据条件检索用户信息
 router.get('/admin/getUserByClass',(req,res)=>{
     axios({
         method:'get',
@@ -172,6 +194,7 @@ router.get('/admin/getUserByClass',(req,res)=>{
     })
 })
 
+//取出附件
 router.get('/user/getEnclosure',(req,res)=>{
     axios({
         method:'get',
@@ -187,6 +210,8 @@ router.get('/user/getEnclosure',(req,res)=>{
     })
 })
 
+
+//查询组织信息
 router.get('/admins/selectOrganization',(req,res)=>{
     axios({
         method:'get',
@@ -202,6 +227,8 @@ router.get('/admins/selectOrganization',(req,res)=>{
     })
 })
 
+
+//显示一级组织信息
 router.get('/admins/showOrganization',(req,res)=>{
     axios({
         method:'get',
@@ -217,7 +244,7 @@ router.get('/admins/showOrganization',(req,res)=>{
     })
 })
 
-
+//显示所有学分类型
 router.get('/creditTypeOperates/showCreditType',(req,res)=>{
     axios({
         method:'get',
@@ -232,7 +259,7 @@ router.get('/creditTypeOperates/showCreditType',(req,res)=>{
     })
 })
 
-
+// 判断管理员是否被授权
 router.get('/judgeUser',(req,res)=>{
     let superPower = req.session.user.superPower;
     if(superPower == '是'){
@@ -240,6 +267,21 @@ router.get('/judgeUser',(req,res)=>{
     }else{
         res.send({err:-1,msg:'没有权限'});
     }
+})
+
+//显示所有指标
+router.get('/IndicatorOperates/showAllIndicator',(req,res)=>{
+    axios({
+        method:'get',
+        url:'/IndicatorOperate/showAllIndicator',
+        headers:{
+            token:req.session.token
+        }
+    }).then((data)=>{
+        res.send(data.data);
+    }).catch((err)=>{
+        res.send(err);
+    })
 })
 
 module.exports = router;

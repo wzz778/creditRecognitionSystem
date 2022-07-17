@@ -409,6 +409,13 @@ input[type=radio]{
     height: 10px;
 
 }
+.search-nothing{
+    display: block;
+    line-height: 43.2px;
+    text-align: center;
+    height: 43.2px;
+    width: 100%;
+}
 .layer-form-radio *{
     display: inline-block;
     vertical-align: middle;
