@@ -102,10 +102,10 @@ function fn(obj) {
                     `
                 <table>
                     <tbody>
-                        <td style="width: 30px;">${i + 1}</td>
-                        <td  class="dieWidthTwo">${result.data.msg.data[i].name}</td>
-                        <td class="dieWidth">${result.data.msg.data[i].studentId}</td>
-                        <td class="dieWidthTwo">${grade}</td>
+                        <td style="width: 30px;" data-tableexport-xlsxformatid="1">${i + 1}</td>
+                        <td  class="dieWidthTwo" data-tableexport-xlsxformatid="1">${result.data.msg.data[i].name}</td>
+                        <td class="dieWidth" data-tableexport-xlsxformatid="1">${result.data.msg.data[i].studentId}</td>
+                        <td class="dieWidthTwo" data-tableexport-xlsxformatid="1">${grade}</td>
                         <td class="dieWidth">${result.data.msg.data[i].academic}</td>
                         <td class="dieWidthTwo">${result.data.msg.data[i].major_class}</td>
                         <!-- 存放学分类型的盒子 -->
@@ -211,8 +211,8 @@ specialized.onchange = function () {
 $("#download").click(function () {
     $("#export").tableExport({
         type:"xlsx",
-        escape:"false",
+        escape:"true",
         // Excel文件的名称
         fileName: "表格-创新创业学分表.xls",
     })
-});
+})

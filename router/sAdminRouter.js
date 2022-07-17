@@ -11,14 +11,7 @@ const { send } = require('process')
 const { url } = require('inspector')
 var mult = multipart()
 
-// router.get('*', (req, res, next) => {
-//     let obj = jwt.decode(req.session.token)
-//     console.log(obj)
-//     if (obj.power == '超级管理员') {
-//         return next()
-//     }
-//     res.render('403.html')
-// })
+
 
 // 请求页面
 // 添加用户 !
@@ -59,10 +52,6 @@ axios.defaults.baseURL = 'http://110.40.205.103:8099'
 // 解析kwt函数
 // 查看历史记录
 router.post('/admin/records', (req, res) => {
-    if (!jwt.decode(req.session.token)) {
-        res.send({ err: -1, msg: '用户身份非法' })
-        return
-    }
     let { nodePage, pageSize, beginDate, endDate, approval_status } = req.body
     let obj = {}
     obj.nodePage = nodePage
@@ -100,10 +89,6 @@ router.post('/admin/records', (req, res) => {
 })
 // 查看申请表
 router.post('/admin/application', (req, res) => {
-    if (!jwt.decode(req.session.token)) {
-        res.send({ err: -1, msg: '用户身份非法' })
-        return
-    }
     // 页数，每页几条，院系，审核状态，指标名，指标分数，开始时间,结束时间，专业
     let { nodePage, pageSize, academy, approval_status, b_Indicator_name, b_points_available, beginDate, endDate, major_class } = req.body
     // 判断是否传值
@@ -152,11 +137,6 @@ router.post('/admin/application', (req, res) => {
 })
 // 添加用户
 router.post('/admin/User', (req, res) => {
-    // 判断是否合法
-    if (!jwt.decode(req.session.token)) {
-        res.send({ err: -1, msg: '用户身份非法' })
-        return
-    }
     let { name, userName, power, sex, grade, academy, major_class, organization, position } = req.body
     if (!organization) {
         organization = '无'
@@ -197,10 +177,6 @@ router.post('/admin/User', (req, res) => {
 })
 // 查询所有学分构成
 router.get('/creditTypeOperate/showCreditType', (req, res) => {
-    if (!jwt.decode(req.session.token)) {
-        res.send({ err: -1, msg: '用户身份非法' })
-        return
-    }
     axios({
         method: 'GET',
         url: '/creditTypeOperate/showCreditType',
@@ -221,10 +197,6 @@ router.get('/creditTypeOperate/showCreditType', (req, res) => {
 })
 // 用户管理
 router.post('/admin/getUserByClass', (req, res) => {
-    if (!jwt.decode(req.session.token)) {
-        res.send({ err: -1, msg: '用户身份非法' })
-        return
-    }
     let { beginIndex, size, academy, name, major_class, sex, power, userName, grade } = req.body
     let obj = {}
     obj.beginIndex = beginIndex
@@ -271,10 +243,6 @@ router.post('/admin/getUserByClass', (req, res) => {
 })
 // 删除用户
 router.post('/admin/delete.doUserInfo', (req, res) => {
-    if (!jwt.decode(req.session.token)) {
-        res.send({ err: -1, msg: '用户身份非法' })
-        return
-    }
     let idArray = req.body.idArray
     // console.log('存的session', req.session.user.uid)
     // console.log('删除上传得东西', idArray)
@@ -305,10 +273,6 @@ router.post('/admin/delete.doUserInfo', (req, res) => {
 })
 // 批量删除用户
 router.post('/delAllUser', (req, res) => {
-    if (!jwt.decode(req.session.token)) {
-        res.send({ err: -1, msg: '用户身份非法' })
-        return
-    }
     let user = req.body.arrId
     // console.log('批量删除传得数据', user)
     for (let i = 0; i < user.length; i++) {
@@ -340,10 +304,6 @@ router.post('/delAllUser', (req, res) => {
 // 获取学分构成的指标
 router.get('/IndicatorOperate/showAllIndicator', (req, res) => {
     // 请求所有指标
-    if (!jwt.decode(req.session.token)) {
-        res.send({ err: -1, msg: '用户身份非法' })
-        return
-    }
     axios({
         method: 'GET',
         url: '/IndicatorOperate/showAllIndicator',
@@ -365,10 +325,6 @@ router.get('/IndicatorOperate/showAllIndicator', (req, res) => {
 
 
 router.get('/getCreditsComposition', (req, res) => {
-    if (!jwt.decode(req.session.token)) {
-        res.send({ err: -1, msg: '用户身份非法' })
-        return
-    }
     axios({
         method: 'GET',
         url: '/creditTypeOperate/showCreditType',
@@ -436,10 +392,6 @@ function getInfo(sendResult, req) {
 
 // 通过学分构成获得其子级目录及学分构成
 router.post('/IndicatorOperate/showIndicator', (req, res) => {
-    if (!jwt.decode(req.session.token)) {
-        res.send({ err: -1, msg: '用户身份非法' })
-        return
-    }
     let { id } = req.body
     axios({
         method: 'GET',
@@ -478,10 +430,6 @@ router.post('/IndicatorOperate/showIndicator', (req, res) => {
 
 // 获取学分构成的子级目录
 router.post('/child', (req, res) => {
-    if (!jwt.decode(req.session.token)) {
-        res.send({ err: -1, msg: '用户身份非法' })
-        return
-    }
     let { id } = req.body
     axios({
         method: 'GET',
@@ -507,10 +455,6 @@ router.post('/child', (req, res) => {
 
 //获取学分构成的三级指标
 router.post('/Third', (req, res) => {
-    if (!jwt.decode(req.session.token)) {
-        res.send({ err: -1, msg: '用户身份非法' })
-        return
-    }
     let { id } = req.body
     axios({
         method: 'GET',
@@ -561,10 +505,6 @@ function addSecondDir(req, b_first_level, resultData) {
 
 // 添加学分构成及其子目录
 router.post('/addCreditAll', (req, res) => {
-    if (!jwt.decode(req.session.token)) {
-        res.send({ err: -1, msg: '用户身份非法' })
-        return
-    }
     // 添加身份判断
     let { AFirstLevel, resultData } = req.body
     // 添加学分构成
@@ -591,10 +531,6 @@ router.post('/addCreditAll', (req, res) => {
 
 // 添加认定范围
 router.post('/IndicatorOperate/addIndicator', (req, res) => {
-    if (!jwt.decode(req.session.token)) {
-        res.send({ err: -1, msg: '用户身份非法' })
-        return
-    }
     let { arrSend } = req.body
     axios({
         method: 'POST',
@@ -649,10 +585,6 @@ router.post('/fileUplo', mult, (req, res) => {
 
 // 删除指标(多个)
 router.post('/IndicatorOperate/deleteIndicator', (req, res) => {
-    if (!jwt.decode(req.session.token)) {
-        res.send({ err: -1, msg: '用户身份非法' })
-        return
-    }
     let { arrId } = req.body
     let urlStr = `http://110.40.205.103:8099/IndicatorOperate/deleteIndicator?ids=${arrId[0]}`
     for (let i = 1; i < arrId.length; i++) {
@@ -678,10 +610,6 @@ router.post('/IndicatorOperate/deleteIndicator', (req, res) => {
 
 // 删除学分构成
 router.post('/creditTypeOperate/deleteCreditType', (req, res) => {
-    if (!jwt.decode(req.session.token)) {
-        res.send({ err: -1, msg: '用户身份非法' })
-        return
-    }
     let { ids } = req.body
     let urlStr = `http://110.40.205.103:8099/creditTypeOperate/deleteCreditType?ids=${ids}`
     axios({
@@ -706,10 +634,6 @@ router.post('/creditTypeOperate/deleteCreditType', (req, res) => {
 
 // 修改二级目录
 router.post('/changeTwoDir', (req, res) => {
-    if (!jwt.decode(req.session.token)) {
-        res.send({ err: -1, msg: '用户身份非法' })
-        return
-    }
     let { b_id, b_Indicator_name, b_superior_id, b_first_level } = req.body
     axios({
         method: 'PUT',
@@ -739,10 +663,6 @@ router.post('/changeTwoDir', (req, res) => {
 
 // 修改学分构成
 router.post('/creditTypeOperate/updateCreditType', (req, res) => {
-    if (!jwt.decode(req.session.token)) {
-        res.send({ err: -1, msg: '用户身份非法' })
-        return
-    }
     axios({
         method: 'PUT',
         url: '/creditTypeOperate/updateCreditType',
@@ -765,10 +685,6 @@ router.post('/creditTypeOperate/updateCreditType', (req, res) => {
 
 // 修改指标信息
 router.post('/changeIndicator', (req, res) => {
-    if (!jwt.decode(req.session.token)) {
-        res.send({ err: -1, msg: '用户身份非法' })
-        return
-    }
     let { sendArr } = req.body
     axios({
         method: 'PUT',
@@ -792,10 +708,6 @@ router.post('/changeIndicator', (req, res) => {
 
 // 修改用户信息
 router.post('/admin/update.do.userInfo', (req, res) => {
-    if (!jwt.decode(req.session.token)) {
-        res.send({ err: -1, msg: '用户身份非法' })
-        return
-    }
     let { obj } = req.body
     axios({
         method: 'PUT',
@@ -819,10 +731,6 @@ router.post('/admin/update.do.userInfo', (req, res) => {
 })
 // 重置密码
 router.post('/admin/resetUserPass', (req, res) => {
-    if (!jwt.decode(req.session.token)) {
-        res.send({ err: -1, msg: '用户身份非法' })
-        return
-    }
     let { id } = req.body
     axios({
         method: 'PUT',
@@ -875,10 +783,6 @@ function delRecord(req, id) {
 
 // 删除历史记录
 router.post('/del/admin/records', (req, res) => {
-    if (!jwt.decode(req.session.token)) {
-        res.send({ err: -1, msg: '用户身份非法' })
-        return
-    }
     let { idArr } = req.body
     let strUrl = `http://110.40.205.103:8099/admin/records?id=${idArr[0]}`
     for (let i = 1; i < idArr.length; i++) {
@@ -1020,10 +924,6 @@ router.post('/admin/auditingApplication', (req, res) => {
 })
 // 给普通管理员授权
 router.post('/superAdmin/givePower', (req, res) => {
-    if (!jwt.decode(req.session.token)) {
-        res.send({ err: -1, msg: '用户身份非法' })
-        return
-    }
     let { id } = req.body
     // console.log(id)
     axios({
@@ -1038,7 +938,7 @@ router.post('/superAdmin/givePower', (req, res) => {
         }
     })
         .then((result) => {
-            console.log('普通管理员授权',result.data)
+            console.log('普通管理员授权', result.data)
             if (result.data.msg == 'OK') {
                 res.send({ err: 0, msg: result.data })
             } else {
@@ -1051,10 +951,6 @@ router.post('/superAdmin/givePower', (req, res) => {
 })
 // 给普通用户授权
 router.post('/admin/updatePower', (req, res) => {
-    if (!jwt.decode(req.session.token)) {
-        res.send({ err: -1, msg: '用户身份非法' })
-        return
-    }
     console.log(req.body)
     axios({
         method: 'PUT',
@@ -1065,7 +961,7 @@ router.post('/admin/updatePower', (req, res) => {
         }
     })
         .then((result) => {
-            console.log('普通用户授权',result)
+            console.log('普通用户授权', result)
             if (result.data.msg == 'OK') {
                 res.send({ err: 0, msg: result.data })
             } else {
