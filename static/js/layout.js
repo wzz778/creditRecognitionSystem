@@ -11,6 +11,7 @@ head_cord_fade.onmouseout=function(){
 head_cord.onmouseout=function(){
     head_cord_fade.style.display = 'none'
 }
+axios.defaults.baseURL = 'http://localhost:8080'
 function outland(){
     $.ajax({
         url: '/api/outlogin',
