@@ -7,7 +7,8 @@ const cookieParse = require('cookie-parser')
 const session = require('express-session')
 const axios = require('axios')
 const jwt = require('jsonwebtoken');
-
+//安装cors中间件
+const cors=require('cors')
  
 // 配置
 app.engine('html', require('express-art-template'))
@@ -21,7 +22,7 @@ app.use(session({
 }))
 app.use('/public', express.static(path.join(__dirname, './static')))
 app.use('/node_modules', express.static(path.join(__dirname, './node_modules')));
-console.log(path.join('路径:',__dirname, './static'));
+app.use(cors())
 app.set("views", "views");
 // 引入路由
 const sAdminRouter = require('./router/sAdminRouter')
