@@ -37,6 +37,7 @@ let header_grade = document.getElementsByClassName('header_grade');
 let header_academy = document.getElementsByClassName('header_academy');
 let header_class = document.getElementsByClassName('header_class');
 let identity = document.getElementsByClassName('identity');
+let search_text = document.getElementsByClassName('search-text');
 checkbox_all[0].numbers = 0;
 checkbox_all[0].changes = -1;
 
@@ -195,7 +196,7 @@ function rendering() {
             pageSize: 10,
         },
     }).then((date)=>{
-        console.log(date.data);
+        // console.log(date.data);
         let all = date.data.data.pageInfo;
         // console.log(all);
         let html = "";
@@ -944,6 +945,8 @@ layer_submit[0].onclick = function (){
                     // console.log(date.data);
 
                     cover_layer[0].style.display = 'none';
+                    let cla = 'layer-form-radioed';
+                    switchover(layer_form_radio,1,cla);
                     swal('添加成功','成功添加','success');
                     render(1,10);
                 }).catch((err)=>{
@@ -978,6 +981,8 @@ layer_submit[0].onclick = function (){
                     params:users,
                 }).then((date)=>{
                     // console.log(date.data);
+                    let cla = 'layer-form-radioed';
+                    switchover(layer_form_radio,1,cla);
                     cover_layer[0].style.display = 'none';
                     swal('修改成功','成功修改','success');
                     render(1,10);
@@ -1045,6 +1050,7 @@ btn_warning[0].onclick = function (){
     search_type[0].value = "";
     search_type[1].value = "";
     search_type[2].value = "";
+    // search_text[0].value = "";
     render(1,10);
 }
 
