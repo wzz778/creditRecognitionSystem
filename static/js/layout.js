@@ -13,7 +13,7 @@ head_cord.onmouseout=function(){
 }
 function outland(){
     $.ajax({
-        url: 'http://127.0.0.1:8080/api/outlogin',
+        url: '/api/outlogin',
         type: "GET",
         contentType : "application/json",
         traditional: true,
@@ -23,7 +23,7 @@ function outland(){
                 swal('退出成功',"退出账号成功","success");
                 sessionStorage.clear();
                 setTimeout(function () {
-                    window.location.assign("http://127.0.0.1:8080/login");
+                    window.location.assign("/login");
                 }, 1000)
             // }else{
             //     swal('退出失败',"退出账号失败","error");

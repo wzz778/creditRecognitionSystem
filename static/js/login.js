@@ -6,7 +6,7 @@ function myFunction() {
         swal("请输入完整的内容！")
     } else {
         axios({
-            url: 'http://127.0.0.1:8080/api/login',
+            url: '/api/login',
             method: 'post',
             data: {
                 "password": text[1].value,
@@ -23,13 +23,13 @@ function myFunction() {
                 swal('登录失败', "您输入的账号密码不正确", "error");
             }
             return  axios({
-                url: 'http://127.0.0.1:8080/api/getmymessage',method: 'get',})
+                url: '/api/getmymessage',method: 'get',})
         }).then((user)=>{
                     console.log(user);
                     sessionStorage.setItem('name', user.data.name);
                     sessionStorage.setItem('power', user.data.power);
                     setTimeout(function () {
-                        window.location.assign("http://127.0.0.1:8080/submitApplication");
+                        window.location.assign("/submitApplication");
                         // sessionStorage.setItem("tousers", '1');
                     }, 1000)   
         }).catch(function (error) {

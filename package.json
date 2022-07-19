@@ -16,5 +16,34 @@
     "multiparty": "^4.2.3",
     "nodemon": "^2.0.18",
     "path": "^0.12.7"
-  }
+  },
+  "bin": "./server.js",
+  "pkg": {
+    "scripts": [
+      "./static/js/*.js"
+    ],
+    "targets": [
+      "node10.24.1-linux-x64",
+      "node10.24.1-win-x64"
+    ],
+    "assets": ["./static","./views"]
+  },
+  "scripts": {
+    "start": "server.js"
+  },
+  "name": "credit-recognition-system",
+  "description": "{**When you're done, you can delete the content in this README and update the file with details for others getting started with your repository**}",
+  "version": "1.0.0",
+  "main": "server.js",
+  "devDependencies": {
+    "pkg": "^5.8.0",
+    "webpack": "^5.73.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/night-star1/credit-recognition-system.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

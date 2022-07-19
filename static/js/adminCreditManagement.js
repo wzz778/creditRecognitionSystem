@@ -434,7 +434,7 @@ let item = document.getElementById('item')
 function skipAdd(event) {
     // 将id保存到本地
     sessionStorage.setItem('skipAddAid', event.parentElement.lastElementChild.innerHTML)
-    window.location.href = 'http://127.0.0.1:8080/addNewIndicator'
+    window.location.href = 'addNewIndicator'
 }
 
 // 弹窗中添加子级目录

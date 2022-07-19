@@ -8,7 +8,7 @@ function myFunction() {
     else {
         axios({
             method: 'put',
-            url: 'http://127.0.0.1:8080/api/uppassword',
+            url: '/api/uppassword',
             params:{
                 // username: text[0].value,
                 mypassword:text[0].value,
@@ -24,7 +24,7 @@ function myFunction() {
                     swal('修改成功', "您的密码修改成功！", "success");
                     sessionStorage.clear();
                 setTimeout(function () {
-                    window.location.assign("http://127.0.0.1:8080/login");
+                    window.location.assign("/login");
                     // sessionStorage.setItem("tousers", '1');
                 }, 1000)   
                 }

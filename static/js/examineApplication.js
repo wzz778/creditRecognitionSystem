@@ -27,7 +27,7 @@ function pass(event){
             swal('成功', "您所选择的申请表已通过！", "success");
             axios({
                 method: 'put',
-                url: 'http://127.0.0.1:8080/api/passpost',
+                url: '/api/passpost',
                 params:{
                     id: oneid,
                     status:'1'
@@ -62,7 +62,7 @@ function refuse(event){
             swal('驳回成功', "您所选择的申请表已驳回！", "success");
             axios({
                 method: 'put',
-                url: 'http://127.0.0.1:8080/api/passpost',
+                url: '/api/passpost',
                 params:{
                     id: oneid,
                     status:'-1'
@@ -97,7 +97,7 @@ function changepage(page,set) {
     pageinput.value=page;
     console.log(apage);
     axios({
-        url: 'http://127.0.0.1:8080/api/allapplication',
+        url: '/api/allapplication',
         method: 'get',
         params: {
             "nodePage":page,
@@ -244,7 +244,7 @@ function deleteall(){
                 }
                 axios({
                     method: 'POST',
-                    url: 'http://127.0.0.1:8080/api/deletepost',
+                    url: '/api/deletepost',
                     data: ptag_ids,
                 })
                     .then((result) => {

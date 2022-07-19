@@ -1,6 +1,6 @@
 let message=document.getElementsByClassName('message');
 axios({
-    url: 'http://127.0.0.1:8080/api/getpostmessage',
+    url: '/api/getpostmessage',
     method: 'get',
     params: {id: sessionStorage.getItem('Applicationid')},
   }).then(response=> {

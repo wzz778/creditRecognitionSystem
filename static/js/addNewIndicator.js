@@ -196,5 +196,5 @@ sureAdd.onclick = function () {
 
 let sureCancel=document.getElementById('sureCancel')
 sureCancel.onclick=function(){
-    window.location.href='http://127.0.0.1:8080/adminCreditManagement'
+    window.location.href='adminCreditManagement'
 }

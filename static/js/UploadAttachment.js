@@ -70,7 +70,7 @@ $("#testListAction").on("click", function () {
         // console.log(formData)
         axios({
             method: 'POST',
-            url: 'http://127.0.0.1:8080/api/UploadAttachment',
+            url: '/api/UploadAttachment',
             data: formData,
             // params:{
             //     id:11,
@@ -124,7 +124,7 @@ document.getElementById('toend').onclick=function(){
         if (isConfirm) {
               swal('提交成功', '您所填写的申请表提交成功', 'success');
               setTimeout(function () {
-                window.location.assign("http://127.0.0.1:8080/EndApplication");
+                window.location.assign("/EndApplication");
                 // sessionStorage.setItem("tousers", '1');
               }, 1000)
         } else {

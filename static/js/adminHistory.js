@@ -365,7 +365,7 @@ del.onclick = function () {
 
 let ExportApplicationform = document.getElementById('ExportApplicationform')
 ExportApplicationform.onclick = function () {
-    window.open('http://127.0.0.1:8080/adminExportForm')
+    window.open('adminExportForm')
 }
 let bodyTop=document.getElementsByClassName('bodyTop')
 let selectStatus=document.getElementById('selectStatus')

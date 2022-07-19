@@ -374,7 +374,7 @@ function downLoad(event){
     // academy.parentElement.lastElementChild.innerHTML
     // console.log(event.parentElement.lastElementChild.innerHTML)
     sessionStorage.setItem('Applicationid', event.parentElement.lastElementChild.innerHTML)
-    window.open('http://127.0.0.1:8080/makepdf')
+    window.open('/makepdf')
 }
 // 查看详情
 function watchInfo(event){

@@ -21,6 +21,8 @@ app.use(session({
 }))
 app.use('/public', express.static(path.join(__dirname, './static')))
 app.use('/node_modules', express.static(path.join(__dirname, './node_modules')));
+console.log(path.join('路径:',__dirname, './static'));
+app.set("views", "views");
 // 引入路由
 const sAdminRouter = require('./router/sAdminRouter')
 const wzzRouter = require('./router/wzzRouter')

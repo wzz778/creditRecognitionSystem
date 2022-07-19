@@ -5,7 +5,7 @@ let body=document.getElementById('Contentbody');
 let addclassdiv=document.getElementById('addclassdiv');
 let academy=document.getElementById('academy');
 let remajordiv=document.getElementById('remajordiv');
-let reclassop=document.getElementById('reclassop');
+let reclassop=document.getElementById('reclassop');/*  */
 let newmagor=document.getElementById('newmagor');
 let newclassfa=document.getElementById('newclassfa');
 let funbutton=document.getElementsByClassName('topOperator')[0].getElementsByTagName('button');
@@ -25,7 +25,7 @@ for(let i=0;i<cancel.length;i++){
 function getgrade(){
     axios({
         method: 'get',
-        url: 'http://127.0.0.1:8080/api/getgrade',
+        url: '/api/getgrade',
         }).then(response=>{
             console.log(response.data);
             let date=response.data.data;
@@ -50,7 +50,7 @@ function getacademy(){
       if (n.selected) {
         axios({
             method: 'get',
-            url: 'http://127.0.0.1:8080/api/getacademy',
+            url: '/api/getacademy',
             params:{id:n.value},
             }).then(response=>{
                 console.log(response.data);
@@ -77,7 +77,7 @@ function getmajor(){
       if (n.selected) {
         axios({
             method: 'get',
-            url: 'http://127.0.0.1:8080/api/getacademy',
+            url: '/api/getacademy',
             params:{id:n.value},
             }).then(response=>{
                 console.log(response.data);
@@ -131,7 +131,7 @@ function watchChild(event) {
     let son=event.parentElement.parentElement.parentElement.getElementsByClassName('InfoContentItemson')[0];
     axios({
         method: 'get',
-        url: 'http://127.0.0.1:8080/api/getacademy',
+        url: '/api/getacademy',
         params:{id:faid},
         }).then(response=>{
             console.log(response.data);
@@ -190,7 +190,7 @@ function addgrade(event){
             if (isConfirm) {
                   swal('提交成功', '您所填写的组织添加成功', 'success');
                   axios({
-                      url:'http://127.0.0.1:8080/api/addorgin',
+                      url:'/api/addorgin',
                       method:'post',
                       data:{
                           'level':'1',
@@ -236,7 +236,7 @@ function delgrade(event){
               swal('删除成功', '您所选的组织删除成功', 'success');
               axios({
                   method: 'POST',
-                  url: 'http://127.0.0.1:8080/api/deleteorganization',
+                  url: '/api/deleteorganization',
                   data: ptag_ids,
               })
               .then((result) => {
@@ -285,7 +285,7 @@ function regrade(event){
               swal('修改成功', '您所选的组织修改成功', 'success');
               axios({
                 method: 'put',
-                url: 'http://127.0.0.1:8080/api/uploador',
+                url: '/api/uploador',
                 params:{
                     level:'1',
                     id: reid,
@@ -336,7 +336,7 @@ function addacamacy(event){
         if (isConfirm) {
               swal('提交成功', '您所填写的组织添加成功', 'success');
               axios({
-                url:'http://127.0.0.1:8080/api/addorgin',
+                url:'/api/addorgin',
                 method:'post',
                 data:{
                     'level':'2',
@@ -381,7 +381,7 @@ function delacademy(event){
               swal('删除成功', '您所选的组织删除成功', 'success');
               axios({
                 method: 'POST',
-                url: 'http://127.0.0.1:8080/api/deleteorganization',
+                url: '/api/deleteorganization',
                 data: ptag_ids,
             })
             .then((result) => {
@@ -403,7 +403,7 @@ function getacademy1(event){
       if (n.selected) {
         axios({
             method: 'get',
-            url: 'http://127.0.0.1:8080/api/getacademy',
+            url: '/api/getacademy',
             params:{id:n.value},
             }).then(response=>{
                 console.log(response.data);
@@ -454,7 +454,7 @@ function reacamacy(event){
               swal('修改成功', '您所选的组织修改成功', 'success');
               axios({
                 method: 'put',
-                url: 'http://127.0.0.1:8080/api/uploador',
+                url: '/api/uploador',
                 params:{
                     level:'2',
                     id: reid,
@@ -504,7 +504,7 @@ function addmajor(event){
         if (isConfirm) {
               swal('添加成功', '您所填写的组织添加成功', 'success');
               axios({
-                url:'http://127.0.0.1:8080/api/addorgin',
+                url:'/api/addorgin',
                 method:'post',
                 data:{
                     'level':'3',
@@ -545,7 +545,7 @@ function delmajor(event){
               ptag_ids.push(id); 
               axios({
                   method: 'POST',
-                  url: 'http://127.0.0.1:8080/api/deleteorganization',
+                  url: '/api/deleteorganization',
                   data: ptag_ids,
               })
               .then((result) => {
@@ -589,7 +589,7 @@ function remajor(event){
               swal('修改成功', '您所选的组织修改成功', 'success');
               axios({
                 method: 'put',
-                url: 'http://127.0.0.1:8080/api/uploador',
+                url: '/api/uploador',
                 params:{
                     level:'3',
                     id:faid,
@@ -637,7 +637,7 @@ function addclass(event){
         if (isConfirm) {
               swal('添加成功', '您所填写的组织添加成功', 'success');
               axios({
-                url:'http://127.0.0.1:8080/api/addorgin',
+                url:'/api/addorgin',
                 method:'post',
                 data:{
                     'level':'4',
@@ -683,7 +683,7 @@ function delclass(event){
               ptag_ids.push(id); 
               axios({
                 method: 'POST',
-                url: 'http://127.0.0.1:8080/api/deleteorganization',
+                url: '/api/deleteorganization',
                 data: ptag_ids,
             })
             .then((result) => {
@@ -730,7 +730,7 @@ function reclass(event){
               swal('修改成功', '您所选的组织修改成功', 'success');
               axios({
                 method: 'put',
-                url: 'http://127.0.0.1:8080/api/uploador',
+                url: '/api/uploador',
                 params:{
                     level:'4',
                     id:faid,
