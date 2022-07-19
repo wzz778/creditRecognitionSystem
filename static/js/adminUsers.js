@@ -45,7 +45,7 @@ axios({
     method:'get',
     url:'/judgeUser',
 }).then((data)=>{
-    console.log(data.data);
+    // console.log(data.data);
     btn_new[0].superPower = data.data.err;
     // if(data.data.err == 0){
     //     selectTitle(layer_click,'identity',4);
@@ -57,8 +57,8 @@ axios({
 
 // 用了layui的分页处理
 function page(numbers){
-    console.log(numbers);
-    console.log(btn_new[0].allLength)
+    // console.log(numbers);
+    // console.log(btn_new[0].allLength)
     layui.use('laypage',function (){
         var laypage = layui.laypage;
 
@@ -67,8 +67,8 @@ function page(numbers){
             count:numbers,
             layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
             jump:function (obj,first){
-                console.log(obj.curr);
-                console.log(obj.limit)
+                // console.log(obj.curr);
+                // console.log(obj.limit)
                 if(!first){
                     render(obj.curr,obj.limit);
                 }
@@ -87,7 +87,7 @@ function selectOrganization(id,className,numbers){
             id:id,
         }
     }).then((date)=>{
-        console.log(date.data);
+        // console.log(date.data);
         let all = date.data.data;
         let html = `<dd class="layer-select-tips layer-this ${className}" >请选择</dd>`;
         for(let i=0;i<all.length;i++){
@@ -114,7 +114,7 @@ function selectYear(){
         url:'/admins/showOrganization',
         params:{},
     }).then((date)=>{
-        console.log(date.data);
+        // console.log(date.data);
         let all = date.data.data;
         let html = `<dd class="layer-select-tips layer-this startTimes" >请选择</dd>`;
         let html_one = `<option value="" class="header_grade">所有</option>`
@@ -168,7 +168,7 @@ function headerOrganization(id,className,numbers){
             id:id,
         }
     }).then((date)=>{
-        console.log(date.data);
+        // console.log(date.data);
         let all = date.data.data;
         let html = `<option value="" class="${className}">所有</option>`;
         for(let i=0;i<all.length;i++){
@@ -195,12 +195,13 @@ function rendering() {
             pageSize: 10,
         },
     }).then((date)=>{
-        console.log(date.data);
+        // console.log(date.data);
         let all = date.data.data.pageInfo;
-        console.log(all);
+        // console.log(all);
         let html = "";
-        for(let i=0;i<all.length;i++){
-            html +=`<ul class="header">
+        if(all.length != 0){
+            for(let i=0;i<all.length;i++){
+                html +=`<ul class="header">
                         <li class="checkbox lis">
                             <div class="inner">
                                 <input type="checkbox" class="checkbox-list" >
@@ -219,13 +220,18 @@ function rendering() {
                             <span class="opertor-list deletes">删除</span>
                         </li>
                     </ul>`
+            }
+        }else{
+            html +=`<ul class="header">
+                        <li class="search-nothing">没有找到匹配的记录</li>
+                    </ul>`
         }
         main_content[0].innerHTML = html;
         let sum = date.data.data.allPages;
         let allPages = date.data.data.allRecords;
         // console.log(sum);
         btn_new[0].allLength = sum * 10;
-        page(allPages);
+        // page(allPages);
         // console.log(btn_primay[0].pageSize)
         // console.log(checkbox_list.length)
         for(let i=0;i<checkbox_list.length;i++){
@@ -274,7 +280,7 @@ function rendering() {
                         size:1,
                     }
                 }).then((date)=>{
-                    console.log(date.data);
+                    // console.log(date.data);
                     let user = date.data.data.records;
                     layer_check[0].value = user[0].name;
                     layer_check[1].value = user[0].userName;
@@ -317,7 +323,7 @@ function rendering() {
                 layer_input[3].value = all[i].academy;
                 layer_input[4].value = all[i].major_class;
                 let sex = all[i].sex;
-                console.log(sex);
+                // console.log(sex);
                 let clist = 'layer-this';
                 let cla = 'layer-form-radioed';
                 for(let i=0;i<startTime.length;i++){
@@ -348,10 +354,12 @@ function rendering() {
                         id:checkbox_list[i].ids,
                     }
                 }).then((date)=>{
-                    console.log(date.data);
+                    // console.log(date.data);
                     if(date.data.msg == 'OK'){
                         swal('重置密码成功', "密码是111111", "success");
                     }
+                }).catch((err)=>{
+                    console.log(err)
                 })
             }
             deletes[i].onclick =function () {
@@ -374,14 +382,16 @@ function rendering() {
                                 user:checkbox_list[i].ids,
                             }
                         }).then((date)=>{
-                            console.log(date.data);
-                            console.log(btn_primay[0].pageSize);
+                            // console.log(date.data);
+                            // console.log(btn_primay[0].pageSize);
                             if(date.data.msg == 'OK'){
                                 swal('删除成功', "删除成功", "success");
                                 render(1,10);
                             }
+                        }).catch((err)=>{
+                            console.log(err)
                         })
-                        swal("删除!", "该用户已被删除！", "success")
+                        // swal("删除!", "该用户已被删除！", "success")
                     } else{
                         swal("取消!", "用户没有被删除！", "error")
                     }
@@ -406,7 +416,7 @@ let index = -1;
 
 // 分页切换渲染页面
 function render(numbers,size){
-    console.log(btn_primay[0].pageSize);
+    // console.log(btn_primay[0].pageSize);
     if(checkbox_all[0].checked){
         checkbox_all[0].click();
     }
@@ -430,15 +440,15 @@ function render(numbers,size){
     if(search_type[2].options[index_one].value == ''){
         delete  his.major_class
     }
-    console.log(his);
+    // console.log(his);
     axios({
         method:'get',
         url:'/admin/getUserByClass',
         params:his,
     }).then((date)=>{
-        console.log(date.data);
+        // console.log(date.data);
         let all = date.data.data.records;
-        console.log(all);
+        // console.log(all);
         let html = "";
         if(all.length != 0){
             for(let i=0;i<all.length;i++){
@@ -480,13 +490,13 @@ function render(numbers,size){
                     checkbox_all[0].academy = all[i].academy;
                     checkbox_all[0].major_class = all[i].major_class;
                     checkbox_all[0].sex = all[i].sex;
-                    console.log(checkbox_all[0].numbers);
+                    // console.log(checkbox_all[0].numbers);
                     index = this.numbers;
                     checkbox_all[0].ids.push(checkbox_list[index].ids);
-                    console.log(checkbox_all[0].ids);
+                    // console.log(checkbox_all[0].ids);
                 }else {
                     checkbox_all[0].numbers -= 1;
-                    console.log(checkbox_all[0].numbers);
+                    // console.log(checkbox_all[0].numbers);
                     index = this.numbers;
                     for(let j=0;j<checkbox_all[0].ids.length;j++){
                         if(checkbox_all[0].ids[j] == checkbox_list[index].ids){
@@ -524,7 +534,7 @@ function render(numbers,size){
                 layer_input[3].value = all[i].academy;
                 layer_input[4].value = all[i].major_class;
                 let sex = all[i].sex;
-                console.log(sex);
+                // console.log(sex);
                 let clist = 'layer-this';
                 let cla = 'layer-form-radioed';
                 for(let i=0;i<startTime.length;i++){
@@ -533,8 +543,8 @@ function render(numbers,size){
                         selectOrganization(layer_this[0].id,'academy',1);
                         for(let j=0;j<academy.length;j++) {
                             if (academy[j].innerHTML == layer_input[3].value) {
-                                console.log(academy[j].innerHTML)
-                                console.log(layer_input[3].value)
+                                // console.log(academy[j].innerHTML)
+                                // console.log(layer_input[3].value)
                                 switchover(academy, j, clist);
                             }
                         }
@@ -559,7 +569,7 @@ function render(numbers,size){
                         size:1,
                     }
                 }).then((date)=>{
-                    console.log(date.data);
+                    // console.log(date.data);
                     let user = date.data.data.records;
                     layer_check[0].value = user[0].name;
                     layer_check[1].value = user[0].userName;
@@ -586,10 +596,12 @@ function render(numbers,size){
                         id:checkbox_list[i].ids,
                     }
                 }).then((date)=>{
-                    console.log(date.data);
+                    // console.log(date.data);
                     if(date.data.msg == 'OK'){
                         swal('重置密码成功', "密码是111111", "success");
                     }
+                }).catch((err)=>{
+                    console.log(err);
                 })
             }
             deletes[i].onclick =function () {
@@ -612,13 +624,15 @@ function render(numbers,size){
                                 user:checkbox_list[i].ids,
                             }
                         }).then((date)=>{
-                            console.log(date.data);
+                            // console.log(date.data);
                             if(date.data.msg == 'OK'){
                                 swal('删除成功', "删除成功", "success");
                                 render(1,10);
                             }
+                        }).catch((err)=>{
+                            console.log(err);
                         })
-                        swal("删除!", "您的虚构文件已被删除！", "success")
+                        // swal("删除!", "您的虚构文件已被删除！", "success")
                     } else{
                         swal("取消!", "您的虚构文件是安全的！", "error")
                     }
@@ -639,7 +653,7 @@ function render(numbers,size){
 
 // 单个或多个删除
 btn_del[0].onclick = function (){
-    console.log(checkbox_all[0].ids)
+    // console.log(checkbox_all[0].ids)
     swal({
         title: "你确定？",
         text: "该用户会被删除！",
@@ -660,14 +674,14 @@ btn_del[0].onclick = function (){
                         user:checkbox_all[0].ids[i],
                     }
                 }).then((date)=>{
-                    console.log(date.data);
+                    // console.log(date.data);
                     if(date.data.msg == 'OK'){
                         swal('删除成功', "删除成功", "success");
                         render(1,10);
                     }
                 })
             }
-            swal("删除!", "该用户已被删除！", "success")
+            // swal("删除!", "该用户已被删除！", "success")
         } else{
             swal("取消!", "用户没有被删除！", "error")
         }
@@ -695,7 +709,7 @@ btn_update[0].onclick =function () {
     layer_input[3].value = checkbox_all[0].academy;
     layer_input[4].value = checkbox_all[0].major_class;
     let sex = checkbox_all[0].sex;
-    console.log(sex);
+    // console.log(sex);
     let clist = 'layer-this';
     let cla = 'layer-form-radioed';
     for(let i=0;i<startTime.length;i++){
@@ -707,8 +721,8 @@ btn_update[0].onclick =function () {
             selectOrganization(layer_this[0].id,'academy',1);
             for(let j=0;j<academy.length;j++) {
                 if (academy[j].innerHTML == layer_input[3].value) {
-                    console.log(academy[j].innerHTML)
-                    console.log(layer_input[3].value)
+                    // console.log(academy[j].innerHTML)
+                    // console.log(layer_input[3].value)
                     switchover(academy, j, clist);
                 }
             }
@@ -740,7 +754,7 @@ function selectTitle(clickName,listName,numbers){
     let flag = true;
     let index2 = 0;
     clickName[numbers].onclick = function (){
-        console.log(numbers);
+        // console.log(numbers);
         if(flag == true){
             checkbox_all[0].changes = numbers;
             layer_list[numbers].style.display = 'block';
@@ -978,7 +992,7 @@ layer_submit[0].onclick = function (){
             }
         }
 
-        console.log(users);
+        // console.log(users);
         let patrn = /^[0-9]{11}$/
         if(!patrn.exec(layer_input[1].value)){
             warn[0].innerHTML = `<span class="warning">输入的格式不对</span>`
@@ -990,13 +1004,13 @@ layer_submit[0].onclick = function (){
                     url:'/admin/User',
                     data:users,
                 }).then((date)=>{
-                    console.log(date.data);
+                    // console.log(date.data);
 
                     cover_layer[0].style.display = 'none';
                     swal('添加成功','成功添加','success');
                     render(1,10);
                 }).catch((err)=>{
-                    console.log(err);
+                    // console.log(err);
                 })
             }else{
                 swal('请把信息填写完整','','error');
@@ -1014,7 +1028,7 @@ layer_submit[0].onclick = function (){
             "power":'普通用户',
             "password": "111111",
         }
-        console.log(users);
+        // console.log(users);
         let patrn = /^[0-9]{11}$/
         if(!patrn.exec(layer_input[1].value)){
             warn[0].innerHTML = `<span class="warning">输入的格式不对</span>`
@@ -1026,7 +1040,7 @@ layer_submit[0].onclick = function (){
                     url:'/admin/update.do.userInfo',
                     params:users,
                 }).then((date)=>{
-                    console.log(date.data);
+                    // console.log(date.data);
                     cover_layer[0].style.display = 'none';
                     swal('修改成功','成功修改','success');
                     render(1,10);
@@ -1080,7 +1094,7 @@ layer_btn_primary[0].onclick = function (){
 
 }
 
-console.log(layer_btn_primary.length);
+// console.log(layer_btn_primary.length);
 
 
 // 搜索
@@ -1117,14 +1131,14 @@ checkbox_all[0].onclick = function (){
             checkbox_list[i].setAttribute('checked','checked');
         }
         batch(checkbox_list);
-        console.log(checkbox_all[0].ids);
+        // console.log(checkbox_all[0].ids);
     }else{
         for(let i=0;i<checkbox_list.length;i++){
             checkbox_list[i].removeAttribute('checked');
-            console.log(checkbox_list[i].hasAttribute('checked'));
+            // console.log(checkbox_list[i].hasAttribute('checked'));
         }
         batch(checkbox_list);
-        console.log(checkbox_all[0].ids);
+        // console.log(checkbox_all[0].ids);
     }
 }
 

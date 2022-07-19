@@ -38,7 +38,7 @@ function render(id){
             id:id,
         }
     }).then((data)=>{
-        console.log(data.data.data);
+        // console.log(data.data.data);
         let date = data.data.data;
         // let html = template('details',data);
         let all = `
@@ -90,7 +90,7 @@ function render(id){
             id:id,
         }
     }).then((date)=>{
-        console.log(date.data.data);
+        // console.log(date.data.data);
         let all = '';
         for(let i=0;i<date.data.data.length;i++){
             all +=`<div class="attchment-everyOne"><img src='${date.data.data[i].address}' class="attchment-imgs"></div>`
@@ -102,7 +102,7 @@ render(id);
 
 // 点击下载图片
 download[0].onclick = function (){
-    console.log(attchment_imgs[0].src);
+    // console.log(attchment_imgs[0].src);
     for(let i=0;i<attchment_imgs.length;i++){
         downloadIamge(attchment_imgs[i].src);
     }
@@ -115,7 +115,7 @@ function downloadIamge(imgSrc) {
     let imgUrl = imgSrc;// 图片链接
     let a = document.createElement('a');
     let now =Date.now();
-    console.log(now);
+    // console.log(now);
     // 这里是将url转成blob地址，
     fetch(imgUrl)  // 跨域时会报错
         .then(res => res.blob())
