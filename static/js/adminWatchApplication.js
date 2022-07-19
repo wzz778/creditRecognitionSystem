@@ -298,7 +298,7 @@ CreditsSecondDir.onchange = function () {
 
 let exportForm = document.getElementById('exportForm')
 exportForm.onclick = function () {
-    window.open('http://127.0.0.1:8080/adminExportForm')
+    window.open('/adminExportForm')
 }
 
 let usGrade = document.getElementById('usGrade')

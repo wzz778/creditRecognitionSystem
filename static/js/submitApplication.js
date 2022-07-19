@@ -20,7 +20,6 @@ $.fn.serializeObject = function () {
   });
   return obj;
 };
-axios.defaults.baseURL = 'http://127.0.0.1:8080/';
 // const hasClass = (el, className) => el.classList.contains(className)
 // let show;
 let credittype = document.getElementsByName('application_credit_type')[0];
@@ -56,7 +55,7 @@ $('#postbutton').on('click', function () {
     }, function (isConfirm) {
       if (isConfirm) {
         axios({
-          url: 'http://127.0.0.1:8080/api/getpost',
+          url: '/api/getpost',
           method: 'post',
           data: o,
           header: {
@@ -69,7 +68,7 @@ $('#postbutton').on('click', function () {
             sessionStorage.setItem('Applicationid', data.data.data);
             console.log(data.data);
             setTimeout(function () {
-              window.location.assign("http://127.0.0.1:8080/UploadAttachment");
+              window.location.assign("/UploadAttachment");
               // sessionStorage.setItem("tousers", '1');
             }, 1000)
           }
@@ -96,7 +95,7 @@ $('#postbutton').on('click', function () {
     }, function (isConfirm) {
       if (isConfirm) {
         axios({
-          url: 'http://127.0.0.1:8080/api/getpost',
+          url: '/api/getpost',
           method: 'post',
           data: o,
           header: {
@@ -109,7 +108,7 @@ $('#postbutton').on('click', function () {
             sessionStorage.setItem('Applicationid', data.data.data);
             console.log(data.data);
             setTimeout(function () {
-              window.location.assign("http://127.0.0.1:8080/UploadAttachment");
+              window.location.assign("/UploadAttachment");
               // sessionStorage.setItem("tousers", '1');
             }, 1000)
           }
@@ -126,7 +125,7 @@ $('#postbutton').on('click', function () {
 });
 function getson1(father) {
   axios({
-    url: 'http://127.0.0.1:8080/api/getcreditson',
+    url: '/api/getcreditson',
     method: 'get',
     params: {
       "indicator": father,
@@ -145,7 +144,7 @@ function getson1(father) {
 }
 function getson2(father) {
   axios({
-    url: 'http://127.0.0.1:8080/api/getsonson',
+    url: '/api/getsonson',
     method: 'get',
     params: {
       "id": father,
