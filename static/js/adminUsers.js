@@ -195,7 +195,7 @@ function rendering() {
             pageSize: 10,
         },
     }).then((date)=>{
-        // console.log(date.data);
+        console.log(date.data);
         let all = date.data.data.pageInfo;
         // console.log(all);
         let html = "";
@@ -214,7 +214,6 @@ function rendering() {
                         <li class="student-time lis">${all[i].academy}</li>
                         <li class="student-state lis">${all[i].sex}</li>
                         <li class="student-operator operator-check">
-                            <span class="opertor-list check-out">查看</span>
                             <span class="opertor-list check">编辑</span>
                             <span class="opertor-list reset">重置</span>
                             <span class="opertor-list deletes">删除</span>
@@ -231,7 +230,7 @@ function rendering() {
         let allPages = date.data.data.allRecords;
         // console.log(sum);
         btn_new[0].allLength = sum * 10;
-        // page(allPages);
+        page(allPages);
         // console.log(btn_primay[0].pageSize)
         // console.log(checkbox_list.length)
         for(let i=0;i<checkbox_list.length;i++){
@@ -267,36 +266,6 @@ function rendering() {
                 }else{
                     btn_update[0].style.pointerEvents = 'none';
                 }
-            }
-            check_out[i].onclick = function () {
-                cover_main[1].style.height = '500px'
-                let id = checkbox_list[i].ids;
-                axios({
-                    method:'get',
-                    url:'/admin/getUserByClass',
-                    params:{
-                        UId:id,
-                        beginIndex:1,
-                        size:1,
-                    }
-                }).then((date)=>{
-                    // console.log(date.data);
-                    let user = date.data.data.records;
-                    layer_check[0].value = user[0].name;
-                    layer_check[1].value = user[0].userName;
-                    layer_check[2].value = user[0].grade;
-                    layer_check[3].value = user[0].academy;
-                    layer_check[4].value = user[0].major_class;
-                    for(let i=0;i<layer_radio.length;i++){
-                        if(layer_radio[i].value == user[0].sex){
-                            let cla = 'layer-form-radioed';
-                            switchover(layer_form_radio,i+2,cla);
-                        }
-                    }
-                    cover_layer[1].style.display = 'block';
-                }).catch((err)=>{
-                    console.log(err);
-                })
             }
             
             
@@ -465,7 +434,6 @@ function render(numbers,size){
                         <li class="student-time lis">${all[i].academy}</li>
                         <li class="student-state lis">${all[i].sex}</li>
                         <li class="student-operator operator-check">
-                            <span class="opertor-list check-out">查看</span>
                             <span class="opertor-list check">编辑</span>
                             <span class="opertor-list reset">重置</span>
                             <span class="opertor-list deletes">删除</span>
@@ -557,37 +525,6 @@ function render(numbers,size){
                     }
                 }
             };
-            check_out[i].onclick = function () {
-
-                let id = checkbox_list[i].ids;
-                axios({
-                    method:'get',
-                    url:'/admin/getUserByClass',
-                    params:{
-                        UId:id,
-                        beginIndex:1,
-                        size:1,
-                    }
-                }).then((date)=>{
-                    // console.log(date.data);
-                    let user = date.data.data.records;
-                    layer_check[0].value = user[0].name;
-                    layer_check[1].value = user[0].userName;
-                    layer_check[2].value = user[0].grade;
-                    layer_check[3].value = user[0].academy;
-                    layer_check[4].value = user[0].major_class;
-                    for(let i=0;i<layer_radio.length;i++){
-                        if(layer_radio[i].value == user[0].sex){
-                            let cla = 'layer-form-radioed';
-                            switchover(layer_form_radio,i+2,cla);
-                        }
-                    }
-                    cover_layer[1].style.display = 'block';
-                    cover_main[1].style.height = '500px'
-                }).catch((err)=>{
-                    console.log(err);
-                })
-            }
             reset[i].onclick = function (){
                 axios({
                     method:'put',
@@ -740,7 +677,7 @@ btn_update[0].onclick =function () {
 
 
 
-// 改变弹出层下拉选择框里面的样式
+// 改变选择框里面的样式
 function switchover(listName,numbers,clList){
     for(let i=0;i<listName.length;i++){
         listName[i].classList.remove(clList);

@@ -111,7 +111,7 @@ function rendering(){
     if(end == ''){
         delete  his.endDate
     }
-    console.log(his);
+    // console.log(his);
     axios({
         method:'get',
         url:'/users/records',

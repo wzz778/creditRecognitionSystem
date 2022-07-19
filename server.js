@@ -7,12 +7,14 @@ const cookieParse = require('cookie-parser')
 const session = require('express-session')
 const axios = require('axios')
 const jwt = require('jsonwebtoken');
+const cors = require('cors');
 
  
 // 配置
 app.engine('html', require('express-art-template'))
 app.use(body_parse.urlencoded({ extended: false }))
 app.use(body_parse.json())
+app.use(cors());
 app.use(session({
   secret: 'hubwizApp',
   cookie: { maxAge: 60 * 1000 * 30 * 24 },

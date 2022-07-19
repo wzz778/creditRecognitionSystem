@@ -19,7 +19,7 @@ function pic(){
 
 
 let id = window.location.search.split("=")[1];
-console.log(id);
+// console.log(id);
 let history_details = document.getElementsByClassName('history-details');
 let application_message = document.getElementsByClassName('application-message');
 let attchment = document.getElementsByClassName('attchment');
