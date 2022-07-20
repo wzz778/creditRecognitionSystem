@@ -57,7 +57,7 @@ axios({
 
 
 // 用了layui的分页处理
-function page(numbers){
+function page(numbers,size){
     // console.log(numbers);
     // console.log(btn_new[0].allLength)
     layui.use('laypage',function (){
@@ -66,10 +66,13 @@ function page(numbers){
         laypage.render({
             elem:'page',
             count:numbers,
+            limit:size,
             layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
             jump:function (obj,first){
                 // console.log(obj.curr);
                 // console.log(obj.limit)
+                checkbox_all[0].pages = obj.curr;
+                checkbox_all[0].sizees = obj.limit;
                 if(!first){
                     render(obj.curr,obj.limit);
                 }
@@ -133,6 +136,7 @@ function selectYear(){
 }
 selectYear()
 
+//搜索的年级
 search_type[0].onchange = function (){
     // console.log(this.value);
     // console.log(header_grade.length);
@@ -145,6 +149,7 @@ search_type[0].onchange = function (){
     }
 }
 
+//搜索的学院
 search_type[1].onchange = function (){
     // console.log(this.value);
     // console.log(header_academy.length);
@@ -199,6 +204,10 @@ function rendering() {
         // console.log(date.data);
         let all = date.data.data.pageInfo;
         // console.log(all);
+        checkbox_all[0].pagees = date.data.data.allPages;
+        checkbox_all[0].total = date.data.data.allRecords;
+        // checkbox_all[0].size = date.data.data.size;
+        checkbox_all[0].count = all.length;
         let html = "";
         if(all.length != 0){
             for(let i=0;i<all.length;i++){
@@ -231,7 +240,7 @@ function rendering() {
         let allPages = date.data.data.allRecords;
         // console.log(sum);
         btn_new[0].allLength = sum * 10;
-        page(allPages);
+        page(allPages,10);
         // console.log(btn_primay[0].pageSize)
         // console.log(checkbox_list.length)
         for(let i=0;i<checkbox_list.length;i++){
@@ -293,6 +302,8 @@ function rendering() {
                 layer_input[3].value = all[i].academy;
                 layer_input[4].value = all[i].major_class;
                 let sex = all[i].sex;
+                // console.log(checkbox_all[0].pages);
+                // console.log(checkbox_all[0].sizees);
                 // console.log(sex);
                 let clist = 'layer-this';
                 let cla = 'layer-form-radioed';
@@ -356,7 +367,7 @@ function rendering() {
                             // console.log(btn_primay[0].pageSize);
                             if(date.data.msg == 'OK'){
                                 swal('删除成功', "删除成功", "success");
-                                render(1,10);
+                                render(checkbox_all[0].pages,checkbox_all[0].sizees);
                             }
                         }).catch((err)=>{
                             console.log(err)
@@ -418,6 +429,7 @@ function render(numbers,size){
     }).then((date)=>{
         // console.log(date.data);
         let all = date.data.data.records;
+        checkbox_all[0].count = all.length;
         // console.log(all);
         let html = "";
         if(all.length != 0){
@@ -447,6 +459,9 @@ function render(numbers,size){
                     </ul>`
         }
         main_content[0].innerHTML = html;
+        checkbox_all[0].pagees = date.data.data.pages;
+        checkbox_all[0].total = date.data.data.total;
+        checkbox_all[0].size = date.data.data.size;
         for(let i=0;i<checkbox_list.length;i++){
             checkbox_list[i].ids = all[i].uid;
             checkbox_list[i].numbers = i;
@@ -470,7 +485,7 @@ function render(numbers,size){
                     for(let j=0;j<checkbox_all[0].ids.length;j++){
                         if(checkbox_all[0].ids[j] == checkbox_list[index].ids){
                             checkbox_all[0].ids.splice(j,1);
-                            console.log(checkbox_all[0].ids);
+                            // console.log(checkbox_all[0].ids);
                         }
                     }
                 }
@@ -504,6 +519,8 @@ function render(numbers,size){
                 layer_input[4].value = all[i].major_class;
                 let sex = all[i].sex;
                 // console.log(sex);
+                // console.log(checkbox_all[0].pages);
+                // console.log(checkbox_all[0].sizees)
                 let clist = 'layer-this';
                 let cla = 'layer-form-radioed';
                 for(let i=0;i<startTime.length;i++){
@@ -545,12 +562,12 @@ function render(numbers,size){
             deletes[i].onclick =function () {
                 swal({
                     title: "你确定？",
-                    text: "您将无法恢复这个虚构的文件！",
+                    text: "该用户会被删除！",
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "是的，删除！",
-                    cancelButtonText: "不，取消",
+                    confirmButtonText: "删除！",
+                    cancelButtonText: "取消",
                     closeOnConfirm: false,
                     closeOnCancel: false
                 }, function(isConfirm) {
@@ -565,7 +582,12 @@ function render(numbers,size){
                             // console.log(date.data);
                             if(date.data.msg == 'OK'){
                                 swal('删除成功', "删除成功", "success");
-                                render(1,10);
+                                if((checkbox_all[0].pagees * checkbox_all[0].size - 9) == checkbox_all[0].total){
+                                    render((checkbox_all[0].pages -1),checkbox_all[0].sizees);
+                                    page((checkbox_all[0].total - 1),checkbox_all[0].sizees);
+                                }else{
+                                    render(checkbox_all[0].pages,checkbox_all[0].sizees);
+                                }
                             }
                         }).catch((err)=>{
                             console.log(err);
@@ -591,7 +613,7 @@ function render(numbers,size){
 
 // 单个或多个删除
 btn_del[0].onclick = function (){
-    // console.log(checkbox_all[0].ids)
+    // console.log(checkbox_all[0].ids.length);
     swal({
         title: "你确定？",
         text: "该用户会被删除！",
@@ -615,7 +637,13 @@ btn_del[0].onclick = function (){
                     // console.log(date.data);
                     if(date.data.msg == 'OK'){
                         swal('删除成功', "删除成功", "success");
-                        render(1,10);
+                        if((checkbox_all[0].pagees * checkbox_all[0].size + checkbox_all[0].ids.length - 10) == checkbox_all[0].total){
+                            render((checkbox_all[0].pages -1),checkbox_all[0].sizees);
+                            page((checkbox_all[0].total - 1),checkbox_all[0].sizees);
+                        }else{
+                            render(checkbox_all[0].pages,checkbox_all[0].sizees);
+                        }
+
                     }
                 })
             }
@@ -789,8 +817,12 @@ layer_input[1].onblur = function (){
 
 // 添加用户
 btn_new[0].onclick = function (){
-    cover_layer[0].style.display = 'block'
-
+    cover_layer[0].style.display = 'block';
+    let clist = 'layer-this';
+    layer_list[1].innerHTML = "";
+    switchover(startTime,0,clist);
+    // console.log(checkbox_all[0].total);
+    // console.log(checkbox_all[0].sizees);
     layer_btn_primary[1].sums = 1;
     layer_submit[0].numbers = 0;
     layer_input[0].value = '';
@@ -948,7 +980,11 @@ layer_submit[0].onclick = function (){
                     let cla = 'layer-form-radioed';
                     switchover(layer_form_radio,1,cla);
                     swal('添加成功','成功添加','success');
-                    render(1,10);
+
+                    if((checkbox_all[0].total + 1) > (checkbox_all[0].pagees * checkbox_all[0].sizees)){
+                        page((checkbox_all[0].total + 1),checkbox_all[0].sizees);
+                    }
+                    render(checkbox_all[0].pages,checkbox_all[0].sizees);
                 }).catch((err)=>{
                     // console.log(err);
                 })
@@ -985,7 +1021,7 @@ layer_submit[0].onclick = function (){
                     switchover(layer_form_radio,1,cla);
                     cover_layer[0].style.display = 'none';
                     swal('修改成功','成功修改','success');
-                    render(1,10);
+                    render(checkbox_all[0].pages,checkbox_all[0].sizees);
                 }).catch((err)=>{
                     console.log(err);
                 })
@@ -1007,7 +1043,7 @@ layer_btn_primary[1].onclick = function (){
     layer_input[4].value = "";
     let clist = 'layer-this';
     switchover(startTime,0,clist);
-    switchover(academy,0,clist);
+    // switchover(academy,0,clist);
     if( this.sums == 1){
         switchover(grade,0,clist);
     }
@@ -1041,7 +1077,8 @@ layer_btn_primary[0].onclick = function (){
 
 // 搜索
 btn_primay[0].onclick = function (){
-    render(1,10);
+    render(1,checkbox_all[0].sizees);
+    page(checkbox_all[0].count,checkbox_all[0].sizees);
     swal('搜索成功','','success');
 }
 

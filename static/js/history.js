@@ -36,7 +36,7 @@ let schedule = document.getElementsByClassName('schedule');
 
 
 // layui分页
-function pading(sum){
+function pading(sum,size){
 
     layui.use('laypage',function (){
         var laypage = layui.laypage;
@@ -44,11 +44,15 @@ function pading(sum){
         laypage.render({
             elem:'page',
             count:sum,
+            limit:size,
             layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
             jump:function (obj,first){
                 // console.log(obj.curr);
 
                 // console.log(obj.limit)
+                btn[0].pages = obj.curr;
+                btn[0].sizes = obj.limit;
+                // btn[0].count = obj.count;
                 if(!first){
                     render(obj.curr,obj.limit);
                 }
@@ -121,6 +125,7 @@ function rendering(){
         // console.log(data.data.data);
         let date = data.data.data.pageInfo;
         // console.log(date);
+        btn[0].count = date.length;
         let all = "";
         if(date.length != 0){
             for(let i=0;i<date.length;i++){
@@ -150,7 +155,7 @@ function rendering(){
         main_content[0].innerHTML = all;
         let pages = data.data.data.allPages * 10;
         let allPages = data.data.data.allRecords;
-        pading(allPages);
+        pading(allPages,10);
         let index = 0;
         for(let i=0;i<check.length;i++) {
             check[i].ids = date[i].applicationId;
@@ -210,10 +215,12 @@ function render(numbers,size){
         url:'/users/records',
         params:his,
     }).then((data)=>{
-        // console.log(data.data.data.pageInfo);
+        console.log(data.data.data);
+        console.log(data.data.data.pageInfo);
         let date = data.data.data.pageInfo;
         let all = "";
-        if(date.length != 0){
+        btn[0].count = date.length;
+        if(date.length > 0){
             for(let i=0;i<date.length;i++){
                 if(date[i].application.approval_status == 0){
                     var approval_status = '审核中';
@@ -232,13 +239,15 @@ function render(numbers,size){
                         <li class="student-apply-credit lis">${date[i].application.classify.b_points_available}</li>
                         <li class="student-operator lis"><span class="check">查看</span></li>
                     </ul>`
+                main_content[0].innerHTML = all;
             }
         }else{
             all += `<ul class="header">
                         <li class="search-nothing">没有找到匹配的记录</li>
                     </ul>`
+            main_content[0].innerHTML = all;
         }
-        main_content[0].innerHTML = all;
+
         let index = 0;
         for(let i=0;i<check.length;i++) {
             check[i].applicationId = date[i].applicationId;
@@ -256,7 +265,8 @@ function render(numbers,size){
 
 //搜索
 btn[0].onclick = function (){
-    rendering();
+    render(1,btn[0].sizes);
+    pading(btn[0].count,btn[0].sizes);
     swal('搜索成功','','success');
 }
 //重置
