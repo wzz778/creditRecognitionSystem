@@ -28,9 +28,9 @@ function myFunction() {
                     // sessionStorage.setItem("tousers", '1');
                 }, 1000)   
                 }
-                console.log(response.data);
+                // console.log(response.data);
             }).catch(function (error) {
-                console.log(error);
+                // console.log(error);
         });
     }
 }

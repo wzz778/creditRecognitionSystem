@@ -33,11 +33,11 @@ function pass(event){
                     status:'1'
                 }
                 }).then(response=>{
-                    console.log(response.data);
+                    // console.log(response.data);
                     changepage(pageinput.value,"1");
                     
                 }).catch(function (error) {
-                    console.log(error);
+                    // console.log(error);
             });
 
         } else{
@@ -68,11 +68,11 @@ function refuse(event){
                     status:'-1'
                 }
                 }).then(response=>{
-                    console.log(response.data);
+                    // console.log(response.data);
                     changepage(pageinput.value,"1");
                     
                 }).catch(function (error) {
-                    console.log(error);
+                    // console.log(error);
             });
         } else{
             swal("您已取消操作")
@@ -95,7 +95,7 @@ function changepage(page,set) {
         }
     }
     pageinput.value=page;
-    console.log(apage);
+    // console.log(apage);
     axios({
         url: '/api/allapplication',
         method: 'get',
@@ -105,11 +105,11 @@ function changepage(page,set) {
             "approval_status":status
         },
     }).then(data => {
-        console.log(data.data);
+        // console.log(data.data);
         let redata=data.data.data;
         Tbody.innerHTML='';
         page_number.innerHTML=`共有${redata.allRecords}条，<span>${redata.allPage}</span>页数据  `
-        console.log(redata);
+        // console.log(redata);
         if(set=='1'){
             setlayui(apage,redata.allRecords);
         }
@@ -155,7 +155,7 @@ function changepage(page,set) {
             }
         }
     }).catch(function (error) {
-        console.log(error);
+        // console.log(error);
     });
 }
 changepage(1,1);
@@ -249,10 +249,10 @@ function deleteall(){
                 })
                     .then((result) => {
                         changepage(pageinput.value,"1");
-                        console.log(result.data)
+                        // console.log(result.data)
                     })
                     .catch((err)=>{
-                        console.log(err)
+                        // console.log(err)
                     })
                     swal("删除！", "你所勾选的用户信息被删除。", "success");
 

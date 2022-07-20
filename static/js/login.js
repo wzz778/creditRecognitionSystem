@@ -25,7 +25,7 @@ function myFunction() {
             return  axios({
                 url: '/api/getmymessage',method: 'get',})
         }).then((user)=>{
-                    console.log(user);
+                    // console.log(user);
                     sessionStorage.setItem('name', user.data.name);
                     sessionStorage.setItem('power', user.data.power);
                     setTimeout(function () {
@@ -33,7 +33,7 @@ function myFunction() {
                         // sessionStorage.setItem("tousers", '1');
                     }, 1000)   
         }).catch(function (error) {
-            console.log(error);
+            // console.log(error);
         });
     }
 }

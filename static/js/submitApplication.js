@@ -39,9 +39,9 @@ $('#postbutton').on('click', function () {
     swal('请选择指标！')
     return
   } else if (credittypesonson.style.display == 'block') {
-    console.log(o.specific_information);
+    // console.log(o.specific_information);
     o.specific_information = o.specific_information[1];
-    console.log(o);
+    // console.log(o);
     swal({
       title: "你确定提交该申请表？",
       text: "你将没有机会修改该部分数据！",
@@ -66,7 +66,7 @@ $('#postbutton').on('click', function () {
           if (data.data.msg == 'OK') {
             swal('提交成功', '您所填写的申请表提交成功', 'success');
             sessionStorage.setItem('Applicationid', data.data.data);
-            console.log(data.data);
+            // console.log(data.data);
             setTimeout(function () {
               window.location.assign("/UploadAttachment");
               // sessionStorage.setItem("tousers", '1');
@@ -74,14 +74,14 @@ $('#postbutton').on('click', function () {
           }
         }).catch(function (error) {
           swal('提交失败',"您所填写的申请表提交失败",'error')
-          console.log(error);
+          // console.log(error);
         });
       } else {
         swal("您已经取消提交")
       }
     })
   } else {
-    console.log(o);
+    // console.log(o);
     swal({
       title: "你确定提交该申请表？",
       text: "你将没有机会修改该部分数据！",
@@ -106,7 +106,7 @@ $('#postbutton').on('click', function () {
           if (data.data.msg == 'OK') {
             swal('提交成功', '您所填写的申请表提交成功', 'success');
             sessionStorage.setItem('Applicationid', data.data.data);
-            console.log(data.data);
+            // console.log(data.data);
             setTimeout(function () {
               window.location.assign("/UploadAttachment");
               // sessionStorage.setItem("tousers", '1');
@@ -114,7 +114,7 @@ $('#postbutton').on('click', function () {
           }
         }).catch(function (error) {
           swal('提交失败',"您所填写的申请表提交失败",'error')
-          console.log(error);
+          // console.log(error);
         });
       } else {
         swal("您已经取消提交")
@@ -131,13 +131,13 @@ function getson1(father) {
       "indicator": father,
     },
   }).then(data => {
-    console.log(data.data);
+    // console.log(data.data);
     son.innerHTML = `<option value="0">请选择</option>`;
     for (let n of data.data.data.childlist[0].childlist) {
       son.innerHTML += `<option value="${n.classfiy.b_id}">${n.classfiy.b_Indicator_name}</option>`
     }
   }).catch(function (error) {
-    console.log(error);
+    // console.log(error);
   });
   credittypesonson.style.display = 'none';
   son2.innerHTML = ``;
@@ -158,14 +158,14 @@ function getson2(father) {
       credittypesonson.style.display = 'block';
       // son2.innerHTML=`<option value="0">请选择</option>`;
       son2.innerHTML = ``;
-      console.log(data.data.data.length);
+      // console.log(data.data.data.length);
       for (let n of data.data.data) {
         son2.innerHTML += `<option value="${n.b_id}">${n.b_Indicator_name}</option>`
       }
     }
-    console.log(data.data.data);
+    // console.log(data.data.data);
   }).catch(function (error) {
-    console.log(error);
+    // console.log(error);
   });
 }
 function setson() {

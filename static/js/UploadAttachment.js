@@ -78,7 +78,7 @@ $("#testListAction").on("click", function () {
             // }
         })
             .then((result) => {
-                console.log(result.data)
+                // console.log(result.data)
                 if(result.data.msg.msg=="OK"){
                     swal("上传成功！","您的文件上传成功！","success")
                     let static=document.getElementsByClassName("datastatus");
@@ -95,7 +95,7 @@ $("#testListAction").on("click", function () {
                 }
             })
             .catch((err)=>{
-                console.log(err)
+                // console.log(err)
             })
 });
 document.getElementById('toend').onclick=function(){

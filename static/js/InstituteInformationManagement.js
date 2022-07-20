@@ -27,7 +27,7 @@ function getgrade(){
         method: 'get',
         url: '/api/getgrade',
         }).then(response=>{
-            console.log(response.data);
+            // console.log(response.data);
             let date=response.data.data;
             for(let n in grades){
                 grades[n].innerHTML='';
@@ -40,7 +40,6 @@ function getgrade(){
             }
             getacademy()
         }).catch(function (error) {
-            console.log(error);
     });
 }
 getgrade();
@@ -53,7 +52,6 @@ function getacademy(){
             url: '/api/getacademy',
             params:{id:n.value},
             }).then(response=>{
-                console.log(response.data);
                 let date=response.data.data;
                 academy.innerHTML='';
                 // academy.innerHTML='<option value="0">请选择...</option>';
@@ -64,7 +62,6 @@ function getacademy(){
                     getmajor()
                 }
             }).catch(function (error) {
-                console.log(error);
         });
         break;
       }
@@ -80,7 +77,7 @@ function getmajor(){
             url: '/api/getacademy',
             params:{id:n.value},
             }).then(response=>{
-                console.log(response.data);
+                // console.log(response.data);
                 let date=response.data.data;
                 body.innerHTML='';
                 if(date.length==0){
@@ -119,7 +116,7 @@ function getmajor(){
                     `
                 }
             }).catch(function (error) {
-                console.log(error);
+                // console.log(error);
         });
         break;
       }
@@ -134,7 +131,7 @@ function watchChild(event) {
         url: '/api/getacademy',
         params:{id:faid},
         }).then(response=>{
-            console.log(response.data);
+            // console.log(response.data);
             let date=response.data.data;
             son.innerHTML=''
             if(date.length==0){
@@ -160,7 +157,7 @@ function watchChild(event) {
                 `
             }
         }).catch(function (error) {
-            console.log(error);
+            // console.log(error);
     });
     // 判断内容盒子是否显现
     if (event.parentElement.parentElement.parentElement.lastElementChild.style.display == 'none') {
@@ -198,12 +195,12 @@ function addgrade(event){
                           'super_id':'0'
                       },  
                   }).then(response=>{
-                      console.log(response.data);
+                    //   console.log(response.data);
                       getgrade();
                       input.value=''
                       bodyTop[2].style.display='none';
                   }).catch(function (error) {
-                      console.log(error);
+                    //   console.log(error);
                   });
 
             } else {
@@ -240,12 +237,12 @@ function delgrade(event){
                   data: ptag_ids,
               })
               .then((result) => {
-                  console.log(result)
+                //   console.log(result)
                   getgrade();
                   bodyTop[0].style.display='none';
               })
               .catch((err)=>{
-                  console.log(err)
+                //   console.log(err)
               })
         } else {
           swal("您已经取消提交")
@@ -292,12 +289,12 @@ function regrade(event){
                     name:input.value
                 }
                 }).then(response=>{
-                    console.log(response.data);
+                    // console.log(response.data);
                     getgrade();
                     input.value=''
                     bodyTop[1].style.display='none';
                 }).catch(function (error) {
-                    console.log(error);
+                    // console.log(error);
             });
         } else {
           swal("您已经取消提交")
@@ -344,12 +341,12 @@ function addacamacy(event){
                     'super_id':reid
                 },  
             }).then(response=>{
-                console.log(response.data);
+                // console.log(response.data);
                 getgrade();
                 input.value=''
                 bodyTop[5].style.display='none';
             }).catch(function (error) {
-                console.log(error);
+                // console.log(error);
             });
 
         } else {
@@ -385,11 +382,11 @@ function delacademy(event){
                 data: ptag_ids,
             })
             .then((result) => {
-                console.log(result)
+                // console.log(result)
                 bodyTop[3].style.display='none';
             })
             .catch((err)=>{
-                console.log(err)
+                // console.log(err)
             })
         } else {
           swal("您已经取消提交")
@@ -406,7 +403,7 @@ function getacademy1(event){
             url: '/api/getacademy',
             params:{id:n.value},
             }).then(response=>{
-                console.log(response.data);
+                // console.log(response.data);
                 let date=response.data.data;
                 getac.innerHTML='<option value="0">请选择...</option>';
                 for(let i of date){
@@ -415,7 +412,7 @@ function getacademy1(event){
                     `
                 }
             }).catch(function (error) {
-                console.log(error);
+                // console.log(error);
         });
         break;
       }
@@ -461,11 +458,11 @@ function reacamacy(event){
                     name:input.value
                 }
                 }).then(response=>{
-                    console.log(response.data);
+                    // console.log(response.data);
                     input.value=''
                     bodyTop[4].style.display='none';
                 }).catch(function (error) {
-                    console.log(error);
+                    // console.log(error);
             });
         } else {
           swal("您已经取消提交")
@@ -512,11 +509,11 @@ function addmajor(event){
                     'super_id':reid
                 },  
             }).then(response=>{
-                console.log(response.data);
+                // console.log(response.data);
                 input.value=''
                 bodyTop[6].style.display='none';
             }).catch(function (error) {
-                console.log(error);
+                // console.log(error);
             });
 
         } else {
@@ -549,11 +546,11 @@ function delmajor(event){
                   data: ptag_ids,
               })
               .then((result) => {
-                  console.log(result)
+                //   console.log(result)
                   getmajor()
               })
               .catch((err)=>{
-                  console.log(err)
+                //   console.log(err)
               })
         } else {
           swal("您已经取消提交")
@@ -596,12 +593,12 @@ function remajor(event){
                     name:rename
                 }
                 }).then(response=>{
-                    console.log(response.data);
+                    // console.log(response.data);
                     getmajor();
                     event.parentElement.parentElement.getElementsByTagName('input')[0].value=''
                     bodyTop[7].style.display='none';
                 }).catch(function (error) {
-                    console.log(error);
+                    // console.log(error);
             });
         } else {
           swal("您已经取消提交")
@@ -645,14 +642,14 @@ function addclass(event){
                     'super_id':newclassfa.value
                 },  
             }).then(response=>{
-                console.log(response.data);
+                // console.log(response.data);
                 watchChild( previousevent)
                 previousevent.parentElement.parentElement.parentElement.lastElementChild.style.display = ''
                 previousevent.firstElementChild.style.display = 'none'
                 event.parentElement.parentElement.getElementsByTagName('input')[0].value=''
                 bodyTop[8].style.display='none';
             }).catch(function (error) {
-                console.log(error);
+                // console.log(error);
             });
         } else {
           swal("您已经取消提交")
@@ -687,13 +684,13 @@ function delclass(event){
                 data: ptag_ids,
             })
             .then((result) => {
-                console.log(result)
+                // console.log(result)
                 watchChild(sonevent)
                 previousevent.parentElement.parentElement.parentElement.lastElementChild.style.display = ''
                 previousevent.firstElementChild.style.display = 'none'
             })
             .catch((err)=>{
-                console.log(err)
+                // console.log(err)
             })
         } else {
           swal("您已经取消提交")
@@ -737,13 +734,13 @@ function reclass(event){
                     name:rename
                 }
                 }).then(response=>{
-                    console.log(response.data);
+                    // console.log(response.data);
                     watchChild(sonevent)
                     previousevent.parentElement.parentElement.parentElement.lastElementChild.style.display = ''
                     previousevent.firstElementChild.style.display = 'none'
                     bodyTop[9].style.display='none';
                 }).catch(function (error) {
-                    console.log(error);
+                    // console.log(error);
             });
         } else {
           swal("您已经取消提交")

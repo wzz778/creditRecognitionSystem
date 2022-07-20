@@ -19,7 +19,6 @@ function outland(){
         contentType : "application/json",
         traditional: true,
         success: function(data) {
-            console.log(data);
             // if(data.msg=='OK'){
                 swal('退出成功',"退出账号成功","success");
                 sessionStorage.clear();
@@ -31,7 +30,6 @@ function outland(){
             // }
         },
         error: function (data) {
-            console.log(data);
         }
     });
 }
@@ -40,7 +38,6 @@ layui.use('element', function(){
     
     //监听导航点击
     element.on('nav(demo)', function(elem){
-      //console.log(elem)
       layer.msg(elem.text());
     });
 });
