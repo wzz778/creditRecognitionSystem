@@ -637,7 +637,7 @@ btn_del[0].onclick = function (){
                     // console.log(date.data);
                     if(date.data.msg == 'OK'){
                         swal('删除成功', "删除成功", "success");
-                        if((checkbox_all[0].pagees * checkbox_all[0].size + checkbox_all[0].ids.length - 10) == checkbox_all[0].total){
+                        if((checkbox_all[0].pagees * checkbox_all[0].size + checkbox_all[0].ids.length - checkbox_all[0].size) == checkbox_all[0].total){
                             render((checkbox_all[0].pages -1),checkbox_all[0].sizees);
                             page((checkbox_all[0].total - 1),checkbox_all[0].sizees);
                         }else{
@@ -962,7 +962,7 @@ layer_submit[0].onclick = function (){
             }
         }
 
-        // console.log(users);
+        console.log(users);
         let patrn = /^[0-9]{11}$/
         if(!patrn.exec(layer_input[1].value)){
             warn[0].innerHTML = `<span class="warning">输入的格式不对</span>`
@@ -971,10 +971,10 @@ layer_submit[0].onclick = function (){
             if(layer_input[0].value != '' && layer_input[2].value != '' && layer_input[3].value != '' && layer_input[4].value != ''){
                 axios({
                     method:'post',
-                    url:'/admin/User',
+                    url:'/admin/Users',
                     data:users,
                 }).then((date)=>{
-                    // console.log(date.data);
+                    console.log(date.data);
 
                     cover_layer[0].style.display = 'none';
                     let cla = 'layer-form-radioed';
@@ -986,7 +986,7 @@ layer_submit[0].onclick = function (){
                     }
                     render(checkbox_all[0].pages,checkbox_all[0].sizees);
                 }).catch((err)=>{
-                    // console.log(err);
+                    console.log(err);
                 })
             }else{
                 swal('请把信息填写完整','','error');
