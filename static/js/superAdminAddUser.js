@@ -172,7 +172,7 @@ save.onclick = function () {
             }
         })
         .catch((err) => {
-            // console.log(err)
+            console.log(err)
             // 提示错误
             // popUps[1].style.display = 'block'
             // setTimeout(() => {
@@ -188,7 +188,7 @@ function GetFirstLevel(ele) {
         url: '/admin/showOrganization',
     })
         .then((result) => {
-            // console.log(result.data)
+            console.log(result.data)
             ele.innerHTML = ''
             ele.add(new Option('请选择...', ''))
             for (let i = 0; i < result.data.msg.length; i++) {
@@ -197,7 +197,7 @@ function GetFirstLevel(ele) {
             ele.value = ''
         })
         .catch((err) => {
-            // console.log(err)
+            console.log(err)
             swal('网络错误')
         })
 }
@@ -222,7 +222,7 @@ function GetOtherLevel(ele, id) {
             ele.value = ''
         })
         .catch((err) => {
-            // console.log(err)
+            console.log(err)
             swal('网络错误')
         })
 }
