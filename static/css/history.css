@@ -77,6 +77,9 @@
     background-image: none;
     border: 1px solid transparent;
 }
+.btn:hover{
+    color: white;
+}
 .font-search{
     cursor: pointer;
     /*width: 12px;*/

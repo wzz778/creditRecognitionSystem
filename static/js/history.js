@@ -46,9 +46,9 @@ function pading(sum){
             count:sum,
             layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
             jump:function (obj,first){
-                console.log(obj.curr);
+                // console.log(obj.curr);
 
-                console.log(obj.limit)
+                // console.log(obj.limit)
                 if(!first){
                     render(obj.curr,obj.limit);
                 }
@@ -64,8 +64,8 @@ function applicationType() {
         method:'get',
         url:'/IndicatorOperates/showAllIndicator',
     }).then((data)=>{
-        console.log(data.data);
-        console.log(data.data.msg);
+        // console.log(data.data);
+        // console.log(data.data.msg);
         let all = `<option value="">所有</option>`;
         for(let i=0;i<data.data.data.length;i++){
             all += `<option value="${data.data.data[i].classfiy.b_Indicator_name}">${data.data.data[i].classfiy.b_Indicator_name}</option>`
@@ -111,16 +111,16 @@ function rendering(){
     if(end == ''){
         delete  his.endDate
     }
-    console.log(his);
+    // console.log(his);
     axios({
         method:'get',
         url:'/users/records',
         params:his,
     }).then((data)=>{
-        console.log(data.data.data);
-        console.log(data.data.data);
+        // console.log(data.data.data);
+        // console.log(data.data.data);
         let date = data.data.data.pageInfo;
-        console.log(date);
+        // console.log(date);
         let all = "";
         if(date.length != 0){
             for(let i=0;i<date.length;i++){
@@ -202,15 +202,15 @@ function render(numbers,size){
     if(end == ''){
         delete  his.endDate
     }
-    console.log(typeName);
-    console.log(typeStatus);
-    console.log(his);
+    // console.log(typeName);
+    // console.log(typeStatus);
+    // console.log(his);
     axios({
         method:'get',
         url:'/users/records',
         params:his,
     }).then((data)=>{
-        console.log(data.data.data.pageInfo);
+        // console.log(data.data.data.pageInfo);
         let date = data.data.data.pageInfo;
         let all = "";
         if(date.length != 0){
