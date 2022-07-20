@@ -283,7 +283,7 @@ selectPerpage.onchange = function () {
 function removePopup(event) {
     swal({
         title: "你确定？",
-        text: "要删除该条历史记录",
+        text: "要删除该用户?",
         type: "warning",
         showCancelButton: true,
         confirmButtonColor: "#DD6B55",
