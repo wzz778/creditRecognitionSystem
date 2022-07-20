@@ -136,6 +136,7 @@ function selectYear(){
 }
 selectYear()
 
+//搜索的年级
 search_type[0].onchange = function (){
     // console.log(this.value);
     // console.log(header_grade.length);
@@ -148,6 +149,7 @@ search_type[0].onchange = function (){
     }
 }
 
+//搜索的学院
 search_type[1].onchange = function (){
     // console.log(this.value);
     // console.log(header_academy.length);
@@ -199,7 +201,7 @@ function rendering() {
             pageSize: 10,
         },
     }).then((date)=>{
-        console.log(date.data);
+        // console.log(date.data);
         let all = date.data.data.pageInfo;
         // console.log(all);
         checkbox_all[0].pagees = date.data.data.allPages;
@@ -300,8 +302,8 @@ function rendering() {
                 layer_input[3].value = all[i].academy;
                 layer_input[4].value = all[i].major_class;
                 let sex = all[i].sex;
-                console.log(checkbox_all[0].pages);
-                console.log(checkbox_all[0].sizees);
+                // console.log(checkbox_all[0].pages);
+                // console.log(checkbox_all[0].sizees);
                 // console.log(sex);
                 let clist = 'layer-this';
                 let cla = 'layer-form-radioed';
@@ -425,7 +427,7 @@ function render(numbers,size){
         url:'/admin/getUserByClass',
         params:his,
     }).then((date)=>{
-        console.log(date.data);
+        // console.log(date.data);
         let all = date.data.data.records;
         checkbox_all[0].count = all.length;
         // console.log(all);
@@ -475,7 +477,7 @@ function render(numbers,size){
                     // console.log(checkbox_all[0].numbers);
                     index = this.numbers;
                     checkbox_all[0].ids.push(checkbox_list[index].ids);
-                    console.log(checkbox_all[0].ids);
+                    // console.log(checkbox_all[0].ids);
                 }else {
                     checkbox_all[0].numbers -= 1;
                     // console.log(checkbox_all[0].numbers);
@@ -483,7 +485,7 @@ function render(numbers,size){
                     for(let j=0;j<checkbox_all[0].ids.length;j++){
                         if(checkbox_all[0].ids[j] == checkbox_list[index].ids){
                             checkbox_all[0].ids.splice(j,1);
-                            console.log(checkbox_all[0].ids);
+                            // console.log(checkbox_all[0].ids);
                         }
                     }
                 }
@@ -517,8 +519,8 @@ function render(numbers,size){
                 layer_input[4].value = all[i].major_class;
                 let sex = all[i].sex;
                 // console.log(sex);
-                console.log(checkbox_all[0].pages);
-                console.log(checkbox_all[0].sizees)
+                // console.log(checkbox_all[0].pages);
+                // console.log(checkbox_all[0].sizees)
                 let clist = 'layer-this';
                 let cla = 'layer-form-radioed';
                 for(let i=0;i<startTime.length;i++){
@@ -611,7 +613,7 @@ function render(numbers,size){
 
 // 单个或多个删除
 btn_del[0].onclick = function (){
-    console.log(checkbox_all[0].ids.length);
+    // console.log(checkbox_all[0].ids.length);
     swal({
         title: "你确定？",
         text: "该用户会被删除！",
@@ -819,8 +821,8 @@ btn_new[0].onclick = function (){
     let clist = 'layer-this';
     layer_list[1].innerHTML = "";
     switchover(startTime,0,clist);
-    console.log(checkbox_all[0].total);
-    console.log(checkbox_all[0].sizees);
+    // console.log(checkbox_all[0].total);
+    // console.log(checkbox_all[0].sizees);
     layer_btn_primary[1].sums = 1;
     layer_submit[0].numbers = 0;
     layer_input[0].value = '';
