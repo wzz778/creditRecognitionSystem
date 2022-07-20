@@ -23,6 +23,16 @@ router.get('/adminUsers',(req,res)=>{
     res.render('adminUsers.html',);
 })
 
+// 提交历史记录 !
+router.get('/adminHistory', (req, res) => {
+    res.render('adminHistory.html')
+})
+
+// 导出excel表格 !
+router.get('/adminExportForm', (req, res) => {
+    res.render('adminExportForm.html')
+})
+
 // 历史记录的详情页面
 router.get('/particulars',(req,res)=>{
     res.render('particulars.html');
@@ -287,6 +297,27 @@ router.get('/admins/showOrganization',(req,res)=>{
     })
 })
 
+// 获取一级信息
+router.get('/admin/showOrganization', (req, res) => {
+    axios({
+        method: 'GET',
+        url: '/admin/showOrganization',
+        headers: {
+            token: req.session.token
+        }
+    })
+        .then((result) => {
+            if (result.data.msg == 'OK') {
+                res.send({ err: 0, msg: result.data.data })
+            } else {
+                res.send({ err: -1, msg: result.data.data })
+            }
+        })
+        .catch((err) => {
+            res.send({ err: -1, msg: err })
+        })
+})
+
 //显示所有学分类型
 router.get('/creditTypeOperates/showCreditType',(req,res)=>{
     axios({
@@ -301,6 +332,28 @@ router.get('/creditTypeOperates/showCreditType',(req,res)=>{
         res.send(err);
     })
 })
+
+// 查询所有学分构成
+router.get('/creditTypeOperate/showCreditType', (req, res) => {
+    axios({
+        method: 'GET',
+        url: '/creditTypeOperate/showCreditType',
+        headers: {
+            token: req.session.token
+        }
+    })
+        .then((result) => {
+            if (result.data.msg == 'OK') {
+                res.send({ err: 0, msg: result.data.data })
+            } else {
+                res.send({ err: -1, msg: result.data })
+            }
+        })
+        .catch((err) => {
+            res.send('错误')
+        })
+})
+
 
 // 判断管理员是否被授权
 router.get('/judgeUser',(req,res)=>{
