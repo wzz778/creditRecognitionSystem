@@ -10,7 +10,14 @@ const { log } = require('console')
 const { send } = require('process')
 var mult = multipart()
 
-
+router.get('*',(req,res,next)=>{
+    let user = jwt.decode(req.session.token);
+    if(user == '超级管理员'){
+        return next();
+    }else{
+            res.render('403.html');
+    }
+})
 
 // 请求页面
 // 添加用户 !
