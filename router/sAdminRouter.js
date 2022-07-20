@@ -10,13 +10,12 @@ const { log } = require('console')
 const { send } = require('process')
 var mult = multipart()
 
-router.get('*', (req, res, next) => {
+router.get('*',(req,res,next)=>{
     let user = jwt.decode(req.session.token);
-    // console.log(user)
-    if (user.power == '超级管理员') {
+    if(user.power == '超级管理员'){
         return next();
-    } else {
-        res.render('403.html');
+    }else{
+            res.render('403.html');
     }
 })
 
