@@ -678,7 +678,9 @@ btn_update[0].onclick =function () {
     // console.log(sex);
     let clist = 'layer-this';
     let cla = 'layer-form-radioed';
-    for(let i=0;i<startTime.length;i++){
+    for(let i=0;i<checkbox_list.length;i++){
+        // console.log(checkbox_all[0].ids);
+        // console.log(checkbox_list[i].ids);
         if(checkbox_all[0].ids == checkbox_list[i].ids){
             layer_submit[0].ids = i;
         }
@@ -820,6 +822,8 @@ btn_new[0].onclick = function (){
     cover_layer[0].style.display = 'block';
     let clist = 'layer-this';
     layer_list[1].innerHTML = "";
+    radios[1].setAttribute('checked','checked');
+    radios[0].removeAttribute('checked');
     switchover(startTime,0,clist);
     // console.log(checkbox_all[0].total);
     // console.log(checkbox_all[0].sizees);
@@ -829,6 +833,7 @@ btn_new[0].onclick = function (){
     layer_input[1].value = '';
     layer_input[2].value = '';
     layer_input[3].value = '';
+
     if(btn_new[0].superPower == 0){
         changes[0].innerHTML = `<div class="layer-form-item">
                 <label class="layer-form-label">专业</label>
@@ -937,6 +942,7 @@ layer_submit[0].onclick = function (){
     }else{
         index = 1;
     }
+    // console.log(index);
     if(layer_submit[0].numbers == 0){
         if(btn_new[0].superPower == 0){
             var users ={
@@ -962,7 +968,7 @@ layer_submit[0].onclick = function (){
             }
         }
 
-        console.log(users);
+        // console.log(users);
         let patrn = /^[0-9]{11}$/
         if(!patrn.exec(layer_input[1].value)){
             warn[0].innerHTML = `<span class="warning">输入的格式不对</span>`
@@ -979,7 +985,12 @@ layer_submit[0].onclick = function (){
                     cover_layer[0].style.display = 'none';
                     let cla = 'layer-form-radioed';
                     switchover(layer_form_radio,1,cla);
-                    swal('添加成功','成功添加','success');
+                    if(date.data.err == -1){
+                        swal(date.data.msg,'信息有误','error');
+                    }else{
+                        swal('添加成功','成功添加','success');
+
+                    }
 
                     if((checkbox_all[0].total + 1) > (checkbox_all[0].pagees * checkbox_all[0].sizees)){
                         page((checkbox_all[0].total + 1),checkbox_all[0].sizees);
