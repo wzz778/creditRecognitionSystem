@@ -110,8 +110,7 @@ router.get('/api/outlogin', (req, res) => {
             token:req.session.token
         }},
     ).then(response=>{
-        req.session=null;
-        console.log(response.data);
+        req.session.destroy()
         res.send(response.data);
     }).catch(function (error) {
         console.log(error);
