@@ -126,6 +126,49 @@ router.put('/admin/resetUserPass',(req,res)=>{
     })
 })
 
+// 添加用户
+router.post('/admin/Users', (req,res) => {
+    let { name, userName, power, sex, grade, academy, major_class, organization, position } = req.body
+    if (!organization) {
+        organization = '无'
+    }
+    if (!position) {
+        position = '无'
+    }
+    // 传数据
+    axios({
+        method: 'POST',
+        url: '/admin/User',
+        params: {
+            name: name,
+            userName: userName,
+            power: power,
+            sex: sex,
+            grade: grade,
+            academy: academy,
+            major_class: major_class,
+            organization: organization,
+            position: position
+        },
+        headers: {
+            token: req.session.token
+        }
+    })
+        .then((result) => {
+            if (result.data.msg == 'OK') {
+                res.send({ err: 0, msg: result.data })
+            } else {
+                // 没请求成功
+                res.send({ err: -1, msg: result.data.msg })
+            }
+        })
+        .catch((err) => {
+            res.send({ err: -1, msg: '错误' })
+        })
+})
+
+
+
 
 //修改用户信息
 router.put('/admin/update.do.userInfo',(req,res)=>{
