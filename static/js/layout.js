@@ -59,7 +59,7 @@ if(sessionStorage.getItem('power')=='超级管理员'){
         <div class="nav-child">
             <a href="adminManageUsers">用户管理</a>
             <a href="adminHistory">提交历史</a>
-            <a href="superAdminAddUser">添加用户</a>
+            <a href="superAdminAdd">添加用户</a>
             <a href="InstituteInformationManagement">组织管理</a>
             <a href="addNewIndicator">添加指标</a>
             <a href="adminCreditManagement">学分构成管理</a>
