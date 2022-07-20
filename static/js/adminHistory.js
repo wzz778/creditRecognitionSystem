@@ -356,10 +356,11 @@ del.onclick = function () {
         })
     } else {
         // 显示请选择删除信息
-        popUps[3].style.display = 'block'
-        setTimeout(() => {
-            popUps[3].style.display = 'none'
-        }, 2000)
+        // popUps[3].style.display = 'block'
+        // setTimeout(() => {
+        //     popUps[3].style.display = 'none'
+        // }, 2000)
+        swal('请选择要删除的内容')
     }
 }
 

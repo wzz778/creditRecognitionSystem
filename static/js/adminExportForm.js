@@ -5,7 +5,7 @@ axios({
     url: '/creditTypeOperate/showCreditType',
 })
     .then((result) => {
-        console.log(result.data)
+        // console.log(result.data)
         CreditsComposition.innerHTML = ''
         for (let i = 0; i < result.data.msg.length; i++) {
             // CreditsComposition.add(new Option(result.data.msg[i].afirstLevel, result.data.msg[i].))
@@ -15,7 +15,7 @@ axios({
         CreditsComposition.value = ''
     })
     .catch((err) => {
-        console.log(err)
+        // console.log(err)
     })
 
 //声明一个变量用于记录返回的学分构成的结果
@@ -81,7 +81,7 @@ function fn(obj) {
         }
     })
         .then((result) => {
-            console.log(result.data)
+            // console.log(result.data)
             if (result.data.msg.data.length == 0) {
                 swal('没有数据')
                 return

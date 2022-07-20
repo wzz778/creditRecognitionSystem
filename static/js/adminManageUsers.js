@@ -722,7 +722,7 @@ function authorizeSuper(event) {
                 }
             })
                 .then((result) => {
-                    console.log(result.data)
+                    // console.log(result.data)
                     if (result.data.err == 0) {
                         swal('授权成功')
                     } else {
@@ -730,7 +730,7 @@ function authorizeSuper(event) {
                     }
                 })
                 .catch((err) => {
-                    console.log(err)
+                    // console.log(err)
                     swal('网络错误')
                 })
         } else {
@@ -774,7 +774,7 @@ OrganizationSure.onclick = function () {
         }
     })
         .then((result) => {
-            console.log(result.data)
+            // console.log(result.data)
             bodyTop[1].style.display = 'none'
             if (result.data.err == 0) {
                 swal('授权成功')
