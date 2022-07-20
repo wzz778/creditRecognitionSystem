@@ -40,7 +40,13 @@ router.get('/repassword',(req,res)=>{
 })
 //审核申请表
 router.get('/examineApplication',(req,res)=>{
-    res.render('examineApplication.html')
+    let user = jwt.decode(req.session.token);
+    if(user.power== '普通管理员'){
+        res.render('examineApplication.html')
+    }else{
+            res.render('403.html');
+    }
+    // res.render('examineApplication.html')
 })
 //提交申请表
 router.get('/submitApplication',(req,res)=>{
