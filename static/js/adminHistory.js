@@ -182,6 +182,7 @@ function GetAllInfo(page, perpage, obj) {
                     changeConment[i].style.display='none'
                 }
             }
+            checkDelAll.checked=''
             swal('查询成功')
         })
         .catch((err) => {
