@@ -708,6 +708,7 @@ router.post('/changeIndicator', (req, res) => {
             }
         })
         .catch((err) => {
+            // console.log(err.data)
             res.send({ err: -1, msg: err })
         })
 })
