@@ -243,7 +243,7 @@ CreditsComposition.onchange = function () {
         }
     })
         .then((result) => {
-            // console.log(result.data)
+            console.log(result.data)
             CreditsSecondDir.innerHTML = ''
             ScopeRecognition.innerHTML = ''
             CreditsSecondDir.add(new Option('请选择...', ''))
