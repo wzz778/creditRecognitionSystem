@@ -40,3 +40,39 @@
 .layui-upload-table {
   min-height: 300px;
 }
+
+.loading {
+  display: inline-block;
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  border: 2px solid dodgerblue;
+  border-bottom-color: transparent;
+  -webkit-animation: loadingRotate 0.75s linear infinite;
+  animation: loadingRotate 0.75s linear infinite;
+  margin-right: 15px;
+}
+
+@-webkit-keyframes loadingRotate {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  50% {
+    -webkit-transform: rotate(180deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes loadingRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
