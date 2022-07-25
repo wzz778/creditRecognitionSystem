@@ -9,14 +9,14 @@ axios({
         alert('获取失败！');
     }else{
         let data=response.data.data;
-        message[0].innerHTML=data.user.name;
-        message[1].innerHTML=data.user.sex;
-        message[2].innerHTML=data.user.userName;
-        message[3].innerHTML=data.user.academy;
-        message[4].innerHTML=data.user.major_class
-        message[5].innerHTML=data.creditType.afirstLevel;
-        message[6].innerHTML=data.classify.b_points_available;
-        message[7].innerHTML=data.remarks;
+        message[0].innerText=data.user.name;
+        message[1].innerText=data.user.sex;
+        message[2].innerText=data.user.userName;
+        message[3].innerText=data.user.academy;
+        message[4].innerText=data.user.major_class
+        message[5].innerText=data.creditType.afirstLevel;
+        message[6].innerText=data.classify.b_points_available;
+        message[7].innerText=data.remarks;
     }
   }).catch(error=> {
     // swal('提交失败',"您所填写的申请表提交失败",'error')

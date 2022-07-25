@@ -58,7 +58,12 @@ $("#testListAction").on("click", function () {
             swal("附件附件不能超过4个！");
             return
         }
-        let formData = new FormData()   
+        for(let i of datastatus){
+            if( i.innerHTML=='等待上传'){
+             i.innerHTML=`<div class="loading"></div><span style='color:#1e9fff;line-height:30px'>上传中......</span>`
+            }
+         }
+        let formData = new FormData();  
         let a=JSON.stringify(files)
         let i=0;
         for (let key in files) {

@@ -1,15 +1,31 @@
 select{
-    padding: 7px;
+    padding: 4px;
 }
 
 button{
     color: #806A84;
     cursor: pointer;
     border-radius: 3px;
+    transition: .15s all;
+    padding: 6px 15px;
+}
+button:hover{
+    opacity: .8;
 }
 select{
     cursor: pointer;
     border-radius: 3px;
+    transition: .15s all;
+}
+input{
+    border-radius: 3px;
+    padding-left: 8px;
+}
+input:hover{
+    border: #adadad 1px solid;
+}
+select:hover{
+    border: #adadad 1px solid;
 }
 .bodyTop{
     width: 100%;
@@ -19,13 +35,12 @@ select{
     z-index: 999;
 }
 .fadediv{
-    border-radius: 2px;
+    border-radius: 3px;
 }
 .bodyTop>div{
     padding: 30px;
     margin: 150px auto;
     width: 425px;
-    min-height: 150px;
     background-color: white;
 }
 
@@ -45,7 +60,8 @@ select{
 }
 
 .bodyTopBottom{
-    margin-left: 130px;
+    text-align: center;
+    /* margin-left: 130px; */
 }
 
 .cancel{
