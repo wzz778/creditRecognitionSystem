@@ -38,6 +38,85 @@ router.get('/makepdf',(req,res)=>{
 router.get('/repassword',(req,res)=>{
     res.render('repassword.html')
 })
+
+//查看历史记录的页面
+router.get('/history',(req,res)=>{
+    res.render('history.html')
+})
+
+// 历史记录的详情页面
+router.get('/particulars',(req,res)=>{
+    res.render('particulars.html');
+})
+
+//用户查看历史记录
+router.get('/users/records',(req,res)=>{
+    // let {nodePage,pageSize} = req.body;
+    axios({
+        method:'get',
+        url:'/user/records',
+        params:req.query,
+        headers:{
+            token:req.session.token
+        },
+    }).then((date)=>{
+        res.send(date.data);
+    }).catch((err)=>{
+        res.send(err);
+    })
+})
+
+
+//显示所有学分类型
+router.get('/creditTypeOperates/showCreditType',(req,res)=>{
+    axios({
+        method:'get',
+        url:'/creditTypeOperate/showCreditType',
+        headers:{
+            token:req.session.token
+        }
+    }).then((data)=>{
+        res.send(data.data);
+    }).catch((err)=>{
+        res.send(err);
+    })
+})
+
+//获取单个申请表
+router.get('/admin/oneApplication',(req,res)=>{
+    axios({
+        method:'get',
+        url:'/user/oneApplication/{id}',
+        params:req.query,
+        headers:{
+            token:req.session.token
+        },
+    }).then((date)=>{
+        res.send(date.data);
+    }).catch((err)=>{
+        res.send(err);
+    })
+})
+
+//取出附件
+router.get('/user/getEnclosure',(req,res)=>{
+    axios({
+        method:'get',
+        url:'/user/getEnclosure',
+        params:req.query,
+        headers:{
+            token:req.session.token
+        }
+    }).then((data)=>{
+        res.send(data.data);
+    }).catch((err)=>{
+        res.send(err);
+    })
+})
+
+
+
+
 //审核申请表
 router.get('/examineApplication',(req,res)=>{
     let user = jwt.decode(req.session.token);

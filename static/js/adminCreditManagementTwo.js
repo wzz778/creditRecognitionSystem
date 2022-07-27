@@ -294,6 +294,10 @@ sureSearch.onclick = function () {
         swal('请输入最大分数')
         return
     }
+    if(Number(CreditNumberMax.value)<Number(CreditNumberMin.value)){
+        swal('数据非法')
+        return
+    }
     // 请求数据
     let obj = {}
     obj.indicator = searchIterator.value
