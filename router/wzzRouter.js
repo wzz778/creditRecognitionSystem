@@ -41,7 +41,7 @@ router.get('/repassword',(req,res)=>{
 //审核申请表
 router.get('/examineApplication',(req,res)=>{
     let user = jwt.decode(req.session.token);
-    if(user.power== '普通管理员'){
+    if(user.power== '普通管理员'||user.power== '超级管理员'){
         res.render('examineApplication.html')
     }else{
             res.render('403.html');

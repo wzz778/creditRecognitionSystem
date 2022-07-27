@@ -57,6 +57,7 @@ if(sessionStorage.getItem('power')=='超级管理员'){
     <li class="nav-item"  style="transition: 0.3s all;">
         <a class="item_top" href="javascript:;" onclick="opennav(this)">超级管理员<i class="fa fa-chevron-up" aria-hidden="true"></i></a>
         <div class="nav-child">
+            <a href="examineApplication">审核申请表</a>
             <a href="adminManageUsers">用户管理</a>
             <a href="adminHistory">提交历史</a>
             <a href="superAdminAdd">添加用户</a>
