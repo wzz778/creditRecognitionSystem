@@ -84,7 +84,7 @@ function GetAll(page, perPage, obj) {
     })
         .then((result) => {
             checkDelAll.checked = ''
-            console.log(result.data)
+            // console.log(result.data)
             adminManageUsersContentContent.innerHTML = ''
             adminManageUsersContentContent.style.display = 'block'
             adminHistoryContentNo.style.display = 'none'
