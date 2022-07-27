@@ -230,7 +230,7 @@ router.post('/admin/getUserByClass', (req, res) => {
     }
     axios({
         method: 'GET',
-        url: '/admin/getUserByClass',
+        url: '/superAdmin/getUserByClass',
         params: obj,
         headers: {
             token: req.session.token

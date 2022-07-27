@@ -228,6 +228,9 @@ function GetOtherLevel(ele, id) {
 }
 usGrade.onchange = function () {
     // 显示学院
+    usCollege.value=''
+    usSpecialized.value=''
+    usClass.value=''
     if (usGrade.value == '') {
         return
     }
@@ -235,6 +238,7 @@ usGrade.onchange = function () {
 }
 usCollege.onchange = function () {
     // 显示专业
+    usSpecialized.value=''
     if (usCollege.value == '') {
         return
     }
