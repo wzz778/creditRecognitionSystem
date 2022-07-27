@@ -163,6 +163,12 @@ save.onclick = function () {
                 // },2000)
                 swal('添加成功')
                 // 清空数据
+                usCollege.innerHTML=``
+                usSpecialized.innerHTML=''
+                usClass.innerHTML=''
+                usCollege.add(new Option('请选择...', ''))
+                usSpecialized.add(new Option('请选择...', ''))
+                usClass.add(new Option('请选择...', ''))
                 for (let i = 0; i < inputAll.length; i++) {
                     inputAll[i].value = ''
                 }
@@ -188,7 +194,7 @@ function GetFirstLevel(ele) {
         url: '/admin/showOrganization',
     })
         .then((result) => {
-            console.log(result.data)
+            // console.log(result.data)
             ele.innerHTML = ''
             ele.add(new Option('请选择...', ''))
             for (let i = 0; i < result.data.msg.length; i++) {
