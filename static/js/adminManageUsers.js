@@ -345,7 +345,7 @@ del.onclick = function () {
         // 删除多个
         swal({
             title: "你确定?",
-            text: "要删除多个历史记录信息吗?",
+            text: "要删除多个用户吗?",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
