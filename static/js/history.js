@@ -71,8 +71,10 @@ function applicationType() {
         // console.log(data.data);
         // console.log(data.data.msg);
         let all = `<option value="">所有</option>`;
-        for(let i=0;i<data.data.data.length;i++){
-            all += `<option value="${data.data.data[i].classfiy.b_Indicator_name}">${data.data.data[i].classfiy.b_Indicator_name}</option>`
+        if(data.data.data.length !=0){
+            for(let i=0;i<data.data.data.length;i++){
+                all += `<option value="${data.data.data[i].classfiy.b_Indicator_name}">${data.data.data[i].classfiy.b_Indicator_name}</option>`
+            }
         }
         search_type[0].innerHTML = all;
     }).catch((err)=>{
@@ -215,8 +217,8 @@ function render(numbers,size){
         url:'/users/records',
         params:his,
     }).then((data)=>{
-        console.log(data.data.data);
-        console.log(data.data.data.pageInfo);
+        // console.log(data.data.data);
+        // console.log(data.data.data.pageInfo);
         let date = data.data.data.pageInfo;
         let all = "";
         btn[0].count = date.length;
