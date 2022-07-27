@@ -692,14 +692,13 @@ changeUserGrade.onchange = function () {
         return
     }
 
-    let id = 1
-    for (let i = 0; i < ResultObj.length; i++) {
-        if (ResultObj[i].name == changeUserGrade.value) {
-            console.log('数据',ResultObj[i])
-            id = ResultObj[i].id
-        }
-    }
-    GetOtherLevelTwo(changeUseraCademy, id)
+    // let id = 1
+    // for (let i = 0; i < ResultObj.msg.length; i++) {
+    //     if (ResultObj.msg[i].name == changeUserGrade.value) {
+    //         id = ResultObj.msg[i].id
+    //     }
+    // }
+    GetOtherLevelTwo(changeUseraCademy, changeUserGrade.value)
 }
 
 // 普通管理员的授权
