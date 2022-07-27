@@ -81,7 +81,7 @@ function fn(obj) {
         }
     })
         .then((result) => {
-            // console.log(result.data)
+            console.log(result.data)
             if (result.data.msg.data.length == 0) {
                 swal('没有数据')
                 return

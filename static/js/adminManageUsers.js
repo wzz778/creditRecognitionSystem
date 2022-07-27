@@ -475,6 +475,9 @@ changeUserInfo.onclick = function () {
         swal('请输入学院')
         return
     }
+    if(specialized.value!=''&&changeUserClass.value==''){
+        swal('不能仅输入专业')
+    }
     if (changeUserClass.value == '') {
         swal('请输入班级')
         return

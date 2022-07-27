@@ -122,7 +122,6 @@ function GetAllInfo(page, perpage, obj) {
         data: obj
     })
         .then((result) => {
-            // console.log(result.data)
             all_Page = result.data.allPage
             allNumber.innerHTML = `共${result.data.allRecords}条`
             //删除的判断
@@ -139,6 +138,7 @@ function GetAllInfo(page, perpage, obj) {
             adminHistoryContentContent.innerHTML = ''
             for (let i = 0; i < result.data.msg.length; i++) {
                 let time = result.data.msg[i].createTime.split(' ')[0]
+                // console.log(result.data.msg[i].createTime.split(' ')[0]);
                 let status = '审核中'
                 if (result.data.msg[i].application.approval_status == '1') {
                     status = '审核通过'
