@@ -894,6 +894,7 @@ router.post('/admin/selectOrganization', (req, res) => {
         }
     })
         .then((result) => {
+            // console.log('获取的数据',result.data);
             if (result.data.msg == 'OK') {
                 res.send({ err: 0, msg: result.data.data })
             } else {
@@ -901,6 +902,7 @@ router.post('/admin/selectOrganization', (req, res) => {
             }
         })
         .catch((err) => {
+            // console.log('错误',err);
             res.send({ err: -1, msg: err })
         })
 })
@@ -945,7 +947,7 @@ router.post('/superAdmin/givePower', (req, res) => {
         }
     })
         .then((result) => {
-            console.log('普通管理员授权', result.data)
+            // console.log('普通管理员授权', result.data)
             if (result.data.msg == 'OK') {
                 res.send({ err: 0, msg: result.data })
             } else {
@@ -958,7 +960,7 @@ router.post('/superAdmin/givePower', (req, res) => {
 })
 // 给普通用户授权
 router.post('/admin/updatePower', (req, res) => {
-    console.log(req.body)
+    // console.log(req.body)
     axios({
         method: 'PUT',
         url: '/admin/updatePower',
@@ -968,7 +970,7 @@ router.post('/admin/updatePower', (req, res) => {
         }
     })
         .then((result) => {
-            console.log('普通用户授权', result)
+            // console.log('普通用户授权', result)
             if (result.data.msg == 'OK') {
                 res.send({ err: 0, msg: result.data })
             } else {

@@ -475,6 +475,9 @@ changeUserInfo.onclick = function () {
         swal('请输入学院')
         return
     }
+    if(specialized.value!=''&&changeUserClass.value==''){
+        swal('不能仅输入专业')
+    }
     if (changeUserClass.value == '') {
         swal('请输入班级')
         return
@@ -656,9 +659,9 @@ function GetFirstLevelOne(ele) {
 
 function GetOtherLevelTwo(ele, id, show) {
     let idResult = 1
-    for (let i = 0; i < ResultObj.length; i++) {
-        if (ResultObj[i].name == id) {
-            idResult = ResultObj[i].id
+    for (let i = 0; i < ResultObj.msg.length; i++) {
+        if (ResultObj.msg[i].name == id) {
+            idResult = ResultObj.msg[i].id
         }
     }
     axios({
@@ -669,6 +672,7 @@ function GetOtherLevelTwo(ele, id, show) {
         }
     })
         .then((result) => {
+            // console.log(idResult);
             // console.log(result.data)
             // 将结果添加到ele上
             ele.innerHTML = ''
@@ -679,7 +683,7 @@ function GetOtherLevelTwo(ele, id, show) {
             changeUseraCademy.value = show || ''
         })
         .catch((err) => {
-            // console.log(err)
+            console.log(err)
             swal('网络错误')
         })
 }
@@ -691,13 +695,13 @@ changeUserGrade.onchange = function () {
         return
     }
 
-    let id = 1
-    for (let i = 0; i < ResultObj.length; i++) {
-        if (ResultObj[i].name == changeUserGrade.value) {
-            id = ResultObj[i].id
-        }
-    }
-    GetOtherLevelTwo(changeUseraCademy, id)
+    // let id = 1
+    // for (let i = 0; i < ResultObj.msg.length; i++) {
+    //     if (ResultObj.msg[i].name == changeUserGrade.value) {
+    //         id = ResultObj.msg[i].id
+    //     }
+    // }
+    GetOtherLevelTwo(changeUseraCademy, changeUserGrade.value)
 }
 
 // 普通管理员的授权
