@@ -37,6 +37,12 @@ function myFunction() {
         });
     }
 }
+
+passwordin.addEventListener("keyup",function(event){
+    if(event.keyCode==13){
+        myFunction();
+      }
+  });
 function eye() {
     let type=passwordin.type;
     if(type=='password'){
