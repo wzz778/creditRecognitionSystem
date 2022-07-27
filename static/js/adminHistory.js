@@ -127,6 +127,7 @@ function GetAllInfo(page, perpage, obj) {
             allNumber.innerHTML = `共${result.data.allRecords}条`
             //删除的判断
             // 判断是否有值
+            checkDelAll.checked=''
             adminHistoryContentContent.style.display = 'block'
             adminHistoryContentNo.style.display = 'none'
             if (result.data.msg.length == 0) {
@@ -185,7 +186,7 @@ function GetAllInfo(page, perpage, obj) {
             swal('查询成功')
         })
         .catch((err) => {
-            // console.log(err)
+            console.log(err)
             // popUps[1].style.display = 'block'
             // setTimeout(() => {
             //     popUps[1].style.display = 'none'

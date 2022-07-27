@@ -144,9 +144,10 @@
 }
 
 .WatchApplicationNo {
-    color: red;
-    font-size: 35px;
-    height: 400px;
-    line-height: 400px;
-    text-align: center;
+     /* color: red; */
+     font-size: 35px;
+     height: 200px;
+     /* line-height: 200px; */
+     text-align: center;
+     display: flex;
 }

@@ -211,11 +211,12 @@ select {
 }
 
 #adminHistoryContentNo{
-    color: red;
+    /* color: red; */
     font-size: 35px;
     height: 200px;
-    line-height: 200px;
+    /* line-height: 200px; */
     text-align: center;
+    display: flex;
 }
 
 #ExportApplicationform{

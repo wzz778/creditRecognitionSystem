@@ -73,7 +73,7 @@ axios.defaults.baseURL='http://110.40.205.103:8099/';
 router.post('/api/login', (req, res) => {
     console.log(req.body);
     axios({
-        url:'user/login',
+        url:'/login',
         method:'post',
         params:req.body,
     }).then(response=>{
