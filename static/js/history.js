@@ -70,7 +70,7 @@ function applicationType() {
     }).then((data)=>{
         // console.log(data.data);
         // console.log(data.data.msg);
-        let all = `<option value="">所有</option>`;
+        let all = `<option value="">请选择...</option>`;
         if(data.data.data.length !=0){
             for(let i=0;i<data.data.data.length;i++){
                 all += `<option value="${data.data.data[i].classfiy.b_Indicator_name}">${data.data.data[i].classfiy.b_Indicator_name}</option>`
