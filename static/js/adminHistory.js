@@ -186,7 +186,7 @@ function GetAllInfo(page, perpage, obj) {
             swal('查询成功')
         })
         .catch((err) => {
-            // console.log(err)
+            console.log(err)
             // popUps[1].style.display = 'block'
             // setTimeout(() => {
             //     popUps[1].style.display = 'none'
