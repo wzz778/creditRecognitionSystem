@@ -145,7 +145,7 @@ function GetAll(page, perPage, obj) {
             // setTimeout(() => {
             //     popUps[0].style.display = 'none'
             // }, 2000)
-            swal('查询成功')
+            // swal('查询成功')
         })
         .catch((err) => {
             // console.log(err)
@@ -161,19 +161,9 @@ GetAll(1, 10, {})
 // 赋值函数(并不判断是否又搜索值就全部加入)
 function assignFn() {
     let obj = {}
-    var indexFaculty = Faculty.selectedIndex; // 选中索引
-    var textFaculty = Faculty.options[indexFaculty].text
-    if (textFaculty == '请选择...') {
-        textFaculty = ''
-    }
-    obj.academy = textFaculty
-    obj.name = usname.value
-    var indexmajor_class = major_class.selectedIndex; // 选中索引
-    var textmajor_class = major_class.options[indexmajor_class].text
-    if (textmajor_class == '请选择...') {
-        textmajor_class = ''
-    }
-    obj.major_class = textmajor_class
+    obj.academy = Faculty.value
+    obj.name = account.value
+    obj.major_class = major_class.value
     obj.sex = sex.value
     obj.power = useriDentity.value
     obj.userName = account.value
@@ -202,13 +192,14 @@ sureSearch.onclick = function () {
         checkDelAll.checked = ''
         nowPage.innerHTML = now_page
         GetAll(now_page, per_Page, assignFn())
+        swal('查询成功')
     } else {
         // 没有查询的数据
         // popUps[2].style.display = 'block'
         // setTimeout(() => {
         //     popUps[2].style.display = 'none'
         // }, 2000)
-        swal('请输入查询数据(不能只输入专业查询)')
+        swal('请输入查询数据')
     }
 }
 
@@ -225,8 +216,9 @@ lastPage.onclick = function () {
         now_page--
         nowPage.innerHTML = now_page
         // 请求数据
+        per_Page = selectPerpage.value
         checkDelAll.checked = ''
-        GetAll(now_page, 10, assignFn())
+        GetAll(now_page, per_Page, assignFn())
     }
 }
 nextPage.onclick = function () {
@@ -241,9 +233,10 @@ nextPage.onclick = function () {
     } else {
         now_page++
         nowPage.innerHTML = now_page
+        per_Page = selectPerpage.value
         checkDelAll.checked = ''
         // 请求数据
-        GetAll(now_page, 10, assignFn())
+        GetAll(now_page, per_Page, assignFn())
     }
 }
 jump.onclick = function () {
@@ -261,8 +254,9 @@ jump.onclick = function () {
             now_page = jumpPage.value
             nowPage.innerHTML = now_page
             // 请求数据
+            per_Page = selectPerpage.value
             checkDelAll.checked = ''
-            GetAll(now_page, 10, assignFn())
+            GetAll(now_page, per_Page, assignFn())
         }
     } else {
         jumpPage.value = ''
@@ -405,20 +399,13 @@ reset.onclick = function () {
     for (let i = 0; i < searchValue.length; i++) {
         searchValue[i].value = ''
     }
-    specialized.value = ''
     usGrade.value = ''
     now_page = 1
-    Faculty.innerHTML = ''
-    Faculty.add(new Option('请选择...', ''))
     Faculty.value = ''
-    specialized.innerHTML = ''
-    specialized.add(new Option('请选择...', ''))
-    specialized.value = ''
-    major_class.innerHTML = ''
-    major_class.add(new Option('请选择...', ''))
     major_class.value = ''
     nowPage.innerHTML = now_page
     GetAll(now_page, per_Page, assignFn())
+    swal('已重置')
 }
 
 // 修改用户信息弹窗
@@ -475,7 +462,7 @@ changeUserInfo.onclick = function () {
         swal('请输入学院')
         return
     }
-    if(specialized.value!=''&&changeUserClass.value==''){
+    if (specialized.value != '' && changeUserClass.value == '') {
         swal('不能仅输入专业')
     }
     if (changeUserClass.value == '') {
@@ -568,72 +555,6 @@ changeUserHas.onclick = function () {
 }
 
 
-// 获取一级的目录,传入要显示年级的元素
-function GetFirstLevel(ele) {
-    axios({
-        method: 'GET',
-        url: '/admin/showOrganization',
-    })
-        .then((result) => {
-            // console.log(result.data)
-            ele.innerHTML = ''
-            ele.add(new Option('请选择...', ''))
-            for (let i = 0; i < result.data.msg.length; i++) {
-                ele.add(new Option(result.data.msg[i].name, result.data.msg[i].id))
-            }
-            ele.value = ''
-        })
-        .catch((err) => {
-            // console.log(err)
-            swal('网络错误')
-        })
-}
-GetFirstLevel(usGrade)
-// 需要添加的元素，上一级的id，级别
-function GetOtherLevel(ele, id) {
-    axios({
-        method: 'POST',
-        url: '/admin/selectOrganization',
-        data: {
-            id: id
-        }
-    })
-        .then((result) => {
-            // console.log(result.data)
-            // 将结果添加到ele上
-            ele.innerHTML = ''
-            ele.add(new Option('请选择...', ''))
-            for (let i = 0; i < result.data.msg.length; i++) {
-                ele.add(new Option(result.data.msg[i].name, result.data.msg[i].id))
-            }
-            ele.value = ''
-        })
-        .catch((err) => {
-            // console.log(err)
-            swal('网络错误')
-        })
-}
-usGrade.onchange = function () {
-    if (usGrade.value == '') {
-        return
-    }
-    // 显示学院
-    GetOtherLevel(Faculty, usGrade.value)
-}
-Faculty.onchange = function () {
-    if (Faculty.value == '') {
-        return
-    }
-    // 显示专业
-    GetOtherLevel(specialized, Faculty.value)
-}
-specialized.onchange = function () {
-    if (specialized.value == '') {
-        return
-    }
-    // 显示班级
-    GetOtherLevel(major_class, specialized.value)
-}
 
 
 let ResultObj = {}
@@ -743,6 +664,27 @@ function authorizeSuper(event) {
     })
 
 }
+// 获取年级
+function GetFirstLevel(ele) {
+    axios({
+        method: 'GET',
+        url: '/admin/showOrganization',
+    })
+        .then((result) => {
+            // console.log(result.data)
+            ele.innerHTML = ''
+            ele.add(new Option('请选择...', ''))
+            for (let i = 0; i < result.data.msg.length; i++) {
+                ele.add(new Option(result.data.msg[i].name, result.data.msg[i].id))
+            }
+            ele.value = ''
+        })
+        .catch((err) => {
+            // console.log(err)
+            swal('网络错误')
+        })
+}
+GetFirstLevel(usGrade)
 
 function authorizeCom(event) {
     bodyTop[1].style.display = 'block'

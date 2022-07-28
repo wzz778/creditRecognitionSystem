@@ -66,75 +66,45 @@
     </div>
     <div class="selectCondition">
         <div class="selectConditionItem">
-            学分构成:<select id="CreditsComposition">
-                <option value="">请选择...</option>
-            </select>
-        </div>
-        <div class="selectConditionItem">
-            二级目录:<select id="CreditsSecondDir">
-                <option value="">请选择...</option>
-            </select>
-        </div>
-        <div class="selectConditionItem">
-            认定范围:<select id="ScopeRecognition">
-                <option value="">请选择...</option>
-            </select>
+            认定范围:
+            <input type="text" class="searchValue" id="ScopeRecognition" placeholder="请输入认定范围" autocomplete="off">
         </div>
         <div class="selectConditionItem">
             学分:
-            <input type="text" id="credit" autocomplete="off" placeholder="请输入学分">
-        </div>
-        <div class="selectConditionItem">
-            年级:
-            <select id="usGrade">
-                <option value="">请选择...</option>
-            </select>
+            <input type="text" class="searchValue" id="credit" autocomplete="off" placeholder="请输入学分">
         </div>
         <div class="selectConditionItem">
             院系:
-            <select id="academy">
-                <option value="">请选择...</option>
-            </select>
-            <!-- <input type="text" id="academy" autocomplete="off"  placeholder="学院,例如:信息工程学院"> -->
+            <input type="text" id="academy" class="searchValue" autocomplete="off" placeholder="学院,例如:信息工程学院">
         </div>
         <div class="selectConditionItem">
-            专业:
-            <select id="specialized">
-                <option value="">请选择...</option>
-            </select>
+            认定班级:
+            <input type="text" id="usClass" class="searchValue" autocomplete="off" placeholder="班级,例如:计科214">
         </div>
-        <div class="selectConditionItem">
-            班级:
-            <select id="usClass">
-                <option value="">请选择...</option>
-            </select>
-            <!-- <input type="text" id="usClass" autocomplete="off" placeholder="班级,例如:计科214"> -->
-        </div>
-    </div>
-    <div class="selectConditionItemChange clearFloat">
         <div class="selectConditionItem">
             <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-label">日期范围</label>
                     <div class="layui-inline" id="test-range">
                         <div class="layui-input-inline">
-                            <input type="text" id="startDate" class="layui-input" placeholder="开始日期">
+                            <input type="text" id="startDate" class="layui-input searchValue" placeholder="开始日期">
                         </div>
                         <div class="layui-form-mid">-</div>
                         <div class="layui-input-inline">
-                            <input type="text" id="endDate" class="layui-input" placeholder="结束日期">
+                            <input type="text" id="endDate" class="layui-input searchValue" placeholder="结束日期">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="operator floatRight">
+        <div class="selectConditionItem">
             <button id="sureSearch">查询</button>
             <button id="exportForm">导出汇总表</button>
             <!-- <button id="importForm">导入管理员信息</button> -->
             <button id="reset">重置</button>
         </div>
     </div>
+
 </div>
 <div class="WatchApplicationContent">
     <div class="totalNumber clearFloat">

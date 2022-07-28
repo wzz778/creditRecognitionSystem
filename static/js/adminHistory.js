@@ -78,6 +78,7 @@ sureSearch.onclick = function () {
         return
     }
     GetAllInfo(now_page, per_Page, limitationFactor())
+    swal('查询成功')
 }
 // 重置函数
 resetSearch.onclick = function () {
@@ -88,6 +89,7 @@ resetSearch.onclick = function () {
     now_page = 1
     nowPage.innerHTML = now_page
     GetAllInfo(now_page, per_Page, limitationFactor())
+    swal('已重置')
 }
 
 // 判断是否需要请求上一页
@@ -122,6 +124,7 @@ function GetAllInfo(page, perpage, obj) {
         data: obj
     })
         .then((result) => {
+            // console.log(result.data)
             all_Page = result.data.allPage
             allNumber.innerHTML = `共${result.data.allRecords}条`
             //删除的判断
@@ -183,7 +186,7 @@ function GetAllInfo(page, perpage, obj) {
                     changeConment[i].style.display='none'
                 }
             }
-            swal('查询成功')
+            // swal('查询成功')
         })
         .catch((err) => {
             console.log(err)
