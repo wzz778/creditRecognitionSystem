@@ -2,6 +2,7 @@
 {{block 'title'}}审核申请表{{/block}}
 {{block 'head'}}
 <link rel="stylesheet" href="public/css/examineApplication.css">
+<link rel="stylesheet" href="public/layui/css/layui.css">
 {{/block}}
 {{block 'body'}}
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 10px;">
@@ -47,7 +48,7 @@
                 <td class="ms">申请类别</td>
                 <td class="ms">申请学分</td>
                 <td class="ml">
-                    <a class='mr' target="_blank" href='particulars' onclick='look(this)'>观看详情</a>
+                    <a class='mr' target="_blank" href='particulars' onclick='look(this)'>查看详情</a>
                     <a class='md' href='javascript:;' onclick='pass(this)'>通过</a>
                     <a class='md' href='javascript:;' onclick='refuse(this)'>驳回</a>
                 </td>
@@ -74,5 +75,6 @@
 </div>
 {{/block}}
 {{block 'bottom'}}
+<script src="public/layui/layui.js"></script>
 <script src="public/js/examineApplication.js"></script>
 {{/block}}

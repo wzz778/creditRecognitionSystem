@@ -115,8 +115,6 @@ router.get('/user/getEnclosure',(req,res)=>{
 })
 
 
-
-
 //审核申请表
 router.get('/examineApplication',(req,res)=>{
     let user = jwt.decode(req.session.token);
@@ -167,6 +165,7 @@ router.post('/api/login', (req, res) => {
 })
 //获取个人信息
 router.get('/api/getmymessage', (req, res) => {
+    console.log(jwt.decode(req.session.token));
     axios({
         url:'user/userInfo',
         method:'get',

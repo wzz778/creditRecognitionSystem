@@ -21,6 +21,7 @@ function myFunction() {
                 // }, 1000)               
             } else {
                 swal('登录失败', "您输入的账号密码不正确", "error");
+                return 
             }
             return  axios({
                 url: '/api/getmymessage',method: 'get',})
