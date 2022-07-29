@@ -27,7 +27,16 @@ let son = document.getElementsByName('specific_information')[0];
 let son2 = document.getElementById('son2');
 let usermessage = document.getElementsByClassName('usermessage');
 let credittypesonson = document.getElementById('credittypesonson');
-
+axios({
+  url: '/api/getmymessage',
+  method: 'get',
+  }).then(data=>{
+    usermessage[0].innerHTML=data.data.name;
+    usermessage[1].innerHTML=data.data.sex;
+    usermessage[2].innerHTML=data.data.userName;
+    usermessage[3].innerHTML=data.data.academy;
+    usermessage[4].innerHTML=data.data.major_class;
+})
 $('#postbutton').on('click', function () {
   var o = $('#form').serializeObject();
   // console.log(o);

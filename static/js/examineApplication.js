@@ -136,7 +136,7 @@ function changepage(page,set) {
                 <td class="ms">${redata.pageInfo[n].classify.b_Indicator_name}</td>
                 <td class="ms">${redata.pageInfo[n].classify.b_points_available}</td>
                 <td class="ml">
-                    <a class='mr' href='particulars?id=${redata.pageInfo[n].id}' onclick='look(this)'>观看详情</a>
+                    <a class='mr' href='particulars?id=${redata.pageInfo[n].id}' onclick='look(this)'>查看详情</a>
                     <a class='md' href='javascript:;' onclick='pass(this)'>通过</a>
                     <a class='md' href='javascript:;' onclick='refuse(this)'>驳回</a>
                 </td>
