@@ -212,81 +212,121 @@
     <div class="operation">
         <button id="del" onclick="delFnAll()">删除</button>
     </div>
-    <div class="adminCreditManagementContentTop adminCreditManagementContentItem">
-        <ul>
-            <li>
-                <span>学分构成</span>
-            </li>
-            <li>排序</li>
-            <li>详情</li>
-            <li>操作框</li>
-        </ul>
-    </div>
-    <div id="item">
-        <div class="adminCreditManagementContentContent adminCreditManagementContentItem">
-            <ul>
-                <li class="constituteSty">
-                    <span class="expandItem" onclick='watchChild(this)'>
+    <!-- 存放学分构成的父盒子  二级目录 -->
+    <div class="Table">
+        <!-- 学分构成 -->
+        <div class="TableItem">
+            <div class="">
+                <span class="expandItem" onclick='watchChild(this)'>
+                    <span class="remove"></span>
+                    <span onclick="" class=""></span>
+                </span>
+                <span>
+                    <div class="" style="display: none;"></div>
+                    <input type="checkbox">
+                </span>
+                <span>创新创业</span>
+                <!-- 存放操作的盒子 -->
+                <span>
+                    <button>
+                        <i class="layui-icon">&#xe654;</i>
+                    </button>
+                    <button>
+                        <i class="layui-icon">&#xe642;</i>
+                    </button>
+                    <button>
+                        <i class="layui-icon">&#xe640;</i>
+                    </button>
+                </span>
+            </div>
+            <!-- 存放指标 -->
+            <div class="CreditIndicator" style="display: none;">
+                <span>
+                    <div class="" style="display: none;"></div>
+                    <input type="checkbox">
+                </span>
+                <span>指标</span>
+                <span>
+                    <button>
+                        <i class="layui-icon">&#xe642;</i>
+                    </button>
+                    <button>
+                        <i class="layui-icon">&#xe640;</i>
+                    </button>
+                    <button>查看备注</button>
+                </span>
+            </div>
+        </div>
+        <div class="TableItem">
+            <div class="">
+                <span class="expandItem" onclick='watchChild(this)'>
+                    <span class="remove"></span>
+                    <span onclick="" class=""></span>
+                </span>
+                <span>
+                    <div class="" style="display: none;"></div>
+                    <input type="checkbox">
+                </span>
+                <span>创新创业</span>
+                <!-- 存放操作的盒子 -->
+                <span>
+                    <button>
+                        <i class="layui-icon">&#xe654;</i>
+                    </button>
+                    <button>
+                        <i class="layui-icon">&#xe642;</i>
+                    </button>
+                    <button>
+                        <i class="layui-icon">&#xe640;</i>
+                    </button>
+                </span>
+            </div>
+            <!-- 存放目录 -->
+            <div class="CreditDir" style="display: none;">
+                <div class="">
+                    <span class="expandItem" onclick='watchChildDir(this)'>
                         <span class="remove"></span>
                         <span onclick="" class=""></span>
                     </span>
-                    <span>学科竞赛</span>
-                </li>
-                <li>1</li>
-                <li>
-                    <button>查看</button>
-                </li>
-                <li>
-                    <button>编辑</button>
-                    <button>新增</button>
-                    <button onclick="delFnOne(this)">删除</button>
-                </li>
-            </ul>
-            <!-- 儿子 -->
-            <div class="ChildDetails" style="display: none;">
-                <div class="ChildDetailsTop ChildDetailsItem">
-                    <ul>
-                        <li>
-                            <input type="checkbox" class="childDelAll commonDel" onclick="allChildInputFather(this)" autocomplete="off">
-                        </li>
-                        <li>认定范围</li>
-                        <li>学分</li>
-                        <li>操作框</li>
-                    </ul>
+                    <span>
+                        <div class="" style="display: none;"></div>
+                        <input type="checkbox">
+                    </span>
+                    <span>二级目录</span>
+                    <span>
+                        <button>
+                            <i class="layui-icon">&#xe654;</i>
+                        </button>
+                        <button>
+                            <i class="layui-icon">&#xe642;</i>
+                        </button>
+                        <button>
+                            <i class="layui-icon">&#xe640;</i>
+                        </button>
+                    </span>
                 </div>
-                <div class="ChildDetailsContent ChildDetailsItem">
-                    <div class="SecondDir clearFloat">
-                        <span>子级目录:</span>
-                        <button class="floatRight">删除此子级目录</button>
-                    </div>
-                    <ul>
-                        <li>
-                            <input type="checkbox" class="childDel commonDel" onclick="judgeChild(this)" autocomplete="off">
-                        </li>
-                        <li>国际竞赛一等奖(最高奖)</li>
-                        <li>6.0</li>
-                        <li>
-                            <button onclick="delFnOne(this)">删除</button>
-                            <button>修改</button>
-                            <button>新增</button>
-                        </li>
-                    </ul>
-                    <ul>
-                        <li>
-                            <input type="checkbox" class="childDel commonDel" onclick="judgeChild(this)" autocomplete="off">
-                        </li>
-                        <li>获全国计算机二级及以上等级证书；非外语专业学生通过英语六级考试；外语专业学生通过专业八级</li>
-                        <li>6.0</li>
-                        <li>
-                            <button onclick="delFnOne(this)">删除</button>
-                            <button>修改</button>
-                            <button>新增</button>
-                        </li>
-                    </ul>
+                <!-- 存放指标 -->
+                <div class="CreditIndicator" style="display: none;">
+                    <span>
+                        <div class="" style="display: none;"></div>
+                        <input type="checkbox">
+                    </span>
+                    <span>指标</span>
+                    <span>
+                        <button>
+                            <i class="layui-icon">&#xe642;</i>
+                        </button>
+                        <button>
+                            <i class="layui-icon">&#xe640;</i>
+                        </button>
+                        <button>查看备注</button>
+                    </span>
                 </div>
             </div>
         </div>
+
     </div>
+
 </div>
 <div class="Indicator clearFloat" style="display: none;">
     <div class="operation">
@@ -296,7 +336,8 @@
     <div class="IndicatorTop clearFloat IndicatorItem">
         <ul>
             <li>
-                <input type="checkbox" class="IndicatorCheckBoxFather" onclick="IndicatorCheckBoxFatherFn(this)" autocomplete="off">
+                <input type="checkbox" class="IndicatorCheckBoxFather" onclick="IndicatorCheckBoxFatherFn(this)"
+                    autocomplete="off">
             </li>
             <li>认定范围</li>
             <li>学分</li>
@@ -307,7 +348,8 @@
         <ul>
             <li>
                 <!-- 点击搜索时要把之前选中的清空 -->
-                <input type="checkbox" class="IndicatorCheckBoxSon commonDel" onclick="IndicatorCheckBoxSonFn(this)" autocomplete="off">
+                <input type="checkbox" class="IndicatorCheckBoxSon commonDel" onclick="IndicatorCheckBoxSonFn(this)"
+                    autocomplete="off">
                 <!-- 存放id -->
                 <div style="display: none;"></div>
             </li>
@@ -323,7 +365,8 @@
         </ul>
         <ul>
             <li>
-                <input type="checkbox" class="IndicatorCheckBoxSon commonDel"  onclick="IndicatorCheckBoxSonFn(this)" autocomplete="off">
+                <input type="checkbox" class="IndicatorCheckBoxSon commonDel" onclick="IndicatorCheckBoxSonFn(this)"
+                    autocomplete="off">
             </li>
             <li>测试</li>
             <li>6</li>
@@ -343,4 +386,5 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="/public/js/adminCreditManagementTwo.js"></script>
 <script src="/public/js/adminCreditManagement.js"></script>
+<script src="/public/js/CreditTree.js"></script>
 {{/block}}

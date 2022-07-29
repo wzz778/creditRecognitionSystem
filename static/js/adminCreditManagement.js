@@ -3,59 +3,50 @@
 let expandItem = document.getElementsByClassName('expandItem')
 
 // 获取学分构成数据
+let Table = document.getElementsByClassName('Table')
 function watchFather() {
     axios({
         method: 'GET',
         url: '/getCreditsComposition',
     })
         .then((result) => {
-            if (result.data.err != 0) {
-                swal('网络错误,请重试!')
-                return
-            }
-            item.innerHTML = ''
+            // console.log(result.data)
+            // 遍历一级目录
+            let str = ''
             for (let i = 0; i < result.data.msg.length; i++) {
-                item.innerHTML += `
-            <div class="adminCreditManagementContentContent adminCreditManagementContentItem">
-                <ul>
-                    <li class="constituteSty">
-                        <span class="expandItem" onclick='watchChild(this)'>
-                            <span class="remove"></span>
-                            <span onclick="" class=""></span>
-                        </span>
-                        <span>${result.data.msg[i].afirstLevel}</span>
-                        <div style="display: none;">${result.data.msg[i].aid}</div>
-                    </li>
-                    <li>${i + 1}</li>
-                    <li>
-                        <span style="display: none;">${result.data.msg[i].afirstLevel}</span>
-                        <button onclick='CompositionChangeFn(this)'>修改</button>
-                        <button onclick='addDirFn(this)'>添加子级目录</button>
-                        <div style="display: none;">${result.data.msg[i].aid}</div>
-                    </li>
-                    <li>
-                        <button onclick='skipAdd(this)'>添加认定范围</button>
-                        <button onclick="delFnFather(this)">删除</button>
-                        <div style="display: none;">${result.data.msg[i].aid}</div>
-                    </li>
-                </ul>
-                <div class="ChildDetails" style="display: none; ">
-                    <div class="ChildDetailsTop ChildDetailsItem">
-                        <ul>
-                            <li>
-                                <input type="checkbox" class="childDelAll " onclick="allChildInputFather(this)">
-                            </li>
-                            <li>认定范围</li>
-                            <li>学分</li>
-                            <li>操作框</li>
-                        </ul>
-                    </div>
-                    <div class="ChildDetailsContent ChildDetailsItem"></div>
-                </div>
+                str += `
+        <div class="TableItem">
+            <div class="">
+                <span class="expandItem" onclick='watchChild(this)'>
+                    <span class="remove"></span>
+                    <span onclick="" class=""></span>
+                    <div class="" style="display: none;">${result.data.msg[i].aid}</div>
+                </span>
+                <span>
+                    <div class="" style="display: none;">${result.data.msg[i].aid}</div>
+                    <input type="checkbox" onclick='allChildInputFather(this)'>
+                </span>
+                <span>${result.data.msg[i].afirstLevel}</span>
+                <!-- 存放操作的盒子 -->
+                <span>
+                    <div class="" style="display: none;">${result.data.msg[i].afirstLevel}</div>
+                    <button onclick='addDirFn(this)'>
+                        <i class="layui-icon">&#xe654;</i>
+                    </button>
+                    <button onclick='CompositionChangeFn(this)'>
+                        <i class="layui-icon">&#xe642;</i>
+                    </button>
+                    <button onclick='delFnFather(this)'>
+                        <i class="layui-icon">&#xe640;</i>
+                    </button>
+                    <div class="" style="display: none;">${result.data.msg[i].aid}</div>
+                </span>
             </div>
-            `
+            <div></div>
+        </div>
+                `
             }
-            swal('获取成功')
+            Table[0].innerHTML = str
         })
         .catch((err) => {
             // console.log(err)
@@ -65,141 +56,162 @@ function watchFather() {
 watchFather()
 // 查看子级
 function watchChild(event) {
-    // 判断内容盒子是否显现
-    if (event.parentElement.parentElement.parentElement.lastElementChild.style.display == 'none') {
-        event.parentElement.parentElement.parentElement.lastElementChild.style.display = ''
-        event.firstElementChild.style.display = 'none'
-    } else {
-        event.parentElement.parentElement.parentElement.lastElementChild.style.display = 'none'
-        event.firstElementChild.style.display = ''
-    }
-    // 请求下一级函数
-    let ele = event.parentElement.parentElement.parentElement.lastElementChild.lastElementChild//获取存放的位置
+    event.nextElementSibling.lastElementChild.checked = ''
+    // 请求数据
     axios({
         method: 'POST',
         url: '/IndicatorOperate/showIndicator',
         data: {
-            id: event.parentElement.lastElementChild.innerHTML
+            id: event.lastElementChild.innerHTML
         }
     })
         .then((result) => {
             // console.log(result.data)
-            if (result.data.err != 0) {
-                swal('网络错误,请重试!')
-                return
-            }
-            ele.innerHTML = ''
+            let str = ``
+            let str1 = ``
             if (result.data.msg == '没有指标信息') {
-                // 没有指标信息
-                ele.innerHTML = `
-            <div id="adminHistoryContentNo" style='min-height: 50px;
-            line-height: 50px;
-            text-align: center;
-            color: red;
-            font-size: 18px'>
-                对不起没有该内容
-            </div>
-            `
+                swal('没有指标信息')
                 return
             }
             for (let i = 0; i < result.data.msg.length; i++) {
-                // 判断是否是目录
-                if (result.data.msg[i].child == '下边没有指标了' && result.data.msg[i].b_points_available) {
-                    // 不是目录
-                    ele.innerHTML += `
-                    <ul>
-                        <li>
-                            <input type="checkbox" class="childDel commonDel" onclick="judgeChild(this)">
-                            <div style="display: none;">${result.data.msg[i].b_id}</div>
-                        </li>
-                        <li>${result.data.msg[i].b_Indicator_name}</li>
-                        <li>${result.data.msg[i].b_points_available}</li>
-                        <li>
-                            <div style='display:none;'>${result.data.msg[i].b_remark}</div>
-                            <button onclick="delFnOne(this)">删除</button>
-                            <button onclick='IndicatorTwo(this)'>修改</button>
-                            <button onclick='watchRemark(this)'>查看备注</button>
-                            <div style='display:none;'>
-                                <div>${result.data.msg[i].b_id}</div>
-                                <div>${result.data.msg[i].b_Indicator_name}</div>
-                                <div>${result.data.msg[i].b_points_available}</div>
-                                <div>${result.data.msg[i].b_remark}</div>
-                            </div>
-                        </li>
-                    </ul>
-                `
-                }
-            }
-            for (let i = 0; i < result.data.msg.length; i++) {
-                // console.log(result.data)
-                if (!result.data.msg[i].b_points_available) {
-                    // 有子级目录判断下面有没有值
-                    if (result.data.msg[i].child == '下边没有指标了') {
-                        // console.log(123)
-                        // 这里是目录但是没有指标
-                        ele.innerHTML += `
-                    <div class="SecondDir clearFloat">
-                        子级目录:
-                        <span>${result.data.msg[i].b_Indicator_name}</span>
-                        <button style="float: right;" onclick='changeOneDirFn(this)'>修改子级目录</button>
-                        <button class="floatRight" onclick='delFnOneNo(this)'>删除此子级目录</button>
-                        <div style='display:none'>${result.data.msg[i].b_id}</div>
-                    </div>
-                    <div id="adminHistoryContentNo" style='min-height: 50px;
-            line-height: 50px;
-            text-align: center;
-            color: red;
-            font-size: 18px'>
-                对不起没有没有子级指标
+                if (result.data.msg[i].child == `下边没有指标了` && result.data.msg[i].b_points_available != 0) {
+                    // 是指标而不是目录
+                    str += `
+            <div class="CreditIndicator">
+                <span>
+                    <div class="" style="display: none;">${result.data.msg[i].b_id}</div>
+                    <input type="checkbox" onclick='judgeChild(this)' class='commonDel'>
+                    <div class="" style="display: none;">${result.data.msg[i].b_id}</div>
+                </span>
+                <span>指标名:${result.data.msg[i].b_Indicator_name};&nbsp;&nbsp;分数:${result.data.msg[i].b_points_available}</span>
+                <div class="" style="display: none;">
+                    <span>${result.data.msg[i].b_Indicator_name}</span>
+                    <span>${result.data.msg[i].b_points_available}</span>
+                </div>
+                <span>
+                    <div class="" style="display: none;">${result.data.msg[i].b_remark}</div>
+                    <button onclick='IndicatorTwo(this)'>
+                        <i class="layui-icon">&#xe642;</i>
+                    </button>
+                    <button onclick='delFnOne(this)'>
+                        <i class="layui-icon">&#xe640;</i>
+                    </button>
+                    <button onclick='watchRemark(this)'>
+                        <i class="layui-icon">&#xe60b;</i>
+                    </button>
+                </span>
             </div>
-                `
-                    } else {
-                        // 遍历
-                        let divEle = document.createElement('div')
-                        divEle.innerHTML += `
-                        <div class="SecondDir clearFloat">
-                            子级目录:
-                            <span>${result.data.msg[i].b_Indicator_name}</span>
-                            <button style="float: right;" onclick='changeTwoDirFn(this)'>修改子级目录</button>
-                            <button class="floatRight" onclick='delFnOne(this)'>删除此子级目录</button>
-                            <div style='display:none'>${result.data.msg[i].b_id}</div>
-                        </div>
-                        `
+                    `
+                } else {
+                    // 判断目录有没有子级指标
+                    let strDir = ``
+                    if (result.data.msg[i].child != '下边没有指标了') {
+                        // 目录里边有指标
                         for (let j = 0; j < result.data.msg[i].child.length; j++) {
-                            divEle.innerHTML += `
-                                <ul>
-                                    <li>
-                                        <input type="checkbox" class="childDel commonDel" onclick="judgeChild(this)">
-                                        <div style='display:none;'>${result.data.msg[i].child[j].b_id}</div>
-                                    </li>
-                                    <li>${result.data.msg[i].child[j].b_Indicator_name}</li>
-                                    <li>${result.data.msg[i].child[j].b_points_available}</li>
-                                    <li>
-                                        <div style='display:none;'>${result.data.msg[i].child[j].b_remark}</div>
-                                        <button onclick="delFnOne(this)">删除</button>
-                                        <button onclick='IndicatorThree(this)'>修改</button>
-                                        <button onclick='watchRemark(this)'>查看备注</button>
-                                        <div style='display:none;'>${result.data.msg[i].child[j].b_superior_id}</div>
-                                    </li>
-                                </ul>
-                `
+                            strDir += `
+                            <!-- 存放指标 -->
+                    <div class="CreditIndicator">
+                        <span>
+                            <div class="" style="display: none;">${result.data.msg[i].child[j].b_id}</div>
+                            <input type="checkbox" onclick='judgeChildDir(this)' class='commonDel'>
+                            <div class="" style="display: none;">${result.data.msg[i].child[j].b_id}</div>
+                        </span>
+                        <span>指标名:${result.data.msg[i].child[j].b_Indicator_name};&nbsp;&nbsp;分数:${result.data.msg[i].child[j].b_points_available}</span>
+                        <div class="" style="display: none;">
+                            <span>${result.data.msg[i].child[j].b_Indicator_name}</span>
+                            <span>${result.data.msg[i].child[j].b_points_available}</span>
+                        </div>
+                        <span>
+                            <div class="" style="display: none;">${result.data.msg[i].child[j].b_remark}</div>
+                            <button onclick='IndicatorThree(this)'>
+                                <i class="layui-icon">&#xe642;</i>
+                            </button>
+                            <button onclick='delFnOne(this)'>
+                                <i class="layui-icon">&#xe640;</i>
+                            </button>
+                            <button onclick='watchRemark(this)'>
+                                <i class="layui-icon">&#xe60b;</i>
+                            </button>
+                        </span>
+                    </div>
+                            `
                         }
-                        divEle.className = 'ChildDetailsContent ChildDetailsItem new'
-                        ele.append(divEle)
                     }
+                    // 是目录
+                    str1 += `
+            <div class="CreditDir">
+                <div class="">
+                    <span class="expandItem" onclick='watchChildDir(this)'>
+                        <span class="remove"></span>
+                        <span onclick="" class=""></span>
+                        <div class="" style="display: none;">${result.data.msg[i].b_id}</div>
+                    </span>
+                    <span>
+                        <div class="" style="display: none;">${result.data.msg[i].b_id}</div>
+                        <input type="checkbox" onclick='allChildInputFatherDir(this)' class='commonDel'>
+                    </span>
+                    <span>${result.data.msg[i].b_Indicator_name}</span>
+                    <span>
+                        <div class="" style="display: none;">${result.data.msg[i].b_id}</div>
+                        <div class="" style="display: none;">${result.data.msg[i].b_Indicator_name}</div>
+                        <button onclick='skipAdd(this)'>
+                            <i class="layui-icon">&#xe654;</i>
+                        </button>
+                        <button onclick='changeTwoDirFn(this)'>
+                            <i class="layui-icon">&#xe642;</i>
+                        </button>
+                        <button onclick='delFnOne(this)'>
+                            <i class="layui-icon">&#xe640;</i>
+                        </button>
+                        <div class="" style="display: none;">${result.data.msg[i].b_superior_id}</div>
+                    </span>
+                </div>
+                <div style='display:none;'>
+                ${strDir}
+                </div>
+            </div>
+        </div>
+                    `
                 }
+
+            }
+            str += str1
+            event.parentElement.parentElement.lastElementChild.innerHTML = str
+            // 判断内容盒子是否显现
+            if (event.firstElementChild.style.display == 'none') {
+                event.parentElement.nextElementSibling.style.display = 'none'
+                event.firstElementChild.style.display = ''
+            } else {
+                event.parentElement.nextElementSibling.style.display = ''
+                event.firstElementChild.style.display = 'none'
             }
         })
         .catch((err) => {
-            // console.log(err)
-            swal('网络错误')
+            console.log(err)
+            swal('网络错误，请重试')
         })
+
+}
+// 三级目录将盒子显现，通过二级目录去请求
+function watchChildDir(event) {
+    if (!event.parentElement.nextElementSibling) {
+        swal('没有子级指标')
+        return
+    }
+    // 判断内容盒子是否显现
+    if (event.firstElementChild.style.display == 'none') {
+        event.parentElement.nextElementSibling.style.display = 'none'
+        event.firstElementChild.style.display = ''
+    } else {
+        event.parentElement.nextElementSibling.style.display = ''
+        event.firstElementChild.style.display = 'none'
+    }
 }
 // 查看备注
 function watchRemark(event) {
     // 奖备注显示在弹窗中
     let str = '没有备注信息'
-    if (event.parentElement.firstElementChild.innerHTML != 'null'&&event.parentElement.firstElementChild.innerHTML!='') {
+    if (event.parentElement.firstElementChild.innerHTML != 'null' && event.parentElement.firstElementChild.innerHTML != '') {
         str = event.parentElement.firstElementChild.innerHTML
     }
     swal(str)
@@ -207,37 +219,88 @@ function watchRemark(event) {
 
 // 父级选择框
 function allChildInputFather(event) {
-    let allUls = event.parentElement.parentElement.parentElement.parentElement.lastElementChild.getElementsByTagName('ul')
+    let allInput = event.parentElement.parentElement.parentElement.getElementsByTagName('input')
     if (event.checked) {
-        // 看下边有几个ul
-        for (let j = 0; j < allUls.length; j++) {
-            // 将所有选中
-            allUls[j].firstElementChild.firstElementChild.checked = 'true'
+        for (let i = 0; i < allInput.length; i++) {
+            allInput[i].checked = 'true'
         }
     } else {
-        for (let j = 0; j < allUls.length; j++) {
-            // 将所有选中
-            allUls[j].firstElementChild.firstElementChild.checked = ''
+        for (let i = 0; i < allInput.length; i++) {
+            allInput[i].checked = ''
         }
     }
 }
-// 判断子级选择框是否完全选中
+
+// 二级目录
+function allChildInputFatherDir(event) {
+    let allInput = event.parentElement.parentElement.parentElement.getElementsByTagName('input')
+    if (event.checked) {
+        for (let i = 0; i < allInput.length; i++) {
+            allInput[i].checked = 'true'
+        }
+        // 判断是否需要将顶级的选择
+        let dirAllInput = event.parentElement.parentElement.parentElement.parentElement.getElementsByTagName('input')
+        let yn = true
+        for (let j = 0; j < dirAllInput.length; j++) {
+            if (!dirAllInput[j].checked) {
+                yn = false
+                break
+            }
+        }
+        if (yn) {
+            event.parentElement.parentElement.parentElement.parentElement.parentElement.firstElementChild.firstElementChild.nextElementSibling.lastElementChild.checked = 'true'
+        }
+        else {
+            event.parentElement.parentElement.parentElement.parentElement.parentElement.firstElementChild.firstElementChild.nextElementSibling.lastElementChild.checked = ''
+        }
+    } else {
+        for (let i = 0; i < allInput.length; i++) {
+            allInput[i].checked = ''
+        }
+        event.parentElement.parentElement.parentElement.parentElement.parentElement.firstElementChild.firstElementChild.nextElementSibling.lastElementChild.checked = ''
+    }
+}
+// 判断子级选择框是否完全选中二级
 function judgeChild(event) {
     // 判断是否都选中
     let yn = true
-    let fatherInput = event.parentElement.parentElement.parentElement.parentElement.firstElementChild.firstElementChild.firstElementChild.firstElementChild
-    let allUls = event.parentElement.parentElement.parentElement.parentElement.lastElementChild.getElementsByTagName('ul')
-    for (let i = 0; i < allUls.length; i++) {
-        if (!allUls[i].firstElementChild.firstElementChild.checked) {
+    let childInputAll = event.parentElement.parentElement.parentElement.getElementsByTagName('input')
+    // console.log(childInputAll)
+    for (let i = 0; i < childInputAll.length; i++) {
+        if (!childInputAll[i].checked) {
             yn = false
+            break
         }
     }
     if (yn) {
         // 全部都选中了
-        fatherInput.checked = 'true'
+        event.parentElement.parentElement.parentElement.parentElement.firstElementChild.firstElementChild.nextElementSibling.lastElementChild.checked = 'true'
     } else {
-        fatherInput.checked = ''
+        event.parentElement.parentElement.parentElement.parentElement.firstElementChild.firstElementChild.nextElementSibling.lastElementChild.checked = ''
     }
+}
+function judgeChildDir(event) {
+    // 判断是否都选中
+    let yn = true
+    let childInputAll = event.parentElement.parentElement.parentElement.getElementsByTagName('input')
+    // console.log(childInputAll)
+    for (let i = 0; i < childInputAll.length; i++) {
+        if (!childInputAll[i].checked) {
+            yn = false
+            break
+        }
+    }
+    let ele = event.parentElement.parentElement.parentElement.parentElement
+    if (yn) {
+        // 全部都选中了
+        ele.firstElementChild.firstElementChild.nextElementSibling.lastElementChild.checked = 'true'
+        // 将最顶级的也选中
+        ele.parentElement.parentElement.firstElementChild.firstElementChild.nextElementSibling.lastElementChild.checked = 'true'
+    } else {
+        ele.firstElementChild.firstElementChild.nextElementSibling.lastElementChild.checked = ''
+        ele.parentElement.parentElement.firstElementChild.firstElementChild.nextElementSibling.lastElementChild.checked = ''
+    }
+
 }
 // 删除的选中函数
 function delFnAll() {
@@ -246,7 +309,7 @@ function delFnAll() {
     let arrId = []
     for (let i = 0; i < commonDel.length; i++) {
         if (commonDel[i].checked) {
-            arrId.push(Number(commonDel[i].parentElement.lastElementChild.innerHTML))
+            arrId.push(Number(commonDel[i].parentElement.firstElementChild.innerHTML))
             yn = true
         }
     }
@@ -316,6 +379,7 @@ function delFnOne(event) {
             // 发送数据
             let arrId = []
             arrId.push(Number(event.parentElement.parentElement.firstElementChild.lastElementChild.innerHTML))
+            console.log(arrId)
             axios({
                 method: 'POST',
                 url: '/IndicatorOperate/deleteIndicator',
@@ -324,7 +388,7 @@ function delFnOne(event) {
                 }
             })
                 .then((result) => {
-                    // console.log(result.data)
+                    console.log(result.data)
                     if (result.data.err == 0) {
                         swal('删除成功')
                         // 重新获取数据
@@ -550,14 +614,14 @@ function changeTwoDirFn(event) {
             for (let i = 0; i < result.data.msg.length; i++) {
                 changeTwoDirFather.add(new Option(result.data.msg[i].afirstLevel, result.data.msg[i].aid))
             }
-            changeTwoDirFather.value = event.parentElement.parentElement.parentElement.parentElement.parentElement.firstElementChild.firstElementChild.lastElementChild.innerHTML
+            changeTwoDirFather.value = event.parentElement.lastElementChild.innerHTML
         })
         .catch((err) => {
             // console.log(err)
             swal('网络错误')
         })
-    changeTwoDirEle.value = event.parentElement.firstElementChild.innerHTML
-    changeTwoDirId.innerHTML = event.parentElement.lastElementChild.innerHTML
+    changeTwoDirEle.value = event.parentElement.firstElementChild.nextElementSibling.innerHTML
+    changeTwoDirId.innerHTML = event.parentElement.firstElementChild.innerHTML
 }
 
 function changeOneDirFn(event) {
@@ -605,6 +669,7 @@ sureChange.onclick = function () {
         .then((result) => {
             bodyTop[1].style.display = 'none'
             watchFather()
+            swal('修改成功')
         })
         .catch((err) => {
             // console.log(err)
