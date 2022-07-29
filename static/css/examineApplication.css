@@ -225,6 +225,151 @@
   opacity: 1;
 }
 
+textarea {
+  margin-top: 10px;
+  padding: 5px;
+  width: 400px;
+  border-radius: 3px;
+  resize: none;
+}
+
+#xzzsdiv {
+  width: 450px;
+  text-align: center;
+  color: #c8c8c8;
+  position: relative;
+}
+
+#xzzs {
+  position: absolute;
+  bottom: 5px;
+  right: 25px;
+}
+
+.layui-layer-title {
+  font-size: 17px;
+}
+
+h3 {
+  padding: 15px;
+  font-size: 17px;
+  border-bottom: 1px #c8c8c8 solid;
+}
+
+.fade {
+  animation: fade .3s;
+  -webkit-animation: fade .3s;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+#feedback {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  position: fixed;
+  top: 0px;
+  z-index: 101;
+  display: none;
+  opacity: 0;
+}
+
+#feedback #feedback_main {
+  width: 450px;
+  height: 350px;
+  background-color: white;
+  margin: 20vh auto;
+  border-radius: 3px;
+  position: relative;
+}
+
+#feedback #feedback_main textarea {
+  margin-top: 10px;
+  padding: 5px;
+  width: 400px;
+  height: 200px;
+  border-radius: 3px;
+  resize: none;
+}
+
+#feedback #feedback_main #xzzsdiv {
+  width: 450px;
+  text-align: center;
+  color: #c8c8c8;
+  position: relative;
+}
+
+#feedback #feedback_main #xzzs {
+  position: absolute;
+  bottom: 5px;
+  right: 25px;
+}
+
+#feedback #feedback_main .layui-layer-title {
+  font-size: 17px;
+}
+
+#feedback #feedback_main h3 {
+  padding: 15px;
+  font-size: 17px;
+  border-bottom: 1px #c8c8c8 solid;
+}
+
+#feedback #feedback_main .fade {
+  animation: fade .3s;
+  -webkit-animation: fade .3s;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+#feedback #feedback_main button {
+  margin: 15px 0 0 26px;
+  background-color: #009688;
+  padding: 8px 24px;
+  font-size: 15px;
+  border-radius: 3px;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  transition: .3s all;
+}
+
+#feedback #feedback_main button:hover {
+  opacity: 0.7;
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;

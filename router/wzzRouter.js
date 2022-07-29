@@ -125,6 +125,21 @@ router.get('/examineApplication',(req,res)=>{
     }
     // res.render('examineApplication.html')
 })
+//反馈申请表
+router.post('/api/setfeedback', (req, res) => {
+    console.log(req.body);
+    axios({
+        url:'/user/feedback',
+        method:'post',
+        params:req.body,
+    }).then(response=>{
+        console.log(req.session.token);
+        res.send(response.data);
+        // return jwt.decode(req.session.token).username;
+    }).catch(function (error) {
+        res.send(error)
+    });
+})
 //提交申请表
 router.get('/submitApplication',(req,res)=>{
     axios.get('/creditTypeOperate/showCreditType',{
@@ -350,6 +365,19 @@ router.put('/api/passpost', (req, res) => {
             console.log(error);
             res.send(error)
         });
+})
+router.get('/api/getEnclosure', (req, res) => {
+    axios.get('/user/getEnclosure',{
+        params:req.query,
+        headers:{
+            token:req.session.token
+        }},
+    ).then(response=>{
+        console.log(response.data);
+        res.send(response.data);
+    }).catch(function (error) {
+        res.send(error)
+    });
 })
 // router.post('/api/deletepost',(req, res) => {
 //     console.log(req.body);

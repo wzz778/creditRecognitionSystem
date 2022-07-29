@@ -5,7 +5,83 @@ let page_number=document.getElementById('page_number');
 let gopage=document.getElementById('gopage');
 let pageinput=document.getElementById('pageinput');
 let Application_delete=document.getElementById('Application_delete');
+let backid=document.getElementById('backid');
 let layuinumber=0;
+function isnull(val) {
+ 
+    var str = val.replace(/(^\s*)|(\s*$)/g, '');//去除空格;
+  
+    if (str == '' || str == undefined || str == null) {
+        return true;
+    } else {
+        return false;
+    }
+  }
+var feedback = document.getElementById("feedback");
+var feedback_main = document.getElementById("feedback_main");
+let weibo= document.getElementById("weibo");
+// 判断是否登录
+// 判断是否登录
+function Feedback_down() {
+    feedback.style.display = "none";
+    feedback.style.opacity = "0";
+    feedback.classList.remove("fade");
+}
+function Feedback_show(id) {
+    feedback.style.display = "block";
+    feedback.style.opacity = "1";
+    feedback.classList.add("fade");
+    backid.innerHTML=id;
+}
+function passfeedback(){
+    if(isnull(weibo.value)){
+        swal("请填写反馈内容！");
+        return 
+    }
+        swal({
+        title: "你确定驳回该申请表？",
+        text: "你确定驳回该申请表？",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      }, function (isConfirm) {
+        if (isConfirm) {
+            swal('驳回成功', "您所选择的申请表已驳回！", "success");
+            axios({
+                method: 'put',
+                url: '/api/passpost',
+                params:{
+                    id: backid.innerHTML,
+                    status:'-1'
+                }
+                }).then(response=>{
+                    // console.log(response.data);
+                    weibo.value="";
+                    Feedback_down()
+                    changepage(pageinput.value,"1");
+                    
+                }).catch(function (error) {
+                    // console.log(error);
+            });
+        } else{
+            swal("您已取消操作")
+        }
+      })
+}
+$(function(){
+    $("#weibo").keyup(function(){
+     var len = $(this).val().length;
+     if(len > 199){
+      $(this).val($(this).val().substring(0,200));
+     }
+     var num = len;
+     $("#word").text(num);
+    });
+   });
 function look(event){
     let id=event.parentNode.parentNode.children[0].innerHTML;
 
@@ -47,37 +123,38 @@ function pass(event){
 }
 function refuse(event){
     let oneid=event.parentNode.parentNode.children[0].innerHTML;
-    swal({
-        title: "你确定驳回该申请表？",
-        text: "你确定驳回该申请表？",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        closeOnConfirm: false,
-        closeOnCancel: false
-      }, function (isConfirm) {
-        if (isConfirm) {
-            swal('驳回成功', "您所选择的申请表已驳回！", "success");
-            axios({
-                method: 'put',
-                url: '/api/passpost',
-                params:{
-                    id: oneid,
-                    status:'-1'
-                }
-                }).then(response=>{
-                    // console.log(response.data);
-                    changepage(pageinput.value,"1");
+    Feedback_show(oneid);
+    // swal({
+    //     title: "你确定驳回该申请表？",
+    //     text: "你确定驳回该申请表？",
+    //     type: "warning",
+    //     showCancelButton: true,
+    //     confirmButtonColor: "#DD6B55",
+    //     confirmButtonText: "确定",
+    //     cancelButtonText: "取消",
+    //     closeOnConfirm: false,
+    //     closeOnCancel: false
+    //   }, function (isConfirm) {
+    //     if (isConfirm) {
+    //         swal('驳回成功', "您所选择的申请表已驳回！", "success");
+    //         axios({
+    //             method: 'put',
+    //             url: '/api/passpost',
+    //             params:{
+    //                 id: oneid,
+    //                 status:'-1'
+    //             }
+    //             }).then(response=>{
+    //                 // console.log(response.data);
+    //                 changepage(pageinput.value,"1");
                     
-                }).catch(function (error) {
-                    // console.log(error);
-            });
-        } else{
-            swal("您已取消操作")
-        }
-      })
+    //             }).catch(function (error) {
+    //                 // console.log(error);
+    //         });
+    //     } else{
+    //         swal("您已取消操作")
+    //     }
+    //   })
 }
 function changepage(page,set) {
     let status;
@@ -124,6 +201,8 @@ function changepage(page,set) {
             return
         }
         for (let n = 0; n < redata.pageInfo.length; n++) {
+            let b_Indicator_name=redata.pageInfo[n].classify!=undefined?redata.pageInfo[n].classify.b_Indicator_name:'指标不存在';
+            let b_points_available=redata.pageInfo[n].classify!=undefined?redata.pageInfo[n].classify.b_points_available:' ';
             Tbody.innerHTML +=`
             <tr>
                 <td class="ms" style='display:none'>${redata.pageInfo[n].id}</td>
@@ -133,8 +212,8 @@ function changepage(page,set) {
                 <td class="ms">${redata.pageInfo[n].user.academy}</td>
                 <td class="ms">${redata.pageInfo[n].user.major_class}</td>
                 <td class="ms">${redata.pageInfo[n].creditType.afirstLevel}</td>
-                <td class="ms">${redata.pageInfo[n].classify.b_Indicator_name}</td>
-                <td class="ms">${redata.pageInfo[n].classify.b_points_available}</td>
+                <td class="ms">${b_Indicator_name}</td>
+                <td class="ms">${b_points_available}</td>
                 <td class="ml">
                     <a class='mr' href='particulars?id=${redata.pageInfo[n].id}' onclick='look(this)'>查看详情</a>
                     <a class='md' href='javascript:;' onclick='pass(this)'>通过</a>

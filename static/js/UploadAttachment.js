@@ -1,3 +1,6 @@
+if(!sessionStorage.getItem('Applicationid')){
+      location.replace('/submitApplication');
+}
 var files;
 layui.use('upload', function () {
     var $ = layui.jquery
@@ -42,10 +45,55 @@ layui.use('upload', function () {
         }
     });
 });
+let demoList=document.getElementById('demoList');
+const getLastItem = thePath => thePath.substring(thePath.lastIndexOf('/') + 1)
+axios({
+    method: 'GET',
+    url: '/api/getEnclosure',
+    params:{
+        id:sessionStorage.getItem('Applicationid'),
+    }
+})
+    .then((result) => {
+        let data=result.data.data;
+        console.log(data);
+        if(data.length==0) {
+            return
+        }else{
+            for(let i in data){
+                let name=getLastItem(data[i].address);
+                demoList.innerHTML+=`
+                <tr id="upload-'+ index +'">
+                    <td>${name}</td>
+                    <td></td>
+                    <td class="datastatus" style='color:#3FCEBF'>上传成功</td>
+                    <td>
+                        <button class="layui-btn layui-btn-xs demo-reload layui-hide">重传</button>
+                        <button class="layui-btn layui-btn-xs layui-btn-danger demo-delete">删除</button>
+                    </td>
+                </tr>
+                
+                `
+            }
+        }
+    })
+    .catch((err)=>{
+        console.log(err)
+    })
 let Attname=document.getElementById('Attname');
+function isnull(val) {
+ 
+    var str = val.replace(/(^\s*)|(\s*$)/g, '');//去除空格;
+  
+    if (str == '' || str == undefined || str == null) {
+        return true;
+    } else {
+        return false;
+    }
+  }
 $("#testListAction").on("click", function () {
         let name=Attname.value;
-        if(name==''){
+        if(isnull(name)){
             swal("请输入附件名！");
             return
         }
@@ -55,7 +103,7 @@ $("#testListAction").on("click", function () {
             return
         }
         if(datastatus.length>4){
-            swal("附件附件不能超过4个！");
+            swal("上传的附件不能超过4个！");
             return
         }
         for(let i of datastatus){
@@ -91,6 +139,7 @@ $("#testListAction").on("click", function () {
                         n.innerHTML='上传成功'
                         n.style.color="#3FCEBF"
                     }
+                    return 
                 }else if(result.data.err==-1){
                     swal("上传失败！","您提交的文件上传失败！","error")
                 }else if(result.data.msg.msg=="文件格式错误"){
@@ -98,6 +147,11 @@ $("#testListAction").on("click", function () {
                 }else{
                     swal("上传失败！","您提交的文件上传失败！","error")
                 }
+                for(let i of datastatus){
+                    if( i.innerText=='上传中......'){
+                     i.innerHTML=`等待上传`
+                    }
+                 }
             })
             .catch((err)=>{
                 // console.log(err)
@@ -110,7 +164,7 @@ document.getElementById('toend').onclick=function(){
         return
     }
     for(let i of datastatus){
-        if( i.innerHTML=='等待上传'){
+        if( i.innerHTML!='上传成功'){
          swal("你还有附件未上传成功！");
          return
         }
@@ -128,6 +182,7 @@ document.getElementById('toend').onclick=function(){
       }, function (isConfirm) {
         if (isConfirm) {
               swal('提交成功', '您所填写的申请表提交成功', 'success');
+              sessionStorage.removeItem('Applicationid');
               setTimeout(function () {
                 window.location.assign("/EndApplication");
                 // sessionStorage.setItem("tousers", '1');

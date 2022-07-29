@@ -192,7 +192,9 @@ body{
   border: none;
   display: none;
 }
-
+.columna i{
+  margin-right: 5px;
+}
 #head #head-cord #head-cord-fade .dropdown-item {
   font-size: 13px;
   display: block;
