@@ -187,7 +187,7 @@ function watchChild(event) {
             }
         })
         .catch((err) => {
-            console.log(err)
+            // console.log(err)
             swal('网络错误，请重试')
         })
 
@@ -379,7 +379,7 @@ function delFnOne(event) {
             // 发送数据
             let arrId = []
             arrId.push(Number(event.parentElement.parentElement.firstElementChild.lastElementChild.innerHTML))
-            console.log(arrId)
+            // console.log(arrId)
             axios({
                 method: 'POST',
                 url: '/IndicatorOperate/deleteIndicator',
@@ -388,7 +388,7 @@ function delFnOne(event) {
                 }
             })
                 .then((result) => {
-                    console.log(result.data)
+                    // console.log(result.data)
                     if (result.data.err == 0) {
                         swal('删除成功')
                         // 重新获取数据
