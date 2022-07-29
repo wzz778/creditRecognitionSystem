@@ -27,7 +27,7 @@
 
 .selectCondition {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr 540px 1fr;
     align-content: center;
     justify-content: center;
 }

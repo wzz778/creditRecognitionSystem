@@ -2,7 +2,7 @@
     position: relative;
     border-radius: 6px;
     margin-top: 10px;
-    padding-top: 5px;
+    padding-top: 17px;
     padding-bottom: 13px;
     box-shadow: 1px 1px 3px rgba(0,0,0,.2);
     width: 100%;
@@ -16,7 +16,15 @@
     font-size: 13px;
 }
 .search-left{
+    position: relative;
     margin-left: 15px;
+}
+.warning{
+    position: absolute;
+    top: -19px;
+    left: 71px;
+    font-size: 1px;
+    color: red;
 }
 .select-time{
     display: inline-block;
@@ -134,6 +142,8 @@
 .header{
     height: 43.2px;
     cursor: pointer;
+    width: 100%;
+    display: block;
 }
 .back-color{
     background-color: rgb(239 243 248);
@@ -156,7 +166,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    width: 155px;
+    width: 12%;
 }
 .student-operator{
     cursor: pointer;
@@ -189,4 +199,10 @@
     text-align: center;
     height: 43.2px;
     width: 100%;
+}
+
+@media screen and (max-width: 1024px) {
+    .lis{
+        width: 11%;
+    }
 }

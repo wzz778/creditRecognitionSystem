@@ -128,6 +128,10 @@ sureAdd.onclick = function () {
                 swal('请输入正确学分')
                 return
             }
+            if( /^[0-9]*$/.test(b_Indicator_name[i].value)){
+                swal('指标名不能为纯数字')
+                return
+            }
             if (b_remark[i].value == '') {
                 arrSend.push({ b_Indicator_name: b_Indicator_name[i].value, b_points_available: Number(b_points_available[i].value) })
             } else {

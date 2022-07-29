@@ -154,13 +154,10 @@ button{
 
 .expandItem {
     position: relative;
-    margin-left: 73px;
-    margin-right: 5px;
-    padding-right: 7px;
-    top: 2px;
     display: inline-block;
     width: 30px;
     height: 20px;
+    /* background-color: red; */
 }
 
 .expandItem>span {
@@ -172,13 +169,11 @@ button{
 
 .expandItem>span:nth-child(1) {
     position: relative;
-    left: -3px;
-    right: 10px;
+    left: 7px;
 }
 
 .expandItem>span:nth-child(2) {
     position: relative;
-    right: 10px;
     transform: rotate(90deg);
 }
 
@@ -316,4 +311,16 @@ button{
 
 .IndicatorTop>ul{
     background-color: #EFF3F8;
+}
+
+.Table{
+    margin-left: 40px;
+}
+
+.CreditIndicator{
+    margin-left: 60px;
+}
+
+.CreditDir{
+    margin-left: 28px;
 }

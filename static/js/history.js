@@ -84,6 +84,10 @@ function applicationType() {
 applicationType()
 
 
+search[0].oninput = function (){
+    this.value=this.value.replace(/^\D*(\d*(?:\.\d{0,1})?).*$/g, '$1');
+}
+
 //初始渲染页面
 function rendering(){
     let index1 = search_type[1].selectedIndex;
@@ -123,7 +127,7 @@ function rendering(){
         url:'/users/records',
         params:his,
     }).then((data)=>{
-        // console.log(data.data.data);
+        console.log(data.data.data);
         // console.log(data.data.data);
         let date = data.data.data.pageInfo;
         // console.log(date);
@@ -267,8 +271,8 @@ function render(numbers,size){
 
 //搜索
 btn[0].onclick = function (){
-    render(1,btn[0].sizes);
     pading(btn[0].count,btn[0].sizes);
+    render(1,btn[0].sizes);
     swal('搜索成功','','success');
 }
 //重置
