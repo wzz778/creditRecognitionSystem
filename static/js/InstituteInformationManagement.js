@@ -4,6 +4,7 @@ let reclassdiv=document.getElementById('reclassdiv');
 let body=document.getElementById('Contentbody');
 let addclassdiv=document.getElementById('addclassdiv');
 let academy=document.getElementById('academy');
+let academys=document.getElementsByClassName('academy');
 let remajordiv=document.getElementById('remajordiv');
 let reclassop=document.getElementById('reclassop');/*  */
 let newmagor=document.getElementById('newmagor');
@@ -22,6 +23,16 @@ for(let i=0;i<cancel.length;i++){
         cancel[i].parentElement.parentElement.parentElement.style.display='none'
     }
 }
+function isnull(val) {
+ 
+    var str = val.replace(/(^\s*)|(\s*$)/g, '');//去除空格;
+  
+    if (str == '' || str == undefined || str == null) {
+        return true;
+    } else {
+        return false;
+    }
+  }
 function getgrade(){
     axios({
         method: 'get',
@@ -38,11 +49,43 @@ function getgrade(){
                     `
                 }
             }
-            getacademy()
+            begingetacademy();
         }).catch(function (error) {
     });
 }
 getgrade();
+function begingetacademy(){
+    let option = grade.getElementsByTagName('option');
+    for (let n of option) {
+      if (n.selected) {
+        axios({
+            method: 'get',
+            url: '/api/getacademy',
+            params:{id:n.value},
+            }).then(response=>{
+                let date=response.data.data;
+                for(let n in academys){
+                    academys[n].innerHTML='';
+                    // grades[n].innerHTML='<option value="0">请选择...</option>';
+                    for(let i of date){
+                        academys[n].innerHTML+=`
+                            <option value="${i.id}">${i.name}</option>
+                        `
+                    }
+                }
+                getmajor()
+                // for(let i of date){
+                //     academy.innerHTML+=`
+                //         <option value="${i.id}">${i.name}</option>
+                //     `
+                //     getmajor()
+                // }
+            }).catch(function (error) {
+        });
+        break;
+      }
+    }
+}
 function getacademy(){
     let option = grade.getElementsByTagName('option');
     for (let n of option) {
@@ -55,6 +98,7 @@ function getacademy(){
                 let date=response.data.data;
                 academy.innerHTML='';
                 // academy.innerHTML='<option value="0">请选择...</option>';
+                getmajor()
                 for(let i of date){
                     academy.innerHTML+=`
                         <option value="${i.id}">${i.name}</option>
@@ -170,7 +214,7 @@ function watchChild(event) {
 }
 function addgrade(event){
     let input=event.parentNode.parentNode.getElementsByTagName('input')[0];
-    if(input.value==''){
+    if(isnull(input.value)){
         swal("请填写内容！");
     }else{
         swal({
@@ -263,7 +307,7 @@ function regrade(event){
         swal("请选择组织！");
         return
     }
-    if(input.value==''){
+    if(isnull(input.value)){
         swal("请填写组织名称！");
         return
     }
@@ -315,7 +359,7 @@ function addacamacy(event){
         swal("请选择组织！");
         return
     }
-    if(input.value==''){
+    if(isnull(input.value)){
         swal("请填写组织名称！");
         return
     }
@@ -432,7 +476,7 @@ function reacamacy(event){
         swal("请选择组织！");
         return
     }
-    if(input.value==''){
+    if(isnull(input.value)){
         swal("请填写组织名称！");
         return
     }
@@ -483,7 +527,7 @@ function addmajor(event){
         swal("请选择组织！");
         return
     }
-    if(input.value==''){
+    if(isnull(input.value)){
         swal("请填写组织名称！");
         return
     }
@@ -568,7 +612,7 @@ function toremajor(event){
 function remajor(event){
     let faid=newmagor.value
     let rename=event.parentElement.parentElement.getElementsByTagName('input')[0].value;
-    if(rename.value==''){
+    if(isnull(rename.value)){
         swal("请填写完整内容！");
     }
     swal({
@@ -616,7 +660,7 @@ function toaddclass(event){
 }
 function addclass(event){
     let rename=event.parentElement.parentElement.getElementsByTagName('input')[0].value;
-    if( rename==''){
+    if(isnull(rename.value)){
         swal("请填写组织名称！");
         return
     }
@@ -709,7 +753,7 @@ function toreclass(event){
 function reclass(event){
     let faid=reclassop.value
     let rename=event.parentElement.parentElement.getElementsByTagName('input')[0].value;
-    if(rename.value==''){
+    if(isnull(rename.value)){
         swal("请填写完整内容！");
     }
     swal({

@@ -4,6 +4,22 @@
 <link rel="stylesheet" href="public/css/examineApplication.css">
 <link rel="stylesheet" href="public/layui/css/layui.css">
 {{/block}}
+{{block 'bodytop'}}
+<div id="feedback">
+    <div id="feedback_main">
+      <h3>驳回反馈</h3>
+      <span id="backid" style="display: none;"></span>
+      <div id="xzzsdiv">
+        <textarea name="con" id="weibo" cols="45" rows="6"></textarea>
+        <span id="xzzs"><span id="word">0</span>/200</span>
+      </div>
+      <div>
+        <button style=" background-color: #368ae2;" onclick="passfeedback()">发出驳回</button>
+        <button onclick="Feedback_down()">取消驳回</button>
+      </div>
+    </div>
+  </div>
+{{/block}}
 {{block 'body'}}
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 10px;">
     <legend>审核申请表</legend>

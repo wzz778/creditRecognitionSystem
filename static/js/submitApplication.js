@@ -1,3 +1,4 @@
+
 layui.use(['form', 'layedit', 'laydate'], function () {
   var form = layui.form
     , layer = layui.layer
@@ -27,20 +28,40 @@ let son = document.getElementsByName('specific_information')[0];
 let son2 = document.getElementById('son2');
 let usermessage = document.getElementsByClassName('usermessage');
 let credittypesonson = document.getElementById('credittypesonson');
+if(sessionStorage.getItem('Applicationid')){
+  swal("您还有申请表未上传完整！");
+  setTimeout(function () {
+    // window.location.assign("/UploadAttachment");
+    location.replace('/UploadAttachment');
+  }, 500)
+}
+function isnull(val) {
+ 
+  var str = val.replace(/(^\s*)|(\s*$)/g, '');//去除空格;
+
+  if (str == '' || str == undefined || str == null) {
+      return true;
+  } else {
+      return false;
+  }
+}
 axios({
   url: '/api/getmymessage',
   method: 'get',
   }).then(data=>{
+    console.log(data);
     usermessage[0].innerHTML=data.data.name;
     usermessage[1].innerHTML=data.data.sex;
     usermessage[2].innerHTML=data.data.userName;
     usermessage[3].innerHTML=data.data.academy;
-    usermessage[4].innerHTML=data.data.major_class;
+    usermessage[4].innerHTML=data.data.major;
+    usermessage[5].innerHTML=data.data.major_class;
 })
 $('#postbutton').on('click', function () {
   var o = $('#form').serializeObject();
-  // console.log(o);
-  if (o.remarks == '') {
+  // console.log(o);isnull(val) 
+  if (isnull(o.remarks)) {
+  // if (o.remarks == '') {
     swal("请填写实践内容说明！");
     return
   }
