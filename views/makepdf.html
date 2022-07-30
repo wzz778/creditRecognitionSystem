@@ -11,8 +11,9 @@
 <html>
     <div id="float">
         <button style="background-color:#009688 " onclick="makepdf() ">导出该pdf</button><br>
-        <button style="background-color:#1e9fff" onclick="{window.history.go(-1)}">返回继续上传附件</button>
+        <button style="background-color:#1e9fff" onclick="{location.replace('/UploadAttachment');}">返回继续上传附件</button>
     </div>
+	<div  id="float2">请按正常页面比例导出该pdf！</div>
     <div id="schoolform" style="background-color: #FFFFFF;">
         <table  border="0" cellspacing="0" cellpadding="0" style="width: 100%;" align="center">
         <tr>
@@ -46,7 +47,7 @@
 				<td>申请类型</td>
 				<td class="message"></td>
 				<td>是否为集体项目</td>
-				<td colspan="2" ></td>
+				<td colspan="2" class="message"></td>
                 <td>申请学分</td>
                 <td class="message"></td>
 			</tr>

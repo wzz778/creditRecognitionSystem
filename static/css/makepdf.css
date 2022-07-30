@@ -67,3 +67,9 @@ display: flex;
 #float button:hover{
     opacity: 0.8;
 }
+#float2{
+    position: fixed;
+    bottom: 50px;
+    right: 30px;
+    color: rgb(209, 7, 7);
+}

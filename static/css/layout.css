@@ -202,9 +202,10 @@ body{
   padding: 4px 15px;
   border-bottom: none;
   line-height: normal;
+  transition: all 0.3s ;
 }
 #head #head-cord #head-cord-fade .dropdown-item:hover {
-  background-color: #1271D5;
+  background-color: #79a1cd;
   color: white;
 }
 #head #head-cord #head-cord-fade i {

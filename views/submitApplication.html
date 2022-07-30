@@ -38,7 +38,18 @@
     <label class="usermessage-type">学院：<span class="usermessage"></span></label>
     <label class="usermessage-type">专业：<span class="usermessage"></span></label>
     <label class="usermessage-type">班级：<span class="usermessage"></span></label>
-
+  </div>
+  <div class="layui-form-item" pane="">
+    <label class="layui-form-label">是否为集体项目</label>
+    <div id="teamdiv" class="layui-input-block">
+      <input type="radio" name="team" class="teamin" value="否" title="否" checked="">否
+      <input type="radio" name="team" class="teamin" value="是" title="是" >是
+      <div id="ranking"></div>
+      <div id="creditdiv">
+        申请学分：
+        <input type="text" name="points" maxlength="3" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')" lay-verify="title" autocomplete="off" placeholder="分值" class="layui-input">分
+      </div>分
+    </div>
   </div>
   <div class="layui-form-item">
     <label class="layui-form-label">学分类型</label>
@@ -70,8 +81,9 @@
   </div>
   <div class="layui-form-item layui-form-text">
     <label class="layui-form-label">实践内容说明</label>
-    <div class="layui-input-block">
-      <textarea placeholder="请输入内容" class="layui-textarea" name="remarks"></textarea>
+    <div class="layui-input-block" id="suttextarea">
+      <span id="xzzs"><span id="word">0</span>/1000</span>
+      <textarea placeholder="请输入内容" id="subtextarea" class="layui-textarea" name="remarks"></textarea>
     </div>
   </div>
   <div class="layui-form-item">

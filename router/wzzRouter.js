@@ -224,6 +224,7 @@ router.get('/api/getcreditmessage', (req, res) => {
     });
 })
 router.post('/api/getpost', (req, res) => {
+    console.log(req.body);
     axios({
         url:'user/application',
         method:'post',
@@ -292,7 +293,7 @@ router.post('/api/UploadAttachment', multipartMiddleware,(req, res) => {
     //req.body中传递非文件数据， req.files是文件数据
     axios({
         method: 'POST',
-        url: 'http://110.40.205.103:8099/user/photo',
+        url: '/user/photo',
         data:formdata,
         // headers: formdata.getHeaders(),
         headers:{
