@@ -95,3 +95,8 @@ a:hover{
     border: 1px solid rgb(238 238 238);
     border-radius: 3px;
 }
+.no-content{
+    text-align: center;
+    line-height: 30px;
+    font-weight: 600;
+}

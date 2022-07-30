@@ -162,6 +162,17 @@ search_type[1].onchange = function (){
     }
 }
 
+search_type[2].onchange = function (){
+    // console.log(this.value);
+    // console.log(header_academy.length);
+    for(let j=0;j<header_class.length;j++){
+        if(header_class[j].value == this.value){
+            // console.log(header_academy[j].id);
+            headerOrganization(header_class[j].id,"header_classes",3);
+        }
+        // console.log(this.id)
+    }
+}
 
 
 
