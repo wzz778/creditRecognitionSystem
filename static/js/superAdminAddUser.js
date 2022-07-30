@@ -236,8 +236,11 @@ function GetOtherLevel(ele, id) {
 }
 usGrade.onchange = function () {
     // 显示学院
-    usCollege.value=''
+    usSpecialized.innerHTML=''
+    usSpecialized.add(new Option('请选择...', ''))
     usSpecialized.value=''
+    usClass.innerHTML=''
+    usClass.add(new Option('请选择...', ''))
     usClass.value=''
     if (usGrade.value == '') {
         return
@@ -246,6 +249,9 @@ usGrade.onchange = function () {
 }
 usCollege.onchange = function () {
     // 显示专业
+    usClass.innerHTML=''
+    usClass.add(new Option('请选择...', ''))
+    usClass.value=''
     usSpecialized.value=''
     if (usCollege.value == '') {
         return

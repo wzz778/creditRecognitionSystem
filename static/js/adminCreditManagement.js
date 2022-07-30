@@ -762,3 +762,7 @@ let allSum = document.getElementById('allSum')
 allSum.onclick = function () {
     window.open('creditSummary')
 }
+let jumpUrl=document.getElementById('jumpUrl')
+jumpUrl.onclick=function(){
+    window.location.href='addNewIndicator'
+}
