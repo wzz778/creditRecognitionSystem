@@ -148,7 +148,8 @@ a:hover{
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    width: 170px;
+    /*width: 170px;*/
+    width: 13%;
 }
 .checkbox-bs{
     width: 36px;
@@ -214,7 +215,7 @@ input[type=checkbox]{
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    width: 180px;
+    width: 140px
 }
 .opertor-list{
     padding: 1.5px 5px;
@@ -475,4 +476,16 @@ input[type=radio]{
     outline: 0;
     height: 30px;
     width: 200px;
+}
+
+@media screen and (max-width: 1024px){
+    .lis{
+        width: 11%;
+    }
+}
+
+@media screen and (max-width: 880px){
+    .lis{
+        width: 10%;
+    }
 }

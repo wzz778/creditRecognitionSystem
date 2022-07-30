@@ -98,9 +98,9 @@ function selectOrganization(id,className,numbers){
             html += `<dd class="layer-select-tips ${className}" value="${all[i].name}" id="${all[i].id}">${all[i].name}</dd>`;
         }
         layer_list[numbers].innerHTML = html;
-        if(numbers == 1){
+        if(numbers == 1 ){
             selectTitle(layer_click,academy,1);
-        }else if(numbers == 2){
+        }else if(numbers == 2 ){
             selectTitle(layer_click,major,2);
         }else if(numbers == 3){
             selectTitle(layer_click,grade,3);
@@ -121,7 +121,7 @@ function selectYear(){
         // console.log(date.data);
         let all = date.data.data;
         let html = `<dd class="layer-select-tips layer-this startTimes" >请选择</dd>`;
-        let html_one = `<option value="" class="header_grade">所有</option>`
+        let html_one = `<option value="" class="header_grade">请选择...</option>`
         for(let i=0;i<all.length;i++){
             html += `<dd class="layer-select-tips startTimes" value="${all[i].name}" id="${all[i].id}">${all[i].name}</dd>`;
             html_one += `<option value="${all[i].name}" id="${all[i].id}" class="header_grade">${all[i].name}</option>`
@@ -187,7 +187,7 @@ function headerOrganization(id,className,numbers){
     }).then((date)=>{
         // console.log(date.data);
         let all = date.data.data;
-        let html = `<option value="" class="${className}">所有</option>`;
+        let html = `<option value="" class="${className}">请选择...</option>`;
         for(let i=0;i<all.length;i++){
             html += `<option value="${all[i].name}" id="${all[i].id}" class="${className}">${all[i].name}</option>`;
         }
@@ -212,9 +212,9 @@ function rendering() {
             pageSize: 10,
         },
     }).then((date)=>{
-        // console.log(date.data);
+        console.log(date.data);
         let all = date.data.data.pageInfo;
-        // console.log(all);
+        console.log(all);
         checkbox_all[0].pagees = date.data.data.allPages;
         checkbox_all[0].total = date.data.data.allRecords;
         // checkbox_all[0].size = date.data.data.size;
@@ -265,6 +265,7 @@ function rendering() {
                     checkbox_all[0].userName = all[i].userName;
                     checkbox_all[0].grade = all[i].grade;
                     checkbox_all[0].academy = all[i].academy;
+                    checkbox_all[0].major = all[i].major;
                     checkbox_all[0].major_class = all[i].major_class;
                     checkbox_all[0].sex = all[i].sex;
                     // console.log(checkbox_all[0].numbers);
@@ -291,52 +292,72 @@ function rendering() {
             
             
             check[i].onclick = function (){
-                cover_layer[0].style.display = 'block'
-                cover_main[0].style.height = '500px'
-                changes[0].innerHTML = `<div class="layer-form-item">
-                <label class="layer-form-label">班级</label>
-                <div class="layer-input-block">
-                    <div class="layer-unselect layer-form-select ">
-                        <div class="layer-select-title">
-                            <input type="text" name=""  placeholder="请选择" class="layer-input layer-click" >
-                        </div>
-                    </div>
-                </div>
-            </div>`
                 layer_submit[0].numbers = 1;
                 layer_submit[0].ids = i;
                 layer_btn_primary[1].sums = 0;
                 checkbox_list[i].ids = all[i].uid;
                 layer_input[0].value = all[i].name;
                 layer_input[1].value = all[i].userName;
-                layer_input[2].value = all[i].grade;
-                layer_input[3].value = all[i].academy;
-                layer_input[4].value = all[i].major_class;
+                // layer_input[2].value = all[i].grade;
+                // layer_input[3].value = all[i].academy;
+                // layer_input[5].value = all[i].major_class;
+                // layer_input[4].value = all[i].major;
                 let sex = all[i].sex;
-                // console.log(checkbox_all[0].pages);
-                // console.log(checkbox_all[0].sizees);
-                // console.log(sex);
-                let clist = 'layer-this';
-                let cla = 'layer-form-radioed';
-                for(let i=0;i<startTime.length;i++){
-                    if(startTime[i].innerHTML == layer_input[2].value){
-                        switchover(startTime,i,clist);
-                        selectOrganization(layer_this[0].id,'academy',1);
-                        for(let j=0;j<academy.length;j++) {
-                            if (academy[j].innerHTML == layer_input[3].value) {
-                                // console.log(academy[j].innerHTML)
-                                // console.log(layer_input[3].value)
-                                switchover(academy, j, clist);
-                            }
+                for(let j=0;j<radios.length;j++){
+                    if(radios[j].value == all[i].sex){
+                        let style = 'layer-form-radioed'
+                        // layer_form_radio[j]
+                        switchover(layer_form_radio,j,style);
+                    }
+                }
+                let timer = setTimeout(renderFrame(startTime,all[i].grade),0);
+                let timer_one = setTimeout(function (a,b) {
+                    let clist = 'layer-this';
+                    for(let i=0;i<a.length;i++){
+                        if(a[i].innerHTML == b){
+                            console.log(a[i].innerHTML);
+                            console.log(b);
+                            // switchover(name,i,clist);
+                            a[i].click();
                         }
                     }
-                }
-                for(let z=0;z<radios.length;z++){
-                    if(radios[z].value == sex){
-                        switchover(layer_form_radio,z,cla);
-                        checke(z);
+                    console.log(a.length);
+                },100,academy,all[i].academy);
+                let timer_two = setTimeout(function (a,b) {
+                    let clist = 'layer-this';
+                    for(let i=0;i<a.length;i++){
+                        if(a[i].innerHTML == b){
+                            console.log(a[i].innerHTML);
+                            console.log(b);
+                            // switchover(name,i,clist);
+                            a[i].click();
+                        }
                     }
-                }
+                    console.log(a.length);
+                },200,major,all[i].major);
+                let timer_three = setTimeout(function (a,b) {
+                    let clist = 'layer-this';
+                    for(let i=0;i<a.length;i++){
+                        if(a[i].innerHTML == b){
+                            console.log(a[i].innerHTML);
+                            console.log(b);
+                            // switchover(name,i,clist);
+                            a[i].click();
+                        }
+                    }
+                    console.log(a.length);
+                },300,grade,all[i].major_class);
+                let timer_four = setTimeout(function (){
+                    cover_layer[0].style.display = 'block'
+                },300);
+                let timer_five = setTimeout(function (){
+                    clearTimeout(timer);
+                    clearTimeout(timer_one);
+                    clearTimeout(timer_two);
+                    clearTimeout(timer_three);
+                    clearTimeout(timer_four);
+                    clearTimeout(timer_five);
+                },500)
             }
             reset[i].onclick = function (){
                 axios({
@@ -402,6 +423,23 @@ rendering();
 
 
 
+function renderFrame(name,otherName){
+    let clist = 'layer-this';
+    for(let i=0;i<name.length;i++){
+        if(name[i].innerHTML == otherName){
+            console.log(name[i].innerHTML);
+            console.log(layer_input[2].value);
+            // switchover(name,i,clist);
+            name[i].click();
+        }
+    }
+    console.log(name.length);
+
+}
+
+
+
+
 checkbox_all[0].ids = new Array();
 let index = -1;
 
@@ -415,12 +453,14 @@ function render(numbers,size){
     let index = search_type[0].selectedIndex;
     let index_one = search_type[1].selectedIndex;
     let index_two = search_type[2].selectedIndex;
+    let index_three = search_type[3].selectedIndex;
     let his = {
         beginIndex:numbers,
         size:size,
         grade:search_type[0].options[index].value,
         academy:search_type[1].options[index_one].value,
-        major_class:search_type[2].options[index_two].value,
+        major:search_type[2].options[index_two].value,
+        major_class:search_type[3].options[index_three].value,
         power:'普通用户'
     }
     if(search_type[0].options[index].value == ''){
@@ -429,7 +469,10 @@ function render(numbers,size){
     if(search_type[1].options[index_one].value == ''){
         delete  his.academy
     }
-    if(search_type[2].options[index_one].value == ''){
+    if(search_type[2].options[index_two].value == ''){
+        delete  his.major
+    }
+    if(search_type[3].options[index_three].value == ''){
         delete  his.major_class
     }
     // console.log(his);
@@ -507,52 +550,73 @@ function render(numbers,size){
                 }
             }
             check[i].onclick = function (){
-                cover_layer[0].style.display = 'block'
-                cover_main[0].style.height = '500px'
-                changes[0].innerHTML = `<div class="layer-form-item">
-                <label class="layer-form-label">班级</label>
-                <div class="layer-input-block">
-                    <div class="layer-unselect layer-form-select ">
-                        <div class="layer-select-title">
-                            <input type="text" name=""  placeholder="请选择" class="layer-input layer-click" >
-                        </div>
-                    </div>
-                </div>
-                </div>`
                 layer_submit[0].numbers = 1;
                 layer_submit[0].ids = i;
                 layer_btn_primary[1].sums = 0;
                 checkbox_list[i].ids = all[i].uid;
                 layer_input[0].value = all[i].name;
                 layer_input[1].value = all[i].userName;
-                layer_input[2].value = all[i].grade;
-                layer_input[3].value = all[i].academy;
-                layer_input[4].value = all[i].major_class;
                 let sex = all[i].sex;
                 // console.log(sex);
                 // console.log(checkbox_all[0].pages);
                 // console.log(checkbox_all[0].sizees)
                 let clist = 'layer-this';
                 let cla = 'layer-form-radioed';
-                for(let i=0;i<startTime.length;i++){
-                    if(startTime[i].innerHTML == layer_input[2].value){
-                        switchover(startTime,i,clist);
-                        selectOrganization(layer_this[0].id,'academy',1);
-                        for(let j=0;j<academy.length;j++) {
-                            if (academy[j].innerHTML == layer_input[3].value) {
-                                // console.log(academy[j].innerHTML)
-                                // console.log(layer_input[3].value)
-                                switchover(academy, j, clist);
-                            }
+                for(let j=0;j<radios.length;j++){
+                    if(radios[j].value == all[i].sex){
+                        let style = 'layer-form-radioed'
+                        // layer_form_radio[j]
+                        switchover(layer_form_radio,j,style);
+                    }
+                }
+                let timer = setTimeout(renderFrame(startTime,all[i].grade),0);
+                let timer_one = setTimeout(function (a,b) {
+                    let clist = 'layer-this';
+                    for(let i=0;i<a.length;i++){
+                        if(a[i].innerHTML == b){
+                            console.log(a[i].innerHTML);
+                            console.log(b);
+                            // switchover(name,i,clist);
+                            a[i].click();
                         }
                     }
-                }
-                for(let z=0;z<radios.length;z++){
-                    if(radios[z].value == sex){
-                        switchover(layer_form_radio,z,cla);
-                        checke(z);
+                    console.log(a.length);
+                },100,academy,all[i].academy);
+                let timer_two = setTimeout(function (a,b) {
+                    let clist = 'layer-this';
+                    for(let i=0;i<a.length;i++){
+                        if(a[i].innerHTML == b){
+                            console.log(a[i].innerHTML);
+                            console.log(b);
+                            // switchover(name,i,clist);
+                            a[i].click();
+                        }
                     }
-                }
+                    console.log(a.length);
+                },200,major,all[i].major);
+                let timer_three = setTimeout(function (a,b) {
+                    let clist = 'layer-this';
+                    for(let i=0;i<a.length;i++){
+                        if(a[i].innerHTML == b){
+                            console.log(a[i].innerHTML);
+                            console.log(b);
+                            // switchover(name,i,clist);
+                            a[i].click();
+                        }
+                    }
+                    console.log(a.length);
+                },300,grade,all[i].major_class);
+                let timer_four = setTimeout(function (){
+                    cover_layer[0].style.display = 'block'
+                },300);
+                let timer_five = setTimeout(function (){
+                    clearTimeout(timer);
+                    clearTimeout(timer_one);
+                    clearTimeout(timer_two);
+                    clearTimeout(timer_three);
+                    clearTimeout(timer_four);
+                    clearTimeout(timer_five);
+                },500)
             };
             reset[i].onclick = function (){
                 axios({
@@ -667,53 +731,73 @@ btn_del[0].onclick = function (){
 
 // 修改个人信息
 btn_update[0].onclick =function () {
-    cover_layer[0].style.display = 'block';
-    cover_main[0].style.height = '500px'
+
     layer_submit[0].numbers = 1;
-    changes[0].innerHTML = `<div class="layer-form-item">
-                <label class="layer-form-label">班级</label>
-                <div class="layer-input-block">
-                    <div class="layer-unselect layer-form-select ">
-                        <div class="layer-select-title">
-                            <input type="text" name=""  placeholder="请选择" class="layer-input layer-click" >
-                        </div>
-                    </div>
-                </div>
-                </div>`
     layer_input[0].value = checkbox_all[0].name;
     layer_input[1].value = checkbox_all[0].userName;
-    layer_input[2].value = checkbox_all[0].grade;
-    layer_input[3].value = checkbox_all[0].academy;
-    layer_input[4].value = checkbox_all[0].major_class;
+    // layer_input[2].value = checkbox_all[0].grade;
+    // layer_input[3].value = checkbox_all[0].academy;
+    // layer_input[4].value = checkbox_all[0].major;
+    // layer_input[5].value = checkbox_all[0].major_class;
     let sex = checkbox_all[0].sex;
     // console.log(sex);
     let clist = 'layer-this';
     let cla = 'layer-form-radioed';
-    for(let i=0;i<checkbox_list.length;i++){
-        // console.log(checkbox_all[0].ids);
-        // console.log(checkbox_list[i].ids);
-        if(checkbox_all[0].ids == checkbox_list[i].ids){
-            layer_submit[0].ids = i;
+    for(let j=0;j<radios.length;j++){
+        if(radios[j].value == checkbox_all[0].sex){
+            let style = 'layer-form-radioed'
+            // layer_form_radio[j]
+            switchover(layer_form_radio,j,style);
         }
-        if(startTime[i].innerHTML == layer_input[2].value){
-            switchover(startTime,i,clist);
-            selectOrganization(layer_this[0].id,'academy',1);
-            for(let j=0;j<academy.length;j++) {
-                if (academy[j].innerHTML == layer_input[3].value) {
-                    // console.log(academy[j].innerHTML)
-                    // console.log(layer_input[3].value)
-                    switchover(academy, j, clist);
-                }
+    }
+    let timer = setTimeout(renderFrame(startTime,checkbox_all[0].grade),0);
+    let timer_one = setTimeout(function (a,b) {
+        let clist = 'layer-this';
+        for(let i=0;i<a.length;i++){
+            if(a[i].innerHTML == b){
+                console.log(a[i].innerHTML);
+                console.log(b);
+                // switchover(name,i,clist);
+                a[i].click();
             }
         }
-
-    }
-    for(let j=0;j<radios.length;j++){
-        if(radios[j].value == sex){
-            switchover(layer_form_radio,j,cla);
-            checke(j);
+        console.log(a.length);
+    },100,academy,checkbox_all[0].academy);
+    let timer_two = setTimeout(function (a,b) {
+        let clist = 'layer-this';
+        for(let i=0;i<a.length;i++){
+            if(a[i].innerHTML == b){
+                console.log(a[i].innerHTML);
+                console.log(b);
+                // switchover(name,i,clist);
+                a[i].click();
+            }
         }
-    }
+        console.log(a.length);
+    },200,major,checkbox_all[0].major);
+    let timer_three = setTimeout(function (a,b) {
+        let clist = 'layer-this';
+        for(let i=0;i<a.length;i++){
+            if(a[i].innerHTML == b){
+                console.log(a[i].innerHTML);
+                console.log(b);
+                // switchover(name,i,clist);
+                a[i].click();
+            }
+        }
+        console.log(a.length);
+    },300,grade,checkbox_all[0].major_class);
+    let timer_four = setTimeout(function (){
+        cover_layer[0].style.display = 'block'
+    },300);
+    let timer_five = setTimeout(function (){
+        clearTimeout(timer);
+        clearTimeout(timer_one);
+        clearTimeout(timer_two);
+        clearTimeout(timer_three);
+        clearTimeout(timer_four);
+        clearTimeout(timer_five);
+    },500)
 }
 
 
@@ -753,6 +837,7 @@ function selectTitle(clickName,listName,numbers){
             // console.log(layer_unselect[numbers].getAttribute('class').indexOf('layer-form-selected') > -1);
             flag = true;
         }
+
     }
 
 
@@ -780,6 +865,7 @@ function selectTitle(clickName,listName,numbers){
         }
     }
 }
+
 
 
 
@@ -830,116 +916,34 @@ layer_input[1].onblur = function (){
 
 // 添加用户
 btn_new[0].onclick = function (){
-    cover_layer[0].style.display = 'block';
-    let clist = 'layer-this';
-    layer_list[1].innerHTML = "";
-    radios[1].setAttribute('checked','checked');
-    radios[0].removeAttribute('checked');
-    switchover(startTime,0,clist);
-    // console.log(checkbox_all[0].total);
-    // console.log(checkbox_all[0].sizees);
-    layer_btn_primary[1].sums = 1;
-    layer_submit[0].numbers = 0;
-    layer_input[0].value = '';
-    layer_input[1].value = '';
-    layer_input[2].value = '';
-    layer_input[3].value = '';
-
-    if(btn_new[0].superPower == 0){
-        changes[0].innerHTML = `<div class="layer-form-item">
-                <label class="layer-form-label">专业</label>
-                <div class="layer-input-block">
-                    <div class="layer-unselect layer-form-select ">
-                        <div class="layer-select-title">
-                            <input type="text" name=""  placeholder="请选择" class="layer-input layer-click" readonly>
-                            <i class="layer-edge"></i>
-                        </div>
-                        <dl class="layer-list">
-                            <dd class="layer-select-tips layer-this major" >请选择</dd>
-                            <dd class="layer-select-tips major" >信工212</dd>
-                            <dd class="layer-select-tips major" >计科214</dd>
-                            <dd class="layer-select-tips major" >通信212</dd>
-                            <dd class="layer-select-tips major" >物联212</dd>
-                        </dl>
-                    </div>
-                </div>
-            </div>
-            <div class="layer-form-item">
-                <label class="layer-form-label">班级</label>
-                <div class="layer-input-block">
-                    <div class="layer-unselect layer-form-select ">
-                        <div class="layer-select-title">
-                            <input type="text" name=""  placeholder="请选择" class="layer-input layer-click" readonly>
-                            <i class="layer-edge"></i>
-                        </div>
-                        <dl class="layer-list">
-                            <dd class="layer-select-tips layer-this grade" >请选择</dd>
-                            <dd class="layer-select-tips grade" >信工212</dd>
-                            <dd class="layer-select-tips grade" >计科214</dd>
-                            <dd class="layer-select-tips grade" >通信212</dd>
-                            <dd class="layer-select-tips grade" >物联212</dd>
-                        </dl>
-                    </div>
-                </div>
-            </div>
-            <div class="layer-form-item">
-                <label class="layer-form-label">用户身份</label>
-                <div class="layer-input-block">
-                    <div class="layer-unselect layer-form-select ">
-                        <div class="layer-select-title">
-                            <input type="text" name=""  placeholder="请选择" class="layer-input layer-click" readonly>
-                            <i class="layer-edge"></i>
-                        </div>
-                        <dl class="layer-list">
-                            <dd class="layer-select-tips layer-this identity" >请选择</dd>
-                            <dd class="layer-select-tips identity" >普通用户</dd>
-                            <dd class="layer-select-tips identity" >普通管理员</dd>
-                        </dl>
-                    </div>
-                </div>
-            </div>
-            `;
-
-        selectTitle(layer_click,identity,4);
-        cover_main[0].style.height = '600px';
+    console.log(btn_new[0].superPower)
+    if(btn_new[0].superPower == -1){
+        swal('暂无权限','请找超级管理员申请权限','error');
     }else{
-        changes[0].innerHTML = `<div class="layer-form-item">
-                <label class="layer-form-label">专业</label>
-                <div class="layer-input-block">
-                    <div class="layer-unselect layer-form-select ">
-                        <div class="layer-select-title">
-                            <input type="text" name=""  placeholder="请选择" class="layer-input layer-click" readonly>
-                            <i class="layer-edge"></i>
-                        </div>
-                        <dl class="layer-list">
-                            <dd class="layer-select-tips layer-this major" >请选择</dd>
-                            <dd class="layer-select-tips major" >信工212</dd>
-                            <dd class="layer-select-tips major" >计科214</dd>
-                            <dd class="layer-select-tips major" >通信212</dd>
-                            <dd class="layer-select-tips major" >物联212</dd>
-                        </dl>
-                    </div>
-                </div>
-            </div>
-            <div class="layer-form-item">
-                <label class="layer-form-label">班级</label>
-                <div class="layer-input-block">
-                    <div class="layer-unselect layer-form-select ">
-                        <div class="layer-select-title">
-                            <input type="text" name=""  placeholder="请选择" class="layer-input layer-click" readonly>
-                            <i class="layer-edge"></i>
-                        </div>
-                        <dl class="layer-list">
-                            <dd class="layer-select-tips layer-this grade" >请选择</dd>
-                            <dd class="layer-select-tips grade" >信工212</dd>
-                            <dd class="layer-select-tips grade" >计科214</dd>
-                            <dd class="layer-select-tips grade" >通信212</dd>
-                            <dd class="layer-select-tips grade" >物联212</dd>
-                        </dl>
-                    </div>
-                </div>
-            </div>`;
-        cover_main[0].style.height = '550px';
+        let clist = 'layer-this';
+        radios[1].setAttribute('checked','checked');
+        radios[0].removeAttribute('checked');
+        switchover(startTime,0,clist);
+        // console.log(checkbox_all[0].total);
+        // console.log(checkbox_all[0].sizees);
+        layer_btn_primary[1].sums = 1;
+        layer_submit[0].numbers = 0;
+        layer_input[0].value = '';
+        layer_input[1].value = '';
+        layer_input[2].value = '';
+        layer_input[3].value = '';
+        layer_input[4].value = '';
+        layer_input[5].value = '';
+        layer_list[1].innerHTML = `<dd class="layer-select-tips layer-this academy" >请选择</dd>`;
+        layer_list[2].innerHTML = `<dd class="layer-select-tips layer-this major" >请选择</dd>`;
+        layer_list[3].innerHTML = `<dd class="layer-select-tips layer-this grade" >请选择</dd>`;
+        let timer = setTimeout(function (){
+            cover_layer[0].style.display = 'block';
+        },300)
+        let timer_one = setTimeout(function (){
+            clearTimeout(timer);
+            clearTimeout(timer_one);
+        },400)
     }
 
 }
@@ -955,28 +959,16 @@ layer_submit[0].onclick = function (){
     }
     // console.log(index);
     if(layer_submit[0].numbers == 0){
-        if(btn_new[0].superPower == 0){
-            var users ={
-                "name":layer_input[0].value,
-                "userName":layer_input[1].value,
-                "grade":layer_input[2].value,
-                "academy":layer_input[3].value,
-                "major_class":layer_input[5].value,
-                "sex": radios[index].value,
-                "power":layer_input[6].value,
-                "password": "111111",
-            }
-        }else{
-            var users ={
-                "name":layer_input[0].value,
-                "userName":layer_input[1].value,
-                "grade":layer_input[2].value,
-                "academy":layer_input[3].value,
-                "major_class":layer_input[5].value,
-                "sex": radios[index].value,
-                "power":'普通用户',
-                "password": "111111",
-            }
+        var users ={
+            "name":layer_input[0].value,
+            "userName":layer_input[1].value,
+            "grade":layer_input[2].value,
+            "academy":layer_input[3].value,
+            "major":layer_input[4].value,
+            "major_class":layer_input[5].value,
+            "sex": radios[index].value,
+            "power":'普通用户',
+            "password": "111111",
         }
 
         // console.log(users);
@@ -1021,7 +1013,8 @@ layer_submit[0].onclick = function (){
             "userName":layer_input[1].value,
             "grade":layer_input[2].value,
             "academy":layer_input[3].value,
-            "major_class":layer_input[4].value,
+            "major":layer_input[4].value,
+            "major_class":layer_input[5].value,
             "sex": radios[index].value,
             "power":'普通用户',
             "password": "111111",
@@ -1063,15 +1056,16 @@ layer_btn_primary[1].onclick = function (){
     layer_input[2].value = '';
     layer_input[3].value = "";
     layer_input[4].value = "";
+    layer_input[5].value = "";
+    warn[0].innerHTML = '';
     let clist = 'layer-this';
     switchover(startTime,0,clist);
-    // switchover(academy,0,clist);
-    if( this.sums == 1){
-        switchover(grade,0,clist);
-    }
     let cla = 'layer-form-radioed';
     switchover(layer_form_radio,1,cla);
     checke(1);
+    layer_list[1].innerHTML = `<dd class="layer-select-tips layer-this academy" >请选择</dd>`;
+    layer_list[2].innerHTML = `<dd class="layer-select-tips layer-this major" >请选择</dd>`;
+    layer_list[3].innerHTML = `<dd class="layer-select-tips layer-this grade" >请选择</dd>`;
     cover_layer[0].style.display = 'none';
 }
 
@@ -1082,16 +1076,16 @@ layer_btn_primary[0].onclick = function (){
     layer_input[2].value = '';
     layer_input[3].value = "";
     layer_input[4].value = "";
+    layer_input[5].value = "";
     let clist = 'layer-this';
     switchover(startTime,0,clist);
-    switchover(academy,0,clist);
-    if(layer_btn_primary[1].sums == 1){
-        switchover(grade,0,clist);
-    }
     let cla = 'layer-form-radioed';
     switchover(layer_form_radio,1,cla);
     checke(1);
-
+    layer_list[1].innerHTML = `<dd class="layer-select-tips layer-this academy" >请选择</dd>`;
+    layer_list[2].innerHTML = `<dd class="layer-select-tips layer-this major" >请选择</dd>`;
+    layer_list[3].innerHTML = `<dd class="layer-select-tips layer-this grade" >请选择</dd>`;
+    warn[0].innerHTML = '';
 }
 
 // console.log(layer_btn_primary.length);
@@ -1109,6 +1103,10 @@ btn_warning[0].onclick = function (){
     search_type[0].value = "";
     search_type[1].value = "";
     search_type[2].value = "";
+    search_type[3].value = "";
+    search_type[1].innerHTML = `<option value="">请选择...</option>`;
+    search_type[2].innerHTML = `<option value="">请选择...</option>`;
+    search_type[3].innerHTML = `<option value="">请选择...</option>`;
     // search_text[0].value = "";
     render(1,10);
 }
@@ -1144,7 +1142,8 @@ checkbox_all[0].onclick = function (){
     }
 }
 
-// 弹出层的关闭
-layer_primary[0].onclick = function (){
-    cover_layer[1].style.display = 'none';
-}
+// // 弹出层的关闭
+// layer_primary[0].onclick = function (){
+//     cover_layer[1].style.display = 'none';
+// }
+
