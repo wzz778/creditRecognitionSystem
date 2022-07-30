@@ -446,25 +446,25 @@ function changeUserInfoFn(event) {
         changeUserHas.value = '有'
         bodyTopClu[0].style.display = 'block'
         changeUserGrade.value = ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML
-        // BFn(changeUseraCademy, changeUserGrade.value, ele.lastElementChild.innerHTML)
-        // .then((result)=>{
-        //     console.log(result)
-        //     AFn(major, result, event.parentElement.firstElementChild.nextElementSibling.innerHTML)
-        // })
-        // .then((result)=>{
-        //     console.log(result)
-        //     AFn(changeUserClass,major.value, ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML)
-        // })
-        // .catch((err)=>{
-        //     console.log(err)
-        // })
-        GetOtherLevelTwo(changeUseraCademy, changeUserGrade.value, ele.lastElementChild.innerHTML)
-        setTimeout(() => {
-            GetOtherLevel(major, changeUseraCademy.value, event.parentElement.firstElementChild.nextElementSibling.innerHTML)
-        }, 250)
-        setTimeout(() => {
-            GetOtherLevel(changeUserClass, major.value, ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML)
-        }, 450)
+        BFn(changeUseraCademy, changeUserGrade.value, ele.lastElementChild.innerHTML)
+        .then((result)=>{
+            // console.log(result)
+            return AFn(major, result, event.parentElement.firstElementChild.nextElementSibling.innerHTML)
+        })
+        .then((result)=>{
+            // console.log(result)
+            AFn(changeUserClass,major.value, ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML)
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
+        // GetOtherLevelTwo(changeUseraCademy, changeUserGrade.value, ele.lastElementChild.innerHTML)
+        // setTimeout(() => {
+        //     GetOtherLevel(major, changeUseraCademy.value, event.parentElement.firstElementChild.nextElementSibling.innerHTML)
+        // }, 200)
+        // setTimeout(() => {
+        //     GetOtherLevel(changeUserClass, major.value, ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML)
+        // }, 450)
         // changeUserClass.value = ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML
     }
 }
@@ -655,7 +655,7 @@ function GetOtherLevelTwo(ele, id, show) {
             // console.log('值', changeUseraCademy.value)
         })
         .catch((err) => {
-            console.log(err)
+            // console.log(err)
             swal('网络错误')
         })
 }
@@ -685,7 +685,7 @@ function GetOtherLevelTwoNew(ele, id, show) {
             // console.log('值', changeUseraCademy.value)
         })
         .catch((err) => {
-            console.log(err)
+            // console.log(err)
             swal('网络错误')
         })
 }
@@ -719,7 +719,7 @@ function GetOtherLevel(ele, id, show) {
             ele.value = value
         })
         .catch((err) => {
-            console.log(err)
+            // console.log(err)
             swal('网络错误')
         })
 }
@@ -897,11 +897,11 @@ function AFn(ele, id, show) {
                     ele.add(new Option(result.data.msg[i].name, result.data.msg[i].id))
                 }
                 ele.value = value
-                console.log('包装的value',value)
+                // console.log('包装的value',value)
                 resolve(value)
             })
             .catch((err) => {
-                console.log(err)
+                // console.log(err)
                 swal('网络错误')
                 resject(err)
             })
@@ -942,7 +942,7 @@ function BFn(ele, id, show) {
                 resolve(value)
             })
             .catch((err) => {
-                console.log(err)
+                // console.log(err)
                 swal('网络错误')
                 resject(err)
             })
