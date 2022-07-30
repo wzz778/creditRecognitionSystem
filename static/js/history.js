@@ -68,8 +68,8 @@ function applicationType() {
         method:'get',
         url:'/IndicatorOperates/showAllIndicator',
     }).then((data)=>{
-        // console.log(data.data);
-        // console.log(data.data.msg);
+        console.log(data.data);
+                // console.log(data.data.msg);
         let all = `<option value="">请选择...</option>`;
         if(data.data.data.length !=0){
             for(let i=0;i<data.data.data.length;i++){
@@ -93,7 +93,7 @@ function rendering(){
     let index1 = search_type[1].selectedIndex;
     let index = search_type[0].selectedIndex;
     let his = {approval_status:search_type[1].options[index1].value,
-        b_Indicator_name:search_type[0].value,
+        a_first_level:search_type[0].value,
         b_points_available:search[0].value,
         beginDate:startTime.value,
         endDate: endTime.value,
@@ -102,7 +102,7 @@ function rendering(){
     }
     let typeName = search_type[0].value;
     if(typeName == ''){
-        delete  his.b_Indicator_name
+        delete  his.a_first_level
     }
 
     let typeStatus = search_type[1].options[index1].value;
@@ -185,7 +185,7 @@ function render(numbers,size){
     let index1 = search_type[1].selectedIndex;
     let index = search_type[0].selectedIndex;
     let his = {approval_status:search_type[1].options[index1].value,
-        b_Indicator_name:search_type[0].options[index].value,
+        a_first_level:search_type[0].options[index].value,
         b_points_available:search[0].value,
         beginDate:startTime.value,
         endDate: endTime.value,
@@ -194,7 +194,7 @@ function render(numbers,size){
     }
     let typeName = search_type[0].options[index].value;
     if(typeName == ''){
-        delete  his.b_Indicator_name
+        delete  his.a_first_level
     }
 
     let typeStatus = search_type[1].options[index1].value;
