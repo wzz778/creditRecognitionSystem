@@ -58,6 +58,7 @@ let adminExportFormBottom = document.getElementsByClassName('adminExportFormBott
 let usGrade = document.getElementById('usGrade')
 let academy = document.getElementById('academy')
 let usClass = document.getElementById('usClass')
+let searchValue=document.getElementsByClassName('searchValue')
 function fn(obj) {
     let sendResult = {}
     if (CreditsComposition.value != '') {
@@ -67,12 +68,15 @@ function fn(obj) {
         sendResult.academy = academy.value
     }
     if (usGrade.value != '') {
-        sendResult.grade = usGrade.value
+        var index = usGrade.selectedIndex; // 选中索引
+        var text = usGrade.options[index].text;
+        sendResult.grade = text
     }
     if (usClass.value != '') {
         sendResult.major_class = usClass.value
     }
     sendResult.flag = true
+    // console.log(sendResult)
     axios({
         method: 'POST',
         url: '/showExcel',
@@ -81,7 +85,7 @@ function fn(obj) {
         }
     })
         .then((result) => {
-            console.log(result.data)
+            // console.log(result.data)
             if (result.data.msg.data.length == 0) {
                 swal('没有数据')
                 return
@@ -138,6 +142,16 @@ reserve.onclick = function () {
 }
 let search = document.getElementById('search')
 search.onclick = function () {
+    let yn=false
+    for(let i=0;i<searchValue.length;i++){
+        if(searchValue[i].value!=''){
+            yn=true
+        }
+    }
+    if(!yn){
+        swal('请选择要查询的内容')
+        return
+    }
     fn(obj)
 }
 
@@ -186,32 +200,11 @@ function GetOtherLevel(ele, id) {
             swal('网络错误')
         })
 }
-usGrade.onchange = function () {
-    if (usGrade == '') {
-        return
-    }
-    // 显示学院
-    GetOtherLevel(academy, usGrade.value)
-}
-academy.onchange = function () {
-    if (academy.value == '') {
-        return
-    }
-    // 显示专业
-    GetOtherLevel(specialized, academy.value)
-}
-specialized.onchange = function () {
-    if (specialized.value == '') {
-        return
-    }
-    // 显示班级
-    GetOtherLevel(usClass, specialized.value)
-}
 
 $("#download").click(function () {
     $("#export").tableExport({
-        type:"xlsx",
-        escape:"true",
+        type: "xlsx",
+        escape: "true",
         // Excel文件的名称
         fileName: "表格-创新创业学分表.xls",
     })

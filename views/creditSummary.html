@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学分汇总表</title>
+    <link rel="stylesheet" href="public/css/moudel/sweetalert.css">
+    <link rel="stylesheet" href="/public/css/LiUniversal.css">
+    <link rel="stylesheet" href="/public/css/creditSummary.css">
+</head>
+
+<body>
+    <div class="middle">
+        <div id="Title">
+            学分汇总表
+        </div>
+        <!-- 存放内容的盒子 -->
+        <div class="content">
+            <!-- 头部 -->
+            <div class="creditItem">
+                <!-- 左边 -->
+                <div class="creditLeft">
+                    学分构成
+                </div>
+                <!-- 右边 -->
+                <div class="creditRight">
+                    <ul>
+                        <li>认定范围</li>
+                        <li>学分</li>
+                        <li>备注</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="contentContent" id="content">
+                <!-- 二级目录 -->
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.bootcss.com/sweetalert/1.1.3/sweetalert.min.js"></script>
+    <script src="/public/js/creditSummary.js"></script>
+</body>
+
+</html>

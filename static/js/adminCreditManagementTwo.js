@@ -69,15 +69,15 @@ cancelRevise.onclick = function () {
 function IndicatorTwo(event) {
     // 父级
     bodyTop[4].style.display = 'block'
-    let ele = event.parentElement.lastElementChild.firstElementChild
-    selfId.innerHTML = ele.innerHTML
-    reviseCreComposition.value = event.parentElement.parentElement.parentElement.parentElement.parentElement.firstElementChild.lastElementChild.lastElementChild.innerHTML
+    let ele = event.parentElement.parentElement.firstElementChild
+    selfId.innerHTML = ele.lastElementChild.innerHTML
+    reviseCreComposition.value = event.parentElement.parentElement.parentElement.parentElement.firstElementChild.firstElementChild.lastElementChild.innerHTML
     getChild(Number(reviseCreComposition.value), false)
-    reviseRecognize.value = ele.nextElementSibling.innerHTML
-    reviseCreditNumber.value = Number(ele.nextElementSibling.nextElementSibling.innerHTML)
+    reviseRecognize.value = ele.nextElementSibling.nextElementSibling.firstElementChild.innerHTML
+    reviseCreditNumber.value = Number(ele.nextElementSibling.nextElementSibling.lastElementChild.innerHTML)
     let test = ''
-    if (ele.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML != 'null') {
-        test = ele.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML
+    if (event.parentElement.firstElementChild.innerHTML != 'null') {
+        test = event.parentElement.firstElementChild.innerHTML
     }
     reviseText.value = test
 }
@@ -91,13 +91,15 @@ function IndicatorThree(event) {
     }
     reviseText.value = text
     let ele = event.parentElement.parentElement.parentElement
-    let secondId = ele.firstElementChild.lastElementChild.innerHTML
-    let fatherId = ele.parentElement.parentElement.parentElement.firstElementChild.firstElementChild.lastElementChild.innerHTML
+    let secondId = ele.parentElement.firstElementChild.firstElementChild.lastElementChild.innerHTML
+    // console.log(ele.firstElementChild.firstElementChild.firstElementChild)
+    let fatherId = ele.parentElement.firstElementChild.firstElementChild.nextElementSibling.nextElementSibling.nextElementSibling.lastElementChild.innerHTML
+    // console.log(fatherId)
     reviseCreComposition.value = fatherId
     // console.log(secondId)
     getChild(Number(reviseCreComposition.value), secondId)
-    reviseRecognize.value = event.parentElement.parentElement.firstElementChild.nextElementSibling.innerHTML
-    reviseCreditNumber.value = event.parentElement.parentElement.firstElementChild.nextElementSibling.nextElementSibling.innerHTML
+    reviseRecognize.value = event.parentElement.parentElement.firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.innerHTML
+    reviseCreditNumber.value = event.parentElement.parentElement.firstElementChild.nextElementSibling.nextElementSibling.lastElementChild.innerHTML
 }
 
 

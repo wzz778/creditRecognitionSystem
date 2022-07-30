@@ -71,7 +71,7 @@ let accountTest = /^[0-9]*$/
 save.onclick = function () {
     // console.log(yn)
     // 判断是否为空
-    if (usName.value == '') {
+    if (usName.value == ''||usName.value.replace(/(^\s*)|(\s*$)/g, "") == "") {
         // 没填写用户名
         // usName.parentElement.lastElementChild.style.display = 'block'
         swal('请输入用户名')

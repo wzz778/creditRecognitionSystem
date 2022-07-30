@@ -1,6 +1,7 @@
 {{extend './layout.html'}}
 {{block 'title'}}发布申请{{/block}}
 {{block 'head'}}
+<link rel="stylesheet" href="public/layui/css/layui.css">
 <link rel="stylesheet" href="public/css/submitApplication.css">
 <link rel="stylesheet" href="public/css/Applicationprogress.css">
 {{/block}}
@@ -30,7 +31,6 @@
   <legend>申请表提交</legend>
 </fieldset>
 <form action="" id="form">
-  {{ if user}}
   <div class="layui-form-item">
     <label class="usermessage-type">姓名：<span class="usermessage">{{user.name}}</span></label>
     <label class="usermessage-type">性别：<span class="usermessage">{{user.sex}}</span></label>
@@ -38,15 +38,6 @@
     <label class="usermessage-type">学院：<span class="usermessage">{{user.academy}}</span></label>
     <label class="usermessage-type">班级：<span class="usermessage">{{user.major_class}}</span></label>
   </div>
-  {{else}}
-  <div class="layui-form-item">
-    <label class="usermessage-type">姓名：<span class="usermessage"></span></label>
-    <label class="usermessage-type">性别：<span class="usermessage"></span></label>
-    <label class="usermessage-type">学号：<span class="usermessage"></span></label>
-    <label class="usermessage-type">学院：<span class="usermessage"></span></label>
-    <label class="usermessage-type">班级：<span class="usermessage"></span></label>
-  </div>
-  {{/if}}
   <div class="layui-form-item">
     <label class="layui-form-label">学分类型</label>
     <div class="layui-input-block">
@@ -87,6 +78,7 @@
     </div>
   </div>
 </form>
+<script src="public/layui/layui.js"></script>
 {{/block}}
 {{block 'bottom'}}
 <script src="public/js/submitApplication.js"></script>

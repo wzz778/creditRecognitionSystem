@@ -28,12 +28,7 @@ let endDate = document.getElementById('endDate')//结束时间
 // 限制条件函数
 function limitationFactor() {
     let obj = {}
-    var indexacademy = academy.selectedIndex; // 选中索引
-    var textacademy = academy.options[indexacademy].text
-    if (textacademy == '请选择...') {
-        textacademy = ''
-    }
-    obj.academy = textacademy
+    obj.academy = academy.value
     obj.approval_status = 1
     obj.b_Indicator_name = ScopeRecognition.value
     if (credit.value != '' && !/(^[1-9]\d*$)/.test(Number(credit.value))) {
@@ -43,12 +38,7 @@ function limitationFactor() {
     obj.b_points_available = credit.value
     obj.beginDate = startDate.value
     obj.endDate = endDate.value
-    var indexusClass = usClass.selectedIndex; // 选中索引
-    var textusClass = usClass.options[indexusClass].text
-    if (textusClass == '请选择...') {
-        textusClass = ''
-    }
-    obj.major_class = textusClass
+    obj.major_class = usClass.value
     // console.log(obj)
     return obj
 }
@@ -99,7 +89,7 @@ function GetAllInfo(page, perpage, obj) {
             // setTimeout(() => {
             //     popUps[0].style.display = 'none'
             // }, 2000)
-            swal('查询成功')
+            // swal('查询成功')
         })
         .catch((err) => {
             // console.log(err)
@@ -176,10 +166,22 @@ jump.onclick = function () {
 
 // 查询函数
 let sureSearch = document.getElementById('sureSearch')
+let searchValue=document.getElementsByClassName('searchValue')
 sureSearch.onclick = function () {
+    let yn=false
+    for(let i=0;i<searchValue.length;i++){
+        if(searchValue[i].value!=''){
+            yn=true
+        }
+    }
+    if(!yn){
+        swal('请输入要查询内容')
+        return
+    }
     now_page = 1
     nowPage.innerHTML = now_page
     GetAllInfo(now_page, per_Page, limitationFactor())
+    swal('查询成功')
 }
 let reset = document.getElementById('reset')
 let allSelect = document.getElementsByTagName('select')
@@ -187,188 +189,30 @@ let allInput = document.getElementsByTagName('input')
 
 reset.onclick = function () {
     // 将值全部清空
-    for (let i = 0; i < allInput.length; i++) {
-        allInput[i].value = ''
-    }
-    for (let i = 0; i < allSelect.length; i++) {
-        allSelect[i].value = ''
-    }
-    academy.innerHTML=''
-    academy.add(new Option('请选择...',''))
+    ScopeRecognition.value=''
+    credit.value=''
     academy.value=''
-    specialized.innerHTML=''
-    specialized.add(new Option('请选择...',''))
-    specialized.value=''
-    usClass.innerHTML=''
-    usClass.add(new Option('请选择...',''))
     usClass.value=''
+    startDate.value=''
+    endDate.value=''
     selectPerpage.value = 10
     now_page = 1
+    per_Page=10
     nowPage.innerHTML = now_page
     GetAllInfo(now_page, per_Page, limitationFactor())
+    swal('已重置')
 }
 selectPerpage.onchange = function () {
     per_Page = selectPerpage.value
     GetAllInfo(now_page, per_Page, limitationFactor())
 }
 
-axios({
-    method: 'GET',
-    url: '/creditTypeOperate/showCreditType',
-})
-    .then((result) => {
-        // console.log(result.data)
-        CreditsComposition.innerHTML = ''
-        for (let i = 0; i < result.data.msg.length; i++) {
-            // CreditsComposition.add(new Option(result.data.msg[i].afirstLevel, result.data.msg[i].))
-            CreditsComposition.add(new Option(result.data.msg[i].afirstLevel, result.data.msg[i].aid))
-        }
-        CreditsComposition.add(new Option('请选择...', ''))
-        CreditsComposition.value = ''
-    })
-    .catch((err) => {
-        // console.log(err)
-        swal('网络错误')
-    })
-let CreditsSecondDir = document.getElementById('CreditsSecondDir')
-CreditsComposition.onchange = function () {
-    if (CreditsComposition.value == '') {
-        return
-    }
-    axios({
-        method: 'POST',
-        url: '/child',
-        data: {
-            id: Number(CreditsComposition.value)
-        }
-    })
-        .then((result) => {
-            console.log(result.data)
-            CreditsSecondDir.innerHTML = ''
-            ScopeRecognition.innerHTML = ''
-            CreditsSecondDir.add(new Option('请选择...', ''))
-            ScopeRecognition.add(new Option('请选择...', ''))
-            if (result.data.msg == "下边没有指标了") {
-                CreditsSecondDir.value = ''
-                ScopeRecognition.value = ''
-                return
-            }
-            for (let i = 0; i < result.data.msg.length; i++) {
-                if (!result.data.msg[i].b_points_available) {
-                    // 是目录
-                    CreditsSecondDir.add(new Option(result.data.msg[i].b_Indicator_name, result.data.msg[i].b_id))
-                } else {
-                    ScopeRecognition.add(new Option(result.data.msg[i].b_Indicator_name, result.data.msg[i].b_Indicator_name))
-                }
-            }
-            CreditsSecondDir.value = ''
-            ScopeRecognition.value = ''
-        })
-        .catch((err) => {
-            // console.log(err)
-            swal('网络错误')
-        })
-}
-
-CreditsSecondDir.onchange = function () {
-    if (CreditsSecondDir.value == '') {
-        return
-    }
-    axios({
-        method: 'POST',
-        url: '/Third',
-        data: {
-            id: Number(CreditsSecondDir.value)
-        }
-    })
-        .then((result) => {
-            // console.log(result.data)
-            ScopeRecognition.innerHTML = ''
-            ScopeRecognition.add(new Option('请选择...', ''))
-            for (let i = 0; i < result.data.msg.length; i++) {
-                ScopeRecognition.add(new Option(result.data.msg[i].b_Indicator_name, result.data.msg[i].b_Indicator_name))
-            }
-            ScopeRecognition.value = ''
-        })
-        .catch((err) => {
-            // console.log(err)
-            swal('网络错误')
-        })
-}
 
 let exportForm = document.getElementById('exportForm')
 exportForm.onclick = function () {
     window.open('/adminExportForm')
 }
 
-let usGrade = document.getElementById('usGrade')
-
-// 获取一级的目录,传入要显示年级的元素
-function GetFirstLevel(ele) {
-    axios({
-        method: 'GET',
-        url: '/admin/showOrganization',
-    })
-        .then((result) => {
-            // console.log(result.data)
-            ele.innerHTML = ''
-            ele.add(new Option('请选择...', ''))
-            for (let i = 0; i < result.data.msg.length; i++) {
-                ele.add(new Option(result.data.msg[i].name, result.data.msg[i].id))
-            }
-            ele.value = ''
-        })
-        .catch((err) => {
-            // console.log(err)
-            swal('网络错误')
-        })
-}
-GetFirstLevel(usGrade)
-// 需要添加的元素，上一级的id，级别
-function GetOtherLevel(ele, id) {
-    axios({
-        method: 'POST',
-        url: '/admin/selectOrganization',
-        data: {
-            id: id
-        }
-    })
-        .then((result) => {
-            // console.log(result.data)
-            // 将结果添加到ele上
-            ele.innerHTML = ''
-            ele.add(new Option('请选择...', ''))
-            for (let i = 0; i < result.data.msg.length; i++) {
-                ele.add(new Option(result.data.msg[i].name, result.data.msg[i].id))
-            }
-            ele.value = ''
-        })
-        .catch((err) => {
-            // console.log(err)
-            swal('网络错误')
-        })
-}
-usGrade.onchange = function () {
-    if (usGrade.value == '') {
-        return
-    }
-    // 显示学院
-    GetOtherLevel(academy, usGrade.value)
-}
-academy.onchange = function () {
-    if(academy.value==''){
-        return
-    }
-    // 显示专业
-    GetOtherLevel(specialized, academy.value)
-}
-specialized.onchange = function () {
-    if(specialized.value==''){
-        return
-    }
-    // 显示班级
-    GetOtherLevel(usClass, specialized.value)
-}
 
 function downLoad(event){
     // academy.parentElement.lastElementChild.innerHTML
