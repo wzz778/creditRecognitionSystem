@@ -138,7 +138,40 @@ function watchChild(event) {
                         }
                     }
                     // 是目录
-                    str1 += `
+                    if (!strDir) {
+                        str1 += `
+            <div class="CreditDir">
+                <div class="">
+                    <span class="expandItem" onclick='watchChildDir(this)'>
+                        <span class="remove"></span>
+                        <span onclick="" class=""></span>
+                        <div class="" style="display: none;">${result.data.msg[i].b_id}</div>
+                    </span>
+                    <span>
+                        <div class="" style="display: none;">${result.data.msg[i].b_id}</div>
+                        <input type="checkbox" onclick='allChildInputFatherDir(this)' class='commonDel'>
+                    </span>
+                    <span>${result.data.msg[i].b_Indicator_name}</span>
+                    <span>
+                        <div class="" style="display: none;">${result.data.msg[i].b_id}</div>
+                        <div class="" style="display: none;">${result.data.msg[i].b_Indicator_name}</div>
+                        <button onclick='skipAdd(this)'>
+                            <i class="layui-icon">&#xe654;</i>
+                        </button>
+                        <button onclick='changeTwoDirFn(this)'>
+                            <i class="layui-icon">&#xe642;</i>
+                        </button>
+                        <button onclick='delFnOne(this)'>
+                            <i class="layui-icon">&#xe640;</i>
+                        </button>
+                        <div class="" style="display: none;">${result.data.msg[i].b_superior_id}</div>
+                    </span>
+                </div>
+            </div>
+        </div>
+                    `
+                    } else {
+                        str1 += `
             <div class="CreditDir">
                 <div class="">
                     <span class="expandItem" onclick='watchChildDir(this)'>
@@ -172,6 +205,7 @@ function watchChild(event) {
             </div>
         </div>
                     `
+                    }
                 }
 
             }
@@ -194,6 +228,7 @@ function watchChild(event) {
 }
 // 三级目录将盒子显现，通过二级目录去请求
 function watchChildDir(event) {
+    // console.log(event.parentElement.nextElementSibling.innerHTML)
     if (!event.parentElement.nextElementSibling) {
         swal('没有子级指标')
         return
@@ -721,4 +756,9 @@ SurechangeComposition.onclick = function () {
             // console.log(err)
             swal('网络错误')
         })
+}
+
+let allSum = document.getElementById('allSum')
+allSum.onclick = function () {
+    window.open('creditSummary')
 }

@@ -84,7 +84,7 @@ function GetAll(page, perPage, obj) {
     })
         .then((result) => {
             checkDelAll.checked = ''
-            console.log(result.data)
+            // console.log(result.data)
             adminManageUsersContentContent.innerHTML = ''
             adminManageUsersContentContent.style.display = 'block'
             adminHistoryContentNo.style.display = 'none'
@@ -133,6 +133,7 @@ function GetAll(page, perPage, obj) {
                 </li>
                 <li>
                     <div style='display:none'>${result.data.msg[i].uid}</div>
+                    <div style='display:none'>${result.data.msg[i].major}</div>
                     <button onclick="removePopup(this)" class="operatorBtnSty">删除</button>
                     <button onclick="changeUserInfoFn(this)" class="operatorBtnSty">修改</button>
                     ${str}
@@ -426,7 +427,7 @@ let bodyTopClu = document.getElementsByClassName('bodyTopClu')
 cancel.onclick = function () {
     bodyTop[0].style.display = 'none'
 }
-
+let major = document.getElementById('major')
 function changeUserInfoFn(event) {
     bodyTop[0].style.display = 'block'
     changeUserId.innerHTML = event.parentElement.firstElementChild.innerHTML
@@ -443,14 +444,20 @@ function changeUserInfoFn(event) {
         bodyTopClu[0].style.display = 'block'
         changeUserGrade.value = ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML
         GetOtherLevelTwo(changeUseraCademy, changeUserGrade.value, ele.lastElementChild.innerHTML)
-        changeUserClass.value = ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML
+        setTimeout(() => {
+            GetOtherLevel(major, changeUseraCademy.value, event.parentElement.firstElementChild.nextElementSibling.innerHTML)
+        }, 100)
+        setTimeout(() => {
+            GetOtherLevel(changeUserClass, major.value, ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML)
+        }, 200)
+        // changeUserClass.value = ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML
     }
 }
 
 let reg = /^[0-9]*$/
 changeUserInfo.onclick = function () {
     // 判断值是否为空
-    if (changeUserName.value == '') {
+    if (changeUserName.value == ''||changeUserName.value.replace(/(^\s*)|(\s*$)/g, "") == "") {
         swal('请输入姓名')
         return
     }
@@ -458,12 +465,17 @@ changeUserInfo.onclick = function () {
         swal('请输入正确的格式的学号或教务账号')
         return
     }
+    if(changeUserGrade.value==''){
+        swal('请输入年级')
+        return
+    }
     if (changeUseraCademy.value == '') {
         swal('请输入学院')
         return
     }
-    if (specialized.value != '' && changeUserClass.value == '') {
-        swal('不能仅输入专业')
+    if (major.value == '' ) {
+        swal('请输入专业')
+        return
     }
     if (changeUserClass.value == '') {
         swal('请输入班级')
@@ -476,9 +488,16 @@ changeUserInfo.onclick = function () {
     obj.userName = changeUserAccount.value
     obj.power = changeUserPermission.value
     if (changeUserHas.value == '有') {
-        obj.academy = changeUseraCademy.value
+        var indexuschangeUseraCademy = changeUseraCademy.selectedIndex; // 选中索引
+        var textuschangeUseraCademy = changeUseraCademy.options[indexuschangeUseraCademy].text;
+        obj.academy = textuschangeUseraCademy
         obj.grade = changeUserGrade.value
-        obj.major_class = changeUserClass.value
+        var indexusmajor = major.selectedIndex
+        var textusmajor = major.options[indexusmajor].text
+        obj.major=textusmajor
+        var indexusmajor_class = changeUserClass.selectedIndex; // 选中索引
+        var textusmajor_class = changeUserClass[indexusmajor_class].text;
+        obj.major_class = textusmajor_class
     } else {
         obj.academy = ''
         obj.grade = ''
@@ -546,7 +565,17 @@ function reviseFn(event) {
     })
 }
 
-changeUserHas.onclick = function () {
+changeUserHas.onchange = function () {
+    changeUserGrade.value=''
+    changeUseraCademy.innerHTML=''
+    changeUseraCademy.add(new Option('请选择...', ''))
+    changeUseraCademy.value=''
+    major.innerHTML=''
+    major.add(new Option('请选择...', ''))
+    major.value=''
+    changeUserClass.innerHTML=''
+    changeUserClass.add(new Option('请选择...', ''))
+    changeUserClass.value=''
     if (changeUserHas.value == '有') {
         bodyTopClu[0].style.display = 'block'
     } else {
@@ -564,8 +593,9 @@ function GetFirstLevelOne(ele) {
         url: '/admin/showOrganization',
     })
         .then((result) => {
-            // console.log(result.data)
+            // console.log('获取的结果', result.data)
             ele.innerHTML = ''
+            ele.add(new Option('请选择...', ''))
             for (let i = 0; i < result.data.msg.length; i++) {
                 ele.add(new Option(result.data.msg[i].name, result.data.msg[i].name))
             }
@@ -593,15 +623,21 @@ function GetOtherLevelTwo(ele, id, show) {
         }
     })
         .then((result) => {
+            // console.log('show',show);
             // console.log(idResult);
             // console.log(result.data)
             // 将结果添加到ele上
             ele.innerHTML = ''
+            let value = ''
             ele.add(new Option('请选择...', ''))
             for (let i = 0; i < result.data.msg.length; i++) {
-                ele.add(new Option(result.data.msg[i].name, result.data.msg[i].name))
+                if (result.data.msg[i].name == show) {
+                    value = result.data.msg[i].id
+                }
+                ele.add(new Option(result.data.msg[i].name, result.data.msg[i].id))
             }
-            changeUseraCademy.value = show || ''
+            changeUseraCademy.value = value
+            // console.log('值', changeUseraCademy.value)
         })
         .catch((err) => {
             console.log(err)
@@ -609,7 +645,69 @@ function GetOtherLevelTwo(ele, id, show) {
         })
 }
 
+function GetOtherLevelTwoNew(ele, id, show) {
+    axios({
+        method: 'POST',
+        url: '/admin/selectOrganization',
+        data: {
+            id: id
+        }
+    })
+        .then((result) => {
+            // console.log('show',show);
+            // console.log(idResult);
+            console.log(result.data)
+            // 将结果添加到ele上
+            ele.innerHTML = ''
+            let value = ''
+            ele.add(new Option('请选择...', ''))
+            for (let i = 0; i < result.data.msg.length; i++) {
+                if (result.data.msg[i].name == show) {
+                    value = result.data.msg[i].id
+                }
+                ele.add(new Option(result.data.msg[i].name, result.data.msg[i].id))
+            }
+            // console.log('值', changeUseraCademy.value)
+        })
+        .catch((err) => {
+            console.log(err)
+            swal('网络错误')
+        })
+}
 GetFirstLevelOne(changeUserGrade)
+// 获取下一级
+function GetOtherLevel(ele, id, show) {
+    if(!id){
+        swal('数据不符')
+        return
+    }
+    axios({
+        method: 'POST',
+        url: '/admin/selectOrganization',
+        data: {
+            id: id
+        }
+    })
+        .then((result) => {
+            // console.log(result.data)
+            // 将结果添加到ele上
+            ele.innerHTML = ''
+            let value = ''
+            ele.add(new Option('请选择...', ''))
+            for (let i = 0; i < result.data.msg.length; i++) {
+                if (result.data.msg[i].name == show) {
+                    value = result.data.msg[i].id
+                }
+                ele.add(new Option(result.data.msg[i].name, result.data.msg[i].id))
+            }
+            ele.value = value
+        })
+        .catch((err) => {
+            console.log(err)
+            swal('网络错误')
+        })
+}
+
 changeUserGrade.onchange = function () {
     // 显示学院
     if (changeUserGrade.value == '') {
@@ -623,8 +721,30 @@ changeUserGrade.onchange = function () {
     //     }
     // }
     GetOtherLevelTwo(changeUseraCademy, changeUserGrade.value)
+    major.innerHTML=''
+    major.add(new Option('请选择...', ''))
+    major.value=''
+    changeUserClass.innerHTML=''
+    changeUserClass.add(new Option('请选择...', ''))
+    changeUserClass.value=''
 }
 
+changeUseraCademy.onchange=function(){
+    if(changeUseraCademy.value==''){
+        return
+    }
+    GetOtherLevelTwoNew(major, changeUseraCademy.value)
+    changeUserClass.innerHTML=''
+    changeUserClass.add(new Option('请选择...', ''))
+    changeUserClass.value=''
+}
+
+major.onchange = function () {
+    if (major.value == '') {
+        return
+    }
+    GetOtherLevelTwoNew(changeUserClass, major.value)
+}
 // 普通管理员的授权
 function authorizeSuper(event) {
     swal({

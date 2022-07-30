@@ -147,7 +147,7 @@ router.post('/admin/application', (req, res) => {
 })
 // 添加用户
 router.post('/admin/User', (req, res) => {
-    let { name, userName, power, sex, grade, academy, major_class, organization, position } = req.body
+    let { name, userName, power, sex, grade, academy, major_class, organization, position ,major} = req.body
     if (!organization) {
         organization = '无'
     }
@@ -167,7 +167,8 @@ router.post('/admin/User', (req, res) => {
             academy: academy,
             major_class: major_class,
             organization: organization,
-            position: position
+            position: position,
+            major:major
         },
         headers: {
             token: req.session.token
@@ -232,6 +233,7 @@ router.post('/admin/getUserByClass', (req, res) => {
     if (grade) {
         obj.grade = grade
     }
+    // console.log('传给后端的数据',obj)
     axios({
         method: 'GET',
         url: '/superAdmin/getUserByClass',
@@ -241,6 +243,7 @@ router.post('/admin/getUserByClass', (req, res) => {
         }
     })
         .then((result) => {
+            // console.log('后端反的数据',result.data)
             if (result.data.msg == 'OK') {
                 res.send({ err: 0, msg: result.data.data.records, total: result.data.data.total, page: result.data.data.pages })
             } else {

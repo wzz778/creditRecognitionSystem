@@ -25,7 +25,7 @@ axios({
                     for (let j = 0; j < result.msg.length; j++) {
                         // 判断是否有二级目录
                         if (result.msg[j].child == "下边没有指标了" && result.msg[j].b_points_available != 0) {
-                            console.log(result.msg[j])
+                            // console.log(result.msg[j])
                             yn = 1
                             // 不是目录是指标
                             str3 += `
@@ -105,18 +105,15 @@ axios({
                     if (yn == 1) {
                         // 二级直接是指标
                         resultStr += `
-                    <div class="creditItem">
-                        ${str1}
-                    <!-- 右边 -->
-                    <div class="creditRight">
-                        ${str3}
+                        <div class="creditItem">
+                            ${str1}
+                        <!-- 右边 -->
+                        <div class="creditRight">
+                            ${str3}
+                        </div>
                     </div>
-                </div>
                     `
                     // console.log('结果',str3)
-                    }
-                    if (yn == 2) {
-                        console.log(11);
                     }
                     if (yn == 3) {
                         resultStr += `
@@ -148,8 +145,8 @@ axios({
                     }
                 })
         }
+        // console.log(resultStr)
         setTimeout(() => {
-            // console.log(resultStr)
             content.innerHTML = resultStr
         }, 1000)
     })
@@ -178,3 +175,49 @@ function getAllDir(id) {
 }
 
 // 请求所有数据看那些是既有二级的指标又有三级的指标
+function makepdf() {
+    let com=confirm('您确定下载该psf表格?');
+    if(com){
+        html2canvas(
+            document.getElementById("schoolform"),
+            {
+                dpi: 172,//导出pdf清晰度
+                onrendered: function (canvas) {
+                    var contentWidth = canvas.width;
+                    var contentHeight = canvas.height;
+    
+                    //一页pdf显示html页面生成的canvas高度;
+                    var pageHeight = contentWidth / 592.28 * 841.89;
+                    //未生成pdf的html页面高度
+                    var leftHeight = contentHeight;
+                    //pdf页面偏移
+                    var position = 0;
+                    //html页面生成的canvas在pdf中图片的宽高（a4纸的尺寸[595.28,841.89]）
+                    var imgWidth = 595.28;
+                    var imgHeight = 592.28 / contentWidth * contentHeight;
+    
+                    var pageData = canvas.toDataURL('image/jpeg', 1.0);
+                    var pdf = new jsPDF('', 'pt', 'a4');
+    
+                    //有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)
+                    //当内容未超过pdf一页显示的范围，无需分页
+                    if (leftHeight < pageHeight) {
+                        pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight);
+                    } else {
+                        while (leftHeight > 0) {
+                            pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight)
+                            leftHeight -= pageHeight;
+                            position -= 841.89;
+                            //避免添加空白页
+                            if (leftHeight > 0) {
+                                pdf.addPage();
+                            }
+                        }
+                    }
+                    pdf.save(`学分汇总表.pdf`);
+                },
+                //背景设为白色（默认为黑色）
+                background: "#fff"
+            })
+    }
+}

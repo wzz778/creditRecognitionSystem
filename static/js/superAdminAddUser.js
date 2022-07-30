@@ -117,6 +117,8 @@ save.onclick = function () {
     var textusCollege = usCollege.options[indexusCollege].text
     var indexusClass = usClass.selectedIndex; // 选中索引
     var textusClass = usClass.options[indexusClass].text;
+    var indexusSpecialized = usSpecialized.selectedIndex; // 选中索引
+    var textusSpecialized = usSpecialized.options[indexusSpecialized].text;
     let obj = {
         name: usName.value,
         userName: account.value,
@@ -127,6 +129,7 @@ save.onclick = function () {
         obj.grade = textGrade
         obj.academy = textusCollege
         obj.major_class = textusClass
+        obj.major=textusSpecialized
     }
     if (OrganizationInformation.style.display == 'grid') {
         // 必须填组织信息
@@ -139,7 +142,6 @@ save.onclick = function () {
             obj.power = '普通管理员'
         }
     }
-    // console.log(obj)
     // 发送数据
     axios({
         method: 'POST',

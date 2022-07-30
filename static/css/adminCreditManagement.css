@@ -324,3 +324,8 @@ button{
 .CreditDir{
     margin-left: 28px;
 }
+
+#allSum{
+    background-color: #F8AC59;
+    color: white;
+}

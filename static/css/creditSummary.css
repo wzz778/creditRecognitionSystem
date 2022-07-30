@@ -66,3 +66,8 @@ li{
     align-items: center;
     border: 1px solid black;
 }
+
+#format{
+    background-color: blue;
+    color: white;
+}
