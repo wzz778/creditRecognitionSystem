@@ -429,9 +429,9 @@ cancel.onclick = function () {
 }
 let major = document.getElementById('major')
 function changeUserInfoFn(event) {
-    changeUseraCademy.innerHTML=''
-    major.innerHTML=''
-    changeUserClass.innerHTML=''
+    changeUseraCademy.innerHTML = ''
+    major.innerHTML = ''
+    changeUserClass.innerHTML = ''
     bodyTop[0].style.display = 'block'
     changeUserId.innerHTML = event.parentElement.firstElementChild.innerHTML
     let ele = event.parentElement.parentElement.firstElementChild
@@ -446,6 +446,18 @@ function changeUserInfoFn(event) {
         changeUserHas.value = '有'
         bodyTopClu[0].style.display = 'block'
         changeUserGrade.value = ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML
+        // BFn(changeUseraCademy, changeUserGrade.value, ele.lastElementChild.innerHTML)
+        // .then((result)=>{
+        //     console.log(result)
+        //     AFn(major, result, event.parentElement.firstElementChild.nextElementSibling.innerHTML)
+        // })
+        // .then((result)=>{
+        //     console.log(result)
+        //     AFn(changeUserClass,major.value, ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML)
+        // })
+        // .catch((err)=>{
+        //     console.log(err)
+        // })
         GetOtherLevelTwo(changeUseraCademy, changeUserGrade.value, ele.lastElementChild.innerHTML)
         setTimeout(() => {
             GetOtherLevel(major, changeUseraCademy.value, event.parentElement.firstElementChild.nextElementSibling.innerHTML)
@@ -460,7 +472,7 @@ function changeUserInfoFn(event) {
 let reg = /^[0-9]*$/
 changeUserInfo.onclick = function () {
     // 判断值是否为空
-    if (changeUserName.value == ''||changeUserName.value.replace(/(^\s*)|(\s*$)/g, "") == "") {
+    if (changeUserName.value == '' || changeUserName.value.replace(/(^\s*)|(\s*$)/g, "") == "") {
         swal('请输入姓名')
         return
     }
@@ -468,7 +480,7 @@ changeUserInfo.onclick = function () {
         swal('请输入正确的格式的学号或教务账号')
         return
     }
-    if(changeUserGrade.value==''){
+    if (changeUserGrade.value == '') {
         swal('请输入年级')
         return
     }
@@ -476,7 +488,7 @@ changeUserInfo.onclick = function () {
         swal('请输入学院')
         return
     }
-    if (major.value == '' ) {
+    if (major.value == '') {
         swal('请输入专业')
         return
     }
@@ -497,7 +509,7 @@ changeUserInfo.onclick = function () {
         obj.grade = changeUserGrade.value
         var indexusmajor = major.selectedIndex
         var textusmajor = major.options[indexusmajor].text
-        obj.major=textusmajor
+        obj.major = textusmajor
         var indexusmajor_class = changeUserClass.selectedIndex; // 选中索引
         var textusmajor_class = changeUserClass[indexusmajor_class].text;
         obj.major_class = textusmajor_class
@@ -569,16 +581,16 @@ function reviseFn(event) {
 }
 
 changeUserHas.onchange = function () {
-    changeUserGrade.value=''
-    changeUseraCademy.innerHTML=''
+    changeUserGrade.value = ''
+    changeUseraCademy.innerHTML = ''
     changeUseraCademy.add(new Option('请选择...', ''))
-    changeUseraCademy.value=''
-    major.innerHTML=''
+    changeUseraCademy.value = ''
+    major.innerHTML = ''
     major.add(new Option('请选择...', ''))
-    major.value=''
-    changeUserClass.innerHTML=''
+    major.value = ''
+    changeUserClass.innerHTML = ''
     changeUserClass.add(new Option('请选择...', ''))
-    changeUserClass.value=''
+    changeUserClass.value = ''
     if (changeUserHas.value == '有') {
         bodyTopClu[0].style.display = 'block'
     } else {
@@ -680,8 +692,9 @@ function GetOtherLevelTwoNew(ele, id, show) {
 GetFirstLevelOne(changeUserGrade)
 // 获取下一级
 function GetOtherLevel(ele, id, show) {
-    if(!id){
-        swal('数据不符')
+    if (!id) {
+        bodyTop[0].style.display = 'none'
+        swal('网络错误，请重新点击')
         return
     }
     axios({
@@ -692,7 +705,7 @@ function GetOtherLevel(ele, id, show) {
         }
     })
         .then((result) => {
-            console.log(result.data)
+            // console.log(result.data)
             // 将结果添加到ele上
             ele.innerHTML = ''
             let value = ''
@@ -724,22 +737,22 @@ changeUserGrade.onchange = function () {
     //     }
     // }
     GetOtherLevelTwo(changeUseraCademy, changeUserGrade.value)
-    major.innerHTML=''
+    major.innerHTML = ''
     major.add(new Option('请选择...', ''))
-    major.value=''
-    changeUserClass.innerHTML=''
+    major.value = ''
+    changeUserClass.innerHTML = ''
     changeUserClass.add(new Option('请选择...', ''))
-    changeUserClass.value=''
+    changeUserClass.value = ''
 }
 
-changeUseraCademy.onchange=function(){
-    if(changeUseraCademy.value==''){
+changeUseraCademy.onchange = function () {
+    if (changeUseraCademy.value == '') {
         return
     }
     GetOtherLevelTwoNew(major, changeUseraCademy.value)
-    changeUserClass.innerHTML=''
+    changeUserClass.innerHTML = ''
     changeUserClass.add(new Option('请选择...', ''))
-    changeUserClass.value=''
+    changeUserClass.value = ''
 }
 
 major.onchange = function () {
@@ -855,4 +868,83 @@ OrganizationSure.onclick = function () {
         .catch((err) => {
             swal('网络错误')
         })
+}
+
+function AFn(ele, id, show) {
+    return new Promise((resolve, resject) => {
+        // if (!id) {
+        //     // bodyTop[0].style.display = 'none'
+        //     swal('网络错误，请重新点击')
+        //     return
+        // }
+        axios({
+            method: 'POST',
+            url: '/admin/selectOrganization',
+            data: {
+                id: id
+            }
+        })
+            .then((result) => {
+                // console.log(result.data)
+                // 将结果添加到ele上
+                ele.innerHTML = ''
+                let value = ''
+                ele.add(new Option('请选择...', ''))
+                for (let i = 0; i < result.data.msg.length; i++) {
+                    if (result.data.msg[i].name == show) {
+                        value = result.data.msg[i].id
+                    }
+                    ele.add(new Option(result.data.msg[i].name, result.data.msg[i].id))
+                }
+                ele.value = value
+                console.log('包装的value',value)
+                resolve(value)
+            })
+            .catch((err) => {
+                console.log(err)
+                swal('网络错误')
+                resject(err)
+            })
+    })
+}
+
+function BFn(ele, id, show) {
+    return new Promise((resolve, resject) => {
+        let idResult = 1
+        for (let i = 0; i < ResultObj.msg.length; i++) {
+            if (ResultObj.msg[i].name == id) {
+                idResult = ResultObj.msg[i].id
+            }
+        }
+        axios({
+            method: 'POST',
+            url: '/admin/selectOrganization',
+            data: {
+                id: idResult
+            }
+        })
+            .then((result) => {
+                // console.log('show',show);
+                // console.log(idResult);
+                // console.log(result.data)
+                // 将结果添加到ele上
+                ele.innerHTML = ''
+                let value = ''
+                ele.add(new Option('请选择...', ''))
+                for (let i = 0; i < result.data.msg.length; i++) {
+                    if (result.data.msg[i].name == show) {
+                        value = result.data.msg[i].id
+                    }
+                    ele.add(new Option(result.data.msg[i].name, result.data.msg[i].id))
+                }
+                changeUseraCademy.value = value
+                // console.log('值', changeUseraCademy.value)
+                resolve(value)
+            })
+            .catch((err) => {
+                console.log(err)
+                swal('网络错误')
+                resject(err)
+            })
+    })
 }
