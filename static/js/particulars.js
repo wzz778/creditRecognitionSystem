@@ -69,7 +69,7 @@ function render(id){
                             </li>
                             <li>
                                 是否为集体项目：
-                                <span>否</span>
+                                <span>${date.group}</span>
                             </li>
                             
                         </ul>
@@ -140,7 +140,7 @@ function render(id){
         let all = '';
         // let datte = date.data.data;
         // preloadimages(datte);
-        if(date.data.data.length != 0){
+        if(date.data.data.length == 0){
             pic(340);
             carousel_item[0].innerHTML = `<div class="attchment-everyOne"><img src='public/img/no-content.png' class="attchment-imgs"><div class="no-content">暂无内容</div></div>`
         }else{
