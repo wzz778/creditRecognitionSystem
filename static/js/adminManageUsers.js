@@ -453,7 +453,7 @@ function changeUserInfoFn(event) {
         })
         .then((result)=>{
             // console.log(result)
-            AFn(changeUserClass,major.value, ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML)
+            AFn(changeUserClass,result, ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML)
         })
         .catch((err)=>{
             console.log(err)
