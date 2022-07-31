@@ -109,14 +109,20 @@ $('#postbutton').on('click', function () {
           if (data.data.msg == 'OK') {
             swal('提交成功', '您所填写的申请表提交成功', 'success');
             sessionStorage.setItem('Applicationid', data.data.data);
-            setTimeout(function () {
-              window.location.assign("/UploadAttachment");
-              // sessionStorage.setItem("tousers", '1');
-            }, 1000)
+            // setTimeout(function () {
+            //   window.location.assign("/UploadAttachment");
+            //   // sessionStorage.setItem("tousers", '1');
+            // }, 1000)
+          }else if(data.data.msg == '已超过最大分值'){
+            swal('提交失败',"您所填写的申请已超过最大分值",'error');
           }
         }).catch(function (error) {
-          swal('提交失败',"您所填写的申请表提交失败",'error')
           console.log(error);
+          if(error.data.msg == '已超过最大分值'){
+            swal('提交失败',"您所填写的申请已超过最大分值",'error');
+            return
+          }
+          swal('提交失败',"您所填写的申请表提交失败",'error')
         });
       } else {
         swal("您已经取消提交")
@@ -145,6 +151,7 @@ $('#postbutton').on('click', function () {
              //如果写成contentType会报错
           }
         }).then(data => {
+          console.log(data);
           if (data.data.msg == 'OK') {
             swal('提交成功', '您所填写的申请表提交成功', 'success');
             sessionStorage.setItem('Applicationid', data.data.data);
@@ -153,8 +160,14 @@ $('#postbutton').on('click', function () {
               window.location.assign("/UploadAttachment");
               // sessionStorage.setItem("tousers", '1');
             }, 1000)
+          }else if(data.data.msg == '已超过最大分值'){
+            swal('提交失败',"您所填写的申请已超过最大分值",'error');
           }
-        }).catch(function (error) {
+        }).catch(function (error) { 
+          if(data.data.msg == '已超过最大分值'){
+            swal('提交失败',"您所填写的申请已超过最大分值",'error');
+            return
+          }
           swal('提交失败',"您所填写的申请表提交失败",'error')
           // console.log(error);
         });
@@ -314,7 +327,7 @@ teamin[1].onclick=function(){
   `;
 }
 $(function(){
-  $("#subtextarea").keyup(function(){
+  $("#subtextarea").keydown(function(){
    var len = $(this).val().length;
    if(len > 999){
     $(this).val($(this).val().substring(0,1000));

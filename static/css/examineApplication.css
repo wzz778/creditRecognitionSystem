@@ -70,7 +70,7 @@
 
 #Application .Application_main tr {
   width: 98%;
-  padding: 10px;
+  padding: 5px;
   height: 40px;
   display: flex;
   border-bottom: 1px #DFE6EC solid;
@@ -102,6 +102,13 @@
   white-space: nowrap;
 }
 
+#Application .Application_main .opentext {
+  background-color: white;
+  box-shadow: #b1aeae 0px 0px 2px;
+  width: 400px;
+  border-radius: 3px;
+}
+
 #Application .Application_main th {
   color: gray;
   width: 20%;
@@ -111,6 +118,8 @@
   text-align: center;
   width: 0px;
   color: #9b9b9b;
+  line-height: 30px;
+  height: 30px;
 }
 
 #Application .Application_main td a {

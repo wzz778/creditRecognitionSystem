@@ -254,7 +254,7 @@ function changepage(page,set) {
                     <td class="ms">${redata.pageInfo[n].user.academy}</td>
                     <td class="ms">${redata.pageInfo[n].user.major_class}</td>
                     <td class="ms">${redata.pageInfo[n].creditType.afirstLevel}</td>
-                    <td class="ms">${b_Indicator_name}</td>
+                    <td class="ms" onmousemove="addopen(this)">${b_Indicator_name}</td>
                     <td class="ms">${redata.pageInfo[n].points}</td>
                     <td class="ml">
                         <a class='mr' href='particulars?id=${redata.pageInfo[n].id}' onclick='look(this)'>查看详情</a>
@@ -288,7 +288,7 @@ function changepage(page,set) {
                     <td class="ms">${redata.pageInfo[n].user.academy}</td>
                     <td class="ms">${redata.pageInfo[n].user.major_class}</td>
                     <td class="ms">${redata.pageInfo[n].creditType.afirstLevel}</td>
-                    <td class="ms">${b_Indicator_name}</td>
+                    <td class="ms" onmousemove="addopen(this)">${b_Indicator_name}</td>
                     <td class="ms">${redata.pageInfo[n].points}</td>
                     <td class="ml">
                         <a class='mr' href='particulars?id=${redata.pageInfo[n].id}' onclick='look(this)'>查看详情</a>
@@ -416,3 +416,9 @@ function deleteall(){
             }
         });
 }
+function addopen(event){
+    event.classList.add("opentext");
+    event.onmouseout=function(){
+      event.classList.remove("opentext");
+    }
+  }
