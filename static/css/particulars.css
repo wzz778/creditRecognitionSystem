@@ -66,6 +66,12 @@ a:hover{
     font-weight: 700;
     margin-bottom: 10px;
 }
+.failure span{
+    display: block;
+    color: black;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
 .attchment-title{
     text-align: left;
     font-weight: 700;
