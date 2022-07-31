@@ -2,26 +2,28 @@ let message=document.getElementsByClassName('message');
 axios({
     url: '/api/getpostmessage',
     method: 'get',
-    params: {id: sessionStorage.getItem('Applicationid')},
+    params: {id:sessionStorage.getItem('Applicationid')},
   }).then(response=> {
-    // console.log(response.data);
+      console.log(response.data);   
+      let data=response.data.data;
+    let qu=data.team=="否"?"否":`是   团队排名为  ${data.orders}`;
     if(response.data.msg!='OK'){
         alert('获取失败！');
     }else{
-        let data=response.data.data;
         message[0].innerText=data.user.name;
         message[1].innerText=data.user.sex;
         message[2].innerText=data.user.userName;
         message[3].innerText=data.user.academy;
         message[4].innerText=data.user.major_class
         message[5].innerText=data.creditType.afirstLevel;
-        message[6].innerText=data.classify.b_points_available;
-        message[7].innerText=data.remarks;
+        message[6].innerText=qu;
+        message[7].innerText=data.points;
+        message[8].innerText=data.remarks;
     }
   }).catch(error=> {
     // swal('提交失败',"您所填写的申请表提交失败",'error')
     alert('获取内容失败！');
-    // console.log(error);
+    console.log(error);
 });
 for(let n of message){
     if(n.innerHTML=='null'){

@@ -126,20 +126,7 @@ router.get('/examineApplication',(req,res)=>{
     // res.render('examineApplication.html')
 })
 //反馈申请表
-router.post('/api/setfeedback', (req, res) => {
-    console.log(req.body);
-    axios({
-        url:'/user/feedback',
-        method:'post',
-        params:req.body,
-    }).then(response=>{
-        console.log(req.session.token);
-        res.send(response.data);
-        // return jwt.decode(req.session.token).username;
-    }).catch(function (error) {
-        res.send(error)
-    });
-})
+
 //提交申请表
 router.get('/submitApplication',(req,res)=>{
     axios.get('/creditTypeOperate/showCreditType',{
@@ -158,7 +145,6 @@ router.get('/submitApplication',(req,res)=>{
         // res.send(error)
     });
 })
-
 axios.defaults.baseURL='http://110.40.205.103:8099/';
 
 //登录
@@ -224,6 +210,7 @@ router.get('/api/getcreditmessage', (req, res) => {
     });
 })
 router.post('/api/getpost', (req, res) => {
+    console.log(req.body);
     axios({
         url:'user/application',
         method:'post',
@@ -292,7 +279,7 @@ router.post('/api/UploadAttachment', multipartMiddleware,(req, res) => {
     //req.body中传递非文件数据， req.files是文件数据
     axios({
         method: 'POST',
-        url: 'http://110.40.205.103:8099/user/photo',
+        url: '/user/photo',
         data:formdata,
         // headers: formdata.getHeaders(),
         headers:{
@@ -481,6 +468,24 @@ router.post('/api/addorgin', (req, res) => {
         res.send(response.data);
     }).catch(function (error) {
         console.log(error);
+        res.send(error)
+    });
+})
+router.post('/api/setfeedback', (req, res) => {
+    console.log(req.body);
+    axios({
+        headers:{
+            token: req.session.token,
+        },
+        url:'/user/feedback',
+        method:'post',
+        params:req.body,
+    }).then(response=>{
+        console.log(response.data);
+        res.send(response.data);
+        // return jwt.decode(req.session.token).username;
+    }).catch(function (error) {
+        console.log(error.data);
         res.send(error)
     });
 })
