@@ -429,6 +429,9 @@ cancel.onclick = function () {
 }
 let major = document.getElementById('major')
 function changeUserInfoFn(event) {
+    changeUseraCademy.innerHTML=''
+    major.innerHTML=''
+    changeUserClass.innerHTML=''
     bodyTop[0].style.display = 'block'
     changeUserId.innerHTML = event.parentElement.firstElementChild.innerHTML
     let ele = event.parentElement.parentElement.firstElementChild
@@ -446,10 +449,10 @@ function changeUserInfoFn(event) {
         GetOtherLevelTwo(changeUseraCademy, changeUserGrade.value, ele.lastElementChild.innerHTML)
         setTimeout(() => {
             GetOtherLevel(major, changeUseraCademy.value, event.parentElement.firstElementChild.nextElementSibling.innerHTML)
-        }, 100)
+        }, 250)
         setTimeout(() => {
             GetOtherLevel(changeUserClass, major.value, ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML)
-        }, 200)
+        }, 450)
         // changeUserClass.value = ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML
     }
 }
@@ -656,7 +659,7 @@ function GetOtherLevelTwoNew(ele, id, show) {
         .then((result) => {
             // console.log('show',show);
             // console.log(idResult);
-            console.log(result.data)
+            // console.log(result.data)
             // 将结果添加到ele上
             ele.innerHTML = ''
             let value = ''
@@ -689,7 +692,7 @@ function GetOtherLevel(ele, id, show) {
         }
     })
         .then((result) => {
-            // console.log(result.data)
+            console.log(result.data)
             // 将结果添加到ele上
             ele.innerHTML = ''
             let value = ''

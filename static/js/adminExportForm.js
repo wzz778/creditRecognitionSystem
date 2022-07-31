@@ -102,6 +102,10 @@ function fn(obj) {
                     }
                     str += `<td class="dieWidth">${points}</td>`
                 }
+                let sumPoints=0
+                if(result.data.msg.data[i].total_application!=null){
+                    sumPoints=result.data.msg.data[i].total_application
+                }
                 adminExportFormBottom[0].innerHTML +=
                     `
                 <table>
@@ -116,7 +120,7 @@ function fn(obj) {
                         <div class="adminExportFormCredit">
                             ${str}
                         </div>
-                        <td class="dieWidth">${result.data.msg.data[i].total_application}</td>
+                        <td class="dieWidth">${sumPoints}</td>
                         <td class="dieWidth">${result.data.msg.data[i].result_score}</td>
                         <td class="dieWidth"></td>
                         <td class="dieWidthTwo"></td>
@@ -124,7 +128,7 @@ function fn(obj) {
                 </tbody>
                 `
             }
-            swal('查询成功')
+            // swal('查询成功')
         })
         .catch((err) => {
             console.log(err)
@@ -139,6 +143,7 @@ reserve.onclick = function () {
     usGrade.value = ''
     usClass.value = ''
     fn(obj)
+    swal('已重置')
 }
 let search = document.getElementById('search')
 search.onclick = function () {
@@ -153,6 +158,7 @@ search.onclick = function () {
         return
     }
     fn(obj)
+    swal('查询成功')
 }
 
 // 获取一级的目录,传入要显示年级的元素
