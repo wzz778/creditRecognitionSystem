@@ -212,9 +212,9 @@ function rendering() {
             pageSize: 10,
         },
     }).then((date)=>{
-        console.log(date.data);
+        // console.log(date.data);
         let all = date.data.data.pageInfo;
-        console.log(all);
+        // console.log(all);
         checkbox_all[0].pagees = date.data.data.allPages;
         checkbox_all[0].total = date.data.data.allRecords;
         // checkbox_all[0].size = date.data.data.size;
@@ -293,16 +293,18 @@ function rendering() {
             
             
             check[i].onclick = function (){
+                cover_layer[0].style.display = 'block'
                 layer_submit[0].numbers = 1;
                 layer_submit[0].ids = i;
                 layer_btn_primary[1].sums = 0;
                 checkbox_list[i].ids = all[i].uid;
+                checkbox_all[0].ids.push(all[i].uid);
                 layer_input[0].value = all[i].name;
                 layer_input[1].value = all[i].userName;
-                // layer_input[2].value = all[i].grade;
-                // layer_input[3].value = all[i].academy;
-                // layer_input[5].value = all[i].major_class;
-                // layer_input[4].value = all[i].major;
+                layer_input[2].value = all[i].grade;
+                layer_input[3].value = all[i].academy;
+                layer_input[5].value = all[i].major_class;
+                layer_input[4].value = all[i].major;
                 let sex = all[i].sex;
                 for(let j=0;j<radios.length;j++){
                     if(radios[j].value == all[i].sex){
@@ -311,54 +313,15 @@ function rendering() {
                         switchover(layer_form_radio,j,style);
                     }
                 }
-                let timer = setTimeout(renderFrame(startTime,all[i].grade),0);
-                let timer_one = setTimeout(function (a,b) {
-                    let clist = 'layer-this';
-                    for(let i=0;i<a.length;i++){
-                        if(a[i].innerHTML == b){
-                            console.log(a[i].innerHTML);
-                            console.log(b);
-                            // switchover(name,i,clist);
-                            a[i].click();
-                        }
-                    }
-                    console.log(a.length);
-                },100,academy,all[i].academy);
-                let timer_two = setTimeout(function (a,b) {
-                    let clist = 'layer-this';
-                    for(let i=0;i<a.length;i++){
-                        if(a[i].innerHTML == b){
-                            console.log(a[i].innerHTML);
-                            console.log(b);
-                            // switchover(name,i,clist);
-                            a[i].click();
-                        }
-                    }
-                    console.log(a.length);
-                },200,major,all[i].major);
-                let timer_three = setTimeout(function (a,b) {
-                    let clist = 'layer-this';
-                    for(let i=0;i<a.length;i++){
-                        if(a[i].innerHTML == b){
-                            console.log(a[i].innerHTML);
-                            console.log(b);
-                            // switchover(name,i,clist);
-                            a[i].click();
-                        }
-                    }
-                    console.log(a.length);
-                },300,grade,all[i].major_class);
-                let timer_four = setTimeout(function (){
-                    cover_layer[0].style.display = 'block'
-                },300);
-                let timer_five = setTimeout(function (){
-                    clearTimeout(timer);
-                    clearTimeout(timer_one);
-                    clearTimeout(timer_two);
-                    clearTimeout(timer_three);
-                    clearTimeout(timer_four);
-                    clearTimeout(timer_five);
-                },500)
+                fn(all[i].grade).then(function (value) {
+                    // console.log(value)
+                    // console.log(1)
+                    return bns(value,academy,'academy',layer_input[3].value,1);
+                }).then((value) => {
+                    return bns(value,major,'major',layer_input[4].value,2);
+                }).then((value) => {
+                    return bns(value,grade,'grade',layer_input[5].value,3);
+                })
             }
             reset[i].onclick = function (){
                 axios({
@@ -419,8 +382,83 @@ function rendering() {
 }
 rendering();
 
+function fn(othername) {
+    return new Promise((resolve, reject) =>{
+        axios({
+            method:'get',
+            url:'/admins/showOrganization',
+            params:{},
+        }).then((date)=>{
+            // console.log(date.data);
+            let all = date.data.data;
+            let html = `<dd class="layer-select-tips layer-this startTimes" >请选择</dd>`;
+            let html_one = `<option value="" class="header_grade">请选择...</option>`
+            for(let i=0;i<all.length;i++){
+                html += `<dd class="layer-select-tips startTimes" value="${all[i].name}" id="${all[i].id}">${all[i].name}</dd>`;
+                html_one += `<option value="${all[i].name}" id="${all[i].id}" class="header_grade">${all[i].name}</option>`
+            }
+            layer_list[0].innerHTML = html;
+            search_type[0].innerHTML = html_one;
+            selectTitle(layer_click,startTime,0);
+            let clist = 'layer-this';
+            for(let j=0;j<startTime.length;j++){
+                if(startTime[j].innerHTML == othername){
+                    console.log(startTime[j].innerHTML);
+                    console.log(othername);
+                    // switchover(name,i,clist);
+                    switchover(startTime,j,clist);
+                    let ids = startTime[j].id
+                    resolve(ids)
+                }
+            }
 
+        }).catch((err)=>{
+            console.log(err);
+        })
+    } )
+}
 
+function bns(id,name,names,othername,numbers){
+    return new Promise((resolve, reject) => {
+        axios({
+            method:'get',
+            url:'/admins/selectOrganization',
+            params:{
+                id:id,
+            }
+        }).then((date)=>{
+            // console.log(date.data);
+            let all = date.data.data;
+            let html = `<dd class="layer-select-tips layer-this ${names}" >请选择</dd>`;
+            for(let i=0;i<all.length;i++){
+                html += `<dd class="layer-select-tips ${names}" value="${all[i].name}" id="${all[i].id}">${all[i].name}</dd>`;
+            }
+            layer_list[numbers].innerHTML = html;
+            if(numbers == 1 ){
+                selectTitle(layer_click,academy,1);
+            }else if(numbers == 2 ){
+                selectTitle(layer_click,major,2);
+            }else if(numbers == 3){
+                selectTitle(layer_click,grade,3);
+            }
+            let clist = 'layer-this';
+            for(let j=0;j<name.length;j++){
+                if(name[j].innerHTML == othername){
+                    console.log(name[j].innerHTML);
+                    console.log(othername);
+                    // switchover(name,i,clist);
+                    switchover(name,j,clist);
+                    let ids = name[j].id
+                    if(numbers != 3){
+                        resolve(ids)
+                    }
+                }
+            }
+        }).catch((err)=>{
+            console.log(err);
+        })
+    })
+}
 
 
 
@@ -428,13 +466,13 @@ function renderFrame(name,otherName){
     let clist = 'layer-this';
     for(let i=0;i<name.length;i++){
         if(name[i].innerHTML == otherName){
-            console.log(name[i].innerHTML);
-            console.log(layer_input[2].value);
+            // console.log(name[i].innerHTML);
+            // console.log(layer_input[2].value);
             // switchover(name,i,clist);
             name[i].click();
         }
     }
-    console.log(name.length);
+    // console.log(name.length);
 
 }
 
@@ -552,12 +590,19 @@ function render(numbers,size){
                 }
             }
             check[i].onclick = function (){
+                cover_layer[0].style.display = 'block';
                 layer_submit[0].numbers = 1;
                 layer_submit[0].ids = i;
                 layer_btn_primary[1].sums = 0;
                 checkbox_list[i].ids = all[i].uid;
+                checkbox_list[i].ids = all[i].uid;
+                checkbox_all[0].ids.push(all[i].uid);
                 layer_input[0].value = all[i].name;
                 layer_input[1].value = all[i].userName;
+                layer_input[2].value = all[i].grade;
+                layer_input[3].value = all[i].academy;
+                layer_input[5].value = all[i].major_class;
+                layer_input[4].value = all[i].major;
                 let sex = all[i].sex;
                 // console.log(sex);
                 // console.log(checkbox_all[0].pages);
@@ -571,54 +616,16 @@ function render(numbers,size){
                         switchover(layer_form_radio,j,style);
                     }
                 }
-                let timer = setTimeout(renderFrame(startTime,all[i].grade),0);
-                let timer_one = setTimeout(function (a,b) {
-                    let clist = 'layer-this';
-                    for(let i=0;i<a.length;i++){
-                        if(a[i].innerHTML == b){
-                            console.log(a[i].innerHTML);
-                            console.log(b);
-                            // switchover(name,i,clist);
-                            a[i].click();
-                        }
-                    }
-                    console.log(a.length);
-                },100,academy,all[i].academy);
-                let timer_two = setTimeout(function (a,b) {
-                    let clist = 'layer-this';
-                    for(let i=0;i<a.length;i++){
-                        if(a[i].innerHTML == b){
-                            console.log(a[i].innerHTML);
-                            console.log(b);
-                            // switchover(name,i,clist);
-                            a[i].click();
-                        }
-                    }
-                    console.log(a.length);
-                },200,major,all[i].major);
-                let timer_three = setTimeout(function (a,b) {
-                    let clist = 'layer-this';
-                    for(let i=0;i<a.length;i++){
-                        if(a[i].innerHTML == b){
-                            console.log(a[i].innerHTML);
-                            console.log(b);
-                            // switchover(name,i,clist);
-                            a[i].click();
-                        }
-                    }
-                    console.log(a.length);
-                },300,grade,all[i].major_class);
-                let timer_four = setTimeout(function (){
-                    cover_layer[0].style.display = 'block'
-                },300);
-                let timer_five = setTimeout(function (){
-                    clearTimeout(timer);
-                    clearTimeout(timer_one);
-                    clearTimeout(timer_two);
-                    clearTimeout(timer_three);
-                    clearTimeout(timer_four);
-                    clearTimeout(timer_five);
-                },500)
+                fn(all[i].grade).then(function (value) {
+                    // console.log(value)
+                    // console.log(1)
+                    return bns(value,academy,'academy',layer_input[3].value,1);
+                }).then((value) => {
+                    return bns(value,major,'major',layer_input[4].value,2);
+                }).then((value) => {
+                    return bns(value,grade,'grade',layer_input[5].value,3);
+                })
+
             };
             reset[i].onclick = function (){
                 axios({
@@ -688,6 +695,8 @@ function render(numbers,size){
 
 
 
+
+
 // 单个或多个删除
 btn_del[0].onclick = function (){
     // console.log(checkbox_all[0].ids.length);
@@ -736,14 +745,14 @@ btn_del[0].onclick = function (){
 
 // 修改个人信息
 btn_update[0].onclick =function () {
-
-    layer_submit[0].numbers = 1;
+    cover_layer[0].style.display = 'block';
+    layer_submit[0].numbers = 2;
     layer_input[0].value = checkbox_all[0].name;
     layer_input[1].value = checkbox_all[0].userName;
-    // layer_input[2].value = checkbox_all[0].grade;
-    // layer_input[3].value = checkbox_all[0].academy;
-    // layer_input[4].value = checkbox_all[0].major;
-    // layer_input[5].value = checkbox_all[0].major_class;
+    layer_input[2].value = checkbox_all[0].grade;
+    layer_input[3].value = checkbox_all[0].academy;
+    layer_input[4].value = checkbox_all[0].major;
+    layer_input[5].value = checkbox_all[0].major_class;
     let sex = checkbox_all[0].sex;
     // console.log(sex);
     let clist = 'layer-this';
@@ -755,54 +764,15 @@ btn_update[0].onclick =function () {
             switchover(layer_form_radio,j,style);
         }
     }
-    let timer = setTimeout(renderFrame(startTime,checkbox_all[0].grade),0);
-    let timer_one = setTimeout(function (a,b) {
-        let clist = 'layer-this';
-        for(let i=0;i<a.length;i++){
-            if(a[i].innerHTML == b){
-                console.log(a[i].innerHTML);
-                console.log(b);
-                // switchover(name,i,clist);
-                a[i].click();
-            }
-        }
-        console.log(a.length);
-    },100,academy,checkbox_all[0].academy);
-    let timer_two = setTimeout(function (a,b) {
-        let clist = 'layer-this';
-        for(let i=0;i<a.length;i++){
-            if(a[i].innerHTML == b){
-                console.log(a[i].innerHTML);
-                console.log(b);
-                // switchover(name,i,clist);
-                a[i].click();
-            }
-        }
-        console.log(a.length);
-    },200,major,checkbox_all[0].major);
-    let timer_three = setTimeout(function (a,b) {
-        let clist = 'layer-this';
-        for(let i=0;i<a.length;i++){
-            if(a[i].innerHTML == b){
-                console.log(a[i].innerHTML);
-                console.log(b);
-                // switchover(name,i,clist);
-                a[i].click();
-            }
-        }
-        console.log(a.length);
-    },300,grade,checkbox_all[0].major_class);
-    let timer_four = setTimeout(function (){
-        cover_layer[0].style.display = 'block'
-    },300);
-    let timer_five = setTimeout(function (){
-        clearTimeout(timer);
-        clearTimeout(timer_one);
-        clearTimeout(timer_two);
-        clearTimeout(timer_three);
-        clearTimeout(timer_four);
-        clearTimeout(timer_five);
-    },500)
+    fn(checkbox_all[0].grade).then(function (value) {
+        // console.log(value)
+        // console.log(1)
+        return bns(value,academy,'academy',layer_input[3].value,1);
+    }).then((value) => {
+        return bns(value,major,'major',layer_input[4].value,2);
+    }).then((value) => {
+        return bns(value,grade,'grade',layer_input[5].value,3);
+    })
 }
 
 
@@ -988,7 +958,7 @@ layer_submit[0].onclick = function (){
                     url:'/admin/Users',
                     data:users,
                 }).then((date)=>{
-                    console.log(date.data);
+                    // console.log(date.data);
 
                     cover_layer[0].style.display = 'none';
                     let cla = 'layer-form-radioed';
@@ -1012,7 +982,6 @@ layer_submit[0].onclick = function (){
             }
         }
     }else{
-        if(checkbox_all[0].ids.length == 1   ){
             let users ={
                 "UId":checkbox_all[0].ids[0],
                 "name":layer_input[0].value,
@@ -1025,8 +994,8 @@ layer_submit[0].onclick = function (){
                 "power":'普通用户',
                 "password": "111111",
             }
-            console.log(users);
-            console.log(layer_submit[0].ids)
+            // console.log(users);
+            // console.log(layer_submit[0].ids)
             let patrn = /^[0-9]{11}$/
             if(!patrn.exec(layer_input[1].value)){
                 warn[0].innerHTML = `<span class="warning">输入的格式不对</span>`
@@ -1043,7 +1012,11 @@ layer_submit[0].onclick = function (){
                         switchover(layer_form_radio,1,cla);
                         cover_layer[0].style.display = 'none';
                         swal('修改成功','成功修改','success');
-                        checkbox_list[layer_submit[0].ids].click()
+                        if(layer_submit[0].numbers == 2){
+                            checkbox_list[layer_submit[0].ids].click()
+                        }else{
+                            checkbox_all[0].ids.splice(0);
+                        }
                         render(checkbox_all[0].pages,checkbox_all[0].sizees);
 
                     }).catch((err)=>{
@@ -1053,7 +1026,6 @@ layer_submit[0].onclick = function (){
                     swal('请把信息填写完整','','error');
                 }
             }
-        }
     }
 
 }
@@ -1068,6 +1040,9 @@ layer_btn_primary[1].onclick = function (){
     layer_input[4].value = "";
     layer_input[5].value = "";
     warn[0].innerHTML = '';
+    if(layer_submit[0].numbers == 2 || layer_submit[0].numbers == 1){
+        checkbox_all[0].ids.splice(0);
+    }
     let clist = 'layer-this';
     switchover(startTime,0,clist);
     let cla = 'layer-form-radioed';
