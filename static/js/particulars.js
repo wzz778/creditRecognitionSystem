@@ -40,9 +40,10 @@ function render(id){
             id:id,
         }
     }).then((data)=>{
-        console.log(data.data.data);
+        // console.log(data.data.data);
         let date = data.data.data;
         // let html = template('details',data);
+        let scords = '分';
         let all = '';
         all += `
                         <ul class="messages">
@@ -76,6 +77,18 @@ function render(id){
                                 是否为集体项目：
                                 <span>${date.team}</span>
                             </li>
+                            <li>
+                                备注：
+                                <span>${date.classify.b_remark}</span>
+                            </li>
+                            <li>
+                                最高得分：
+                                <span>${date.classify.b_points_available} + ${scords}</span>
+                            </li>
+                            <li>
+                                个人得分：
+                                <span>${date.points} + ${scords}</span>
+                            </li>
                             
                         </ul>
                         <div class="parctice-content">
@@ -98,7 +111,7 @@ function render(id){
             id:id,
         }
     }).then((data)=>{
-        console.log(data.data);
+        // console.log(data.data);
         if(data.data.status == 200){
             reject[0].innerHTML = `<div class="failure">
                             <span>驳回的理由：</span>
@@ -119,7 +132,7 @@ function render(id){
             id:id,
         }
     }).then((date)=>{
-        console.log(date.data.data);
+        // console.log(date.data.data);
         let all = '';
         // let datte = date.data.data;
         // preloadimages(datte);
@@ -132,7 +145,7 @@ function render(id){
                 all +=`<div class="attchment-everyOne"><img src='${date.data.data[i].address}' class="attchment-imgs attchments" ></div>`
             }
             carousel_item[0].innerHTML = all;
-            attchment_header[0].innerHTML = date.data.data[0].enclosure_name;
+            attchment_header[0].innerHTML = '附件名称：' + date.data.data[0].enclosure_name;
         }
 
     })

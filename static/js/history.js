@@ -68,7 +68,7 @@ function applicationType() {
         method:'get',
         url:'/IndicatorOperates/showAllIndicator',
     }).then((data)=>{
-        console.log(data.data);
+        // console.log(data.data);
                 // console.log(data.data.msg);
         let all = `<option value="">请选择...</option>`;
         if(data.data.data.length !=0){
@@ -83,9 +83,9 @@ function applicationType() {
 }
 applicationType()
 
-
+//输入的学分限制
 search[0].oninput = function (){
-    this.value=this.value.replace(/^\D*(\d*(?:\.\d{0,1})?).*$/g, '$1');
+    this.value=this.value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1');
 }
 
 //初始渲染页面
@@ -127,7 +127,7 @@ function rendering(){
         url:'/users/records',
         params:his,
     }).then((data)=>{
-        console.log(data.data.data);
+        // console.log(data.data.data);
         // console.log(data.data.data);
         let date = data.data.data.pageInfo;
         // console.log(date);
