@@ -380,27 +380,23 @@ router.get('/IndicatorOperates/showAllIndicator',(req,res)=>{
     })
 })
 
-//查询一个组织的id
-router.get('/admins/selectOrganizations',(req,res)=>{
+
+//取出反馈
+router.get('/user/feedback',(req,res)=>{
     axios({
         method:'get',
-        url:'/admin/selectOrganization',
+        url:'/user/feedback',
         params:req.query,
         headers:{
             token:req.session.token
         }
     }).then((data)=>{
-        // res.send(data.data);
-        let name = req.query.name;
-        for(let i=0;i<data.data.data.length;i++){
-            if(name == data.data.data[i].name){
-                res.send({err:0,msg:data.data.data[i].id})
-            }
-        }
+        res.send(data.data);
     }).catch((err)=>{
         res.send(err);
     })
 })
+
 
 
 

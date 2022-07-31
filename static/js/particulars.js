@@ -19,13 +19,14 @@ function pic(hei){
 
 
 let id = window.location.search.split("=")[1];
-// console.log(id);
+console.log(id);
 let history_details = document.getElementsByClassName('history-details');
 let application_message = document.getElementsByClassName('application-message');
 let attchment = document.getElementsByClassName('attchment');
 let carousel_item = document.getElementsByClassName('carousel-item');
 let download = document.getElementsByClassName('download');
 let attchment_imgs = document.getElementsByClassName('attchments');
+let reject = document.getElementsByClassName('reject');
 
 
 
@@ -42,8 +43,7 @@ function render(id){
         let date = data.data.data;
         // let html = template('details',data);
         let all = '';
-        if(date.approval_status == 2){
-            all += `
+        all += `
                         <ul class="messages">
                             <li>
                                 姓名：
@@ -69,7 +69,7 @@ function render(id){
                             </li>
                             <li>
                                 是否为集体项目：
-                                <span>${date.group}</span>
+                                <span>${date.team}</span>
                             </li>
                             
                         </ul>
@@ -79,55 +79,33 @@ function render(id){
                                 <textarea name="" id="textarea" readonly style="resize: none">${date.remarks}</textarea>
                             </div>
                         </div>
-                        <div class="failure">
-                            <span>驳回的理由：</span>
-                            <div>
-                                <textarea name="" id="textarea" readonly style="resize: none"></textarea>
-                            </div>
-                        </div>`
-        }else{
-            all += `
-                        <ul class="messages">
-                            <li>
-                                姓名：
-                                <span class="name">${date.user.name}</span>
-                            </li>
-                            <li>
-                                性别：
-                                <span class="sex">${date.user.sex}</span>
-                            </li>
-                            
-                            <li>
-                                所属学院：
-                                <span>${date.user.academy}</span>
-                            </li>
-                            
-                            <li>
-                                班级：
-                                <span>${date.user.major_class}</span>
-                            </li>
-                            <li>
-                                申请类型：
-                                <span>${date.creditType.afirstLevel}</span>
-                            </li>
-                            <li>
-                                是否为集体项目：
-                                <span>否</span>
-                            </li>
-                            
-                        </ul>
-                        <div class="parctice-content">
-                            <span>实践内容说明：</span>
-                            <div>
-                                <textarea name="" id="textarea" readonly style="resize: none">${date.remarks}</textarea>
-                            </div>
-                        </div>`
-        }
+                        `
         application_message[0].innerHTML = all;
         // pic(300);
     }).catch((err)=>{
         console.log(err);
     })
+
+    axios({
+        method:'get',
+        url:'/user/feedback',
+        params:{
+            id:id,
+        }
+    }).then((data)=>{
+        console.log(data.data);
+        if(data.data.status == 200){
+            reject[0].innerHTML = `<div class="failure">
+                            <span>驳回的理由：</span>
+                            <div>
+                                <textarea name="" id="textarea" readonly style="resize: none">${data.data.data.message}</textarea>
+                            </div>
+                        </div>`
+        }
+    }).catch((err)=>{
+        console.log(err);
+    })
+
 
     axios({
         method: 'get',
