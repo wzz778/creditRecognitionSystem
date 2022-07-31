@@ -43,6 +43,10 @@ select {
     color: #999999;
 }
 
+textarea{
+    color: #999999;
+}
+
 /* 公共样式 */
 .clearFloat::after {
     content: "";
