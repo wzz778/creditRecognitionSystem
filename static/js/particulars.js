@@ -19,7 +19,7 @@ function pic(hei){
 
 
 let id = window.location.search.split("=")[1];
-// console.log(id);
+console.log(id);
 let history_details = document.getElementsByClassName('history-details');
 let application_message = document.getElementsByClassName('application-message');
 let attchment = document.getElementsByClassName('attchment');
@@ -128,6 +128,19 @@ function render(id){
     }).catch((err)=>{
         console.log(err);
     })
+
+    axios({
+        method:'get',
+        url:'/user/feedback',
+        params:{
+            id:id,
+        }
+    }).then((data)=>{
+        console.log(data.data);
+    }).catch((err)=>{
+        console.log(err);
+    })
+
 
     axios({
         method: 'get',
