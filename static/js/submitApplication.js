@@ -1,11 +1,11 @@
 
-layui.use(['form', 'layedit', 'laydate'], function () {
-  var form = layui.form
-    , layer = layui.layer
-    , layedit = layui.layedit
-    , laydate = layui.laydate;
-  //自定义验证规则
-});
+// layui.use(['form', 'layedit', 'laydate'], function () {
+//   var form = layui.form
+//     , layer = layui.layer
+//     , layedit = layui.layedit
+//     , laydate = layui.laydate;
+//   //自定义验证规则
+// });
 $.fn.serializeObject = function () {
   var ct = this.serializeArray();
   var obj = {};
@@ -28,6 +28,7 @@ let son = document.getElementsByName('specific_information')[0];
 let son2 = document.getElementById('son2');
 let usermessage = document.getElementsByClassName('usermessage');
 let credittypesonson = document.getElementById('credittypesonson');
+let ranking= document.getElementById('ranking');
 if(sessionStorage.getItem('Applicationid')){
   swal("您还有申请表未上传完整！");
   setTimeout(function () {
@@ -59,11 +60,22 @@ axios({
 })
 $('#postbutton').on('click', function () {
   var o = $('#form').serializeObject();
-  // console.log(o);isnull(val) 
+  console.log(o);
   if (isnull(o.remarks)) {
   // if (o.remarks == '') {
     swal("请填写实践内容说明！");
     return
+  }
+  if (isnull(o.points)) {
+    // if (o.remarks == '') {
+      swal("请您要申请的分值！");
+      return
+    }
+  if(o.team=="是"){
+    if(isnull(o.orders)){
+      swal("请填写您的团队排名！");
+      return
+    }
   }
   if (o.specific_information == '0') {
     swal('请选择指标！')
@@ -93,10 +105,10 @@ $('#postbutton').on('click', function () {
              //如果写成contentType会报错
           }
         }).then(data => {
+          console.log(data);
           if (data.data.msg == 'OK') {
             swal('提交成功', '您所填写的申请表提交成功', 'success');
             sessionStorage.setItem('Applicationid', data.data.data);
-            // console.log(data.data);
             setTimeout(function () {
               window.location.assign("/UploadAttachment");
               // sessionStorage.setItem("tousers", '1');
@@ -104,7 +116,7 @@ $('#postbutton').on('click', function () {
           }
         }).catch(function (error) {
           swal('提交失败',"您所填写的申请表提交失败",'error')
-          // console.log(error);
+          console.log(error);
         });
       } else {
         swal("您已经取消提交")
@@ -289,3 +301,25 @@ function setsonson() {
 // });
 // }
 // submitpost();
+  let teamin=document.getElementsByClassName('teamin');
+    teamin[0].onclick=function(){
+    ranking.innerHTML='';
+  }
+teamin[1].onclick=function(){
+  ranking.innerHTML='';
+  ranking.innerHTML=`
+  项目排名：&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+  <input name="orders" maxlength="2" autocomplete="off" placeholder="排名"  class="layui-input" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}">
+  名
+  `;
+}
+$(function(){
+  $("#subtextarea").keyup(function(){
+   var len = $(this).val().length;
+   if(len > 999){
+    $(this).val($(this).val().substring(0,1000));
+   }
+   var num = len;
+   $("#word").text(num);
+  });
+ });

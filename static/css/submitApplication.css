@@ -40,6 +40,54 @@
   line-height: 40px;
 }
 
+#teamdiv {
+  line-height: 50px;
+  display: flex;
+}
+
+#teamdiv .teamin {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  margin: 15px 5px 0 20px;
+}
+
+#teamdiv #creditdiv {
+  height: 50px;
+  margin-left: 60px;
+  width: 120px;
+  position: relative;
+}
+
+#teamdiv #creditdiv input {
+  position: absolute;
+  top: 6px;
+  right: 4px;
+  z-index: 10;
+  height: 36px;
+  border-radius: 3px;
+  width: 50px;
+  padding-left: 5px;
+}
+
+#teamdiv #ranking {
+  height: 50px;
+  margin-left: 60px;
+  width: 150px;
+  position: relative;
+}
+
+#teamdiv #ranking input {
+  position: absolute;
+  top: 6px;
+  right: 24px;
+  z-index: 10;
+  height: 36px;
+  border-radius: 3px;
+  width: 50px;
+  padding-left: 5px;
+}
+
 #credittypeson {
   position: relative;
 }
@@ -51,4 +99,20 @@
   position: absolute;
   z-index: 10;
   opacity: 0;
+}
+
+#suttextarea {
+  background-color: antiquewhite;
+  position: relative;
+}
+
+#suttextarea #xzzs {
+  position: absolute;
+  border-radius: 4px;
+  top: 10px;
+  right: 10px;
+  z-index: 100;
+  color: white;
+  padding: 5px 10px;
+  background-color: rgba(0, 0, 0, 0.3);
 }
