@@ -260,6 +260,7 @@ function rendering() {
             checkbox_list[i].onclick = function (){
 
                 if(this.checked){
+                    layer_submit[0].ids = this.numbers;
                     checkbox_all[0].numbers +=1;
                     checkbox_all[0].name = all[i].name;
                     checkbox_all[0].userName = all[i].userName;
@@ -521,6 +522,7 @@ function render(numbers,size){
             checkbox_list[i].numbers = i;
             checkbox_list[i].onclick = function (){
                 if(this.checked){
+                    layer_submit[0].ids = this.numbers;
                     checkbox_all[0].numbers +=1;
                     checkbox_all[0].name = all[i].name;
                     checkbox_all[0].userName = all[i].userName;
@@ -689,44 +691,47 @@ function render(numbers,size){
 // 单个或多个删除
 btn_del[0].onclick = function (){
     // console.log(checkbox_all[0].ids.length);
-    swal({
-        title: "你确定？",
-        text: "该用户会被删除！",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "删除！",
-        cancelButtonText: "取消",
-        closeOnConfirm: false,
-        closeOnCancel: false
-    }, function(isConfirm) {
-        if (isConfirm) {
-            for(let i = 0;i<checkbox_all[0].ids.length;i++){
-                axios({
-                    method:'delete',
-                    url:'/admin/delete.doUserInfo',
-                    params:{
-                        user:checkbox_all[0].ids[i],
-                    }
-                }).then((date)=>{
-                    // console.log(date.data);
-                    if(date.data.msg == 'OK'){
-                        swal('删除成功', "删除成功", "success");
-                        if((checkbox_all[0].pagees * checkbox_all[0].size + checkbox_all[0].ids.length - checkbox_all[0].size) == checkbox_all[0].total){
-                            render((checkbox_all[0].pages -1),checkbox_all[0].sizees);
-                            page((checkbox_all[0].total - 1),checkbox_all[0].sizees);
-                        }else{
-                            render(checkbox_all[0].pages,checkbox_all[0].sizees);
+    if(checkbox_all[0].ids.length != 0){
+        swal({
+            title: "你确定？",
+            text: "该用户会被删除！",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "删除！",
+            cancelButtonText: "取消",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        }, function(isConfirm) {
+            if (isConfirm) {
+                for(let i = 0;i<checkbox_all[0].ids.length;i++){
+                    axios({
+                        method:'delete',
+                        url:'/admin/delete.doUserInfo',
+                        params:{
+                            user:checkbox_all[0].ids[i],
                         }
+                    }).then((date)=>{
+                        // console.log(date.data);
+                        if(date.data.msg == 'OK'){
+                            swal('删除成功', "删除成功", "success");
+                            checkbox_all[0].ids.splice(0);
+                            if((checkbox_all[0].pagees * checkbox_all[0].size + checkbox_all[0].ids.length - checkbox_all[0].size) == checkbox_all[0].total){
+                                render((checkbox_all[0].pages -1),checkbox_all[0].sizees);
+                                page((checkbox_all[0].total - 1),checkbox_all[0].sizees);
+                            }else{
+                                render(checkbox_all[0].pages,checkbox_all[0].sizees);
+                            }
 
-                    }
-                })
+                        }
+                    })
+                }
+                // swal("删除!", "该用户已被删除！", "success")
+            } else{
+                swal("取消!", "用户没有被删除！", "error")
             }
-            // swal("删除!", "该用户已被删除！", "success")
-        } else{
-            swal("取消!", "用户没有被删除！", "error")
-        }
-    })
+        })
+    }
 }
 
 // 修改个人信息
@@ -1007,41 +1012,46 @@ layer_submit[0].onclick = function (){
             }
         }
     }else{
-        let users ={
-            "UId":checkbox_list[layer_submit[0].ids].ids,
-            "name":layer_input[0].value,
-            "userName":layer_input[1].value,
-            "grade":layer_input[2].value,
-            "academy":layer_input[3].value,
-            "major":layer_input[4].value,
-            "major_class":layer_input[5].value,
-            "sex": radios[index].value,
-            "power":'普通用户',
-            "password": "111111",
-        }
-        // console.log(users);
-        let patrn = /^[0-9]{11}$/
-        if(!patrn.exec(layer_input[1].value)){
-            warn[0].innerHTML = `<span class="warning">输入的格式不对</span>`
-        }else{
-            warn[0].innerHTML = '';
-            if(layer_input[0].value != '' && layer_input[2].value != '' && layer_input[3].value != '' && layer_input[4].value != ''){
-                axios({
-                    method:'put',
-                    url:'/admin/update.do.userInfo',
-                    params:users,
-                }).then((date)=>{
-                    // console.log(date.data);
-                    let cla = 'layer-form-radioed';
-                    switchover(layer_form_radio,1,cla);
-                    cover_layer[0].style.display = 'none';
-                    swal('修改成功','成功修改','success');
-                    render(checkbox_all[0].pages,checkbox_all[0].sizees);
-                }).catch((err)=>{
-                    console.log(err);
-                })
+        if(checkbox_all[0].ids.length == 1   ){
+            let users ={
+                "UId":checkbox_all[0].ids[0],
+                "name":layer_input[0].value,
+                "userName":layer_input[1].value,
+                "grade":layer_input[2].value,
+                "academy":layer_input[3].value,
+                "major":layer_input[4].value,
+                "major_class":layer_input[5].value,
+                "sex": radios[index].value,
+                "power":'普通用户',
+                "password": "111111",
+            }
+            console.log(users);
+            console.log(layer_submit[0].ids)
+            let patrn = /^[0-9]{11}$/
+            if(!patrn.exec(layer_input[1].value)){
+                warn[0].innerHTML = `<span class="warning">输入的格式不对</span>`
             }else{
-                swal('请把信息填写完整','','error');
+                warn[0].innerHTML = '';
+                if(layer_input[0].value != '' && layer_input[2].value != '' && layer_input[3].value != '' && layer_input[4].value != ''){
+                    axios({
+                        method:'put',
+                        url:'/admin/update.do.userInfo',
+                        params:users,
+                    }).then((date)=>{
+                        // console.log(date.data);
+                        let cla = 'layer-form-radioed';
+                        switchover(layer_form_radio,1,cla);
+                        cover_layer[0].style.display = 'none';
+                        swal('修改成功','成功修改','success');
+                        checkbox_list[layer_submit[0].ids].click()
+                        render(checkbox_all[0].pages,checkbox_all[0].sizees);
+
+                    }).catch((err)=>{
+                        console.log(err);
+                    })
+                }else{
+                    swal('请把信息填写完整','','error');
+                }
             }
         }
     }
