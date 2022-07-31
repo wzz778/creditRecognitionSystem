@@ -27,6 +27,7 @@ let carousel_item = document.getElementsByClassName('carousel-item');
 let download = document.getElementsByClassName('download');
 let attchment_imgs = document.getElementsByClassName('attchments');
 let reject = document.getElementsByClassName('reject');
+let attchment_header = document.getElementsByClassName('attchment-header');
 
 
 
@@ -66,6 +67,10 @@ function render(id){
                             <li>
                                 申请类型：
                                 <span>${date.creditType.afirstLevel}</span>
+                            </li>
+                            <li>
+                                获得奖项或参见的项目：
+                                <span>${date.classify.b_Indicator_name}</span>
                             </li>
                             <li>
                                 是否为集体项目：
@@ -127,6 +132,7 @@ function render(id){
                 all +=`<div class="attchment-everyOne"><img src='${date.data.data[i].address}' class="attchment-imgs attchments" ></div>`
             }
             carousel_item[0].innerHTML = all;
+            attchment_header[0].innerHTML = date.data.data[0].enclosure_name;
         }
 
     })
