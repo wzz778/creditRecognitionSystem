@@ -80,7 +80,7 @@ function GetAllInfo(page, perpage, obj) {
                     <li>${result.data.msg[i].user.academy}</li>
                     <li>${result.data.msg[i].user.major_class}</li>
                     <li>${result.data.msg[i].creditType.afirstLevel}</li>
-                    <li>${result.data.msg[i].classify.b_points_available}</li>
+                    <li>${result.data.msg[i].points}</li>
                     <li>
                         <button class="watchDetails" onclick="downLoad(this)">下载</button>
                         <button class="watchDetails" onclick="watchInfo(this)">查看</button>

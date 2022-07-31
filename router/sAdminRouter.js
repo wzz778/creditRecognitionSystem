@@ -134,7 +134,7 @@ router.post('/admin/application', (req, res) => {
         }
     })
         .then((result) => {
-            console.log('请求的数据', result.data)
+            // console.log('请求的数据', result.data)
             if (result.data.msg == 'OK') {
                 res.send({ err: 0, msg: result.data.data.pageInfo, AllPages: result.data.data.allPage, allRecords: result.data.data.allRecords })
             } else {
