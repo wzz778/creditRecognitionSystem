@@ -50,7 +50,32 @@ function passfeedback(){
         closeOnCancel: false
       }, function (isConfirm) {
         if (isConfirm) {
-            swal('驳回成功', "您所选择的申请表已驳回！", "success");
+            // axios({
+            //     method: 'post',
+            //     url: '/api/setfeedback',
+            //     data:{
+            //         application_id: backid.innerHTML,
+            //         message:weibo.value
+            //     }
+            // }).then(response=>{
+            //     console.log(response.data);
+            //     return axios({
+            //         url: '/api/passpost',
+            //         method: 'put',
+            //         params:{
+            //             id: backid.innerHTML,
+            //             status:'-1'
+            //         }
+            //     })
+            // }).then(response=>{
+            //         swal('驳回成功', "您所选择的申请表已驳回！", "success");
+            //         console.log(response.data);
+            //         weibo.value="";
+            //         Feedback_down()
+            //         changepage(pageinput.value,"1");
+            //     }).catch(function (error) {
+            //         // console.log(error);
+            // });
             axios({
                 method: 'put',
                 url: '/api/passpost',
@@ -59,11 +84,28 @@ function passfeedback(){
                     status:'-1'
                 }
                 }).then(response=>{
-                    // console.log(response.data);
+                    console.log(response.data);
+                    // weibo.value="";
+                    // Feedback_down()
+                    // changepage(pageinput.value,"1");
+                    return axios({
+                        method: 'post',
+                        url: '/api/setfeedback',
+                        data:{
+                            'application_id': backid.innerHTML,
+                            'message':weibo.value
+                        },
+                        // header: {
+                        //     'Content-Type': 'application/json' 
+                        //      //如果写成contentType会报错
+                        //   }
+                    })
+                }).then(response=>{
+                    swal('驳回成功', "您所选择的申请表已驳回！", "success");
+                    console.log(response.data);
                     weibo.value="";
                     Feedback_down()
                     changepage(pageinput.value,"1");
-                    
                 }).catch(function (error) {
                     // console.log(error);
             });
@@ -200,37 +242,70 @@ function changepage(page,set) {
             `
             return
         }
-        for (let n = 0; n < redata.pageInfo.length; n++) {
-            let b_Indicator_name=redata.pageInfo[n].classify!=undefined?redata.pageInfo[n].classify.b_Indicator_name:'指标不存在';
-            let b_points_available=redata.pageInfo[n].classify!=undefined?redata.pageInfo[n].classify.b_points_available:' ';
-            Tbody.innerHTML +=`
-            <tr>
-                <td class="ms" style='display:none'>${redata.pageInfo[n].id}</td>
-                <td class="ms"><input type="checkbox" name="team_a" value="a"></td>
-                <td class="ms">${redata.pageInfo[n].user.name}</td>
-                <td class="ms">${redata.pageInfo[n].user.userName}</td>
-                <td class="ms">${redata.pageInfo[n].user.academy}</td>
-                <td class="ms">${redata.pageInfo[n].user.major_class}</td>
-                <td class="ms">${redata.pageInfo[n].creditType.afirstLevel}</td>
-                <td class="ms">${b_Indicator_name}</td>
-                <td class="ms">${b_points_available}</td>
-                <td class="ml">
-                    <a class='mr' href='particulars?id=${redata.pageInfo[n].id}' onclick='look(this)'>查看详情</a>
-                    <a class='md' href='javascript:;' onclick='pass(this)'>通过</a>
-                    <a class='md' href='javascript:;' onclick='refuse(this)'>驳回</a>
-                </td>
-            </tr>
-            `
-            let ms = document.getElementsByClassName("ms");
-            let ml = document.getElementsByClassName("ml");
-            for (let i of ms) {
-                if (i.innerHTML == "null" || i.innerHTML == "undefined") {
-                    i.innerHTML = " ";
+        if(status==0){
+            for (let n = 0; n < redata.pageInfo.length; n++) {
+                let b_Indicator_name=redata.pageInfo[n].classify!=undefined?redata.pageInfo[n].classify.b_Indicator_name:'指标不存在';
+                Tbody.innerHTML +=`
+                <tr>
+                    <td class="ms" style='display:none'>${redata.pageInfo[n].id}</td>
+                    <td class="ms"><input type="checkbox" name="team_a" value="a"></td>
+                    <td class="ms">${redata.pageInfo[n].user.name}</td>
+                    <td class="ms">${redata.pageInfo[n].user.userName}</td>
+                    <td class="ms">${redata.pageInfo[n].user.academy}</td>
+                    <td class="ms">${redata.pageInfo[n].user.major_class}</td>
+                    <td class="ms">${redata.pageInfo[n].creditType.afirstLevel}</td>
+                    <td class="ms">${b_Indicator_name}</td>
+                    <td class="ms">${redata.pageInfo[n].points}</td>
+                    <td class="ml">
+                        <a class='mr' href='particulars?id=${redata.pageInfo[n].id}' onclick='look(this)'>查看详情</a>
+                        <a class='md' href='javascript:;' onclick='pass(this)'>通过</a>
+                        <a class='md' href='javascript:;' onclick='refuse(this)'>驳回</a>
+                    </td>
+                </tr>
+                `
+                let ms = document.getElementsByClassName("ms");
+                let ml = document.getElementsByClassName("ml");
+                for (let i of ms) {
+                    if (i.innerHTML == "null" || i.innerHTML == "undefined") {
+                        i.innerHTML = " ";
+                    }
+                }
+                for (let i of ml) {
+                    if (i.innerHTML == "null" || i.innerHTML == "undefined") {
+                        i.innerHTML = " ";
+                    }
                 }
             }
-            for (let i of ml) {
-                if (i.innerHTML == "null" || i.innerHTML == "undefined") {
-                    i.innerHTML = " ";
+        }else{
+            for (let n = 0; n < redata.pageInfo.length; n++) {
+                let b_Indicator_name=redata.pageInfo[n].classify!=undefined?redata.pageInfo[n].classify.b_Indicator_name:'指标不存在';
+                Tbody.innerHTML +=`
+                <tr>
+                    <td class="ms" style='display:none'>${redata.pageInfo[n].id}</td>
+                    <td class="ms"><input type="checkbox" name="team_a" value="a"></td>
+                    <td class="ms">${redata.pageInfo[n].user.name}</td>
+                    <td class="ms">${redata.pageInfo[n].user.userName}</td>
+                    <td class="ms">${redata.pageInfo[n].user.academy}</td>
+                    <td class="ms">${redata.pageInfo[n].user.major_class}</td>
+                    <td class="ms">${redata.pageInfo[n].creditType.afirstLevel}</td>
+                    <td class="ms">${b_Indicator_name}</td>
+                    <td class="ms">${redata.pageInfo[n].points}</td>
+                    <td class="ml">
+                        <a class='mr' href='particulars?id=${redata.pageInfo[n].id}' onclick='look(this)'>查看详情</a>
+                    </td>
+                </tr>
+                `
+                let ms = document.getElementsByClassName("ms");
+                let ml = document.getElementsByClassName("ml");
+                for (let i of ms) {
+                    if (i.innerHTML == "null" || i.innerHTML == "undefined") {
+                        i.innerHTML = " ";
+                    }
+                }
+                for (let i of ml) {
+                    if (i.innerHTML == "null" || i.innerHTML == "undefined") {
+                        i.innerHTML = " ";
+                    }
                 }
             }
         }
