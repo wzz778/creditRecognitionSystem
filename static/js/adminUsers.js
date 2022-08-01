@@ -895,6 +895,7 @@ btn_new[0].onclick = function (){
     if(btn_new[0].superPower == -1){
         swal('暂无权限','请找超级管理员申请权限','error');
     }else{
+        cover_layer[0].style.display = 'block';
         let clist = 'layer-this';
         radios[1].setAttribute('checked','checked');
         radios[0].removeAttribute('checked');
@@ -912,13 +913,6 @@ btn_new[0].onclick = function (){
         layer_list[1].innerHTML = `<dd class="layer-select-tips layer-this academy" >请选择</dd>`;
         layer_list[2].innerHTML = `<dd class="layer-select-tips layer-this major" >请选择</dd>`;
         layer_list[3].innerHTML = `<dd class="layer-select-tips layer-this grade" >请选择</dd>`;
-        let timer = setTimeout(function (){
-            cover_layer[0].style.display = 'block';
-        },300)
-        let timer_one = setTimeout(function (){
-            clearTimeout(timer);
-            clearTimeout(timer_one);
-        },400)
     }
 
 }

@@ -79,15 +79,11 @@ function render(id){
                                 <span>${date.team}</span>
                             </li>
                             <li>
-                                备注：
-                                <span>${date.classify.b_remark}</span>
-                            </li>
-                            <li>
-                                最高得分：
+                                最高申请的学分：
                                 <span>${date.classify.b_points_available}${scords}</span>
                             </li>
                             <li>
-                                个人得分：
+                                个人申请的学分：
                                 <span>${date.points}${scords}</span>
                             </li>
                             
@@ -101,6 +97,18 @@ function render(id){
                             <li>
                                 个人排名：
                                 <span>第${date.orders}名</span>
+                            </li>
+                            <li>
+                                备注：
+                                <span>${date.classify.b_remark}</span>
+                            </li>
+                            
+                        </ul>`
+        }else{
+            ranking[0].innerHTML = `<ul class="messages">
+                            <li>
+                                备注：
+                                <span>${date.classify.b_remark}</span>
                             </li>
                             
                         </ul>`
