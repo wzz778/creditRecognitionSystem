@@ -124,17 +124,26 @@ sureAdd.onclick = function () {
     for (let i = 0; i < b_Indicator_name.length; i++) {
         // 判断是否全部为空
         if (b_Indicator_name[i].value != '' && b_points_available[i].value != '') {
-            if(!reg.test(b_points_available[i].value)){
+            if (!reg.test(b_points_available[i].value)) {
                 swal('请输入正确学分')
                 return
             }
-            if( /^[0-9]*$/.test(b_Indicator_name[i].value)){
+            if (/^[0-9]*$/.test(b_Indicator_name[i].value)) {
                 swal('指标名不能为纯数字')
+                return
+            }
+            // 学分名和备注不能是纯空值
+            if (b_Indicator_name[i].value.replace(/(^\s*)|(\s*$)/g, "") == "") {
+                swal('指标名不能是空格')
                 return
             }
             if (b_remark[i].value == '') {
                 arrSend.push({ b_Indicator_name: b_Indicator_name[i].value, b_points_available: Number(b_points_available[i].value) })
             } else {
+                if (b_remark[i].value.replace(/(^\s*)|(\s*$)/g, "") == "") {
+                    swal('备注不能是空格')
+                    return
+                }
                 arrSend.push({ b_Indicator_name: b_Indicator_name[i].value, b_points_available: Number(b_points_available[i].value), b_remark: b_remark[i].value })
             }
         }
@@ -188,17 +197,17 @@ sureAdd.onclick = function () {
                         </div>
                 </div>
                 `
-            }else{
+            } else {
                 swal('添加失败，请重试')
             }
         })
-        .catch((err) => {
+        .catch((err) => {changeUserInfoFn(this)
             swal('网络错误')
             // console.log(err)
         })
 }
 
-let sureCancel=document.getElementById('sureCancel')
-sureCancel.onclick=function(){
-    window.location.href='adminCreditManagement'
+let sureCancel = document.getElementById('sureCancel')
+sureCancel.onclick = function () {
+    window.location.href = 'adminCreditManagement'
 }
