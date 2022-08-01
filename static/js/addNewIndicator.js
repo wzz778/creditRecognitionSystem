@@ -198,6 +198,10 @@ sureAdd.onclick = function () {
                 </div>
                 `
             } else {
+                if(result.data.msg.msg){
+                    swal(result.data.msg.msg)
+                    return
+                }
                 swal('添加失败，请重试')
             }
         })

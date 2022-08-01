@@ -686,9 +686,9 @@ changeTwoDirEle.onclick = function () {
 }
 sureChange.onclick = function () {
     // 判断是否为空
-    if (changeTwoDirEle.value == '') {
+    if (changeTwoDirEle.value == '' || changeTwoDirEle.value.replace(/(^\s*)|(\s*$)/g, "") == "") {
         // changeTwoDirEle.parentElement.lastElementChild.style.display = 'block'
-        swal('请输入修改内容')
+        swal('请输入修改内容,不能为空格')
         return
     }
     axios({
@@ -729,9 +729,9 @@ CompositionName.onclick = function () {
     CompositionName.parentElement.lastElementChild.style.display = 'none'
 }
 SurechangeComposition.onclick = function () {
-    if (CompositionName.value == '') {
+    if (CompositionName.value == ''||CompositionName.value.replace(/(^\s*)|(\s*$)/g, "") == "") {
         // CompositionName.parentElement.lastElementChild.style.display = 'block'
-        swal('请输入修改内容')
+        swal('请输入修改内容,不能为空格')
         return
     }
     axios({
@@ -743,13 +743,14 @@ SurechangeComposition.onclick = function () {
         }
     })
         .then((result) => {
+            console.log(result.data)
             bodyTop[2].style.display = 'none'
             if (result.data.err != -1) {
                 // 重新获取数据
                 watchFather()
                 swal('修改成功')
             } else {
-                swal('修改失败请重试')
+                swal('修改失败,数据存在重复，请重试')
             }
         })
         .catch((err) => {
@@ -762,7 +763,7 @@ let allSum = document.getElementById('allSum')
 allSum.onclick = function () {
     window.open('creditSummary')
 }
-let jumpUrl=document.getElementById('jumpUrl')
-jumpUrl.onclick=function(){
-    window.location.href='addNewIndicator'
+let jumpUrl = document.getElementById('jumpUrl')
+jumpUrl.onclick = function () {
+    window.location.href = 'addNewIndicator'
 }
