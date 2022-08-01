@@ -756,7 +756,7 @@ SurechangeComposition.onclick = function () {
         }
     })
         .then((result) => {
-            console.log(result.data)
+            // console.log(result.data)
             bodyTop[2].style.display = 'none'
             if (result.data.err != -1) {
                 // 重新获取数据
