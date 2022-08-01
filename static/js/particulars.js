@@ -30,6 +30,7 @@ let reject = document.getElementsByClassName('reject');
 let attchment_header = document.getElementsByClassName('attchment-header');
 let ranking = document.getElementsByClassName('ranking');
 let describe = document.getElementsByClassName('describe');
+let messages = document.getElementsByName('messages');
 
 
 //渲染页面
@@ -47,63 +48,66 @@ function render(id){
         let scords = '分';
         let all = '';
         all += `
-                        <ul class="messages">
-                            <li>
+                        
+                            <li class="contents">
                                 姓名：
                                 <span class="name">${date.user.name}</span>
                             </li>
-                            <li>
+                            <li class="contents">
                                 性别：
                                 <span class="sex">${date.user.sex}</span>
                             </li>
                             
-                            <li>
+                            <li class="contents">
                                 所属学院：
                                 <span>${date.user.academy}</span>
                             </li>
                             
-                            <li>
+                            <li class="contents">
                                 班级：
                                 <span>${date.user.major_class}</span>
                             </li>
-                            <li>
+                            <li class="contents">
                                 申请类型：
                                 <span>${date.creditType.afirstLevel}</span>
                             </li>
-                            <li>
+                            <li class="contents">
                                 获得奖项或参见的项目：
                                 <span>${date.classify.b_Indicator_name}</span>
                             </li>
-                            <li>
+                            <li class="contents">
                                 是否为集体项目：
                                 <span>${date.team}</span>
                             </li>
-                            <li>
-                                备注：
-                                <span>${date.classify.b_remark}</span>
-                            </li>
-                            <li>
-                                最高得分：
+                            <li class="contents">
+                                最高申请的学分：
                                 <span>${date.classify.b_points_available}${scords}</span>
                             </li>
-                            <li>
-                                个人得分：
+                            <li class="contents">
+                                个人申请的学分：
                                 <span>${date.points}${scords}</span>
                             </li>
-                            
-                        </ul>
-                    
                         `
         application_message[0].innerHTML = all;
         if(date.team == '是'){
-            ranking[0].innerHTML = `<ul class="messages">
+            application_message[0].innerHTML += `
                             
-                            <li>
+                            <li class="contents">
                                 个人排名：
                                 <span>第${date.orders}名</span>
                             </li>
-                            
-                        </ul>`
+                            <li class="contents">
+                                备注：
+                                <span>${date.classify.b_remark}</span>
+                            </li>
+                            `
+        }else{
+            application_message[0].innerHTML += `
+                            <li class="contents">
+                                备注：
+                                <span>${date.classify.b_remark}</span>
+                            </li>
+                            `
         }
         describe[0].innerHTML = `<div class="parctice-content">
                             <span>实践内容说明：</span>

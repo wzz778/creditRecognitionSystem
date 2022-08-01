@@ -257,6 +257,7 @@ function rendering() {
         for(let i=0;i<checkbox_list.length;i++){
             checkbox_list[i].ids = all[i].uid;
             checkbox_list[i].numbers = i;
+            let index4 = 0;
             checkbox_list[i].onclick = function (){
 
                 if(this.checked){
@@ -270,24 +271,34 @@ function rendering() {
                     checkbox_all[0].major_class = all[i].major_class;
                     checkbox_all[0].sex = all[i].sex;
                     // console.log(checkbox_all[0].numbers);
-                    index = this.numbers;
-                    checkbox_all[0].ids.push(checkbox_list[index].ids);
+                    index4 = this.numbers;
+                    checkbox_all[0].ids.push(checkbox_list[index4].ids);
                     // console.log(checkbox_all[0].ids);
                 }else {
                     checkbox_all[0].numbers -= 1;
                     // console.log(checkbox_all[0].numbers);
-                    index = this.numbers;
+                    index4 = this.numbers;
                     for(let j=0;j<checkbox_all[0].ids.length;j++){
-                        if(checkbox_all[0].ids[j] == checkbox_list[index].ids){
+                        if(checkbox_all[0].ids[j] == checkbox_list[index4].ids){
                             checkbox_all[0].ids.splice(j,1);
                             // console.log(checkbox_all[0].ids);
                         }
                     }
                 }
                 if(checkbox_all[0].numbers == 1 ){
-                    btn_update[0].style.pointerEvents = 'auto';
+                    // btn_update[0].style.pointerEvents = 'auto';
+                    btn_update[0].style.cursor = 'pointer'
                 }else{
-                    btn_update[0].style.pointerEvents = 'none';
+                    // btn_update[0].style.pointerEvents = 'none';
+                    btn_update[0].style.cursor = 'not-allowed'
+                }
+
+                if(checkbox_all[0].numbers != 0 ){
+                    // btn_update[0].style.pointerEvents = 'auto';
+                    btn_del[0].style.cursor = 'pointer'
+                }else{
+                    // btn_update[0].style.pointerEvents = 'none';
+                    btn_del[0].style.cursor = 'not-allowed'
                 }
             }
             
@@ -362,8 +373,37 @@ function rendering() {
                             // console.log(date.data);
                             // console.log(btn_primay[0].pageSize);
                             if(date.data.msg == 'OK'){
+                                if(checkbox_all[0].ids != 0){
+                                    for(let j=0;j<checkbox_all[0].ids.length;j++){
+                                        if(checkbox_all[0].ids[j] == checkbox_list[i].ids){
+                                            checkbox_all[0].ids.splice(j,1);
+                                            checkbox_all[0].numbers -= 1;
+                                            if(checkbox_all[0].numbers == 1 ){
+                                                // btn_update[0].style.pointerEvents = 'auto';
+                                                btn_update[0].style.cursor = 'pointer'
+                                            }else{
+                                                // btn_update[0].style.pointerEvents = 'none';
+                                                btn_update[0].style.cursor = 'not-allowed'
+                                            }
+
+                                            if(checkbox_all[0].numbers != 0 ){
+                                                // btn_update[0].style.pointerEvents = 'auto';
+                                                btn_del[0].style.cursor = 'pointer'
+                                            }else{
+                                                // btn_update[0].style.pointerEvents = 'none';
+                                                btn_del[0].style.cursor = 'not-allowed'
+                                            }
+                                        }
+                                    }
+                                }
                                 swal('删除成功', "删除成功", "success");
-                                render(checkbox_all[0].pages,checkbox_all[0].sizees);
+                                if((checkbox_all[0].pagees * checkbox_all[0].size + checkbox_all[0].ids.length - checkbox_all[0].size) == checkbox_all[0].total){
+                                    page((checkbox_all[0].total - 1),checkbox_all[0].sizees);
+                                    render((checkbox_all[0].pages -1),checkbox_all[0].sizees);
+
+                                }else{
+                                    render(checkbox_all[0].pages,checkbox_all[0].sizees);
+                                }
                             }
                         }).catch((err)=>{
                             console.log(err)
@@ -444,8 +484,8 @@ function bns(id,name,names,othername,numbers){
             let clist = 'layer-this';
             for(let j=0;j<name.length;j++){
                 if(name[j].innerHTML == othername){
-                    console.log(name[j].innerHTML);
-                    console.log(othername);
+                    // console.log(name[j].innerHTML);
+                    // console.log(othername);
                     // switchover(name,i,clist);
                     switchover(name,j,clist);
                     let ids = name[j].id
@@ -555,6 +595,7 @@ function render(numbers,size){
         checkbox_all[0].pagees = date.data.data.pages;
         checkbox_all[0].total = date.data.data.total;
         checkbox_all[0].size = date.data.data.size;
+        let index4 = 0;
         for(let i=0;i<checkbox_list.length;i++){
             checkbox_list[i].ids = all[i].uid;
             checkbox_list[i].numbers = i;
@@ -569,24 +610,33 @@ function render(numbers,size){
                     checkbox_all[0].major_class = all[i].major_class;
                     checkbox_all[0].sex = all[i].sex;
                     // console.log(checkbox_all[0].numbers);
-                    index = this.numbers;
-                    checkbox_all[0].ids.push(checkbox_list[index].ids);
+                    index4 = this.numbers;
+                    checkbox_all[0].ids.push(checkbox_list[index4].ids);
                     // console.log(checkbox_all[0].ids);
                 }else {
                     checkbox_all[0].numbers -= 1;
                     // console.log(checkbox_all[0].numbers);
-                    index = this.numbers;
+                    index4 = this.numbers;
                     for(let j=0;j<checkbox_all[0].ids.length;j++){
-                        if(checkbox_all[0].ids[j] == checkbox_list[index].ids){
+                        if(checkbox_all[0].ids[j] == checkbox_list[index4].ids){
                             checkbox_all[0].ids.splice(j,1);
                             // console.log(checkbox_all[0].ids);
                         }
                     }
                 }
                 if(checkbox_all[0].numbers == 1 ){
-                    btn_update[0].style.pointerEvents = 'auto';
+                    // btn_update[0].style.pointerEvents = 'auto';
+                    btn_update[0].style.cursor = 'pointer'
                 }else{
-                    btn_update[0].style.pointerEvents = 'none';
+                    // btn_update[0].style.pointerEvents = 'none';
+                    btn_update[0].style.cursor = 'not-allowed'
+                }
+                if(checkbox_all[0].numbers != 0 ){
+                    // btn_update[0].style.pointerEvents = 'auto';
+                    btn_del[0].style.cursor = 'pointer'
+                }else{
+                    // btn_update[0].style.pointerEvents = 'none';
+                    btn_del[0].style.cursor = 'not-allowed'
                 }
             }
             check[i].onclick = function (){
@@ -665,10 +715,34 @@ function render(numbers,size){
                         }).then((date)=>{
                             // console.log(date.data);
                             if(date.data.msg == 'OK'){
+                                if(checkbox_all[0].ids != 0){
+                                    for(let j=0;j<checkbox_all[0].ids.length;j++){
+                                        if(checkbox_all[0].ids[j] == checkbox_list[i].ids){
+                                            checkbox_all[0].ids.splice(j,1);
+                                            checkbox_all[0].numbers -= 1;
+                                            if(checkbox_all[0].numbers == 1 ){
+                                                // btn_update[0].style.pointerEvents = 'auto';
+                                                btn_update[0].style.cursor = 'pointer'
+                                            }else{
+                                                // btn_update[0].style.pointerEvents = 'none';
+                                                btn_update[0].style.cursor = 'not-allowed'
+                                            }
+
+                                            if(checkbox_all[0].numbers != 0 ){
+                                                // btn_update[0].style.pointerEvents = 'auto';
+                                                btn_del[0].style.cursor = 'pointer'
+                                            }else{
+                                                // btn_update[0].style.pointerEvents = 'none';
+                                                btn_del[0].style.cursor = 'not-allowed'
+                                            }
+                                        }
+                                    }
+                                }
                                 swal('删除成功', "删除成功", "success");
-                                if((checkbox_all[0].pagees * checkbox_all[0].size - 9) == checkbox_all[0].total){
-                                    render((checkbox_all[0].pages -1),checkbox_all[0].sizees);
+                                if((checkbox_all[0].pagees * checkbox_all[0].size + checkbox_all[0].ids.length - checkbox_all[0].size) == checkbox_all[0].total){
                                     page((checkbox_all[0].total - 1),checkbox_all[0].sizees);
+                                    render((checkbox_all[0].pages -1),checkbox_all[0].sizees);
+
                                 }else{
                                     render(checkbox_all[0].pages,checkbox_all[0].sizees);
                                 }
@@ -725,9 +799,13 @@ btn_del[0].onclick = function (){
                         if(date.data.msg == 'OK'){
                             swal('删除成功', "删除成功", "success");
                             checkbox_all[0].ids.splice(0);
+                            checkbox_all[0].numbers = 0;
+                            btn_update[0].style.cursor = 'not-allowed';
+                            btn_del[0].style.cursor = 'not-allowed'
                             if((checkbox_all[0].pagees * checkbox_all[0].size + checkbox_all[0].ids.length - checkbox_all[0].size) == checkbox_all[0].total){
-                                render((checkbox_all[0].pages -1),checkbox_all[0].sizees);
                                 page((checkbox_all[0].total - 1),checkbox_all[0].sizees);
+                                render((checkbox_all[0].pages -1),checkbox_all[0].sizees);
+
                             }else{
                                 render(checkbox_all[0].pages,checkbox_all[0].sizees);
                             }
@@ -745,34 +823,36 @@ btn_del[0].onclick = function (){
 
 // 修改个人信息
 btn_update[0].onclick =function () {
-    cover_layer[0].style.display = 'block';
-    layer_submit[0].numbers = 2;
-    layer_input[0].value = checkbox_all[0].name;
-    layer_input[1].value = checkbox_all[0].userName;
-    layer_input[2].value = checkbox_all[0].grade;
-    layer_input[3].value = checkbox_all[0].academy;
-    layer_input[4].value = checkbox_all[0].major;
-    layer_input[5].value = checkbox_all[0].major_class;
-    let sex = checkbox_all[0].sex;
-    // console.log(sex);
-    let clist = 'layer-this';
-    let cla = 'layer-form-radioed';
-    for(let j=0;j<radios.length;j++){
-        if(radios[j].value == checkbox_all[0].sex){
-            let style = 'layer-form-radioed'
-            // layer_form_radio[j]
-            switchover(layer_form_radio,j,style);
+    if(checkbox_all[0].numbers == 1){
+        cover_layer[0].style.display = 'block';
+        layer_submit[0].numbers = 2;
+        layer_input[0].value = checkbox_all[0].name;
+        layer_input[1].value = checkbox_all[0].userName;
+        layer_input[2].value = checkbox_all[0].grade;
+        layer_input[3].value = checkbox_all[0].academy;
+        layer_input[4].value = checkbox_all[0].major;
+        layer_input[5].value = checkbox_all[0].major_class;
+        let sex = checkbox_all[0].sex;
+        // console.log(sex);
+        let clist = 'layer-this';
+        let cla = 'layer-form-radioed';
+        for(let j=0;j<radios.length;j++){
+            if(radios[j].value == checkbox_all[0].sex){
+                let style = 'layer-form-radioed'
+                // layer_form_radio[j]
+                switchover(layer_form_radio,j,style);
+            }
         }
+        fn(layer_input[2].value).then(function (value) {
+            // console.log(value)
+            // console.log(1)
+            return bns(value,academy,'academy',layer_input[3].value,1);
+        }).then((value) => {
+            return bns(value,major,'major',layer_input[4].value,2);
+        }).then((value) => {
+            return bns(value,grade,'grade',layer_input[5].value,3);
+        })
     }
-    fn(checkbox_all[0].grade).then(function (value) {
-        // console.log(value)
-        // console.log(1)
-        return bns(value,academy,'academy',layer_input[3].value,1);
-    }).then((value) => {
-        return bns(value,major,'major',layer_input[4].value,2);
-    }).then((value) => {
-        return bns(value,grade,'grade',layer_input[5].value,3);
-    })
 }
 
 
@@ -895,6 +975,7 @@ btn_new[0].onclick = function (){
     if(btn_new[0].superPower == -1){
         swal('暂无权限','请找超级管理员申请权限','error');
     }else{
+        cover_layer[0].style.display = 'block';
         let clist = 'layer-this';
         radios[1].setAttribute('checked','checked');
         radios[0].removeAttribute('checked');
@@ -912,13 +993,6 @@ btn_new[0].onclick = function (){
         layer_list[1].innerHTML = `<dd class="layer-select-tips layer-this academy" >请选择</dd>`;
         layer_list[2].innerHTML = `<dd class="layer-select-tips layer-this major" >请选择</dd>`;
         layer_list[3].innerHTML = `<dd class="layer-select-tips layer-this grade" >请选择</dd>`;
-        let timer = setTimeout(function (){
-            cover_layer[0].style.display = 'block';
-        },300)
-        let timer_one = setTimeout(function (){
-            clearTimeout(timer);
-            clearTimeout(timer_one);
-        },400)
     }
 
 }
@@ -1040,9 +1114,9 @@ layer_btn_primary[1].onclick = function (){
     layer_input[4].value = "";
     layer_input[5].value = "";
     warn[0].innerHTML = '';
-    if(layer_submit[0].numbers == 2 || layer_submit[0].numbers == 1){
-        checkbox_all[0].ids.splice(0);
-    }
+    // if(layer_submit[0].numbers == 2 || layer_submit[0].numbers == 1){
+    //     checkbox_all[0].ids.splice(0);
+    // }
     let clist = 'layer-this';
     switchover(startTime,0,clist);
     let cla = 'layer-form-radioed';

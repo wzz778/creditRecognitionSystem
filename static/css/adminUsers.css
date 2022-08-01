@@ -118,11 +118,13 @@ a:hover{
 .btn-update{
     background-color: rgb(29 197 163);
     border-color: rgb(29 197 163);
-    pointer-events: none;
+    /*pointer-events: none;*/
+    cursor: not-allowed;
 }
 .btn-del{
     background-color: rgb(239 103 118);
     border-color: rgb(239 103 118);
+    cursor: not-allowed;
 }
 .container{
     padding-bottom: 0px;
