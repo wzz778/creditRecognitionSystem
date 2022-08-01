@@ -100,7 +100,7 @@ function GetAll(page, perPage, obj) {
             allPages.innerHTML = `共${all_Page}页`
             allNumber.innerHTML = `共${result.data.total}条`
             for (let i = 0; i < result.data.msg.length; i++) {
-                let userClass = '未知'
+                let userClass = '未设置'
                 if (result.data.msg[i].major_class) {
                     userClass = result.data.msg[i].major_class
                 }
@@ -439,7 +439,7 @@ function changeUserInfoFn(event) {
     changeUserAccount.value = ele.nextElementSibling.nextElementSibling.innerHTML
     changeUserPermission.value = ele.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML
     changeUserSex.value = event.parentElement.lastElementChild.innerHTML
-    if (ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML == '未知') {
+    if (ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML == '未设置') {
         changeUserHas.value = '无'
         bodyTopClu[0].style.display = 'none'
     } else {
