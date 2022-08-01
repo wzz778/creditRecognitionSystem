@@ -1,7 +1,7 @@
 let AddDirFatherName = document.getElementById('AddDirFatherName')
 let AddDirFatherId = document.getElementById('AddDirFatherId')
 let addCreditDefaul = document.getElementById('addCreditDefaul')
-let addCreditDefaulFather=document.getElementById('addCreditDefaulFather')
+let addCreditDefaulFather = document.getElementById('addCreditDefaulFather')
 function addDirFn(event) {
     bodyTop[3].style.display = 'block'
     addCreditDefaulFather.innerHTML = `
@@ -177,9 +177,9 @@ let sureRevise = document.getElementById('sureRevise')
 let reg = /^[+]{0,1}[1-9]\d*$|^[+]{0,1}(0\.\d*[1-9])$|^[+]{0,1}([1-9]\d*\.\d*[1-9])$/
 sureRevise.onclick = function () {
     // 判断值是否为空
-    if (reviseRecognize.value == '') {
+    if (reviseRecognize.value == '' || reviseRecognize.value.replace(/(^\s*)|(\s*$)/g, "") == "") {
         // reviseRecognize.parentElement.lastElementChild.style.display = 'block'
-        swal('请输入修改内容')
+        swal('请输入修改内容,不能为空格')
         return
     }
     if (reviseCreditNumber.value == '' || !reg.test(Number(reviseCreditNumber.value))) {
@@ -202,7 +202,11 @@ sureRevise.onclick = function () {
     // console.log('二级目录的id', secondId)
     sendArr.b_superior_id = Number(secondId)
     sendArr.b_points_available = Number(reviseCreditNumber.value)
-    sendArr.b_remark = reviseText.value
+    if (reviseText.value.replace(/(^\s*)|(\s*$)/g, "") != "") {
+        sendArr.b_remark = reviseText.value
+    } else {
+        sendArr.b_remark='无'
+    }
     // console.log('传的数据',sendArr)
     axios({
         method: 'POST',
@@ -213,7 +217,7 @@ sureRevise.onclick = function () {
     })
         .then((result) => {
             bodyTop[4].style.display = 'none'
-            if(result.data.err==-1){
+            if (result.data.err == -1) {
                 swal('网络错误')
                 return
             }
@@ -296,7 +300,7 @@ sureSearch.onclick = function () {
         swal('请输入最大分数')
         return
     }
-    if(Number(CreditNumberMax.value)<Number(CreditNumberMin.value)){
+    if (Number(CreditNumberMax.value) < Number(CreditNumberMin.value)) {
         swal('数据非法')
         return
     }
