@@ -53,9 +53,9 @@ router.get('/InstituteInformationManagement', (req, res) => {
     res.render('InstituteInformationManagement.html')
 })
 // 学分汇总表
-router.get('/creditSummary', (req, res) => {
-    res.render('creditSummary.html')
-})
+// router.get('/creditSummary', (req, res) => {
+//     res.render('creditSummary.html')
+// })
 
 axios.defaults.baseURL = 'http://110.40.205.103:8099'
 
