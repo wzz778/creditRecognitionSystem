@@ -473,7 +473,7 @@ let reg = /^[0-9]*$/
 changeUserInfo.onclick = function () {
     // 判断值是否为空
     if (changeUserName.value == '' || changeUserName.value.replace(/(^\s*)|(\s*$)/g, "") == "") {
-        swal('请输入姓名')
+        swal('请输入姓名,不能为空格')
         return
     }
     if (changeUserAccount.value == '' || !reg.test(Number(changeUserAccount.value))) {
@@ -533,7 +533,7 @@ changeUserInfo.onclick = function () {
                 swal('修改成功')
                 GetAll(now_page, per_Page, assignFn())
             } else {
-                swal(result.data.msg.msg)
+                swal('账号重复,操作失败')
             }
         })
         .catch((err) => {

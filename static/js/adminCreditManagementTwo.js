@@ -216,9 +216,10 @@ sureRevise.onclick = function () {
         }
     })
         .then((result) => {
+            console.log(result.data)
             bodyTop[4].style.display = 'none'
             if (result.data.err == -1) {
-                swal('网络错误')
+                swal('数据重复,操作失败')
                 return
             }
             swal('修改成功')
