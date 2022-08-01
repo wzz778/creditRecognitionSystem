@@ -153,6 +153,11 @@ function GetAllInfo(page, perpage, obj) {
                 if (result.data.msg[i].application.approval_status == '-1') {
                     status = '审核未通过'
                 }
+                let pointS=result.data.msg[i].application.classify.b_points_available
+                // console.log(result.data.msg[i].application.points)
+                if(result.data.msg[i].application.points){
+                    pointS=result.data.msg[i].application.points
+                }
                 adminHistoryContentContent.innerHTML += `
                 <ul>
                     <li>
@@ -163,7 +168,7 @@ function GetAllInfo(page, perpage, obj) {
                     <li>${result.data.msg[i].application.user.userName}</li>
                     <li>${result.data.msg[i].application.user.major_class}</li>
                     <li>${result.data.msg[i].application.classify.b_Indicator_name}</li>
-                    <li>${result.data.msg[i].application.classify.b_points_available}</li>
+                    <li>${pointS}</li>
                     <li>${time}</li>
                     <li>${status}</li>
                     <li>
