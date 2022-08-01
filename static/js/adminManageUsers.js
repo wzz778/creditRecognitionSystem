@@ -948,3 +948,8 @@ function BFn(ele, id, show) {
             })
     })
 }
+
+// 跳转到添加用户
+function AddFn(){
+    window.location.href='superAdminAdd'
+}
