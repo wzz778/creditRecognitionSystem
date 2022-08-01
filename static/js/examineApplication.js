@@ -17,6 +17,18 @@ function isnull(val) {
         return false;
     }
   }
+  function htmllEscape(htmlstr){
+    return htmlstr.replace(/<|>"|&/g,(match)=>{
+        switch(match){
+            case '<':
+                return "&lt"
+            case '>':
+                return "&gt"
+            case '&':
+                return "&amp"
+        }
+    })
+ }
 var feedback = document.getElementById("feedback");
 var feedback_main = document.getElementById("feedback_main");
 let weibo= document.getElementById("weibo");
@@ -84,7 +96,7 @@ function passfeedback(){
                     status:'-1'
                 }
                 }).then(response=>{
-                    console.log(response.data);
+                    // console.log(response.data);
                     // weibo.value="";
                     // Feedback_down()
                     // changepage(pageinput.value,"1");
@@ -93,7 +105,7 @@ function passfeedback(){
                         url: '/api/setfeedback',
                         data:{
                             'application_id': backid.innerHTML,
-                            'message':weibo.value
+                            'message':htmllEscape(weibo.value)
                         },
                         // header: {
                         //     'Content-Type': 'application/json' 
@@ -102,7 +114,7 @@ function passfeedback(){
                     })
                 }).then(response=>{
                     swal('驳回成功', "您所选择的申请表已驳回！", "success");
-                    console.log(response.data);
+                    // console.log(response.data);
                     weibo.value="";
                     Feedback_down()
                     changepage(pageinput.value,"1");
@@ -115,7 +127,7 @@ function passfeedback(){
       })
 }
 $(function(){
-    $("#weibo").keyup(function(){
+    $("#weibo").keydown(function(){
      var len = $(this).val().length;
      if(len > 199){
       $(this).val($(this).val().substring(0,200));
@@ -246,7 +258,11 @@ function changepage(page,set) {
             for (let n = 0; n < redata.pageInfo.length; n++) {
                 let b_Indicator_name=redata.pageInfo[n].classify!=undefined?redata.pageInfo[n].classify.b_Indicator_name:'指标不存在';
                 Tbody.innerHTML +=`
-                <tr>
+                <div class="opentextdiv">
+                    <span class="opentext">${b_Indicator_name}</span>
+                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                </div>
+                <tr  class="faopen">
                     <td class="ms" style='display:none'>${redata.pageInfo[n].id}</td>
                     <td class="ms"><input type="checkbox" name="team_a" value="a"></td>
                     <td class="ms">${redata.pageInfo[n].user.name}</td>
@@ -254,7 +270,7 @@ function changepage(page,set) {
                     <td class="ms">${redata.pageInfo[n].user.academy}</td>
                     <td class="ms">${redata.pageInfo[n].user.major_class}</td>
                     <td class="ms">${redata.pageInfo[n].creditType.afirstLevel}</td>
-                    <td class="ms" onmousemove="addopen(this)">${b_Indicator_name}</td>
+                    <td class="ms ">${b_Indicator_name}</td>
                     <td class="ms">${redata.pageInfo[n].points}</td>
                     <td class="ml">
                         <a class='mr' href='particulars?id=${redata.pageInfo[n].id}' onclick='look(this)'>查看详情</a>
@@ -280,7 +296,11 @@ function changepage(page,set) {
             for (let n = 0; n < redata.pageInfo.length; n++) {
                 let b_Indicator_name=redata.pageInfo[n].classify!=undefined?redata.pageInfo[n].classify.b_Indicator_name:'指标不存在';
                 Tbody.innerHTML +=`
-                <tr>
+                <div class="opentextdiv">
+                    <span class="opentext">${b_Indicator_name}</span>
+                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                </div>
+                <tr class="faopen">
                     <td class="ms" style='display:none'>${redata.pageInfo[n].id}</td>
                     <td class="ms"><input type="checkbox" name="team_a" value="a"></td>
                     <td class="ms">${redata.pageInfo[n].user.name}</td>
@@ -288,7 +308,7 @@ function changepage(page,set) {
                     <td class="ms">${redata.pageInfo[n].user.academy}</td>
                     <td class="ms">${redata.pageInfo[n].user.major_class}</td>
                     <td class="ms">${redata.pageInfo[n].creditType.afirstLevel}</td>
-                    <td class="ms" onmousemove="addopen(this)">${b_Indicator_name}</td>
+                    <td class="ms ">${b_Indicator_name}</td>
                     <td class="ms">${redata.pageInfo[n].points}</td>
                     <td class="ml">
                         <a class='mr' href='particulars?id=${redata.pageInfo[n].id}' onclick='look(this)'>查看详情</a>
@@ -309,8 +329,22 @@ function changepage(page,set) {
                 }
             }
         }
+        let faopen=document.getElementsByClassName('faopen');
+        let opentextdiv=document.getElementsByClassName('opentextdiv');
+        for(let i in faopen){
+            faopen[i].onmousemove=function(){
+                for(let n of opentextdiv){
+                   n.style.display='none';
+                }
+                opentextdiv[i].style.display='block';
+            }
+            // faopen[i].onmousemove=function(){
+            //     opentextdiv[i].style.display='none';
+            //     console.log("none");
+            // }
+        }
     }).catch(function (error) {
-        console.log(error);
+        // console.log(error);
     });
 }
 changepage(1,1);
