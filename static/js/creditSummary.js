@@ -48,7 +48,7 @@ axios({
                         } else if (result.msg[j].child == '下边没有指标了' && result.msg[j].b_points_available == 0) {
                             // console.log(result.msg[j])
                             // 是目录但是目录下没有指标
-                            yn = 2
+                            // yn = 2
                             resultStr += `
                             <div class="creditItemDir">
                                 <!-- 三级目录 -->
@@ -68,7 +68,11 @@ axios({
                                 </div>
                             </div>
                             `
-                            str3=''
+                            // str3=''
+                            // console.log('第一个str3',str3,yn)
+                            if(str3){
+                                yn=1
+                            }
                         } else if (result.msg == "没有指标信息") {
                             // 没有指标信息
                             // console.log(1)
@@ -81,8 +85,9 @@ axios({
                         </ul>
                         `
                         } else {
+                            // console.log('结果2',str2)
                             str3 = ''
-                            yn = 3
+                            // yn = 3
                             // 是目录且有指标
                             // str2 += ` <span class="dirSty">${result.msg[j].b_Indicator_name}</span>`
                             // 循环遍历三级目录
@@ -115,7 +120,10 @@ axios({
                             str3 = ''
                         }
                     }
+                    // console.log(str3)
                     if (yn == 1) {
+                        // console.log(str2)
+                        // console.log(str3)
                         // 二级直接是指标
                         if (!str2) {
                             resultStr += `
@@ -132,27 +140,27 @@ axios({
                         // console.log('结果',str3)
                         str3=''
                     }
-                    if (yn == 3) {
-                        // console.log('结果', str2)
-                        if (str2) {
-                            resultStr += `
-                        <div class="creditItemDir">
-                    <!-- 三级目录 -->
-                    ${str1}
-                    <!-- 右边 -->
-                    <div class="">
-                        <div class="creditRightDir">
-                            ${str2}
-                            <div class="DriContent">
-                               ${str3}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                    `
-                        }
-                        str3 = ''
-                    }
+                //     if (yn == 3) {
+                //         // console.log('结果', str2)
+                //         if (str2) {
+                //             resultStr += `
+                //         <div class="creditItemDir">
+                //     <!-- 三级目录 -->
+                //     ${str1}
+                //     <!-- 右边 -->
+                //     <div class="">
+                //         <div class="creditRightDir">
+                //             ${str2}
+                //             <div class="DriContent">
+                //                ${str3}
+                //             </div>
+                //         </div>
+                //     </div>
+                // </div>
+                //     `
+                //         }
+                //         str3 = ''
+                //     }
                     if (yn == 4) {
                         resultStr += `
                     <div class="creditItem">
