@@ -447,17 +447,17 @@ function changeUserInfoFn(event) {
         bodyTopClu[0].style.display = 'block'
         changeUserGrade.value = ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML
         BFn(changeUseraCademy, changeUserGrade.value, ele.lastElementChild.innerHTML)
-        .then((result)=>{
-            // console.log(result)
-            return AFn(major, result, event.parentElement.firstElementChild.nextElementSibling.innerHTML)
-        })
-        .then((result)=>{
-            // console.log(result)
-            AFn(changeUserClass,result, ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML)
-        })
-        .catch((err)=>{
-            console.log(err)
-        })
+            .then((result) => {
+                // console.log(result)
+                return AFn(major, result, event.parentElement.firstElementChild.nextElementSibling.innerHTML)
+            })
+            .then((result) => {
+                // console.log(result)
+                AFn(changeUserClass, result, ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
         // GetOtherLevelTwo(changeUseraCademy, changeUserGrade.value, ele.lastElementChild.innerHTML)
         // setTimeout(() => {
         //     GetOtherLevel(major, changeUseraCademy.value, event.parentElement.firstElementChild.nextElementSibling.innerHTML)
@@ -527,13 +527,19 @@ changeUserInfo.onclick = function () {
         }
     })
         .then((result) => {
-            // console.log(result.data)
+            console.log(result.data)
             bodyTop[0].style.display = 'none'
             if (result.data.err == 0) {
                 swal('修改成功')
                 GetAll(now_page, per_Page, assignFn())
             } else {
-                swal('账号重复,操作失败')
+                if (result.data.msg.msg == "学号或教工号修改有误") {
+                    swal(result.data.msg.msg)
+                } else if (result.data.msg == "用户名有误") {
+                    swal("用户名有误")
+                } else {
+                    swal('数据重复，操作失败')
+                }
             }
         })
         .catch((err) => {
@@ -950,6 +956,6 @@ function BFn(ele, id, show) {
 }
 
 // 跳转到添加用户
-function AddFn(){
-    window.location.href='superAdminAdd'
+function AddFn() {
+    window.location.href = 'superAdminAdd'
 }

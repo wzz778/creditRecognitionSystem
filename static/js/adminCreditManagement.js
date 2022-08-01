@@ -704,7 +704,7 @@ sureChange.onclick = function () {
         .then((result) => {
             // console.log(result.data)
             if(result.data.err==-1){
-                swal('数据重复，操作失败')
+                swal('数据重复或错误，操作失败')
                 return
             }
             bodyTop[1].style.display = 'none'
@@ -755,7 +755,7 @@ SurechangeComposition.onclick = function () {
                 watchFather()
                 swal('修改成功')
             } else {
-                swal('数据存在重复，操作失败')
+                swal('数据重复或错误，操作失败')
             }
         })
         .catch((err) => {
