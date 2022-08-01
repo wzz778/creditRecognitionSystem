@@ -6,7 +6,7 @@ let hasStr = ''
 let has = 0
 
 axios({
-    method: 'GET',
+    method: 'POST',
     url: '/getCreditsComposition',
 })
     .then((result) => {

@@ -6,7 +6,7 @@ let expandItem = document.getElementsByClassName('expandItem')
 let Table = document.getElementsByClassName('Table')
 function watchFather() {
     axios({
-        method: 'GET',
+        method: 'POST',
         url: '/getCreditsComposition',
     })
         .then((result) => {
