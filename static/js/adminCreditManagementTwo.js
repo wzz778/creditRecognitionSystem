@@ -182,9 +182,14 @@ sureRevise.onclick = function () {
         swal('请输入修改内容,不能为空格')
         return
     }
+    if(/^[0-9]*$/.test(reviseRecognize.value)){
+        swal('指标名不能为纯数字')
+        return
+    }
     if (reviseCreditNumber.value == '' || !reg.test(Number(reviseCreditNumber.value))) {
         // reviseCreditNumber.parentElement.lastElementChild.style.display = 'block'
         swal('请输入合法数字')
+        return
     }
     let sendArr = {}
     sendArr.b_Indicator_name = reviseRecognize.value
