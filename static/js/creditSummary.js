@@ -4,6 +4,10 @@ let appendStr = ''
 let hasStr = ''
 // 判断是否是二级目录和三级目录都存在
 let has = 0
+let middle = document.getElementsByClassName('middle')
+let loading = document.getElementById('loading')
+middle[0].style.display = 'none'
+loading.style.display = 'block'
 
 axios({
     method: 'POST',
@@ -70,8 +74,8 @@ axios({
                             `
                             // str3=''
                             // console.log('第一个str3',str3,yn)
-                            if(str3){
-                                yn=1
+                            if (str3) {
+                                yn = 1
                             }
                         } else if (result.msg == "没有指标信息") {
                             // 没有指标信息
@@ -135,32 +139,32 @@ axios({
                         </div>
                     </div>
                     `
-                    // str3 = ''
+                            // str3 = ''
                         }
                         // console.log('结果',str3)
-                        str3=''
+                        str3 = ''
                     }
-                //     if (yn == 3) {
-                //         // console.log('结果', str2)
-                //         if (str2) {
-                //             resultStr += `
-                //         <div class="creditItemDir">
-                //     <!-- 三级目录 -->
-                //     ${str1}
-                //     <!-- 右边 -->
-                //     <div class="">
-                //         <div class="creditRightDir">
-                //             ${str2}
-                //             <div class="DriContent">
-                //                ${str3}
-                //             </div>
-                //         </div>
-                //     </div>
-                // </div>
-                //     `
-                //         }
-                //         str3 = ''
-                //     }
+                    //     if (yn == 3) {
+                    //         // console.log('结果', str2)
+                    //         if (str2) {
+                    //             resultStr += `
+                    //         <div class="creditItemDir">
+                    //     <!-- 三级目录 -->
+                    //     ${str1}
+                    //     <!-- 右边 -->
+                    //     <div class="">
+                    //         <div class="creditRightDir">
+                    //             ${str2}
+                    //             <div class="DriContent">
+                    //                ${str3}
+                    //             </div>
+                    //         </div>
+                    //     </div>
+                    // </div>
+                    //     `
+                    //         }
+                    //         str3 = ''
+                    //     }
                     if (yn == 4) {
                         resultStr += `
                     <div class="creditItem">
@@ -178,7 +182,9 @@ axios({
         // console.log(resultStr)
         setTimeout(() => {
             content.innerHTML = resultStr
-        }, 1100)
+            middle[0].style.display = 'block'
+            loading.style.display = 'none'
+        }, 1500)
     })
     .catch((err) => {
         console.log(err)
