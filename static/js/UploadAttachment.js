@@ -56,7 +56,7 @@ axios({
 })
     .then((result) => {
         let data=result.data.data;
-        console.log(data);
+        // console.log(data);
         if(data.length==0) {
             return
         }else{
@@ -78,7 +78,7 @@ axios({
         }
     })
     .catch((err)=>{
-        console.log(err)
+        // console.log(err)
     })
 let Attname=document.getElementById('Attname');
 function isnull(val) {

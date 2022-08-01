@@ -4,7 +4,7 @@ axios({
     method: 'get',
     params: {id:sessionStorage.getItem('Applicationid')},
   }).then(response=> {
-      console.log(response.data);   
+    //   console.log(response.data);   
       let data=response.data.data;
     let qu=data.team=="否"?"否":`是   团队排名为  ${data.orders}`;
     if(response.data.msg!='OK'){
@@ -23,7 +23,7 @@ axios({
   }).catch(error=> {
     // swal('提交失败',"您所填写的申请表提交失败",'error')
     alert('获取内容失败！');
-    console.log(error);
+    // console.log(error);
 });
 for(let n of message){
     if(n.innerHTML=='null'){

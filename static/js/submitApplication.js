@@ -46,6 +46,18 @@ function isnull(val) {
       return false;
   }
 }
+function htmllEscape(htmlstr){
+  return htmlstr.replace(/<|>"|&/g,(match)=>{
+      switch(match){
+          case '<':
+              return "&lt"
+          case '>':
+              return "&gt"
+          case '&':
+              return "&amp"
+      }
+  })
+}
 axios({
   url: '/api/getmymessage',
   method: 'get',
@@ -60,7 +72,8 @@ axios({
 })
 $('#postbutton').on('click', function () {
   var o = $('#form').serializeObject();
-  console.log(o);
+  // console.log(o);
+  o.remarks=htmllEscape( o.remarks);
   if (isnull(o.remarks)) {
   // if (o.remarks == '') {
     swal("请填写实践内容说明！");
@@ -109,10 +122,10 @@ $('#postbutton').on('click', function () {
           if (data.data.msg == 'OK') {
             swal('提交成功', '您所填写的申请表提交成功', 'success');
             sessionStorage.setItem('Applicationid', data.data.data);
-            // setTimeout(function () {
-            //   window.location.assign("/UploadAttachment");
-            //   // sessionStorage.setItem("tousers", '1');
-            // }, 1000)
+            setTimeout(function () {
+              window.location.assign("/UploadAttachment");
+              // sessionStorage.setItem("tousers", '1');
+            }, 1000)
           }else if(data.data.msg == '已超过最大分值'){
             swal('提交失败',"您所填写的申请已超过最大分值",'error');
           }
