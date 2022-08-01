@@ -117,13 +117,13 @@
             </select>
         </div>
         <div class="">
-            年级:
+            用户年级:
             <select id="USGrade" class="searchValue">
                 <option value="">请选择...</option>
             </select>
         </div>
         <div class="">
-            院系:
+            用户院系:
             <!-- <select id="Faculty" class="searchValue">
                 <option value="">请选择...</option>
             </select> -->
@@ -136,20 +136,21 @@
             </select>
         </div> -->
         <div class="">
-            班级:
+            用户班级:
             <!-- <select id="major_class" class="searchValue">
                 <option value="">请选择...</option>
             </select> -->
             <input type="text" id="major_class" class="searchValue" placeholder="班级,例如:计科214" autocomplete="off">
         </div>
         <div class="">
-            姓名:
+            用户姓名:
             <input type="text" placeholder="请输入姓名" id="account" class="searchValue" autocomplete="off">
         </div>
     </div>
     <div class="floatRight" style="position: relative;top: -40px;">
         <button id="sureSearch">查询</button>
         <button id="reset">重置</button>
+        <button id="add" onclick="AddFn()">新增</button>
     </div>
     <div class=""></div>
 </div>

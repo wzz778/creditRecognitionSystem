@@ -403,8 +403,8 @@ function fn(othername) {
             let clist = 'layer-this';
             for(let j=0;j<startTime.length;j++){
                 if(startTime[j].innerHTML == othername){
-                    console.log(startTime[j].innerHTML);
-                    console.log(othername);
+                    // console.log(startTime[j].innerHTML);
+                    // console.log(othername);
                     // switchover(name,i,clist);
                     switchover(startTime,j,clist);
                     let ids = startTime[j].id

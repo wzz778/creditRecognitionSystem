@@ -337,7 +337,7 @@ router.get('/IndicatorOperate/showAllIndicator', (req, res) => {
 })
 
 
-router.get('/getCreditsComposition', (req, res) => {
+router.post('/getCreditsComposition', (req, res) => {
     axios({
         method: 'GET',
         url: '/creditTypeOperate/showCreditType',
