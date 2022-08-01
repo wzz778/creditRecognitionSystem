@@ -19,7 +19,7 @@ function pic(hei){
 
 
 let id = window.location.search.split("=")[1];
-console.log(id);
+// console.log(id);
 let history_details = document.getElementsByClassName('history-details');
 let application_message = document.getElementsByClassName('application-message');
 let attchment = document.getElementsByClassName('attchment');
@@ -28,7 +28,8 @@ let download = document.getElementsByClassName('download');
 let attchment_imgs = document.getElementsByClassName('attchments');
 let reject = document.getElementsByClassName('reject');
 let attchment_header = document.getElementsByClassName('attchment-header');
-
+let ranking = document.getElementsByClassName('ranking');
+let describe = document.getElementsByClassName('describe');
 
 
 //渲染页面
@@ -40,7 +41,7 @@ function render(id){
             id:id,
         }
     }).then((data)=>{
-        // console.log(data.data.data);
+        console.log(data.data.data);
         let date = data.data.data;
         // let html = template('details',data);
         let scords = '分';
@@ -83,22 +84,33 @@ function render(id){
                             </li>
                             <li>
                                 最高得分：
-                                <span>${date.classify.b_points_available} + ${scords}</span>
+                                <span>${date.classify.b_points_available}${scords}</span>
                             </li>
                             <li>
                                 个人得分：
-                                <span>${date.points} + ${scords}</span>
+                                <span>${date.points}${scords}</span>
                             </li>
                             
                         </ul>
-                        <div class="parctice-content">
+                    
+                        `
+        application_message[0].innerHTML = all;
+        if(date.team == '是'){
+            ranking[0].innerHTML = `<ul class="messages">
+                            
+                            <li>
+                                个人排名：
+                                <span>第${date.orders}名</span>
+                            </li>
+                            
+                        </ul>`
+        }
+        describe[0].innerHTML = `<div class="parctice-content">
                             <span>实践内容说明：</span>
                             <div>
                                 <textarea name="" id="textarea" readonly style="resize: none">${date.remarks}</textarea>
                             </div>
-                        </div>
-                        `
-        application_message[0].innerHTML = all;
+                        </div>`
         // pic(300);
     }).catch((err)=>{
         console.log(err);
@@ -159,64 +171,51 @@ download[0].onclick = function (){
         swal('下载失败','暂无内容','error');
     }else{
         for(let i=0;i<attchment_imgs.length;i++){
-            downloadIamge(attchment_imgs[i].src);
+            downloadImage(attchment_imgs[i].src);
         }
         swal('下载成功','全部下载完毕','success');
     }
 }
 
 
-//下载图片
-function downloadIamge(imgSrc) {
-    let imgUrl = imgSrc;// 图片链接
-    let a = document.createElement('a');
-    let now =Date.now();
-    // console.log(now);
-    // 这里是将url转成blob地址，
-    fetch(imgUrl)  // 跨域时会报错
-        .then(res => res.blob())
-        .then(blob => { // 将链接地址字符内容转变成blob地址
-            a.href = URL.createObjectURL(blob);
-            a.download ='图片'+ now + '.jpg'; // 下载文件的名字
-            document.body.appendChild(a);
-            a.click();
-            //在资源下载完成后 清除 占用的缓存资源
-            window.URL.revokeObjectURL(a.href);
-            document.body.removeChild(a);
-        })
-}
+// //下载图片
+// function downloadIamge(imgSrc) {
+//     let imgUrl = imgSrc;// 图片链接
+//     let a = document.createElement('a');
+//     let now =Date.now();
+//     // console.log(now);
+//     // 这里是将url转成blob地址，
+//     fetch(imgUrl)  // 跨域时会报错
+//         .then(res => res.blob())
+//         .then(blob => { // 将链接地址字符内容转变成blob地址
+//             a.href = URL.createObjectURL(blob);
+//             a.download ='图片'+ now; // 下载文件的名字
+//             document.body.appendChild(a);
+//             a.click();
+//             //在资源下载完成后 清除 占用的缓存资源
+//             window.URL.revokeObjectURL(a.href);
+//             document.body.removeChild(a);
+//         })
+// }
 
 
-function preloadimages(arr){
-    let newimages=[];
-    let loadedimages = 0;
-    let  postaction = function (newImages){
-        let all = '';
-        for(let i=0;i<newImages.length;i++){
-            all +=`<div class="attchment-everyOne"><img src='${newImages[i].src}' class="attchment-imgs"></div>`
-        }
-        carousel_item[0].innerHTML = all;
-    }
+function downloadImage(imgsrc) {//下载图片地址和图片名
+    var image = new Image();
+    // 解决跨域 Canvas 污染问题,
+    image.setAttribute("crossorigin", "anonymous");
+    image.onload = function() {
+        var canvas = document.createElement("canvas");
+        canvas.width = image.width;
+        canvas.height = image.height;
+        var context = canvas.getContext("2d");
+        context.drawImage(image, 0, 0, image.width, image.height);
+        var url = canvas.toDataURL("image/png"); //将图片格式转为base64
+        var a = document.createElement("a"); // 生成一个a元素
+        var event = new MouseEvent("click"); // 创建一个单击事件
+        a.download = '图片'+ Date.now(); // 设置图片名称
+        a.href = url; // 将生成的URL设置为a.href属性
+        a.dispatchEvent(event); // 触发a的单击事件
+    };
+    image.src = imgsrc + '?time=' + Date.now();  //注意，这里是灵魂，否则依旧会产生跨域问题
 
-    function imageloadpost(){
-        loadedimages ++;
-        if(loadedimages == arr.length){
-            postaction(newimages);
-        }
-    }
-    for(let i=0;i<arr.length;i++){
-        newimages[i] = new Image();
-        newimages[i].src = arr[i].address;
-        newimages[i].onload = function (){
-            imageloadpost();
-        }
-        newimages[i].onerror = function (){
-            imageloadpost();
-        }
-    }
-    // return { //此处返回一个空白对象的done方法
-    //     done:function(f){
-    //         postaction=f || postaction
-    //     }
-    // }
 }
