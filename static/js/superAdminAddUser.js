@@ -74,7 +74,7 @@ save.onclick = function () {
     if (usName.value == ''||usName.value.replace(/(^\s*)|(\s*$)/g, "") == "") {
         // 没填写用户名
         // usName.parentElement.lastElementChild.style.display = 'block'
-        swal('请输入用户名')
+        swal('请输入用户名,不能为空格')
         return
     } else if (account.value == '' || !accountTest.test(account.value)) {
         // 没填写账号

@@ -555,7 +555,7 @@ router.post('/IndicatorOperate/addIndicator', (req, res) => {
         }
     })
         .then((result) => {
-            console.log('添加认定范围',result.data)
+            // console.log('添加认定范围',result.data)
             if (result.data.msg == 'OK') {
                 res.send({ err: 0, msg: result.data })
             } else {
@@ -709,6 +709,7 @@ router.post('/changeIndicator', (req, res) => {
         }
     })
         .then((result) => {
+            // console.log('返回的数据',result.data)
             if (result.data.msg == 'OK') {
                 res.send({ err: 0, msg: result.data })
             } else {
