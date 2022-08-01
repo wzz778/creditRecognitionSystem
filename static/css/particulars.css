@@ -42,7 +42,7 @@ a:hover{
     font-size: 20px;
 }
 .application-message{
-
+    overflow: hidden;
 }
 .messages{
     overflow: hidden;
@@ -113,4 +113,14 @@ a:hover{
     height: 33px;
     line-height: 33px;
     font-size: 23px;
+}
+.contents{
+    display: inline-block;
+    width: 50%;
+    box-sizing: border-box;
+    float: left;
+    font-weight: 900;
+    font-size: 15px;
+    padding-bottom: 10px;
+    padding-right: 15px;
 }
