@@ -691,6 +691,10 @@ sureChange.onclick = function () {
         swal('请输入修改内容,不能为空格')
         return
     }
+    if(/^[0-9]*$/.test(changeTwoDirEle.value)){
+        swal('目录名不能是纯数字')
+        return
+    }
     axios({
         method: 'POST',
         url: '/changeTwoDir',
@@ -739,6 +743,10 @@ SurechangeComposition.onclick = function () {
         swal('请输入修改内容,不能为空格')
         return
     }
+    if(/^[0-9]*$/.test(CompositionName.value)){
+        swal('学分构成不能是纯数字')
+        return
+    }
     axios({
         method: 'POST',
         url: '/creditTypeOperate/updateCreditType',
@@ -748,7 +756,7 @@ SurechangeComposition.onclick = function () {
         }
     })
         .then((result) => {
-            console.log(result.data)
+            // console.log(result.data)
             bodyTop[2].style.display = 'none'
             if (result.data.err != -1) {
                 // 重新获取数据

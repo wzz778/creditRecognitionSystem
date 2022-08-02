@@ -527,7 +527,7 @@ changeUserInfo.onclick = function () {
         }
     })
         .then((result) => {
-            console.log(result.data)
+            // console.log(result.data)
             bodyTop[0].style.display = 'none'
             if (result.data.err == 0) {
                 swal('修改成功')
