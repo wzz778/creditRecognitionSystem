@@ -148,7 +148,7 @@ function render(id){
             id:id,
         }
     }).then((date)=>{
-        console.log(date.data.data);
+        // console.log(date.data.data);
         let all = '';
         // let datte = date.data.data;
         // preloadimages(datte);
@@ -159,7 +159,7 @@ function render(id){
             pic(600);
             for(let i=0;i<date.data.data.length;i++){
                 let  arr = date.data.data[i].address.split('.');
-                console.log(arr[arr.length -1]);
+                // console.log(arr[arr.length -1]);
                 if(arr[arr.length -1] == 'pdf'){
                     all += `<iframe src="${date.data.data[i].address}" class="attchment-imgs attchments"></iframe>`
                     // all += `<object data="${date.data.data[i].address}" type="application/pdf" class="attchment-imgs attchments"></object>`
