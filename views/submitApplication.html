@@ -49,6 +49,11 @@
         申请学分：
         <input type="text" name="points" maxlength="4" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')" lay-verify="title" autocomplete="off" placeholder="分值" class="layui-input">分
       </div>分
+      <div id="orediv">
+        是否上传附件：
+        <input type="radio" name="ore" class="ore ore1" value="否" title="否" checked="">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp否&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+        <input type="radio" name="ore" class="ore ore2" value="是" title="是" >是
+      </div>
     </div>
   </div>
   <div class="layui-form-item">
@@ -85,6 +90,9 @@
       <span id="xzzs"><span id="word">0</span>/1000</span>
       <textarea placeholder="请输入内容" id="subtextarea" class="layui-textarea" name="remarks"></textarea>
     </div>
+  </div>
+  <div id="tocreditSummary">
+    <a href="creditSummary" target="_blank" id="topdf">不知道申请多少学分？点击查看指标总览</a>
   </div>
   <div class="layui-form-item">
     <div class="layui-input-block">

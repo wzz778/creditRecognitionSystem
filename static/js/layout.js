@@ -1,5 +1,6 @@
 let head_cord=document.getElementById('head-cord');
 let head_cord_fade=document.getElementById('head-cord-fade');
+sessionStorage.setItem("havasuccess", '0');
 function dropdown() {
     head_cord_fade.style.display = 'block'
 }
@@ -13,26 +14,42 @@ head_cord.onmouseout=function(){
 }
 // axios.defaults.baseURL = 'http://110.40.205.103:8080'
 function outland(){
-    $.ajax({
-        url: '/api/outlogin',
-        type: "GET",
-        contentType : "application/json",
-        traditional: true,
-        success: function(data) {
-            // if(data.msg=='OK'){
-                swal('退出成功',"退出账号成功","success");
-                sessionStorage.clear();
-                setTimeout(function () {
-                    window.history.replaceState(null, "", '/login');
-                    window.location.assign("/login");
-                }, 1000)
-            // }else{
-            //     swal('退出失败',"退出账号失败","error");
-            // }
-        },
-        error: function (data) {
+    swal({
+        title: "你确定退出登录？",
+        text: "你确定退出登录！",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      }, function (isConfirm) {
+        if (isConfirm) {
+            $.ajax({
+                url: '/api/outlogin',
+                type: "GET",
+                contentType : "application/json",
+                traditional: true,
+                success: function(data) {
+                    // if(data.msg=='OK'){
+                        swal('退出成功',"退出账号成功","success");
+                        sessionStorage.clear();
+                        setTimeout(function () {
+                            window.history.replaceState(null, "", '/login');
+                            window.location.assign("/login");
+                        }, 1000)
+                    // }else{
+                    //     swal('退出失败',"退出账号失败","error");
+                    // }
+                },
+                error: function (data) {
+                }
+            });
+        } else {
+          swal("您已经取消操作")
         }
-    });
+      })
 
 }
 let navul=document.getElementById('renavul');

@@ -95,6 +95,9 @@ $("#testListAction").on("click", function () {
         let name=Attname.value;
         if(isnull(name)){
             swal("请输入附件名！");
+            if(!isNaN(name)){
+                swal("请按正常的附件名格式填写！");
+            }
             return
         }
         let datastatus=document.getElementsByClassName('datastatus');
@@ -182,6 +185,7 @@ document.getElementById('toend').onclick=function(){
       }, function (isConfirm) {
         if (isConfirm) {
               swal('提交成功', '您所填写的申请表提交成功', 'success');
+              sessionStorage.setItem("havesuccess", '1');
               sessionStorage.removeItem('Applicationid');
               setTimeout(function () {
                 window.location.assign("/EndApplication");

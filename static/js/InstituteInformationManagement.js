@@ -25,7 +25,7 @@ for(let i=0;i<cancel.length;i++){
 }
 function isnull(val) {
  
-    var str = val.replace(/(^\s*)|(\s*$)/g, '');//去除空格;
+    let str = val.replace(/(^\s*)|(\s*$)/g, '');//去除空格;
   
     if (str == '' || str == undefined || str == null) {
         return true;
@@ -136,7 +136,7 @@ function getmajor(){
                 for(let i in date){
                     body.innerHTML+=`
                         <div class="InfoContentItem">
-                            <ul>
+                            <ul class='open'>
                                 <li class="id">${date[i].id}</li>
                                 <li class="constituteSty">
                                     <span class="expandItem" onclick='watchChild(this)'>
@@ -147,9 +147,9 @@ function getmajor(){
                                 </li>
                                 <li>${parseInt(i)+1}</li>
                                 <li>
-                                    <button onclick="toaddclass(this)">添加班级</button>
-                                    <button onclick="toremajor(this)">修改</button>
-                                    <button onclick="delmajor(this)">删除</button>
+                                    <button class="addbu" onclick="toaddclass(this)">添加班级</button>
+                                    <button class="rebu" onclick="toremajor(this)">修改</button>
+                                    <button class="debu" onclick="delmajor(this)">删除</button>
                                 </li>
                             </ul>
                             <!-- 存放班级的盒子 -->
@@ -189,13 +189,13 @@ function watchChild(event) {
             }
             for(let i in date){
                 son.innerHTML+=`
-                    <ul>
+                    <ul class='open'>
                         <li class="id">${date[i].id}</li>
                         <li class='majorname'>${date[i].name}</li>
                         <li>${parseInt(i)+1}</li>
                         <li>
-                            <button onclick="toreclass(this)">修改</button>
-                            <button onclick="delclass(this)">删除</button>
+                            <button class="rebu" onclick="toreclass(this)">修改</button>
+                            <button class="debu" onclick="delclass(this)">删除</button>
                         </li>
                     </ul>
                 `
@@ -660,7 +660,7 @@ function toaddclass(event){
 }
 function addclass(event){
     let rename=event.parentElement.parentElement.getElementsByTagName('input')[0].value;
-    if(isnull(rename.value)){
+    if(isnull(rename)){
         swal("请填写组织名称！");
         return
     }
@@ -753,7 +753,7 @@ function toreclass(event){
 function reclass(event){
     let faid=reclassop.value
     let rename=event.parentElement.parentElement.getElementsByTagName('input')[0].value;
-    if(isnull(rename.value)){
+    if(isnull(rename)){
         swal("请填写完整内容！");
     }
     swal({
