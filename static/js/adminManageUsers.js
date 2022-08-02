@@ -527,6 +527,7 @@ changeUserInfo.onclick = function () {
         }
     })
         .then((result) => {
+            // console.log(obj)
             // console.log(result.data)
             bodyTop[0].style.display = 'none'
             if (result.data.err == 0) {
