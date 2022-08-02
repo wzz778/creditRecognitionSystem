@@ -132,9 +132,9 @@ select:hover{
 .InfoContentItem>ul:hover{
     background-color: #EFF3F8;
 }
-.InfoContentItem>ul>li>button{
+/* .InfoContentItem>ul>li>button{
     padding: 0px;
-}
+} */
 .InfoContentItemson>ul{
     display: grid;
     grid-template-columns: repeat(3,1fr);
@@ -144,9 +144,9 @@ select:hover{
     padding: 5px 0px;
     background-color: #ebebeb;
 }
-.InfoContentItemson>ul>li>button{
+/* .InfoContentItemson>ul>li>button{
     padding: 0px;
-}
+} */
 .constituteSty{
     display: grid;
     grid-template-columns: 30px 200px;
@@ -185,4 +185,18 @@ select:hover{
     position: relative;
     right: 10px;
     transform: rotate(90deg);
+}
+.open button{
+    padding: 1.5px 5px;
+    font-size: 12px;
+    color: white;
+}
+.addbu{
+    background-color: #1C84C6;
+}
+.rebu{
+    background-color: #f8ac59;
+}
+.debu{
+    background-color: #f59da6;
 }

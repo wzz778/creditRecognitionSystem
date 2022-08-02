@@ -79,6 +79,10 @@
   background-color: #e8eaf0;
 }
 
+#Application .Application_main .tmt {
+  background-color: #EFF3F8;
+}
+
 #Application .Application_main .ms {
   width: 10%;
   overflow: hidden;
@@ -101,20 +105,33 @@
 
 #Application .Application_main td {
   text-align: center;
-  color: #9b9b9b;
+  color: #806A84;
   line-height: 30px;
 }
 
 #Application .Application_main td a {
-  color: #63a5f7;
+  display: block;
+  background-color: #1C84C6;
+  height: 24px;
+  line-height: 24px;
+  border-color: #1C84C6;
+  color: white;
+  padding: 1.5px 5px;
+  font-size: 12px;
+  display: inline-block;
+  border-radius: 3px;
 }
 
 #Application .Application_main td a:hover {
-  color: #0771f3;
+  opacity: .8;
 }
 
-#Application .Application_main td a i {
-  padding: 0 3px;
+#Application .Application_main td a:nth-child(2) {
+  background-color: #1AB394;
+}
+
+#Application .Application_main td a:nth-child(3) {
+  background-color: #ED5565;
 }
 
 #Application .Application_main .opentextdiv {

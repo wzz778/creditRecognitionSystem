@@ -38,6 +38,7 @@ function Feedback_down() {
     feedback.style.display = "none";
     feedback.style.opacity = "0";
     feedback.classList.remove("fade");
+    weibo.value="";
 }
 function Feedback_show(id) {
     feedback.style.display = "block";
@@ -115,7 +116,7 @@ function passfeedback(){
                 }).then(response=>{
                     swal('驳回成功', "您所选择的申请表已驳回！", "success");
                     // console.log(response.data);
-                    weibo.value="";
+                    // weibo.value="";
                     Feedback_down()
                     changepage(pageinput.value,"1");
                 }).catch(function (error) {
@@ -142,6 +143,12 @@ function look(event){
 }
 function pass(event){
     let oneid=event.parentNode.parentNode.children[0].innerHTML;
+    let thisname=event.parentNode.parentNode.children[2].innerHTML;
+    let myname=sessionStorage.getItem('name');
+    if(thisname==myname){
+        swal("您暂无权限审核自己的申请表！");
+        return
+    }
     swal({
         title: "你确定通过该申请表？",
         text: "你确定通过该申请表？",
@@ -177,6 +184,12 @@ function pass(event){
 }
 function refuse(event){
     let oneid=event.parentNode.parentNode.children[0].innerHTML;
+    let thisname=event.parentNode.parentNode.children[2].innerHTML;
+    let myname=sessionStorage.getItem('name');
+    if(thisname==myname){
+        swal("您暂无权限审核自己的申请表！");
+        return
+    }
     Feedback_show(oneid);
     // swal({
     //     title: "你确定驳回该申请表？",
@@ -420,35 +433,35 @@ function deleteall(){
         closeOnConfirm: false,
         closeOnCancel: false
     },
-        function (isConfirm) {
-            if (isConfirm) {
-                let ptag_ids = new Array();
-                // let formData = new FormData();
-                let n=1;
-                for (let i in a) {
-                    if (a[i].checked) {
-                        var id = a[i].parentNode.parentNode.children[0].innerHTML;
-                        ptag_ids.push(id);
-                    }
+    function (isConfirm) {
+        if (isConfirm) {
+            let ptag_ids = new Array();
+            // let formData = new FormData();
+            let n=1;
+            for (let i in a) {
+                if (a[i].checked) {
+                    var id = a[i].parentNode.parentNode.children[0].innerHTML;
+                    ptag_ids.push(id);
                 }
-                axios({
-                    method: 'POST',
-                    url: '/api/deletepost',
-                    data: ptag_ids,
-                })
-                    .then((result) => {
-                        changepage(pageinput.value,"1");
-                        // console.log(result.data)
-                    })
-                    .catch((err)=>{
-                        // console.log(err)
-                    })
-                    swal("删除！", "你所勾选的用户信息被删除。", "success");
-
-            } else {
-                swal("取消！", "你已经取消删除:", "error");
             }
-        });
+            axios({
+                method: 'POST',
+                url: '/api/deletepost',
+                data: ptag_ids,
+            })
+                .then((result) => {
+                    changepage(pageinput.value,"1");
+                    // console.log(result.data)
+                })
+                .catch((err)=>{
+                    // console.log(err)
+                })
+                swal("删除！", "你所勾选的用户信息被删除。", "success");
+
+        } else {
+            swal("取消！", "你已经取消删除:", "error");
+        }
+    });
 }
 function addopen(event){
     event.classList.add("opentext");

@@ -96,7 +96,6 @@ $('#postbutton').on('click', function () {
   } else if (credittypesonson.style.display == 'block') {
     // console.log(o.specific_information);
     o.specific_information = o.specific_information[1];
-    // console.log(o);
     swal({
       title: "你确定提交该申请表？",
       text: "你将没有机会修改该部分数据！",
@@ -118,14 +117,20 @@ $('#postbutton').on('click', function () {
              //如果写成contentType会报错
           }
         }).then(data => {
-          console.log(data);
           if (data.data.msg == 'OK') {
             swal('提交成功', '您所填写的申请表提交成功', 'success');
-            sessionStorage.setItem('Applicationid', data.data.data);
-            setTimeout(function () {
-              window.location.assign("/UploadAttachment");
-              // sessionStorage.setItem("tousers", '1');
-            }, 1000)
+            if(o.ore=="是"){
+              sessionStorage.setItem('Applicationid', data.data.data);
+              setTimeout(function () {
+                window.location.assign("/UploadAttachment");
+                // sessionStorage.setItem("tousers", '1');
+              }, 1000)
+            }else{
+              setTimeout(function () {
+                sessionStorage.setItem("havesuccess", '1');
+                window.location.assign("/EndApplication");
+              }, 1000)
+            }
           }else if(data.data.msg == '已超过最大分值'){
             swal('提交失败',"您所填写的申请已超过最大分值",'error');
           }
@@ -164,17 +169,18 @@ $('#postbutton').on('click', function () {
              //如果写成contentType会报错
           }
         }).then(data => {
-          console.log(data);
-          if (data.data.msg == 'OK') {
-            swal('提交成功', '您所填写的申请表提交成功', 'success');
+          swal('提交成功', '您所填写的申请表提交成功', 'success');
+          if(o.ore=="是"){
             sessionStorage.setItem('Applicationid', data.data.data);
-            // console.log(data.data);
             setTimeout(function () {
               window.location.assign("/UploadAttachment");
               // sessionStorage.setItem("tousers", '1');
             }, 1000)
-          }else if(data.data.msg == '已超过最大分值'){
-            swal('提交失败',"您所填写的申请已超过最大分值",'error');
+          }else{
+            setTimeout(function () {
+              sessionStorage.setItem("havesuccess", '1');
+              window.location.assign("/EndApplication");
+            }, 1000)
           }
         }).catch(function (error) { 
           if(data.data.msg == '已超过最大分值'){
