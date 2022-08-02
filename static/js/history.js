@@ -127,7 +127,7 @@ function rendering(){
         url:'/users/records',
         params:his,
     }).then((data)=>{
-        console.log(data.data.data);
+        // console.log(data.data.data);
         // console.log(data.data.data);
         let date = data.data.data.pageInfo;
         // console.log(date);

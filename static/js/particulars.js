@@ -42,7 +42,7 @@ function render(id){
             id:id,
         }
     }).then((data)=>{
-        console.log(data.data.data);
+        // console.log(data.data.data);
         let date = data.data.data;
         // let html = template('details',data);
         let scords = '分';
