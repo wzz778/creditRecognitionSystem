@@ -148,7 +148,7 @@ function render(id){
             id:id,
         }
     }).then((date)=>{
-        // console.log(date.data.data);
+        console.log(date.data.data);
         let all = '';
         // let datte = date.data.data;
         // preloadimages(datte);
