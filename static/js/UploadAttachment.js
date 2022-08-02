@@ -146,7 +146,7 @@ $("#testListAction").on("click", function () {
                 }else if(result.data.err==-1){
                     swal("上传失败！","您提交的文件上传失败！","error")
                 }else if(result.data.msg.msg=="文件格式错误"){
-                    swal("上传失败！","您提交的文件格式错误！","error")
+                    swal("您提交的文件格式错误！","只能上传图片或pdf形式的文件！","error")
                 }else{
                     swal("上传失败！","您提交的文件上传失败！","error")
                 }

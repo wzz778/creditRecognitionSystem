@@ -68,22 +68,31 @@
   font-size: 15px;
 }
 
-#Application .Application_main tr {
+#Application .Application_main .tr {
   width: 98%;
   padding: 5px;
   display: flex;
   border-bottom: 1px #DFE6EC solid;
+  position: relative;
+  text-align: center;
 }
 
-#Application .Application_main tr:hover {
+#Application .Application_main .tr:hover {
   background-color: #e8eaf0;
 }
 
 #Application .Application_main .tmt {
+  text-align: center;
   background-color: #EFF3F8;
+  color: gray;
+  padding: 5px;
+  width: 98%;
+  border-bottom: 1px #DFE6EC solid;
+  display: flex;
 }
 
 #Application .Application_main .ms {
+  display: block;
   width: 10%;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -91,25 +100,14 @@
 }
 
 #Application .Application_main .ml {
+  display: block;
   width: 20%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-#Application .Application_main th {
-  color: gray;
-  width: 20%;
-  line-height: 30px;
-}
-
-#Application .Application_main td {
-  text-align: center;
-  color: #806A84;
-  line-height: 30px;
-}
-
-#Application .Application_main td a {
+#Application .Application_main .ml a {
   display: block;
   background-color: #1C84C6;
   height: 24px;
@@ -122,44 +120,86 @@
   border-radius: 3px;
 }
 
-#Application .Application_main td a:hover {
+#Application .Application_main .ml a:hover {
   opacity: .8;
 }
 
-#Application .Application_main td a:nth-child(2) {
+#Application .Application_main .ml a:nth-child(2) {
   background-color: #1AB394;
 }
 
-#Application .Application_main td a:nth-child(3) {
+#Application .Application_main .ml a:nth-child(3) {
   background-color: #ED5565;
 }
 
-#Application .Application_main .opentextdiv {
-  margin: 10px;
+#Application .Application_main .td {
+  text-align: center;
+  color: #806A84;
+  line-height: 30px;
+}
+
+#Application .Application_main .td a {
+  display: block;
+  background-color: #1C84C6;
+  height: 24px;
+  line-height: 24px;
+  border-color: #1C84C6;
+  color: white;
+  padding: 1.5px 5px;
+  font-size: 12px;
+  display: inline-block;
+  border-radius: 3px;
+}
+
+#Application .Application_main .td a:hover {
+  opacity: .8;
+}
+
+#Application .Application_main .td a:nth-child(2) {
+  background-color: #1AB394;
+}
+
+#Application .Application_main .td a:nth-child(3) {
+  background-color: #ED5565;
+}
+
+#Application .Application_main .faopentext {
   position: relative;
+}
+
+#Application .Application_main .opentextdiv {
+  position: absolute;
   height: 40px;
-  width: 98%;
-  padding-left: 57%;
+  z-index: 98;
+  top: -35px;
+  width: 400px;
+  left: 40%;
   display: none;
 }
 
 #Application .Application_main .opentextdiv .opentext {
-  background-color: #d4d4d4;
+  background-color: #e0e0e0;
   text-align: center;
-  line-height: 40px;
-  font-size: 16px;
+  line-height: 35px;
+  font-size: 15px;
+  color: black;
+  width: auto;
   padding: 0 20px;
-  height: 40px;
+  height: 35px;
   border-radius: 8px;
   position: absolute;
+  min-width: 300px;
+  box-shadow: #b1aeae 0px 0px 6px;
+  max-width: 500px;
 }
 
 #Application .Application_main .opentextdiv i {
-  left: 60%;
-  top: 28px;
+  z-index: 99;
+  top: 22px;
+  right: 100px;
   font-size: 30px;
   position: absolute;
-  color: #d4d4d4;
+  color: #e0e0e0;
 }
 
 #Application .Application_main input {

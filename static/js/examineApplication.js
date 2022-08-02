@@ -1,4 +1,4 @@
-let Tbody = document.getElementsByClassName("Application_main")[0].getElementsByTagName("tbody")[0];
+let Tbody = document.getElementById("tbody");
 let statusoption=document.getElementsByName('approval_status')[0].getElementsByTagName('option');
 let apagenumber=document.getElementsByName('apagenumber')[0].getElementsByTagName('option');
 let page_number=document.getElementById('page_number');
@@ -271,26 +271,27 @@ function changepage(page,set) {
             for (let n = 0; n < redata.pageInfo.length; n++) {
                 let b_Indicator_name=redata.pageInfo[n].classify!=undefined?redata.pageInfo[n].classify.b_Indicator_name:'指标不存在';
                 Tbody.innerHTML +=`
+            <div  class="faopen tr">
+                <span class="ms" style='display:none'>${redata.pageInfo[n].id}</span>
+                <span class="ms"><input type="checkbox" name="team_a" value="a"></span>
+                <span class="ms">${redata.pageInfo[n].user.name}</span>
+                <span class="ms">${redata.pageInfo[n].user.userName}</span>
+                <span class="ms">${redata.pageInfo[n].user.academy}</span>
+                <span class="ms">${redata.pageInfo[n].user.major_class}</span>
+                <span class="ms">${redata.pageInfo[n].creditType.afirstLevel}</span>
+                <span class="ms">${b_Indicator_name}
+                </span>
+                <span class="ms">${redata.pageInfo[n].points}</span>
                 <div class="opentextdiv">
                     <span class="opentext">${b_Indicator_name}</span>
                     <i class="fa fa-caret-down" aria-hidden="true"></i>
                 </div>
-                <tr  class="faopen">
-                    <td class="ms" style='display:none'>${redata.pageInfo[n].id}</td>
-                    <td class="ms"><input type="checkbox" name="team_a" value="a"></td>
-                    <td class="ms">${redata.pageInfo[n].user.name}</td>
-                    <td class="ms">${redata.pageInfo[n].user.userName}</td>
-                    <td class="ms">${redata.pageInfo[n].user.academy}</td>
-                    <td class="ms">${redata.pageInfo[n].user.major_class}</td>
-                    <td class="ms">${redata.pageInfo[n].creditType.afirstLevel}</td>
-                    <td class="ms ">${b_Indicator_name}</td>
-                    <td class="ms">${redata.pageInfo[n].points}</td>
-                    <td class="ml">
-                        <a class='mr' href='particulars?id=${redata.pageInfo[n].id}' onclick='look(this)'>查看详情</a>
-                        <a class='md' href='javascript:;' onclick='pass(this)'>通过</a>
-                        <a class='md' href='javascript:;' onclick='refuse(this)'>驳回</a>
-                    </td>
-                </tr>
+                <span class="ml">
+                    <a class='mr' href='particulars?id=${redata.pageInfo[n].id}' onclick='look(this)'>查看详情</a>
+                    <a class='md' href='javascript:;' onclick='pass(this)'>通过</a>
+                    <a class='md' href='javascript:;' onclick='refuse(this)'>驳回</a>
+                </span>
+            </div>
                 `
                 let ms = document.getElementsByClassName("ms");
                 let ml = document.getElementsByClassName("ml");
@@ -309,24 +310,25 @@ function changepage(page,set) {
             for (let n = 0; n < redata.pageInfo.length; n++) {
                 let b_Indicator_name=redata.pageInfo[n].classify!=undefined?redata.pageInfo[n].classify.b_Indicator_name:'指标不存在';
                 Tbody.innerHTML +=`
+            <div  class="faopen tr">
+                <span class="ms" style='display:none'>${redata.pageInfo[n].id}</span>
+                <span class="ms"><input type="checkbox" name="team_a" value="a"></span>
+                <span class="ms">${redata.pageInfo[n].user.name}</span>
+                <span class="ms">${redata.pageInfo[n].user.userName}</span>
+                <span class="ms">${redata.pageInfo[n].user.academy}</span>
+                <span class="ms">${redata.pageInfo[n].user.major_class}</span>
+                <span class="ms">${redata.pageInfo[n].creditType.afirstLevel}</span>
+                <span class="ms">${b_Indicator_name}
+                </span>
+                <span class="ms">${redata.pageInfo[n].points}</span>
                 <div class="opentextdiv">
                     <span class="opentext">${b_Indicator_name}</span>
                     <i class="fa fa-caret-down" aria-hidden="true"></i>
                 </div>
-                <tr class="faopen">
-                    <td class="ms" style='display:none'>${redata.pageInfo[n].id}</td>
-                    <td class="ms"><input type="checkbox" name="team_a" value="a"></td>
-                    <td class="ms">${redata.pageInfo[n].user.name}</td>
-                    <td class="ms">${redata.pageInfo[n].user.userName}</td>
-                    <td class="ms">${redata.pageInfo[n].user.academy}</td>
-                    <td class="ms">${redata.pageInfo[n].user.major_class}</td>
-                    <td class="ms">${redata.pageInfo[n].creditType.afirstLevel}</td>
-                    <td class="ms ">${b_Indicator_name}</td>
-                    <td class="ms">${redata.pageInfo[n].points}</td>
-                    <td class="ml">
-                        <a class='mr' href='particulars?id=${redata.pageInfo[n].id}' onclick='look(this)'>查看详情</a>
-                    </td>
-                </tr>
+                <span class="ml">
+                    <a class='mr' href='particulars?id=${redata.pageInfo[n].id}' onclick='look(this)'>查看详情</a>
+                </span>
+            </div>
                 `
                 let ms = document.getElementsByClassName("ms");
                 let ml = document.getElementsByClassName("ml");
@@ -346,15 +348,12 @@ function changepage(page,set) {
         let opentextdiv=document.getElementsByClassName('opentextdiv');
         for(let i in faopen){
             faopen[i].onmousemove=function(){
-                for(let n of opentextdiv){
-                   n.style.display='none';
-                }
+                opentextdiv[i].style.display='block';
                 opentextdiv[i].style.display='block';
             }
-            // faopen[i].onmousemove=function(){
-            //     opentextdiv[i].style.display='none';
-            //     console.log("none");
-            // }
+            faopen[i].onmouseout=function(){
+                opentextdiv[i].style.display='none';
+            }
         }
     }).catch(function (error) {
         // console.log(error);

@@ -39,21 +39,21 @@
             <a href="javascript:;" class="Application_find_bon" onclick="teamfind()"><i class="fa fa-search" aria-hidden="true"></i>搜索</a>
         </div> -->
     </div>
-    <table class="Application_main">
-        <thead>
-            <tr class="tmt">
-                <th class="ms"><input type="checkbox" onchange="allover()" name="team_all" value="all"></th>
-                <th class="ms">姓名</th>
-                <th class="ms">学号</th>
-                <th class="ms">学院</th>
-                <th class="ms">班级</th>
-                <th class="ms">学分构成</th>
-                <th class="ms">申请类别</th>
-                <th class="ms">申请学分</th>
-                <th class="ml">操作</th>
-            </tr>
-        </thead>
-        <tbody>
+    <div class="Application_main">
+        <!-- <thead> -->
+            <div class="tmt th">
+                <span class="ms"><input type="checkbox" onchange="allover()" name="team_all" value="all"></span>
+                <span class="ms">姓名</span>
+                <span class="ms">学号</span>
+                <span class="ms">学院</span>
+                <span class="ms">班级</span>
+                <span class="ms">学分构成</span>
+                <span class="ms">申请类别</span>
+                <span class="ms">申请学分</span>
+                <span class="ml">操作</span>
+            </div>
+        <!-- </thead> -->
+        <div id="tbody">
             <!-- <tr>
                 <td class="ms"><input type="checkbox"  name="team_a" value="a"></td>
                 <td class="ms">姓名</td>
@@ -69,8 +69,8 @@
                     <a class='md' href='javascript:;' onclick='refuse(this)'>驳回</a>
                 </td>
             </tr> -->
-        </tbody>
-    </table>
+        </div >
+    </div>
     <div class="Application_b">
         <div id="Application_b_left">
             <span id="page_number">共0个用户</span>
