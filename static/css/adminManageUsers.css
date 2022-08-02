@@ -82,7 +82,7 @@ input{
     background-color: #F8AC59;
     color: white;
     padding: 5px;
-    margin-left: 30px;
+    margin-left: 5px;
 }
 
 .totalNumber{
@@ -183,4 +183,10 @@ input{
      /* line-height: 200px; */
      text-align: center;
      display: flex;
+}
+
+#add{
+    background-color: #368AE2;
+    color: white;
+    padding: 5px;
 }

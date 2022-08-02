@@ -6,7 +6,7 @@ let expandItem = document.getElementsByClassName('expandItem')
 let Table = document.getElementsByClassName('Table')
 function watchFather() {
     axios({
-        method: 'GET',
+        method: 'POST',
         url: '/getCreditsComposition',
     })
         .then((result) => {
@@ -686,9 +686,9 @@ changeTwoDirEle.onclick = function () {
 }
 sureChange.onclick = function () {
     // 判断是否为空
-    if (changeTwoDirEle.value == '') {
+    if (changeTwoDirEle.value == '' || changeTwoDirEle.value.replace(/(^\s*)|(\s*$)/g, "") == "") {
         // changeTwoDirEle.parentElement.lastElementChild.style.display = 'block'
-        swal('请输入修改内容')
+        swal('请输入修改内容,不能为空格')
         return
     }
     axios({
@@ -702,6 +702,11 @@ sureChange.onclick = function () {
         }
     })
         .then((result) => {
+            // console.log(result.data)
+            if(result.data.err==-1){
+                swal('数据重复或错误，操作失败')
+                return
+            }
             bodyTop[1].style.display = 'none'
             watchFather()
             swal('修改成功')
@@ -729,9 +734,9 @@ CompositionName.onclick = function () {
     CompositionName.parentElement.lastElementChild.style.display = 'none'
 }
 SurechangeComposition.onclick = function () {
-    if (CompositionName.value == '') {
+    if (CompositionName.value == ''||CompositionName.value.replace(/(^\s*)|(\s*$)/g, "") == "") {
         // CompositionName.parentElement.lastElementChild.style.display = 'block'
-        swal('请输入修改内容')
+        swal('请输入修改内容,不能为空格')
         return
     }
     axios({
@@ -743,13 +748,14 @@ SurechangeComposition.onclick = function () {
         }
     })
         .then((result) => {
+            console.log(result.data)
             bodyTop[2].style.display = 'none'
             if (result.data.err != -1) {
                 // 重新获取数据
                 watchFather()
                 swal('修改成功')
             } else {
-                swal('修改失败请重试')
+                swal('数据重复或错误，操作失败')
             }
         })
         .catch((err) => {
@@ -762,7 +768,7 @@ let allSum = document.getElementById('allSum')
 allSum.onclick = function () {
     window.open('creditSummary')
 }
-let jumpUrl=document.getElementById('jumpUrl')
-jumpUrl.onclick=function(){
-    window.location.href='addNewIndicator'
+let jumpUrl = document.getElementById('jumpUrl')
+jumpUrl.onclick = function () {
+    window.location.href = 'addNewIndicator'
 }

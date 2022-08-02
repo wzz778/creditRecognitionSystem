@@ -10,12 +10,12 @@ const { log } = require('console')
 const { send } = require('process')
 var mult = multipart()
 
-router.get('*',(req,res,next)=>{
+router.get('*', (req, res, next) => {
     let user = jwt.decode(req.session.token);
-    if(user.power == '超级管理员'){
+    if (user.power == '超级管理员') {
         return next();
-    }else{
-            res.render('403.html');
+    } else {
+        res.render('403.html');
     }
 })
 
@@ -53,9 +53,9 @@ router.get('/InstituteInformationManagement', (req, res) => {
     res.render('InstituteInformationManagement.html')
 })
 // 学分汇总表
-router.get('/creditSummary',(req,res)=>{
-    res.render('creditSummary.html')
-})
+// router.get('/creditSummary', (req, res) => {
+//     res.render('creditSummary.html')
+// })
 
 axios.defaults.baseURL = 'http://110.40.205.103:8099'
 
@@ -134,9 +134,9 @@ router.post('/admin/application', (req, res) => {
         }
     })
         .then((result) => {
-            // console.log(result.data)
+            // console.log('请求的数据', result.data)
             if (result.data.msg == 'OK') {
-                res.send({ err: 0, msg: result.data.data.pageInfo, AllPages: result.data.data.allPage })
+                res.send({ err: 0, msg: result.data.data.pageInfo, AllPages: result.data.data.allPage, allRecords: result.data.data.allRecords })
             } else {
                 res.send({ err: -1, msg: result.data })
             }
@@ -147,7 +147,7 @@ router.post('/admin/application', (req, res) => {
 })
 // 添加用户
 router.post('/admin/User', (req, res) => {
-    let { name, userName, power, sex, grade, academy, major_class, organization, position ,major} = req.body
+    let { name, userName, power, sex, grade, academy, major_class, organization, position, major } = req.body
     if (!organization) {
         organization = '无'
     }
@@ -168,7 +168,7 @@ router.post('/admin/User', (req, res) => {
             major_class: major_class,
             organization: organization,
             position: position,
-            major:major
+            major: major
         },
         headers: {
             token: req.session.token
@@ -337,7 +337,7 @@ router.get('/IndicatorOperate/showAllIndicator', (req, res) => {
 })
 
 
-router.get('/getCreditsComposition', (req, res) => {
+router.post('/getCreditsComposition', (req, res) => {
     axios({
         method: 'GET',
         url: '/creditTypeOperate/showCreditType',
@@ -555,6 +555,7 @@ router.post('/IndicatorOperate/addIndicator', (req, res) => {
         }
     })
         .then((result) => {
+            // console.log('添加认定范围',result.data)
             if (result.data.msg == 'OK') {
                 res.send({ err: 0, msg: result.data })
             } else {
@@ -708,6 +709,7 @@ router.post('/changeIndicator', (req, res) => {
         }
     })
         .then((result) => {
+            // console.log('返回的数据',result.data)
             if (result.data.msg == 'OK') {
                 res.send({ err: 0, msg: result.data })
             } else {

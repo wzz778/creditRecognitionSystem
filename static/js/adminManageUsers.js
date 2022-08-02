@@ -100,7 +100,7 @@ function GetAll(page, perPage, obj) {
             allPages.innerHTML = `共${all_Page}页`
             allNumber.innerHTML = `共${result.data.total}条`
             for (let i = 0; i < result.data.msg.length; i++) {
-                let userClass = '未知'
+                let userClass = '未设置'
                 if (result.data.msg[i].major_class) {
                     userClass = result.data.msg[i].major_class
                 }
@@ -439,7 +439,7 @@ function changeUserInfoFn(event) {
     changeUserAccount.value = ele.nextElementSibling.nextElementSibling.innerHTML
     changeUserPermission.value = ele.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML
     changeUserSex.value = event.parentElement.lastElementChild.innerHTML
-    if (ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML == '未知') {
+    if (ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML == '未设置') {
         changeUserHas.value = '无'
         bodyTopClu[0].style.display = 'none'
     } else {
@@ -447,17 +447,17 @@ function changeUserInfoFn(event) {
         bodyTopClu[0].style.display = 'block'
         changeUserGrade.value = ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML
         BFn(changeUseraCademy, changeUserGrade.value, ele.lastElementChild.innerHTML)
-        .then((result)=>{
-            // console.log(result)
-            return AFn(major, result, event.parentElement.firstElementChild.nextElementSibling.innerHTML)
-        })
-        .then((result)=>{
-            // console.log(result)
-            AFn(changeUserClass,result, ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML)
-        })
-        .catch((err)=>{
-            console.log(err)
-        })
+            .then((result) => {
+                // console.log(result)
+                return AFn(major, result, event.parentElement.firstElementChild.nextElementSibling.innerHTML)
+            })
+            .then((result) => {
+                // console.log(result)
+                AFn(changeUserClass, result, ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
         // GetOtherLevelTwo(changeUseraCademy, changeUserGrade.value, ele.lastElementChild.innerHTML)
         // setTimeout(() => {
         //     GetOtherLevel(major, changeUseraCademy.value, event.parentElement.firstElementChild.nextElementSibling.innerHTML)
@@ -473,7 +473,7 @@ let reg = /^[0-9]*$/
 changeUserInfo.onclick = function () {
     // 判断值是否为空
     if (changeUserName.value == '' || changeUserName.value.replace(/(^\s*)|(\s*$)/g, "") == "") {
-        swal('请输入姓名')
+        swal('请输入姓名,不能为空格')
         return
     }
     if (changeUserAccount.value == '' || !reg.test(Number(changeUserAccount.value))) {
@@ -527,13 +527,19 @@ changeUserInfo.onclick = function () {
         }
     })
         .then((result) => {
-            // console.log(result.data)
+            console.log(result.data)
             bodyTop[0].style.display = 'none'
             if (result.data.err == 0) {
                 swal('修改成功')
                 GetAll(now_page, per_Page, assignFn())
             } else {
-                swal(result.data.msg.msg)
+                if (result.data.msg.msg == "学号或教工号修改有误") {
+                    swal(result.data.msg.msg)
+                } else if (result.data.msg == "用户名有误") {
+                    swal("用户名有误")
+                } else {
+                    swal('数据重复，操作失败')
+                }
             }
         })
         .catch((err) => {
@@ -947,4 +953,9 @@ function BFn(ele, id, show) {
                 resject(err)
             })
     })
+}
+
+// 跳转到添加用户
+function AddFn() {
+    window.location.href = 'superAdminAdd'
 }

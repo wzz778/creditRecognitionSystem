@@ -70,22 +70,13 @@
 
 #Application .Application_main tr {
   width: 98%;
-  padding: 10px;
-  height: 40px;
+  padding: 5px;
   display: flex;
   border-bottom: 1px #DFE6EC solid;
 }
 
 #Application .Application_main tr:hover {
   background-color: #e8eaf0;
-}
-
-#Application .Application_main .tmt {
-  background-color: #F8F8F9;
-}
-
-#Application .Application_main .tmt:hover {
-  background-color: #F8F8F9;
 }
 
 #Application .Application_main .ms {
@@ -105,12 +96,13 @@
 #Application .Application_main th {
   color: gray;
   width: 20%;
+  line-height: 30px;
 }
 
 #Application .Application_main td {
   text-align: center;
-  width: 0px;
   color: #9b9b9b;
+  line-height: 30px;
 }
 
 #Application .Application_main td a {
@@ -123,6 +115,34 @@
 
 #Application .Application_main td a i {
   padding: 0 3px;
+}
+
+#Application .Application_main .opentextdiv {
+  margin: 10px;
+  position: relative;
+  height: 40px;
+  width: 98%;
+  padding-left: 57%;
+  display: none;
+}
+
+#Application .Application_main .opentextdiv .opentext {
+  background-color: #d4d4d4;
+  text-align: center;
+  line-height: 40px;
+  font-size: 16px;
+  padding: 0 20px;
+  height: 40px;
+  border-radius: 8px;
+  position: absolute;
+}
+
+#Application .Application_main .opentextdiv i {
+  left: 60%;
+  top: 28px;
+  font-size: 30px;
+  position: absolute;
+  color: #d4d4d4;
 }
 
 #Application .Application_main input {

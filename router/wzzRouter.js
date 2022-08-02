@@ -18,6 +18,10 @@ router.get('/layout',(req,res)=>{
 router.get('/login',(req,res)=>{
     res.render('login.html')
 })
+// 学分汇总表
+router.get('/creditSummary', (req, res) => {
+    res.render('creditSummary.html')
+})
 //结束申请表
 router.get('/EndApplication',(req,res)=>{
     res.render('EndApplication.html')

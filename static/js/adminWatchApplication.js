@@ -59,11 +59,15 @@ function GetAllInfo(page, perpage, obj) {
             // 判断是否有值
             WatchApplicationContentContent.style.display = 'block'
             WatchApplicationNo.style.display = 'none'
-            allNumber.innerHTML = `共${result.data.AllPages}页`
+            allNumber.innerHTML = `共${result.data.allRecords}条`
+            allPages.innerHTML = `共${result.data.AllPages}页`
             all_Page = result.data.AllPages
             if (result.data.msg.length == 0) {
-                WatchApplicationContentContent.style.display = 'none'
-                WatchApplicationNo.style.display = 'block'
+                judgeHas()
+                if (now_page == 1) {
+                    WatchApplicationContentContent.style.display = 'none'
+                    WatchApplicationNo.style.display = 'block'
+                }
                 return
             }
             for (let i = 0; i < result.data.msg.length; i++) {
@@ -76,7 +80,7 @@ function GetAllInfo(page, perpage, obj) {
                     <li>${result.data.msg[i].user.academy}</li>
                     <li>${result.data.msg[i].user.major_class}</li>
                     <li>${result.data.msg[i].creditType.afirstLevel}</li>
-                    <li>${result.data.msg[i].classify.b_points_available}</li>
+                    <li>${result.data.msg[i].points}</li>
                     <li>
                         <button class="watchDetails" onclick="downLoad(this)">下载</button>
                         <button class="watchDetails" onclick="watchInfo(this)">查看</button>
@@ -102,6 +106,19 @@ function GetAllInfo(page, perpage, obj) {
 }
 GetAllInfo(1, 10, {})
 
+// 判断是否需要请求上一页
+function judgeHas() {
+    let WatchApplicationContentContent = document.getElementsByClassName('WatchApplicationContentContent')[0]
+    let allUls = WatchApplicationContentContent.getElementsByTagName('ul')
+    // console.log('函数',allUls)
+    if (allUls.length == 0 && now_page != 1) {
+        // 请求上一页
+        now_page--
+        nowPage.innerHTML = now_page
+        GetAllInfo(now_page, per_Page, limitationFactor())
+        // return
+    }
+}
 
 
 lastPage.onclick = function () {
@@ -166,15 +183,15 @@ jump.onclick = function () {
 
 // 查询函数
 let sureSearch = document.getElementById('sureSearch')
-let searchValue=document.getElementsByClassName('searchValue')
+let searchValue = document.getElementsByClassName('searchValue')
 sureSearch.onclick = function () {
-    let yn=false
-    for(let i=0;i<searchValue.length;i++){
-        if(searchValue[i].value!=''){
-            yn=true
+    let yn = false
+    for (let i = 0; i < searchValue.length; i++) {
+        if (searchValue[i].value != '') {
+            yn = true
         }
     }
-    if(!yn){
+    if (!yn) {
         swal('请输入要查询内容')
         return
     }
@@ -189,15 +206,15 @@ let allInput = document.getElementsByTagName('input')
 
 reset.onclick = function () {
     // 将值全部清空
-    ScopeRecognition.value=''
-    credit.value=''
-    academy.value=''
-    usClass.value=''
-    startDate.value=''
-    endDate.value=''
+    ScopeRecognition.value = ''
+    credit.value = ''
+    academy.value = ''
+    usClass.value = ''
+    startDate.value = ''
+    endDate.value = ''
     selectPerpage.value = 10
     now_page = 1
-    per_Page=10
+    per_Page = 10
     nowPage.innerHTML = now_page
     GetAllInfo(now_page, per_Page, limitationFactor())
     swal('已重置')
@@ -214,13 +231,13 @@ exportForm.onclick = function () {
 }
 
 
-function downLoad(event){
+function downLoad(event) {
     // academy.parentElement.lastElementChild.innerHTML
     // console.log(event.parentElement.lastElementChild.innerHTML)
     sessionStorage.setItem('Applicationid', event.parentElement.lastElementChild.innerHTML)
     window.open('/makepdf')
 }
 // 查看详情
-function watchInfo(event){
+function watchInfo(event) {
     window.location.href = 'particulars?id=' + event.parentElement.lastElementChild.innerHTML
 }

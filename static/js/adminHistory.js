@@ -103,7 +103,7 @@ function judgeHas() {
         nowPage.innerHTML = now_page
         GetAllInfo(now_page, per_Page, limitationFactor())
         checkDelAll.checked = ''
-        return
+        // return
     }
 }
 
@@ -125,20 +125,24 @@ function GetAllInfo(page, perpage, obj) {
     })
         .then((result) => {
             // console.log(result.data)
+            adminHistoryContentContent.innerHTML = ''
             all_Page = result.data.allPage
             allNumber.innerHTML = `共${result.data.allRecords}条`
+            allPages.innerHTML=`共${result.data.allPage}页`
             //删除的判断
             // 判断是否有值
             checkDelAll.checked=''
             adminHistoryContentContent.style.display = 'block'
             adminHistoryContentNo.style.display = 'none'
             if (result.data.msg.length == 0) {
+                judgeHas()
                 // 没有数据
-                adminHistoryContentContent.style.display = 'none'
-                adminHistoryContentNo.style.display = 'block'
+                if(now_page == 1){
+                    adminHistoryContentContent.style.display = 'none'
+                    adminHistoryContentNo.style.display = 'block'
+                }
                 return
             }
-            adminHistoryContentContent.innerHTML = ''
             for (let i = 0; i < result.data.msg.length; i++) {
                 let time = result.data.msg[i].createTime.split(' ')[0]
                 // console.log(result.data.msg[i].createTime.split(' ')[0]);
@@ -148,6 +152,11 @@ function GetAllInfo(page, perpage, obj) {
                 }
                 if (result.data.msg[i].application.approval_status == '-1') {
                     status = '审核未通过'
+                }
+                let pointS=result.data.msg[i].application.classify.b_points_available
+                // console.log(result.data.msg[i].application.points)
+                if(result.data.msg[i].application.points){
+                    pointS=result.data.msg[i].application.points
                 }
                 adminHistoryContentContent.innerHTML += `
                 <ul>
@@ -159,7 +168,7 @@ function GetAllInfo(page, perpage, obj) {
                     <li>${result.data.msg[i].application.user.userName}</li>
                     <li>${result.data.msg[i].application.user.major_class}</li>
                     <li>${result.data.msg[i].application.classify.b_Indicator_name}</li>
-                    <li>${result.data.msg[i].application.classify.b_points_available}</li>
+                    <li>${pointS}</li>
                     <li>${time}</li>
                     <li>${status}</li>
                     <li>
@@ -176,7 +185,6 @@ function GetAllInfo(page, perpage, obj) {
             // setTimeout(() => {
             //     popUps[0].style.display = 'none'
             // }, 2000)
-            judgeHas()
             // 判断是否需要显示修改功能
             let changeConment = document.getElementsByClassName('changeConment')
             // console.log(changeConment)
