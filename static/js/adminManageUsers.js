@@ -845,12 +845,12 @@ let OrganizationName = document.getElementById('OrganizationName')
 // 普通用户授权
 OrganizationSure.onclick = function () {
     // 判断是否为空
-    if (OrganizationName.value == '') {
-        swal('请输入组织名')
+    if (OrganizationName.value == ''||OrganizationName.replace(/(^\s*)|(\s*$)/g, "") == "") {
+        swal('请输入组织名,不能为纯空格')
         return
     }
-    if (OrganizationPosition.value == '') {
-        swal('请输入职位')
+    if (OrganizationPosition.value == ''||OrganizationName.replace(/(^\s*)|(\s*$)/g, "") == "") {
+        swal('请输入职位,不能为纯空格')
         return
     }
     axios({
