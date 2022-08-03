@@ -13,6 +13,7 @@ head_cord.onmouseout=function(){
     head_cord_fade.style.display = 'none'
 }
 // axios.defaults.baseURL = 'http://110.40.205.103:8080'
+// axios.defaults.baseURL = 'http://127.0.0.1'
 function outland(){
     swal({
         title: "你确定退出登录？",

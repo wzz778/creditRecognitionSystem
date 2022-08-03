@@ -158,8 +158,6 @@ select:hover{
 }
 .expandItem {
     position: relative;
-    margin-left: 56px;
-    margin-right: 5px;
     padding-right: 7px;
     top: 3px;
     display: inline-block;
@@ -187,7 +185,7 @@ select:hover{
     transform: rotate(90deg);
 }
 .open button{
-    padding: 1.5px 5px;
+    padding: 5px 8px;
     font-size: 12px;
     color: white;
 }
