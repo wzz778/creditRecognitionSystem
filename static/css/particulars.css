@@ -32,6 +32,26 @@
     right: 20px;
     top: 10px;
 }
+.returns{
+    position: absolute;
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+    display: inline-block;
+    font-weight: 400;
+    margin-bottom: 0;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid transparent;
+    color: white;
+    background-color: rgb(54,138,226);
+    border-color: rgb(54,138,226);
+    left: 20px;
+    top: 10px;
+}
 a:hover{
     color: white;
 }

@@ -138,16 +138,20 @@ sureAdd.onclick = function () {
                 return
             }
             if (b_remark[i].value == '') {
-                arrSend.push({ b_Indicator_name: b_Indicator_name[i].value, b_points_available: Number(b_points_available[i].value) })
+                let name=b_Indicator_name[i].value.replace(/</g,'&lt;').replace(/>/g,'&gt;')
+                arrSend.push({ b_Indicator_name: name, b_points_available: Number(b_points_available[i].value) })
             } else {
                 if (b_remark[i].value.replace(/(^\s*)|(\s*$)/g, "") == "") {
                     swal('备注不能是空格')
                     return
                 }
-                arrSend.push({ b_Indicator_name: b_Indicator_name[i].value, b_points_available: Number(b_points_available[i].value), b_remark: b_remark[i].value })
+                let name=b_Indicator_name[i].value.replace(/</g,'&lt;').replace(/。/g,'&gt;')
+                let remark=b_remark[i].value.replace(/</g,'&lt;').replace(/>/g,'&gt;')
+                arrSend.push({ b_Indicator_name: name, b_points_available: Number(b_points_available[i].value), b_remark: remark })
             }
         }
     }
+    // console.log(arrSend)
     if (arrSend.length == 0) {
         // 没有传入数据
         swal('请输入要添加的数据')
