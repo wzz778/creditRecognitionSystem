@@ -63,32 +63,6 @@ function passfeedback(){
         closeOnCancel: false
       }, function (isConfirm) {
         if (isConfirm) {
-            // axios({
-            //     method: 'post',
-            //     url: '/api/setfeedback',
-            //     data:{
-            //         application_id: backid.innerHTML,
-            //         message:weibo.value
-            //     }
-            // }).then(response=>{
-            //     console.log(response.data);
-            //     return axios({
-            //         url: '/api/passpost',
-            //         method: 'put',
-            //         params:{
-            //             id: backid.innerHTML,
-            //             status:'-1'
-            //         }
-            //     })
-            // }).then(response=>{
-            //         swal('驳回成功', "您所选择的申请表已驳回！", "success");
-            //         console.log(response.data);
-            //         weibo.value="";
-            //         Feedback_down()
-            //         changepage(pageinput.value,"1");
-            //     }).catch(function (error) {
-            //         // console.log(error);
-            // });
             axios({
                 method: 'put',
                 url: '/api/passpost',
@@ -249,7 +223,7 @@ function changepage(page,set) {
             "approval_status":status
         },
     }).then(data => {
-        console.log(data.data);
+        // console.log(data.data);
         let redata=data.data.data;
     
         Tbody.innerHTML='';

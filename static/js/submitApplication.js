@@ -62,7 +62,7 @@ axios({
   url: '/api/getmymessage',
   method: 'get',
   }).then(data=>{
-    console.log(data);
+    // console.log(data);
     usermessage[0].innerHTML=data.data.name;
     usermessage[1].innerHTML=data.data.sex;
     usermessage[2].innerHTML=data.data.userName;

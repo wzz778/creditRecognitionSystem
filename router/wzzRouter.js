@@ -263,11 +263,9 @@ router.get('/api/getpostmessage', (req, res) => {
             token:req.session.token
         }},
     ).then(response=>{
-        console.log("wwwwwwwwwwwwww");
         console.log(response.data);
         res.send(response.data);
     }).catch(function (error) {
-        console.log("wwwwwwwwwwwwww");
         res.send(error)
     });
 })
@@ -301,6 +299,23 @@ router.post('/api/UploadAttachment', multipartMiddleware,(req, res) => {
             res.send({ err: -1, msg: err})
         })
 })  
+router.post('/api/deletePhoto',(req, res) => {
+    console.log(req.body.key);
+    axios({
+    headers: {
+        token:req.session.token
+    },
+    method: 'delete',
+    url: '/user/deletePhoto',
+    params:{key:req.body.key}
+    }).then(response=>{
+        console.log(response.data);
+        res.send(response);
+    }).catch(function (error) {
+        console.log(error);
+        res.send(error)
+    });
+})
 router.put('/api/uppassword', (req, res) => {
     if (!jwt.decode(req.session.token)) {
         res.send({ err: -1, msg: '用户身份非法' })
