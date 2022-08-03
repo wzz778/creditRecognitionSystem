@@ -706,7 +706,6 @@ sureChange.onclick = function () {
         }
     })
         .then((result) => {
-            // console.log(result.data)
             if(result.data.err==-1){
                 swal('数据重复或错误，操作失败')
                 return
