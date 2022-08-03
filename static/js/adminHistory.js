@@ -419,16 +419,5 @@ cancel.onclick = function () {
 }
 // 查看详情
 function watchInfo(event) {
-    sessionStorage.setItem('now_page', now_page)
-    sessionStorage.setItem('per_Page', per_Page)
     window.location.href = 'particulars?id=' + event.parentElement.firstElementChild.innerHTML
-}
-if (sessionStorage.getItem('now_page')) {
-    now_page = sessionStorage.getItem('now_page')
-    per_Page=sessionStorage.getItem('per_Page')||10
-    selectPerpage.value=per_Page
-    nowPage.innerHTML=now_page
-    GetAllInfo(now_page, per_Page, {})
-    sessionStorage.removeItem('now_page')
-    sessionStorage.removeItem('per_Page')
 }
