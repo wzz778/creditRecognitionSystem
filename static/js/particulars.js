@@ -182,9 +182,21 @@ download[0].onclick = function (){
         swal('下载失败','暂无内容','error');
     }else{
         for(let i=0;i<attchment_imgs.length;i++){
-            downloadIamge(attchment_imgs[i].src);
+            console.log(attchment_imgs[i].src)
+            let all = attchment_imgs[i].src.split('.');
+            if(all[all.length - 1] == 'pdf'){
+                downloadIamge(attchment_imgs[i].src);
+            }else{
+                downloadImages(attchment_imgs[i].src)
+            }
+            if(i == attchment_imgs.length -1){
+                let timer = setTimeout(function (){
+                    swal('下载成功','全部下载完毕','success');
+                    clearTimeout(timer);
+                },500);
+            }
+
         }
-        swal('下载成功','全部下载完毕','success');
     }
 }
 
@@ -212,23 +224,23 @@ function downloadIamge(imgSrc) {
 }
 
 
-// function downloadImage(imgsrc) {//下载图片地址和图片名
-//     var image = new Image();
-//     // 解决跨域 Canvas 污染问题,
-//     image.setAttribute("crossorigin", "anonymous");
-//     image.onload = function() {
-//         var canvas = document.createElement("canvas");
-//         canvas.width = image.width;
-//         canvas.height = image.height;
-//         var context = canvas.getContext("2d");
-//         context.drawImage(image, 0, 0, image.width, image.height);
-//         var url = canvas.toDataURL("image/png"); //将图片格式转为base64
-//         var a = document.createElement("a"); // 生成一个a元素
-//         var event = new MouseEvent("click"); // 创建一个单击事件
-//         a.download = '图片'+ Date.now(); // 设置图片名称
-//         a.href = url; // 将生成的URL设置为a.href属性
-//         a.dispatchEvent(event); // 触发a的单击事件
-//     };
-//     image.src = imgsrc + '?time=' + Date.now();  //注意，这里是灵魂，否则依旧会产生跨域问题
-//
-// }
+function downloadImages(imgsrc) {//下载图片地址和图片名
+    var image = new Image();
+    // 解决跨域 Canvas 污染问题,
+    image.setAttribute("crossorigin", "anonymous");
+    image.onload = function() {
+        var canvas = document.createElement("canvas");
+        canvas.width = image.width;
+        canvas.height = image.height;
+        var context = canvas.getContext("2d");
+        context.drawImage(image, 0, 0, image.width, image.height);
+        var url = canvas.toDataURL("image/png"); //将图片格式转为base64
+        var a = document.createElement("a"); // 生成一个a元素
+        var event = new MouseEvent("click"); // 创建一个单击事件
+        a.download = '图片'+ Date.now(); // 设置图片名称
+        a.href = url; // 将生成的URL设置为a.href属性
+        a.dispatchEvent(event); // 触发a的单击事件
+    };
+    image.src = imgsrc + '?time=' + Date.now();  //注意，这里是灵魂，否则依旧会产生跨域问题
+
+}

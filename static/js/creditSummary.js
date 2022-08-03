@@ -89,6 +89,17 @@ axios({
                         </ul>
                         `
                         } else {
+                            if (str3) {
+                                resultStr += `
+                        <div class="creditItem">
+                            ${str1}
+                        <!-- 右边 -->
+                        <div class="creditRight">
+                            ${str3}
+                        </div>
+                    </div>
+                    `
+                            }
                             // console.log('结果2',str2)
                             str3 = ''
                             // yn = 3
