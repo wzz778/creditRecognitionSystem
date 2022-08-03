@@ -31,6 +31,7 @@ let attchment_header = document.getElementsByClassName('attchment-header');
 let ranking = document.getElementsByClassName('ranking');
 let describe = document.getElementsByClassName('describe');
 let messages = document.getElementsByName('messages');
+let returns = document.getElementsByClassName('returns');
 
 
 //渲染页面
@@ -243,4 +244,8 @@ function downloadImages(imgsrc) {//下载图片地址和图片名
     };
     image.src = imgsrc + '?time=' + Date.now();  //注意，这里是灵魂，否则依旧会产生跨域问题
 
+}
+
+returns[0].onclick = function (){
+    window.history.go(-1);
 }
