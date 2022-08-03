@@ -196,7 +196,9 @@ function downloadIamge(imgSrc) {
     let now =Date.now();
     // console.log(now);
     // 这里是将url转成blob地址，
-    fetch(imgUrl)  // 跨域时会报错
+    fetch(imgUrl,{
+        mode:'cors'
+    })  // 跨域时会报错
         .then(res => res.blob())
         .then(blob => { // 将链接地址字符内容转变成blob地址
             a.href = URL.createObjectURL(blob);
