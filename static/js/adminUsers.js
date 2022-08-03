@@ -344,7 +344,7 @@ function rendering() {
                 }).then((date)=>{
                     // console.log(date.data);
                     if(date.data.msg == 'OK'){
-                        swal('重置密码成功', "密码是111111", "success");
+                        swal('重置密码成功', "密码是123456", "success");
                     }
                 }).catch((err)=>{
                     console.log(err)
@@ -687,7 +687,7 @@ function render(numbers,size){
                 }).then((date)=>{
                     // console.log(date.data);
                     if(date.data.msg == 'OK'){
-                        swal('重置密码成功', "密码是111111", "success");
+                        swal('重置密码成功', "密码是123456", "success");
                     }
                 }).catch((err)=>{
                     console.log(err);
@@ -752,7 +752,7 @@ function render(numbers,size){
                         })
                         // swal("删除!", "您的虚构文件已被删除！", "success")
                     } else{
-                        swal("取消!", "您的虚构文件是安全的！", "error")
+                        swal("取消!", "用户没有被删除", "error")
                     }
                 })
             }
