@@ -3,3 +3,8 @@ if(!sessionStorage.getItem('havesuccess')){
 }else{
     sessionStorage.removeItem('havesuccess');
 }
+if(!sessionStorage.getItem('Applicationid')){
+   
+}else{
+    sessionStorage.removeItem('Applicationid');
+}

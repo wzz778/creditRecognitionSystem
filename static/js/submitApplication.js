@@ -169,9 +169,18 @@ $('#postbutton').on('click', function () {
              //如果写成contentType会报错
           }
         }).then(data => {
+          if(data.data.msg == '已超过最大分值'){
+            swal('提交失败',"您所填写的申请已超过最大分值",'error');
+            return
+          }
           swal('提交成功', '您所填写的申请表提交成功', 'success');
+          let date=data.data;
+          console.log(data.data);
+          let aid=date.data;
+          // console.log(aid);
+          console.log(aid);
+          sessionStorage.setItem('Applicationid',aid);
           if(o.ore=="是"){
-            sessionStorage.setItem('Applicationid', data.data.data);
             setTimeout(function () {
               window.location.assign("/UploadAttachment");
               // sessionStorage.setItem("tousers", '1');
