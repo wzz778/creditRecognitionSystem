@@ -46,7 +46,7 @@ axios({
                         <ul>
                             <li>${result.msg[j].b_Indicator_name}</li>
                             <li>${result.msg[j].b_points_available}</li>
-                            <li>${result.msg[j].b_remark}</li>
+                            <li style='word-wrap: break-word'>${result.msg[j].b_remark}</li>
                         </ul>
                         `
                         } else if (result.msg[j].child == '下边没有指标了' && result.msg[j].b_points_available == 0) {

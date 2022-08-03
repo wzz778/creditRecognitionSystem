@@ -3,6 +3,8 @@ li{
     border: 1px solid black;
     display: grid;
     align-items: center;
+    word-wrap:break-word;  
+    word-break:break-all; 
 }
 
 .middle{

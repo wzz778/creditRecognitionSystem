@@ -26,7 +26,7 @@ SureaddDir.onclick = function () {
     let resultData = []
     for (let i = 0; i < AddDirValue.length; i++) {
         if (AddDirValue[i].value != '') {
-            resultData.push({ b_Indicator_level: 2, b_Indicator_name: AddDirValue[i].value, b_first_level: Number(AddDirFatherId.innerHTML), b_superior_id: Number(AddDirFatherId.innerHTML) })
+            resultData.push({ b_Indicator_level: 2, b_Indicator_name: AddDirValue[i].value.replace(/</g,'&lt;').replace(/>/g,'&gt;'), b_first_level: Number(AddDirFatherId.innerHTML), b_superior_id: Number(AddDirFatherId.innerHTML) })
         }
     }
     if (resultData.length == 0) {
@@ -73,11 +73,11 @@ function IndicatorTwo(event) {
     selfId.innerHTML = ele.lastElementChild.innerHTML
     reviseCreComposition.value = event.parentElement.parentElement.parentElement.parentElement.firstElementChild.firstElementChild.lastElementChild.innerHTML
     getChild(Number(reviseCreComposition.value), false)
-    reviseRecognize.value = ele.nextElementSibling.nextElementSibling.firstElementChild.innerHTML
+    reviseRecognize.value = ele.nextElementSibling.nextElementSibling.firstElementChild.innerHTML.replace(/&lt;/g,'<').replace(/&gt;/g,'>')
     reviseCreditNumber.value = Number(ele.nextElementSibling.nextElementSibling.lastElementChild.innerHTML)
     let test = ''
     if (event.parentElement.firstElementChild.innerHTML != 'null') {
-        test = event.parentElement.firstElementChild.innerHTML
+        test = event.parentElement.firstElementChild.innerHTML.replace(/&lt;/g,'<').replace(/&gt;/g,'>')
     }
     reviseText.value = test
 }
@@ -192,7 +192,7 @@ sureRevise.onclick = function () {
         return
     }
     let sendArr = {}
-    sendArr.b_Indicator_name = reviseRecognize.value
+    sendArr.b_Indicator_name = reviseRecognize.value.replace(/</g,'&lt;').replace(/>/g,'&gt;')
     sendArr.b_id = Number(selfId.innerHTML)
     sendArr.b_first_level = Number(reviseCreComposition.value)
     let secondId = ''
@@ -208,7 +208,7 @@ sureRevise.onclick = function () {
     sendArr.b_superior_id = Number(secondId)
     sendArr.b_points_available = Number(reviseCreditNumber.value)
     if (reviseText.value.replace(/(^\s*)|(\s*$)/g, "") != "") {
-        sendArr.b_remark = reviseText.value
+        sendArr.b_remark = reviseText.value.replace(/</g,'&lt;').replace(/>/g,'&gt;')
     } else {
         sendArr.b_remark='无'
     }
