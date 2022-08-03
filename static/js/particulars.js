@@ -182,14 +182,18 @@ download[0].onclick = function (){
         swal('下载失败','暂无内容','error');
     }else{
         for(let i=0;i<attchment_imgs.length;i++){
-            let all = attchment_imgs[i].src.splice('.');
+            console.log(attchment_imgs[i].src)
+            let all = attchment_imgs[i].src.split('.');
             if(all[all.length - 1] == 'pdf'){
                 downloadIamge(attchment_imgs[i].src);
             }else{
                 downloadImages(attchment_imgs[i].src)
             }
             if(i == attchment_imgs.length -1){
-                swal('下载成功','全部下载完毕','success');
+                let timer = setTimeout(function (){
+                    swal('下载成功','全部下载完毕','success');
+                    clearTimeout(timer);
+                },500);
             }
 
         }
