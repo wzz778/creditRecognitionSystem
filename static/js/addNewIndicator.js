@@ -151,7 +151,7 @@ sureAdd.onclick = function () {
             }
         }
     }
-    console.log(arrSend)
+    // console.log(arrSend)
     if (arrSend.length == 0) {
         // 没有传入数据
         swal('请输入要添加的数据')
