@@ -26,7 +26,7 @@ SureaddDir.onclick = function () {
     let resultData = []
     for (let i = 0; i < AddDirValue.length; i++) {
         if (AddDirValue[i].value != '') {
-            resultData.push({ b_Indicator_level: 2, b_Indicator_name: AddDirValue[i].value.replace(/</g,'&lt;').replace(/>/g,'&gt;'), b_first_level: Number(AddDirFatherId.innerHTML), b_superior_id: Number(AddDirFatherId.innerHTML) })
+            resultData.push({ b_Indicator_level: 2, b_Indicator_name: AddDirValue[i].value.replace(/</g, '&lt;').replace(/>/g, '&gt;'), b_first_level: Number(AddDirFatherId.innerHTML), b_superior_id: Number(AddDirFatherId.innerHTML) })
         }
     }
     if (resultData.length == 0) {
@@ -73,11 +73,11 @@ function IndicatorTwo(event) {
     selfId.innerHTML = ele.lastElementChild.innerHTML
     reviseCreComposition.value = event.parentElement.parentElement.parentElement.parentElement.firstElementChild.firstElementChild.lastElementChild.innerHTML
     getChild(Number(reviseCreComposition.value), false)
-    reviseRecognize.value = ele.nextElementSibling.nextElementSibling.firstElementChild.innerHTML.replace(/&lt;/g,'<').replace(/&gt;/g,'>')
+    reviseRecognize.value = ele.nextElementSibling.nextElementSibling.firstElementChild.innerHTML.replace(/&lt;/g, '<').replace(/&gt;/g, '>')
     reviseCreditNumber.value = Number(ele.nextElementSibling.nextElementSibling.lastElementChild.innerHTML)
     let test = ''
     if (event.parentElement.firstElementChild.innerHTML != 'null') {
-        test = event.parentElement.firstElementChild.innerHTML.replace(/&lt;/g,'<').replace(/&gt;/g,'>')
+        test = event.parentElement.firstElementChild.innerHTML.replace(/&lt;/g, '<').replace(/&gt;/g, '>')
     }
     reviseText.value = test
 }
@@ -182,7 +182,7 @@ sureRevise.onclick = function () {
         swal('请输入修改内容,不能为空格')
         return
     }
-    if(/^[0-9]*$/.test(reviseRecognize.value)){
+    if (/^[0-9]*$/.test(reviseRecognize.value)) {
         swal('指标名不能为纯数字')
         return
     }
@@ -192,7 +192,7 @@ sureRevise.onclick = function () {
         return
     }
     let sendArr = {}
-    sendArr.b_Indicator_name = reviseRecognize.value.replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    sendArr.b_Indicator_name = reviseRecognize.value.replace(/</g, '&lt;').replace(/>/g, '&gt;')
     sendArr.b_id = Number(selfId.innerHTML)
     sendArr.b_first_level = Number(reviseCreComposition.value)
     let secondId = ''
@@ -208,9 +208,9 @@ sureRevise.onclick = function () {
     sendArr.b_superior_id = Number(secondId)
     sendArr.b_points_available = Number(reviseCreditNumber.value)
     if (reviseText.value.replace(/(^\s*)|(\s*$)/g, "") != "") {
-        sendArr.b_remark = reviseText.value.replace(/</g,'&lt;').replace(/>/g,'&gt;')
+        sendArr.b_remark = reviseText.value.replace(/</g, '&lt;').replace(/>/g, '&gt;')
     } else {
-        sendArr.b_remark='无'
+        sendArr.b_remark = '无'
     }
     // console.log('传的数据',sendArr)
     axios({
@@ -321,7 +321,7 @@ sureSearch.onclick = function () {
         data: obj
     })
         .then((result) => {
-            // console.log(result.data)
+            console.log(result.data)
             if (result.data.msg.length == 0) {
                 swal('没有该内容')
                 return

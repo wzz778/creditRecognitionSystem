@@ -129,7 +129,7 @@ sureAdd.onclick = function () {
                 return
             }
             if (/^[0-9]*$/.test(b_Indicator_name[i].value)) {
-                swal('指标名不能为纯数字')
+                swal('认证范围不能为纯数字')
                 return
             }
             // 学分名和备注不能是纯空值
