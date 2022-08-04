@@ -186,13 +186,13 @@ sureRevise.onclick = function () {
         swal('指标名不能为纯数字')
         return
     }
-    if (reviseCreditNumber.value == '' || !reg.test(Number(reviseCreditNumber.value))) {
+    if (reviseCreditNumber.value == '' || !reg.test(Number(reviseCreditNumber.value))||(Number(reviseCreditNumber.value)>12)) {
         // reviseCreditNumber.parentElement.lastElementChild.style.display = 'block'
-        swal('请输入合法数字')
+        swal('请输入合法数字,且不能大于12')
         return
     }
     let sendArr = {}
-    sendArr.b_Indicator_name = reviseRecognize.value.replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    sendArr.b_Indicator_name = reviseRecognize.value.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\s+/g,"")
     sendArr.b_id = Number(selfId.innerHTML)
     sendArr.b_first_level = Number(reviseCreComposition.value)
     let secondId = ''

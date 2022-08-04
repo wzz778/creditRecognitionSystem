@@ -145,7 +145,7 @@ sureAdd.onclick = function () {
                     swal('备注不能是空格')
                     return
                 }
-                let name=b_Indicator_name[i].value.replace(/</g,'&lt;').replace(/。/g,'&gt;')
+                let name=b_Indicator_name[i].value.replace(/</g,'&lt;').replace(/。/g,'&gt;').replace(/\s+/g,"")
                 let remark=b_remark[i].value.replace(/</g,'&lt;').replace(/>/g,'&gt;')
                 arrSend.push({ b_Indicator_name: name, b_points_available: Number(b_points_available[i].value), b_remark: remark })
             }
