@@ -111,7 +111,7 @@ function IndicatorThree(event) {
     reviseCreComposition.value = fatherId
     // console.log(secondId)
     getChild(Number(reviseCreComposition.value), secondId)
-    reviseRecognize.value = event.parentElement.parentElement.firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.innerHTML
+    reviseRecognize.value = event.parentElement.parentElement.firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.innerHTML.replace(/&lt;/g,'<').replace(/&gt;/g,'>')
     reviseCreditNumber.value = event.parentElement.parentElement.firstElementChild.nextElementSibling.nextElementSibling.lastElementChild.innerHTML
 }
 
