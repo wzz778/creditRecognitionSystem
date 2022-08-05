@@ -93,7 +93,8 @@ function IndicatorThree(event) {
     selfId.innerHTML = event.parentElement.parentElement.firstElementChild.lastElementChild.innerHTML
     let text = ''
     if (event.parentElement.firstElementChild.innerHTML != 'null') {
-        text = event.parentElement.firstElementChild.innerHTML
+        text = event.parentElement.firstElementChild.innerHTML.replace(/&lt;/g,'<').replace(/&gt;/g,'>')
+
     }
     creditRules.value = event.parentElement.lastElementChild.innerHTML
     if (creditRules.value == 0) {
@@ -224,7 +225,7 @@ sureRevise.onclick = function () {
     // console.log('二级目录的id', secondId)
     sendArr.b_superior_id = Number(secondId)
     sendArr.b_points_available = Number(reviseCreditNumber.value)
-    sendArr.b_remark = reviseText.value
+    sendArr.b_remark = reviseText.value.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\s+/g, "")
     sendArr.rule = creditRules.value
     // console.log('传的数据',sendArr)
     axios({
