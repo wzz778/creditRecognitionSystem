@@ -139,3 +139,7 @@ select{
 #CreditsComposition{
     width: 510px;
 }
+
+.rules{
+    margin: 10px 0px;
+}

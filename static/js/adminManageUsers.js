@@ -91,6 +91,9 @@ function GetAll(page, perPage, obj) {
             if (result.data.msg.length == 0) {
                 judgeHas()
                 if (now_page == 1) {
+                    all_Page = result.data.page
+                    allPages.innerHTML = `共${all_Page}页`
+                    allNumber.innerHTML = `共${result.data.total}条`
                     adminManageUsersContentContent.style.display = 'none'
                     adminHistoryContentNo.style.display = 'block'
                 }
@@ -126,6 +129,7 @@ function GetAll(page, perPage, obj) {
                 <li>${result.data.msg[i].userName}</li>
                 <li>${result.data.msg[i].power}</li>
                 <li>${result.data.msg[i].grade}</li>
+                <li>${result.data.msg[i].academy}</li>
                 <li>${userClass}</li>
                 <li>
                     <button class="operatorBtnSty" onclick='reviseFn(this)'>重置密码</button>
@@ -439,7 +443,8 @@ function changeUserInfoFn(event) {
     changeUserAccount.value = ele.nextElementSibling.nextElementSibling.innerHTML
     changeUserPermission.value = ele.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML
     changeUserSex.value = event.parentElement.lastElementChild.innerHTML
-    if (ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML == '未设置') {
+    // console.log(ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML)
+    if (ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML == '未设置') {
         changeUserHas.value = '无'
         bodyTopClu[0].style.display = 'none'
     } else {
@@ -453,19 +458,11 @@ function changeUserInfoFn(event) {
             })
             .then((result) => {
                 // console.log(result)
-                AFn(changeUserClass, result, ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML)
+                AFn(changeUserClass, result, ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML)
             })
             .catch((err) => {
                 console.log(err)
             })
-        // GetOtherLevelTwo(changeUseraCademy, changeUserGrade.value, ele.lastElementChild.innerHTML)
-        // setTimeout(() => {
-        //     GetOtherLevel(major, changeUseraCademy.value, event.parentElement.firstElementChild.nextElementSibling.innerHTML)
-        // }, 200)
-        // setTimeout(() => {
-        //     GetOtherLevel(changeUserClass, major.value, ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML)
-        // }, 450)
-        // changeUserClass.value = ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML
     }
 }
 
@@ -498,7 +495,7 @@ changeUserInfo.onclick = function () {
     }
     let obj = {}
     obj.uId = Number(changeUserId.innerHTML)
-    obj.name = changeUserName.value
+    obj.name = changeUserName.value.replace(/\s+/g,"")
     obj.sex = changeUserSex.value
     obj.userName = changeUserAccount.value
     obj.power = changeUserPermission.value
@@ -845,11 +842,11 @@ let OrganizationName = document.getElementById('OrganizationName')
 // 普通用户授权
 OrganizationSure.onclick = function () {
     // 判断是否为空
-    if (OrganizationName.value == ''||OrganizationName.replace(/(^\s*)|(\s*$)/g, "") == "") {
+    if (OrganizationName.value == '' || OrganizationName.replace(/(^\s*)|(\s*$)/g, "") == "") {
         swal('请输入组织名,不能为纯空格')
         return
     }
-    if (OrganizationPosition.value == ''||OrganizationName.replace(/(^\s*)|(\s*$)/g, "") == "") {
+    if (OrganizationPosition.value == '' || OrganizationName.replace(/(^\s*)|(\s*$)/g, "") == "") {
         swal('请输入职位,不能为纯空格')
         return
     }
@@ -879,11 +876,12 @@ OrganizationSure.onclick = function () {
 
 function AFn(ele, id, show) {
     return new Promise((resolve, resject) => {
-        // if (!id) {
-        //     // bodyTop[0].style.display = 'none'
-        //     swal('网络错误，请重新点击')
-        //     return
-        // }
+        if (!id) {
+            // bodyTop[0].style.display = 'none'
+            swal('相关数据被删除')
+            resject()
+            return
+        }
         axios({
             method: 'POST',
             url: '/admin/selectOrganization',
@@ -917,6 +915,11 @@ function AFn(ele, id, show) {
 
 function BFn(ele, id, show) {
     return new Promise((resolve, resject) => {
+        if(!id){
+            swal('相关数据被删除')
+            resject()
+            return
+        }
         let idResult = 1
         for (let i = 0; i < ResultObj.msg.length; i++) {
             if (ResultObj.msg[i].name == id) {

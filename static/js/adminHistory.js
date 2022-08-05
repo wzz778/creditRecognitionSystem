@@ -153,7 +153,12 @@ function GetAllInfo(page, perpage, obj) {
                 if (result.data.msg[i].application.approval_status == '-1') {
                     status = '审核未通过'
                 }
-                let pointS = result.data.msg[i].application.classify.b_points_available
+                let pointS = '该指标被删除'
+                let bName='该指标被删除'
+                if(result.data.msg[i].application.classify){
+                    pointS=result.data.msg[i].application.classify.b_points_available
+                    bName=result.data.msg[i].application.classify.b_Indicator_name
+                }
                 // console.log(result.data.msg[i].application.points)
                 if (result.data.msg[i].application.points) {
                     pointS = result.data.msg[i].application.points
@@ -167,7 +172,7 @@ function GetAllInfo(page, perpage, obj) {
                     <li>${result.data.msg[i].application.user.name}</li>
                     <li>${result.data.msg[i].application.user.userName}</li>
                     <li>${result.data.msg[i].application.user.major_class}</li>
-                    <li>${result.data.msg[i].application.classify.b_Indicator_name}</li>
+                    <li>${bName}</li>
                     <li>${pointS}</li>
                     <li>${time}</li>
                     <li>${status}</li>
