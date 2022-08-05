@@ -82,6 +82,8 @@ function IndicatorTwo(event) {
     creditRules.value = event.parentElement.lastElementChild.innerHTML
     if (creditRules.value == 0) {
         creditRules.removeAttribute('readOnly')
+    } else {
+        reviseText.setAttribute('readOnly', 'true')
     }
     reviseText.value = test
 }
@@ -95,7 +97,9 @@ function IndicatorThree(event) {
     }
     creditRules.value = event.parentElement.lastElementChild.innerHTML
     if (creditRules.value == 0) {
-        creditRules.removeAttribute('readOnly')
+        reviseText.removeAttribute('readOnly')
+    } else {
+        reviseText.setAttribute('readOnly', 'true')
     }
     reviseText.value = text
     let ele = event.parentElement.parentElement.parentElement
