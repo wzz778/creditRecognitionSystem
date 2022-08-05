@@ -425,6 +425,7 @@ function changeRules(event) {
     }
     if (event.value == 0) {
         // console.log(123)
+        event.parentElement.nextElementSibling.firstElementChild.firstElementChild.value = ''
         event.parentElement.nextElementSibling.firstElementChild.firstElementChild.removeAttribute('readOnly')
         return
     }

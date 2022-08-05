@@ -30,14 +30,14 @@ function addNewIndicator(event) {
             <div class='rules'>
                 算分规则(选择后可在备注查看):
                 <select class="creditRules" onchange="changeRules(this)">
-                    <option value="">请选择</option>
+                    <option value="">请选择...</option>
                     <option value="0">不是团队项目</option>
                     <option value="1">规则1</option>
                     <option value="2">规则2</option>
                     <option value="3">规则3</option>
                     <option value="4">规则4</option>
                     <option value="5">规则5</option>
-                    <option value="5">规则6</option>
+                    <option value="6">规则6</option>
                 </select>
             </div>
             <div class="remarksText">备注:
@@ -207,14 +207,14 @@ sureAdd.onclick = function () {
                         <div class='rules'>
                             算分规则(选择后可在备注查看):
                             <select class="creditRules" onchange="changeRules(this)">
-                                <option value="">请选择</option>
+                                <option value="">请选择...</option>
                                 <option value="0">不是团队项目</option>
                                 <option value="1">规则1</option>
                                 <option value="2">规则2</option>
                                 <option value="3">规则3</option>
                                 <option value="4">规则4</option>
                                 <option value="5">规则5</option>
-                                <option value="5">规则6</option>
+                                <option value="6">规则6</option>
                             </select>
                         </div>
                         <div class="remarksText">备注:
