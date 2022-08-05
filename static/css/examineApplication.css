@@ -173,7 +173,7 @@
   z-index: 98;
   top: -35px;
   width: 400px;
-  left: 40%;
+  left: 35%;
   display: none;
 }
 
@@ -445,6 +445,10 @@ h3 {
 
 #feedback #feedback_main button:hover {
   opacity: 0.7;
+}
+
+.chanceinput {
+  display: none;
 }
 
 input::-webkit-outer-spin-button,

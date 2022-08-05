@@ -33,6 +33,30 @@ function isnull(val) {
         return false;
     }
   }
+  function htmllEscape(htmlstr){
+    return htmlstr.replace(/<|>"|&/g,(match)=>{
+        switch(match){
+            case '<':
+                return "&lt"
+            case '>':
+                return "&gt"
+            case '&':
+                return "&amp"
+        }
+    })
+ }
+ function openhtmllEscape(htmlstr){
+    return htmlstr.replace(/&lt|&gt"|&amp/g,(match)=>{
+        switch(match){
+            case '&lt':
+                return "<"
+            case '&gt':
+                return ">"
+            case '&amp':
+                return ""
+        }
+    })
+ }  
 function getgrade(){
     axios({
         method: 'get',
@@ -227,6 +251,13 @@ function addgrade(event){
     let input=event.parentNode.parentNode.getElementsByTagName('input')[0];
     if(isnull(input.value)){
         swal("请填写内容！");
+        return
+    }else if(isNaN(input.value)){
+        swal("请填写纯数字！")
+        return
+    }else if(2000>input.value||3000<input.value){
+        swal("请输入合理的年份！")
+        return
     }else{
         swal({
             title: "你确定添加该组织？",
@@ -326,6 +357,12 @@ function regrade(event){
     }
     if(isnull(input.value)){
         swal("请填写组织名称！");
+        return
+    }else if(isNaN(input.value)){
+        swal("请填写纯数字！")
+        return
+    }else if(2000>input.value||3000<input.value){
+        swal("请输入合理的年份！")
         return
     }
     swal({
