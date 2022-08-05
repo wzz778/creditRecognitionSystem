@@ -97,7 +97,7 @@ function fn(obj) {
                 let str = ``
                 for (let j = 0; j < obj.length; j++) {
                     let points = ''
-                    if (result.data.msg.data[i].credit[obj[j].afirstLevel] != null) {
+                    if (result.data.msg.data[i].credit[obj[j].afirstLevel] != 0) {
                         points = result.data.msg.data[i].credit[obj[j].afirstLevel]
                     }
                     str += `<td class="dieWidth">${points}</td>`
