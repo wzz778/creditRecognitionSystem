@@ -143,3 +143,18 @@ select{
 .rules{
     margin: 10px 0px;
 }
+
+.flexedRule{
+    position: fixed;
+    right: 90px;
+    top: 90px;
+    width: 300px;
+}
+
+.flexedRuleItem{
+    padding: 5px;
+}
+
+.rulesIllustrate{
+    margin-left: 20px;
+}
