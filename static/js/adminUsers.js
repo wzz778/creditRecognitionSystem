@@ -560,7 +560,7 @@ function render(numbers,size){
         url:'/admin/getUserByClass',
         params:his,
     }).then((date)=>{
-        // console.log(date.data);
+        console.log(date.data);
         let all = date.data.data.records;
         checkbox_all[0].count = all.length;
         // console.log(all);

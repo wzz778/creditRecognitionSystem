@@ -33,7 +33,7 @@ let check = document.getElementsByClassName('check');
 let layui_btn = document.getElementsByClassName('layui-btn');
 let cover_layer = document.getElementsByClassName('cover-layer');
 let schedule = document.getElementsByClassName('schedule');
-
+let update = document.getElementsByClassName('update');
 
 // layui分页
 function pading(sum,size){
@@ -85,7 +85,11 @@ applicationType()
 
 //输入的学分限制
 search[0].oninput = function (){
-    this.value=this.value.replace(/^\D*(\d*(?:\.\d{0,2})?).*$/g, '$1');
+    this.value=this.value.replace(/^\D*(\d*(?:\.\d{0,1})?).*$/g, '$1');
+    if (this.value / 1 > 12) {
+        this.value = this.value + "";
+        this.value = this.value.slice(0, this.value.length - 1);
+    }
 }
 
 //初始渲染页面
@@ -235,7 +239,8 @@ function render(numbers,size){
                 }else{
                     var approval_status = '未通过';
                 }
-                all +=`<ul class="header">
+                if(date[i].application.classifye.b_Indicator_name){
+                    all +=`<ul class="header">
                         <li class="student-name lis">${date[i].application.user.name}</li>
                         <li class="student-major lis">${date[i].application.user.academy}</li>
                         <li class="student-class lis">${date[i].application.user.major_class}</li>
@@ -243,9 +248,31 @@ function render(numbers,size){
                         <li class="student-time lis">${date[i].application.application_time}</li>
                         <li class="student-state lis">${approval_status}</li>
                         <li class="student-apply-credit lis">${date[i].application.points}</li>
-                        <li class="student-operator lis"><span class="check">查看</span></li>
+                        <li class="student-operator lis"><span class="check">查看</span><span class="update">修改</span></li>
                     </ul>`
+                }else{
+                    all +=`<ul class="header">
+                        <li class="student-name lis">${date[i].application.user.name}</li>
+                        <li class="student-major lis">${date[i].application.user.academy}</li>
+                        <li class="student-class lis">${date[i].application.user.major_class}</li>
+                        <li class="student-apply lis">指标已不存在</li>
+                        <li class="student-time lis">${date[i].application.application_time}</li>
+                        <li class="student-state lis">${approval_status}</li>
+                        <li class="student-apply-credit lis">${date[i].application.points}</li>
+                        <li class="student-operator lis"><span class="check">查看</span><span class="update">修改</span></li>
+                    </ul>`
+                }
                 main_content[0].innerHTML = all;
+                for(let j=0;j<date.length;j++){
+                    update[j].name = date[j].application.classify.b_Indicator_name;
+                    update[j].onclick =function (){
+                        if(this.name == 0){
+
+                        }else{
+                            swal('无法修改','已审核','error');
+                        }
+                    }
+                }
             }
         }else{
             all += `<ul class="header">
