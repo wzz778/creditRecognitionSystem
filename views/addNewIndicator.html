@@ -87,9 +87,21 @@
             认证范围:<input type="text" placeholder="请输入认证范围" class='b_Indicator_name' autocomplete="off" />
             学分:<input type="text" placeholder="请输入学分大小" class="b_points_available" autocomplete="off" />
             <button class="addScopeCertification" onclick="addNewIndicator(this)">添加</button>
+            <div class="rules">
+            算分规则(选择后可在备注查看):<select class="creditRules" onchange="changeRules(this)">
+                    <option value="">请选择</option>
+                    <option value="0">不是团队项目</option>
+                    <option value="1">规则1</option>
+                    <option value="2">规则2</option>
+                    <option value="3">规则3</option>
+                    <option value="4">规则4</option>
+                    <option value="5">规则5</option>
+                    <option value="5">规则6</option>
+                </select>
+            </div>
             <div class="remarksText">备注:
                 <div class="remarksBottom">
-                    <textarea class="b_remark"></textarea>
+                    <textarea class="b_remark" readonly></textarea>
                 </div>
             </div>
         </div>
@@ -121,5 +133,6 @@
 
 {{block 'bottom'}}
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="/public/js/creditSumRule.js"></script>
 <script src="/public/js/addNewIndicator.js"></script>
 {{/block}}

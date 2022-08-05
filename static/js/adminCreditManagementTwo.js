@@ -79,6 +79,10 @@ function IndicatorTwo(event) {
     if (event.parentElement.firstElementChild.innerHTML != 'null') {
         test = event.parentElement.firstElementChild.innerHTML.replace(/&lt;/g, '<').replace(/&gt;/g, '>')
     }
+    creditRules.value = event.parentElement.lastElementChild.innerHTML
+    if (creditRules.value == 0) {
+        creditRules.removeAttribute('readOnly')
+    }
     reviseText.value = test
 }
 
@@ -88,6 +92,10 @@ function IndicatorThree(event) {
     let text = ''
     if (event.parentElement.firstElementChild.innerHTML != 'null') {
         text = event.parentElement.firstElementChild.innerHTML
+    }
+    creditRules.value = event.parentElement.lastElementChild.innerHTML
+    if (creditRules.value == 0) {
+        creditRules.removeAttribute('readOnly')
     }
     reviseText.value = text
     let ele = event.parentElement.parentElement.parentElement
@@ -174,6 +182,7 @@ reviseCreComposition.onclick = function () {
 }
 
 let sureRevise = document.getElementById('sureRevise')
+let creditRules = document.getElementsByClassName('creditRules')[0]
 let reg = /^[+]{0,1}[1-9]\d*$|^[+]{0,1}(0\.\d*[1-9])$|^[+]{0,1}([1-9]\d*\.\d*[1-9])$/
 sureRevise.onclick = function () {
     // 判断值是否为空
@@ -186,13 +195,17 @@ sureRevise.onclick = function () {
         swal('指标名不能为纯数字')
         return
     }
-    if (reviseCreditNumber.value == '' || !reg.test(Number(reviseCreditNumber.value))||(Number(reviseCreditNumber.value)>12)) {
+    if (reviseCreditNumber.value == '' || !reg.test(Number(reviseCreditNumber.value)) || (Number(reviseCreditNumber.value) > 12)) {
         // reviseCreditNumber.parentElement.lastElementChild.style.display = 'block'
         swal('请输入合法数字,且不能大于12')
         return
     }
+    if (creditRules.value == '') {
+        swal('请选择计分规则(具体内容在备注中看)')
+        return
+    }
     let sendArr = {}
-    sendArr.b_Indicator_name = reviseRecognize.value.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\s+/g,"")
+    sendArr.b_Indicator_name = reviseRecognize.value.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\s+/g, "")
     sendArr.b_id = Number(selfId.innerHTML)
     sendArr.b_first_level = Number(reviseCreComposition.value)
     let secondId = ''
@@ -207,11 +220,8 @@ sureRevise.onclick = function () {
     // console.log('二级目录的id', secondId)
     sendArr.b_superior_id = Number(secondId)
     sendArr.b_points_available = Number(reviseCreditNumber.value)
-    if (reviseText.value.replace(/(^\s*)|(\s*$)/g, "") != "") {
-        sendArr.b_remark = reviseText.value.replace(/</g, '&lt;').replace(/>/g, '&gt;')
-    } else {
-        sendArr.b_remark = '无'
-    }
+    sendArr.b_remark = reviseText.value
+    sendArr.rule = creditRules.value
     // console.log('传的数据',sendArr)
     axios({
         method: 'POST',
@@ -221,7 +231,7 @@ sureRevise.onclick = function () {
         }
     })
         .then((result) => {
-            console.log(result.data)
+            // console.log(result.data)
             bodyTop[4].style.display = 'none'
             if (result.data.err == -1) {
                 swal('数据重复或错误,操作失败')
@@ -401,4 +411,19 @@ function IndicatorRevise(event) {
         test = event.parentElement.firstElementChild.innerHTML
     }
     reviseText.value = test
+}
+
+function changeRules(event) {
+    // console.log(123)
+    if (event.value == '') {
+        event.parentElement.nextElementSibling.firstElementChild.firstElementChild.value = ''
+        return
+    }
+    if (event.value == 0) {
+        // console.log(123)
+        event.parentElement.nextElementSibling.firstElementChild.firstElementChild.removeAttribute('readOnly')
+        return
+    }
+    event.parentElement.nextElementSibling.firstElementChild.firstElementChild.setAttribute('readOnly', 'true')
+    event.parentElement.nextElementSibling.firstElementChild.firstElementChild.value = remaarkArr[event.value]
 }

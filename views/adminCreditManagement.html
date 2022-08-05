@@ -115,9 +115,21 @@
             <div class="hintText" style="display: none;">请输入正确的数字</div>
         </div>
         <div class="bodyTopItem">
+            算分规则:<select class="creditRules" onchange="changeRules(this)">
+                <option value="">请选择</option>
+                <option value="0">不是团队项目</option>
+                <option value="1">规则1</option>
+                <option value="2">规则2</option>
+                <option value="3">规则3</option>
+                <option value="4">规则4</option>
+                <option value="5">规则5</option>
+                <option value="5">规则6</option>
+            </select>
+        </div>
+        <div class="bodyTopItem">
             备注:
             <div class="">
-                <textarea name="" id="reviseText" cols="30" rows="10"></textarea>
+                <textarea name="" id="reviseText" cols="30" rows="10" readonly></textarea>
             </div>
         </div>
         <div class="bodyTopBottom operator">
@@ -217,7 +229,7 @@
     <!-- 存放学分构成的父盒子  二级目录 -->
     <div class="Table">
         <!-- 学分构成 -->
-        
+
 
     </div>
 
@@ -241,17 +253,17 @@
     <div class="IndicatorCnotent IndicatorItem">
         <!-- <ul>
             <li> -->
-                <!-- 点击搜索时要把之前选中的清空 -->
-                <!-- <input type="checkbox" class="IndicatorCheckBoxSon commonDel" onclick="IndicatorCheckBoxSonFn(this)"
+        <!-- 点击搜索时要把之前选中的清空 -->
+        <!-- <input type="checkbox" class="IndicatorCheckBoxSon commonDel" onclick="IndicatorCheckBoxSonFn(this)"
                     autocomplete="off"> -->
-                <!-- 存放id -->
-                <!-- <div style="display: none;"></div>
+        <!-- 存放id -->
+        <!-- <div style="display: none;"></div>
             </li>
             <li>测试</li>
             <li>6</li>
             <li> -->
-                <!-- 存放备注 -->
-                <!-- <div style="display: none;"></div>
+        <!-- 存放备注 -->
+        <!-- <div style="display: none;"></div>
                 <button onclick="delFnOne(this)">删除</button>
                 <button>修改</button>
                 <button onclick="watchRemark(this)">查看备注</button>
@@ -278,6 +290,7 @@
 
 {{block 'bottom'}}
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="/public/js/creditSumRule.js"></script>
 <script src="/public/js/adminCreditManagementTwo.js"></script>
 <script src="/public/js/adminCreditManagement.js"></script>
 {{/block}}

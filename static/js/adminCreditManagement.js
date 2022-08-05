@@ -99,6 +99,7 @@ function watchChild(event) {
                     <button onclick='watchRemark(this)'>
                         <i class="layui-icon">&#xe60b;</i>
                     </button>
+                    <div class="" style="display: none;">${result.data.msg[i].rule}</div>
                 </span>
             </div>
                     `
@@ -132,6 +133,7 @@ function watchChild(event) {
                             <button onclick='watchRemark(this)'>
                                 <i class="layui-icon">&#xe60b;</i>
                             </button>
+                            <div class="" style="display: none;">${result.data.msg[i].child[j].rule}</div>
                         </span>
                     </div>
                             `
