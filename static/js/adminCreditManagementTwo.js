@@ -243,7 +243,12 @@ sureRevise.onclick = function () {
                 return
             }
             swal('修改成功')
-            watchFather()
+            if(Indicator[0].style.display=='none'){
+                // console.log(123)
+                watchFather()
+            }else{
+                getSearch()
+            }
         })
         .catch((err) => {
             swal('网络错误')
@@ -295,6 +300,9 @@ let Indicator = document.getElementsByClassName('Indicator')
 let IndicatorSum = document.getElementById('IndicatorSum')
 let IndicatorCnotent = document.getElementsByClassName('IndicatorCnotent')
 sureSearch.onclick = function () {
+    getSearch()
+}
+function getSearch(){
     // 判断是否为空
     if (searchIterator.value == '' && CreditNumberMin.value == '' && CreditNumberMax.value == '') {
         swal('请输入要搜索内容')
@@ -336,7 +344,7 @@ sureSearch.onclick = function () {
         data: obj
     })
         .then((result) => {
-            console.log(result.data)
+            // console.log(result.data)
             if (result.data.msg.length == 0) {
                 swal('没有该内容')
                 return
@@ -364,6 +372,7 @@ sureSearch.onclick = function () {
             <li>
                 <!-- 存放备注 -->
                 <div style="display: none;">${result.data.msg[i].classfiy.b_remark}</div>
+                <div style="display: none;">${result.data.msg[i].classfiy.rule}</div>
                 <button onclick="delFnOne(this)">删除</button>
                 <button onclick='IndicatorRevise(this)'>修改</button>
                 <button onclick="watchRemark(this)">查看备注</button>
@@ -409,11 +418,18 @@ function IndicatorRevise(event) {
     }
     getChild(Number(reviseCreComposition.value), second)
     reviseChildDir.value = second
-    reviseRecognize.value = ele.nextElementSibling.innerHTML
+    reviseRecognize.value = ele.nextElementSibling.innerHTML.replace(/&lt;/g,'<').replace(/&gt;/g,'>')
     reviseCreditNumber.value = Number(ele.nextElementSibling.nextElementSibling.innerHTML)
     let test = ''
     if (event.parentElement.firstElementChild.innerHTML != 'null') {
-        test = event.parentElement.firstElementChild.innerHTML
+        test = event.parentElement.firstElementChild.innerHTML.replace(/&lt;/g,'<').replace(/&gt;/g,'>')
+    }
+    creditRules.value=event.parentElement.firstElementChild.nextElementSibling.innerHTML
+    if(creditRules.value==0){
+        // 允许编辑
+        reviseText.removeAttribute('readOnly')
+    }else{
+        reviseText.setAttribute('readOnly', 'true')
     }
     reviseText.value = test
 }
