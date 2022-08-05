@@ -29,6 +29,18 @@ function isnull(val) {
         }
     })
  }
+ function openhtmllEscape(htmlstr){
+    return htmlstr.replace(/&lt|&gt"|&amp/g,(match)=>{
+        switch(match){
+            case '&lt':
+                return "<"
+            case '&gt':
+                return ">"
+            case '&amp':
+                return ""
+        }
+    })
+ }
 var feedback = document.getElementById("feedback");
 var feedback_main = document.getElementById("feedback_main");
 let weibo= document.getElementById("weibo");
@@ -51,7 +63,7 @@ function passfeedback(){
         swal("请填写反馈内容！");
         return 
     }
-        swal({
+    swal({
         title: "你确定驳回该申请表？",
         text: "你确定驳回该申请表？",
         type: "warning",
@@ -102,6 +114,14 @@ function passfeedback(){
       })
 }
 $(function(){
+    $("#weibo").keyup(function(){
+        var len = $(this).val().length;
+        if(len > 199){
+         $(this).val($(this).val().substring(0,200));
+        }
+        var num = len;
+        $("#word").text(num);
+       });
     $("#weibo").keydown(function(){
      var len = $(this).val().length;
      if(len > 199){
@@ -242,18 +262,19 @@ function changepage(page,set) {
             return
         }
         if(status==0){
+            console.log(redata.pageInfo);
             for (let n = 0; n < redata.pageInfo.length; n++) {
                 let b_Indicator_name=redata.pageInfo[n].classify!=undefined?redata.pageInfo[n].classify.b_Indicator_name:'指标不存在';
                 Tbody.innerHTML +=`
             <div  class="faopen tr">
                 <span class="ms" style='display:none'>${redata.pageInfo[n].id}</span>
-                <span class="ms"><input type="checkbox" name="team_a" value="a"></span>
+                <span class="ms chanceinput" style="display: none;"><input type="checkbox" name="team_a" value="a"></span>
                 <span class="ms">${redata.pageInfo[n].user.name}</span>
                 <span class="ms">${redata.pageInfo[n].user.userName}</span>
                 <span class="ms">${redata.pageInfo[n].user.academy}</span>
                 <span class="ms">${redata.pageInfo[n].user.major_class}</span>
                 <span class="ms">${redata.pageInfo[n].creditType.afirstLevel}</span>
-                <span class="ms">${b_Indicator_name}
+                <span class="ml">${b_Indicator_name}
                 </span>
                 <span class="ms">${redata.pageInfo[n].points}</span>
                 <div class="opentextdiv">
@@ -286,13 +307,13 @@ function changepage(page,set) {
                 Tbody.innerHTML +=`
             <div  class="faopen tr">
                 <span class="ms" style='display:none'>${redata.pageInfo[n].id}</span>
-                <span class="ms"><input type="checkbox" name="team_a" value="a"></span>
+                <span class="ms" style='display:none'><input type="checkbox" name="team_a" value="a"></span>
                 <span class="ms">${redata.pageInfo[n].user.name}</span>
                 <span class="ms">${redata.pageInfo[n].user.userName}</span>
                 <span class="ms">${redata.pageInfo[n].user.academy}</span>
                 <span class="ms">${redata.pageInfo[n].user.major_class}</span>
                 <span class="ms">${redata.pageInfo[n].creditType.afirstLevel}</span>
-                <span class="ms">${b_Indicator_name}
+                <span class="ml">${b_Indicator_name}
                 </span>
                 <span class="ms">${redata.pageInfo[n].points}</span>
                 <div class="opentextdiv">

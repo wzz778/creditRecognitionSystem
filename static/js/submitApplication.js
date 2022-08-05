@@ -72,21 +72,25 @@ axios({
 })
 $('#postbutton').on('click', function () {
   var o = $('#form').serializeObject();
-  // console.log(o);
+  console.log(o);
   o.remarks=htmllEscape( o.remarks);
   if (isnull(o.remarks)) {
   // if (o.remarks == '') {
     swal("请填写实践内容说明！");
     return
   }
-  if (isnull(o.points)) {
-    // if (o.remarks == '') {
-      swal("请您要申请的分值！");
-      return
-    }
+  // if (isnull(o.points)) {
+  //   // if (o.remarks == '') {
+  //     swal("请您要申请的分值！");
+  //     return
+  //   }
   if(o.team=="是"){
     if(isnull(o.orders)){
       swal("请填写您的团队排名！");
+      return
+    }
+    if(o.orders<=0){
+      swal("请填写合理的团队排名！");
       return
     }
   }
@@ -169,6 +173,7 @@ $('#postbutton').on('click', function () {
              //如果写成contentType会报错
           }
         }).then(data => {
+          console.log(data.data);
           if(data.data.msg == '已超过最大分值'){
             swal('提交失败',"您所填写的申请已超过最大分值",'error');
             return
@@ -178,7 +183,7 @@ $('#postbutton').on('click', function () {
           console.log(data.data);
           let aid=date.data;
           // console.log(aid);
-          console.log(aid);
+          // console.log(aid);
           sessionStorage.setItem('Applicationid',aid);
           if(o.ore=="是"){
             setTimeout(function () {
@@ -197,7 +202,7 @@ $('#postbutton').on('click', function () {
             return
           }
           swal('提交失败',"您所填写的申请表提交失败",'error')
-          // console.log(error);
+          console.log(error);
         });
       } else {
         swal("您已经取消提交")
@@ -216,11 +221,14 @@ function getson1(father) {
   }).then(data => {
     // console.log(data.data);
     son.innerHTML = `<option value="0">请选择</option>`;
-    for (let n of data.data.data.childlist[0].childlist) {
+    console.log(data.data.data.length);
+    let reson=data.data.data.length!=undefined?data.data.data:data.data.data.childlist[0].childlist;
+    // console.log(reson);
+    for (let n of reson) {
       son.innerHTML += `<option value="${n.classfiy.b_id}">${n.classfiy.b_Indicator_name}</option>`
     }
   }).catch(function (error) {
-    // console.log(error);
+    console.log(error);
   });
   credittypesonson.style.display = 'none';
   son2.innerHTML = ``;
@@ -355,6 +363,14 @@ teamin[1].onclick=function(){
   `;
 }
 $(function(){
+  $("#subtextarea").keyup(function(){
+    var len = $(this).val().length;
+    if(len > 999){
+     $(this).val($(this).val().substring(0,1000));
+    }
+    var num = len;
+    $("#word").text(num);
+   });
   $("#subtextarea").keydown(function(){
    var len = $(this).val().length;
    if(len > 999){

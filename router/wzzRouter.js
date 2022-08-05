@@ -149,6 +149,23 @@ router.get('/submitApplication',(req,res)=>{
         // res.send(error)
     });
 })
+router.get('/UpdateApplication',(req,res)=>{
+    axios.get('/creditTypeOperate/showCreditType',{
+        // params:req.query,
+        headers:{
+            token: req.session.token,
+        }
+    }).then(response=>{
+        req.session.credittype=response.data.data;
+        console.log(req.session.user);
+        res.render('UpdateApplication.html',{
+            credittype: req.session.credittype,
+            user:req.session.user
+        })
+    }).catch(function (error) {
+        // res.send(error)
+    });
+})
 axios.defaults.baseURL='http://110.40.205.103:8099/';
 
 //登录
@@ -230,6 +247,23 @@ router.post('/api/getpost', (req, res) => {
         res.send(error)
     });
 })
+router.post('/api/updatapost', (req, res) => {
+    console.log(req.body);
+    axios({
+        url:'/user/updateApplication',
+        method:'put',
+        data:req.body,
+        headers:{
+            token:req.session.token
+        },
+    }).then(response=>{
+        console.log(response.data);
+        res.send(response.data);
+    }).catch(function (error) {
+        console.log(error);
+        res.send(error)
+    });
+})
 router.get('/api/getcreditson', (req, res) => {
     axios.get('/IndicatorOperate/searshIndicator',{
         params:req.query,
@@ -257,6 +291,7 @@ router.get('/api/getsonson', (req, res) => {
     });
 })
 router.get('/api/getpostmessage', (req, res) => {
+    console.log(req.query);
     axios.get('/user/oneApplication/{id}',{
         params:req.query,
         headers:{
@@ -358,19 +393,19 @@ router.get('/api/allapplication', (req, res) => {
     });
 })
 router.put('/api/passpost', (req, res) => {
-        axios({
-        headers: {
-            token:req.session.token
-        },
-        method: 'put',
-        url: '/admin/auditingApplication',
-        params:req.query
-        }).then(response=>{
-            res.send(response.data);
-        }).catch(function (error) {
-            console.log(error);
-            res.send(error)
-        });
+    axios({
+    headers: {
+        token:req.session.token
+    },
+    method: 'put',
+    url: '/admin/auditingApplication',
+    params:req.query
+    }).then(response=>{
+        res.send(response.data);
+    }).catch(function (error) {
+        console.log(error);
+        res.send(error)
+    });
 })
 router.get('/api/getEnclosure', (req, res) => {
     axios.get('/user/getEnclosure',{

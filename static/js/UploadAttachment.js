@@ -393,3 +393,27 @@ document.getElementById('toend').onclick=function(){
         }
       })
 }
+document.getElementById('goback').onclick=function(){
+    let id=sessionStorage.getItem('Applicationid')
+    swal({
+        title: "你确定返回上一步？",
+        text: "你将可能会修改刚才填写的申请表！",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      }, function (isConfirm) {
+        if (isConfirm) {
+            setTimeout(function () {
+                window.location.assign(`/UpdateApplication?id=${id}`);
+                // sessionStorage.setItem("tousers", '1');
+                sessionStorage.removeItem('Applicationid');
+              }, 500)
+        } else {
+          swal("您已经取消操作")
+        }
+      })
+}

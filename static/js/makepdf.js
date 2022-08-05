@@ -6,19 +6,19 @@ axios({
   }).then(response=> {
     //   console.log(response.data);   
       let data=response.data.data;
-    let qu=data.team=="否"?"否":`是   团队排名为  ${data.orders}`;
+    let qu=data.申请表.team=="否"?"否":`是   团队排名为  ${data.申请表.orders}`;
     if(response.data.msg!='OK'){
         alert('获取失败！');
     }else{
-        message[0].innerText=data.user.name;
-        message[1].innerText=data.user.sex;
-        message[2].innerText=data.user.userName;
-        message[3].innerText=data.user.academy;
-        message[4].innerText=data.user.major_class
-        message[5].innerText=data.creditType.afirstLevel;
+        message[0].innerText=data.申请表.user.name;
+        message[1].innerText=data.申请表.user.sex;
+        message[2].innerText=data.申请表.user.userName;
+        message[3].innerText=data.申请表.user.academy;
+        message[4].innerText=data.申请表.user.major_class
+        message[5].innerText=data.申请表.creditType.afirstLevel;
         message[6].innerText=qu;
-        message[7].innerText=data.points;
-        message[8].innerText=data.remarks;
+        message[7].innerText=data.分数;
+        message[8].innerText=data.申请表.remarks;
     }
   }).catch(error=> {
     // swal('提交失败',"您所填写的申请表提交失败",'error')
