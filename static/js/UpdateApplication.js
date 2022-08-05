@@ -32,6 +32,7 @@ axios({
           `;
           teamin[0].checked=false;
           teamin[1].checked=true;
+          document.getElementById('rankinput').value=data.申请表.orders;
         }
         let num=data.申请表.remarks.length;
         document.getElementById('word').innerText=num;
