@@ -495,7 +495,7 @@ changeUserInfo.onclick = function () {
     }
     let obj = {}
     obj.uId = Number(changeUserId.innerHTML)
-    obj.name = changeUserName.value
+    obj.name = changeUserName.value.replace(/\s+/g,"")
     obj.sex = changeUserSex.value
     obj.userName = changeUserAccount.value
     obj.power = changeUserPermission.value
