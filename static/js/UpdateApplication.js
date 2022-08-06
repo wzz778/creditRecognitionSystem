@@ -9,7 +9,13 @@
 let aid = window.location.search.split("=")[1];
 let subtextarea=document.getElementById('subtextarea');
 let teamin=document.getElementsByClassName('teamin');
-// console.log(aid);
+let credittype = document.getElementsByName('application_credit_type')[0];
+let son = document.getElementById('son');
+let son2 = document.getElementById('son2');
+let usermessage = document.getElementsByClassName('usermessage');
+let credittypesonson = document.getElementById('credittypesonson');
+let ranking= document.getElementById('ranking');
+var sqb;
 axios({
     url: '/api/getpostmessage',
     method: 'get',
@@ -36,12 +42,128 @@ axios({
         }
         let num=data.申请表.remarks.length;
         document.getElementById('word').innerText=num;
+        setfather(data.申请表.creditType.aid);
+        // if(data.申请表.classify.b_Indicator_level==2){
+        //   resetson(data.申请表.classify.b_Indicator_name);
+        // }else if(data.申请表.classify.b_Indicator_level==3){
+
+        // }
+        sqb=data.申请表.classify;
+        return data.申请表.classify;
+        // return data.申请表.classify.b_Indicator_name;
+      }
+    }).then(date1=>{
+      let option = credittype.getElementsByTagName('option');
+      // console.log("2222222222222");
+      for (let n of option) {
+        if (n.selected) {
+          return     axios({
+            url: '/api/getsonson',
+            method: 'get',
+            params: {
+              "id": n.value,
+              "level": "1"
+            },
+          })
+        }
+      }
+  }).then(data => {
+    // console.log(data);
+    son.innerHTML = `<option value="0">请选择</option>`;
+    // console.log(data.data.data.length);
+    let reson=data.data.data.length!=undefined?data.data.data:data.data.data.childlist[0].childlist;
+    for (let n of reson) {
+      son.innerHTML += `<option value="${n.b_id}">${n.b_Indicator_name}</option>`
     }
-  }).catch(error=> {
+  })  
+  .then(date=>{
+    // console.log(sqb);
+    // console.log("44444444444");
+    if(sqb.b_Indicator_level==2){
+      resetson(sqb.b_Indicator_name);
+      return 0;
+    }else if(sqb.b_Indicator_level==3){
+      resetson2(sqb.b_superior_id);
+      return sqb.b_superior_id;
+    }
+  }).then(end=>{
+    if(end==0){
+      return 0;
+    }
+    let option = son.getElementsByTagName('option');
+    for (let n of option) {
+      
+      if (n.selected) {
+       return     axios({
+        url: '/api/getsonson',
+        method: 'get',
+        params: {
+          "id": end,
+          "level": "2"
+        },
+      })
+      }
+    }
+    // resetson(end.data.);
+  }).then(data => {
+    if(data==0){
+      return 0;
+    }
+    if (data.data.data == '下边没有指标了') {
+      credittypesonson.style.display = 'none';
+      son2.innerHTML = ``;
+    } else if (data.data.data.length > 0) {
+      credittypesonson.style.display = 'block';
+      // son2.innerHTML=`<option value="0">请选择</option>`;
+      son2.innerHTML = ``;
+      // console.log(data.data.data.length);
+      for (let n of data.data.data) {
+        son2.innerHTML += `<option value="${n.b_id}">${n.b_Indicator_name}</option>`
+      }
+    }
+    resonson(sqb.b_Indicator_name)
+    // console.log(data.data.data);
+  })
+  .catch(error=> {
     // swal('提交失败',"您所填写的申请表提交失败",'error')
     // swal('获取内容失败！');
     // console.log(error);
 });
+function setfather(id){
+  let option = credittype.getElementsByTagName('option');
+  for (let n of option) {
+    if (n.value==id) {
+      n.selected=true;
+    }
+  }
+}
+function resetson(id){
+  // console.log(id);
+  let reoption = son.getElementsByTagName('option');
+  for (let n of reoption) {
+    if (n.innerHTML==id) {
+      n.selected=true;
+    }
+  }
+}
+function resetson2(id){
+  // console.log(id);
+  // console.log(son);
+  let reoption = son.getElementsByTagName('option');
+  for (let n of reoption) {
+    if (n.value==id) {
+      n.selected=true;
+    }
+  }
+}
+function resonson(id){
+  let option = son2.getElementsByTagName('option');
+  for (let n of option) {
+    if (n.innerHTML==id) {
+      n.selected=true;
+    }
+  }
+}
 $.fn.serializeObject = function () {
     var ct = this.serializeArray();
     var obj = {};
@@ -59,12 +181,6 @@ $.fn.serializeObject = function () {
   };
   // const hasClass = (el, className) => el.classList.contains(className)
   // let show;
-  let credittype = document.getElementsByName('application_credit_type')[0];
-  let son = document.getElementsByName('specific_information')[0];
-  let son2 = document.getElementById('son2');
-  let usermessage = document.getElementsByClassName('usermessage');
-  let credittypesonson = document.getElementById('credittypesonson');
-  let ranking= document.getElementById('ranking');
   if(sessionStorage.getItem('Applicationid')){
     swal("您还有申请表未上传完整！");
     setTimeout(function () {
@@ -108,7 +224,7 @@ $.fn.serializeObject = function () {
   })
   $('#postbutton').on('click', function () {
     var o = $('#form').serializeObject();
-    console.log(o);
+    // console.log(o);
     o.remarks=htmllEscape( o.remarks);
     if (isnull(o.remarks)) {
     // if (o.remarks == '') {
@@ -157,7 +273,7 @@ $.fn.serializeObject = function () {
                //如果写成contentType会报错
             }
           }).then(data => {
-            console.log(data.data);
+            // console.log(data.data);
             let aid = window.location.search.split("=")[1];
             if (data.data.msg == 'OK') {
               swal('修改成功', '您所填写的申请表修改成功', 'success');
@@ -177,7 +293,7 @@ $.fn.serializeObject = function () {
               swal('修改失败',"您所填写的申请已超过最大分值",'error');
             }
           }).catch(function (error) {
-            console.log(error);
+            // console.log(error);
             if(error.data.msg == '已超过最大分值'){
               swal('修改失败',"您所填写的申请已超过最大分值",'error');
               return
@@ -211,7 +327,7 @@ $.fn.serializeObject = function () {
                //如果写成contentType会报错
             }
           }).then(data => {
-            console.log(data.data);
+            // console.log(data.data);
             
             if(data.data.msg == '已超过最大分值'){
               swal('修改失败',"您所填写的申请已超过最大分值",'error');
@@ -219,7 +335,7 @@ $.fn.serializeObject = function () {
             }
             swal('修改成功', '您所填写的申请表提交成功', 'success');
             let date=data.data;
-            console.log(data.data);
+            // console.log(data.data);
             let aid = window.location.search.split("=")[1];
             // console.log(aid);
             if(o.ore=="是"){
@@ -251,20 +367,21 @@ $.fn.serializeObject = function () {
   });
   function getson1(father) {
     axios({
-      url: '/api/getcreditson',
+      url: '/api/getsonson',
       method: 'get',
       params: {
-        "indicator": father,
+        "id": father,
+        "level": "1"
       },
     }).then(data => {
-      // console.log(data.data);
+      // console.log(data);
       son.innerHTML = `<option value="0">请选择</option>`;
       // console.log(data.data.data.length);
       let reson=data.data.data.length!=undefined?data.data.data:data.data.data.childlist[0].childlist;
-      console.log(reson);
       for (let n of reson) {
-        son.innerHTML += `<option value="${n.classfiy.b_id}">${n.classfiy.b_Indicator_name}</option>`
+        son.innerHTML += `<option value="${n.b_id}">${n.b_Indicator_name}</option>`
       }
+      // console.log(son.innerHTML);
     }).catch(function (error) {
       // console.log(error);
     });
@@ -297,16 +414,19 @@ $.fn.serializeObject = function () {
       // console.log(error);
     });
   }
+  function showson(id){
+
+  }
   function setson() {
     let option = credittype.getElementsByTagName('option');
     for (let n of option) {
       if (n.selected) {
-        getson1(n.innerHTML)
+        getson1(n.value)
         break;
       }
     }
   }
-  setson()
+  // setson()
   function setsonson() {
     let option = son.getElementsByTagName('option');
     for (let n of option) {

@@ -72,7 +72,7 @@ axios({
 })
 $('#postbutton').on('click', function () {
   var o = $('#form').serializeObject();
-  console.log(o);
+  // console.log(o);
   o.remarks=htmllEscape( o.remarks);
   if (isnull(o.remarks)) {
   // if (o.remarks == '') {
@@ -139,7 +139,7 @@ $('#postbutton').on('click', function () {
             swal('提交失败',"您所填写的申请已超过最大分值",'error');
           }
         }).catch(function (error) {
-          console.log(error);
+          // console.log(error);
           if(error.data.msg == '已超过最大分值'){
             swal('提交失败',"您所填写的申请已超过最大分值",'error');
             return
@@ -173,14 +173,14 @@ $('#postbutton').on('click', function () {
              //如果写成contentType会报错
           }
         }).then(data => {
-          console.log(data.data);
+          // console.log(data.data);
           if(data.data.msg == '已超过最大分值'){
             swal('提交失败',"您所填写的申请已超过最大分值",'error');
             return
           }
           swal('提交成功', '您所填写的申请表提交成功', 'success');
           let date=data.data;
-          console.log(data.data);
+          // console.log(data.data);
           let aid=date.data;
           // console.log(aid);
           // console.log(aid);
@@ -202,7 +202,7 @@ $('#postbutton').on('click', function () {
             return
           }
           swal('提交失败',"您所填写的申请表提交失败",'error')
-          console.log(error);
+          // console.log(error);
         });
       } else {
         swal("您已经取消提交")
@@ -213,19 +213,25 @@ $('#postbutton').on('click', function () {
 });
 function getson1(father) {
   axios({
-    url: '/api/getcreditson',
+    url: '/api/getsonson',
     method: 'get',
     params: {
-      "indicator": father,
+      "id": father,
+      "level": "1"
     },
+    // url: '/api/getcreditson',
+    // method: 'get',
+    // params: {
+    //   "indicator": father,
+    // },
   }).then(data => {
     // console.log(data.data);
     son.innerHTML = `<option value="0">请选择</option>`;
-    console.log(data.data.data.length);
+    // console.log(data.data.data.length);
     let reson=data.data.data.length!=undefined?data.data.data:data.data.data.childlist[0].childlist;
     // console.log(reson);
     for (let n of reson) {
-      son.innerHTML += `<option value="${n.classfiy.b_id}">${n.classfiy.b_Indicator_name}</option>`
+      son.innerHTML += `<option value="${n.b_id}">${n.b_Indicator_name}</option>`
     }
   }).catch(function (error) {
     console.log(error);
@@ -263,7 +269,7 @@ function setson() {
   let option = credittype.getElementsByTagName('option');
   for (let n of option) {
     if (n.selected) {
-      getson1(n.innerHTML)
+      getson1(n.value)
       break;
     }
   }
@@ -380,3 +386,15 @@ $(function(){
    $("#word").text(num);
   });
  });
+//  axios({
+//   url: '/IndicatorOperate/showIndicator',
+//   method: 'post',
+//   data: {
+//     "id": 4,
+//   },
+// }).then(data => {
+//   console.log(data);
+//   // console.log(data.data.data);
+// }).catch(function (error) {
+//   // console.log(error);
+// });

@@ -290,6 +290,19 @@ router.get('/api/getsonson', (req, res) => {
         res.send(error)
     });
 })
+router.get('/api/gefatherm', (req, res) => {
+    axios.get('/IndicatorOperate/searchInfo',{
+        params:req.query,
+        headers:{
+            token:req.session.token
+        }},
+    ).then(response=>{
+        console.log(response.data);
+        res.send(response.data);
+    }).catch(function (error) {
+        res.send(error)
+    });
+})
 router.get('/api/getpostmessage', (req, res) => {
     console.log(req.query);
     axios.get('/user/oneApplication/{id}',{
