@@ -84,13 +84,13 @@ function applicationType() {
 applicationType()
 
 //输入的学分限制
-search[0].oninput = function (){
-    this.value=this.value.replace(/^\D*(\d*(?:\.\d{0,1})?).*$/g, '$1');
-    if (this.value / 1 > 12) {
-        this.value = this.value + "";
-        this.value = this.value.slice(0, this.value.length - 1);
-    }
-}
+// search[0].oninput = function (){
+//     this.value=this.value.replace(/^\D*(\d*(?:\.\d{0,1})?).*$/g, '$1');
+//     if (this.value / 1 > 12) {
+//         this.value = this.value + "";
+//         this.value = this.value.slice(0, this.value.length - 1);
+//     }
+// }
 
 //初始渲染页面
 function rendering(){
@@ -98,7 +98,6 @@ function rendering(){
     let index = search_type[0].selectedIndex;
     let his = {approval_status:search_type[1].options[index1].value,
         a_first_level:search_type[0].value,
-        b_points_available:search[0].value,
         beginDate:startTime.value,
         endDate: endTime.value,
         nodePage:1,
@@ -113,25 +112,22 @@ function rendering(){
     if(typeStatus == ''){
         delete  his.approval_status
     }
-    let scords = search[0].value;
     let start = startTime.value;
     let end = endTime.value;
-    if(scords == ''){
-        delete  his.b_points_available
-    }
     if(start == ''){
         delete his.beginDate
     }
     if(end == ''){
         delete  his.endDate
     }
-    // console.log(his);
+    console.log(his);
     axios({
         method:'get',
         url:'/users/records',
         params:his,
     }).then((data)=>{
-        // console.log(data.data.data);
+        console.log(data.data)
+        console.log(data.data.data);
         // console.log(data.data.data);
         let date = data.data.data.pageInfo;
         // console.log(date);
@@ -146,16 +142,29 @@ function rendering(){
                 }else{
                     var approval_status = '未通过';
                 }
-                all +=`<ul class="header">
+                if(date[i].application.classify.b_Indicator_name !=''){
+                    all +=`<ul class="header">
                         <li class="student-name lis">${date[i].application.user.name}</li>
                         <li class="student-major lis">${date[i].application.user.academy}</li>
                         <li class="student-class lis">${date[i].application.user.major_class}</li>
                         <li class="student-apply lis">${date[i].application.classify.b_Indicator_name}</li>
                         <li class="student-time lis">${date[i].application.application_time}</li>
                         <li class="student-state lis">${approval_status}</li>
-                        <li class="student-apply-credit lis">${date[i].application.points}</li>
-                        <li class="student-operator lis"><span class="check">查看</span></li>
+                        <li class="student-apply-credit lis">${data.data.data.points[i]}</li>
+                        <li class="student-operator lis"><span class="check">查看</span><span class="update">修改</span></li>
                     </ul>`
+                }else{
+                    all +=`<ul class="header">
+                        <li class="student-name lis">${date[i].application.user.name}</li>
+                        <li class="student-major lis">${date[i].application.user.academy}</li>
+                        <li class="student-class lis">${date[i].application.user.major_class}</li>
+                        <li class="student-apply lis">指标已不存在</li>
+                        <li class="student-time lis">${date[i].application.application_time}</li>
+                        <li class="student-state lis">${approval_status}</li>
+                        <li class="student-apply-credit lis">${data.data.data.points[i]}</li>
+                        <li class="student-operator lis"><span class="check">查看</span><span class="update">修改</span></li>
+                    </ul>`
+                }
             }
         }else{
             all += `<ul class="header">
@@ -169,10 +178,16 @@ function rendering(){
         let index = 0;
         for(let i=0;i<check.length;i++) {
             check[i].ids = date[i].applicationId;
+            update[i].status = date[i].application.approval_status
             check[i].onclick = function () {
-
-
                 window.location.href = 'particulars?id=' + check[i].ids;
+            }
+            update[i].onclick = function (){
+                if(this.status == 0){
+                    window.location.href = 'UpdateApplication?id=' + check[i].ids ;
+                }else{
+                    swal('无法修改','已审核','error');
+                }
             }
         }
     })
@@ -190,7 +205,6 @@ function render(numbers,size){
     let index = search_type[0].selectedIndex;
     let his = {approval_status:search_type[1].options[index1].value,
         a_first_level:search_type[0].options[index].value,
-        b_points_available:search[0].value,
         beginDate:startTime.value,
         endDate: endTime.value,
         nodePage:numbers,
@@ -205,12 +219,8 @@ function render(numbers,size){
     if(typeStatus == ''){
         delete  his.approval_status
     }
-    let scords = search[0].value;
     let start = startTime.value;
     let end = endTime.value;
-    if(scords == ''){
-        delete  his.b_points_available
-    }
     if(start == ''){
         delete his.beginDate
     }
@@ -239,7 +249,7 @@ function render(numbers,size){
                 }else{
                     var approval_status = '未通过';
                 }
-                if(date[i].application.classifye.b_Indicator_name){
+                if(date[i].application.classify.b_Indicator_name !=''){
                     all +=`<ul class="header">
                         <li class="student-name lis">${date[i].application.user.name}</li>
                         <li class="student-major lis">${date[i].application.user.academy}</li>
@@ -247,7 +257,7 @@ function render(numbers,size){
                         <li class="student-apply lis">${date[i].application.classify.b_Indicator_name}</li>
                         <li class="student-time lis">${date[i].application.application_time}</li>
                         <li class="student-state lis">${approval_status}</li>
-                        <li class="student-apply-credit lis">${date[i].application.points}</li>
+                        <li class="student-apply-credit lis">${data.data.data.points[i]}</li>
                         <li class="student-operator lis"><span class="check">查看</span><span class="update">修改</span></li>
                     </ul>`
                 }else{
@@ -258,21 +268,11 @@ function render(numbers,size){
                         <li class="student-apply lis">指标已不存在</li>
                         <li class="student-time lis">${date[i].application.application_time}</li>
                         <li class="student-state lis">${approval_status}</li>
-                        <li class="student-apply-credit lis">${date[i].application.points}</li>
+                        <li class="student-apply-credit lis">${data.data.data.points[i]}</li>
                         <li class="student-operator lis"><span class="check">查看</span><span class="update">修改</span></li>
                     </ul>`
                 }
                 main_content[0].innerHTML = all;
-                for(let j=0;j<date.length;j++){
-                    update[j].name = date[j].application.classify.b_Indicator_name;
-                    update[j].onclick =function (){
-                        if(this.name == 0){
-
-                        }else{
-                            swal('无法修改','已审核','error');
-                        }
-                    }
-                }
             }
         }else{
             all += `<ul class="header">
@@ -285,10 +285,18 @@ function render(numbers,size){
         for(let i=0;i<check.length;i++) {
             check[i].applicationId = date[i].applicationId;
             check[i].ids = date[i].id;
+            update[i].status = date[i].application.approval_status
             check[i].onclick = function () {
 
 
                 window.location.href = 'particulars?applicationId=' + check[i].applicationId ;
+            }
+            update[i].onclick = function (){
+                if(this.status == 0){
+                    window.location.href = 'UpdateApplication?id=' + check[i].applicationId ;
+                }else{
+                    swal('无法修改','已审核','error');
+                }
             }
         }
     })
@@ -306,7 +314,6 @@ btn[0].onclick = function (){
 btn[1].onclick = function (){
     search_type[0].value = "";
     search_type[1].value = "";
-    search[0].value = "";
     startTime.value = "";
     endTime.value = "";
     rendering();
