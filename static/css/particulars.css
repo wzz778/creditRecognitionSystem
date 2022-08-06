@@ -123,8 +123,9 @@ a:hover{
 }
 .no-content{
     text-align: center;
-    line-height: 30px;
+    line-height: 40px;
     font-weight: 600;
+    font-size: 35px;
 }
 .attchment-header{
     text-align: center;

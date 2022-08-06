@@ -84,13 +84,13 @@ function applicationType() {
 applicationType()
 
 //输入的学分限制
-search[0].oninput = function (){
-    this.value=this.value.replace(/^\D*(\d*(?:\.\d{0,1})?).*$/g, '$1');
-    if (this.value / 1 > 12) {
-        this.value = this.value + "";
-        this.value = this.value.slice(0, this.value.length - 1);
-    }
-}
+// search[0].oninput = function (){
+//     this.value=this.value.replace(/^\D*(\d*(?:\.\d{0,1})?).*$/g, '$1');
+//     if (this.value / 1 > 12) {
+//         this.value = this.value + "";
+//         this.value = this.value.slice(0, this.value.length - 1);
+//     }
+// }
 
 //初始渲染页面
 function rendering(){
@@ -112,7 +112,6 @@ function rendering(){
     if(typeStatus == ''){
         delete  his.approval_status
     }
-    let scords = search[0].value;
     let start = startTime.value;
     let end = endTime.value;
     if(start == ''){
@@ -136,6 +135,8 @@ function rendering(){
         let all = "";
         if(date.length != 0){
             for(let i=0;i<date.length;i++){
+                let scord = data.data.data.分数 + i;
+                console.log(scord)
                 if(date[i].application.approval_status == 0){
                     var approval_status = '审核中';
                 }else if(date[i].application.approval_status == 1){
@@ -151,7 +152,7 @@ function rendering(){
                         <li class="student-apply lis">${date[i].application.classify.b_Indicator_name}</li>
                         <li class="student-time lis">${date[i].application.application_time}</li>
                         <li class="student-state lis">${approval_status}</li>
-                        <li class="student-apply-credit lis">${date[i].application.points}</li>
+                        <li class="student-apply-credit lis">${data.data.data.分数0}</li>
                         <li class="student-operator lis"><span class="check">查看</span><span class="update">修改</span></li>
                     </ul>`
                 }else{
@@ -206,7 +207,6 @@ function render(numbers,size){
     let index = search_type[0].selectedIndex;
     let his = {approval_status:search_type[1].options[index1].value,
         a_first_level:search_type[0].options[index].value,
-        b_points_available:search[0].value,
         beginDate:startTime.value,
         endDate: endTime.value,
         nodePage:numbers,
@@ -221,12 +221,8 @@ function render(numbers,size){
     if(typeStatus == ''){
         delete  his.approval_status
     }
-    let scords = search[0].value;
     let start = startTime.value;
     let end = endTime.value;
-    if(scords == ''){
-        delete  his.b_points_available
-    }
     if(start == ''){
         delete his.beginDate
     }
@@ -263,7 +259,7 @@ function render(numbers,size){
                         <li class="student-apply lis">${date[i].application.classify.b_Indicator_name}</li>
                         <li class="student-time lis">${date[i].application.application_time}</li>
                         <li class="student-state lis">${approval_status}</li>
-                        <li class="student-apply-credit lis">${date[i].application.points}</li>
+                        <li class="student-apply-credit lis">${data.data.data.分数i}</li>
                         <li class="student-operator lis"><span class="check">查看</span><span class="update">修改</span></li>
                     </ul>`
                 }else{
@@ -320,7 +316,6 @@ btn[0].onclick = function (){
 btn[1].onclick = function (){
     search_type[0].value = "";
     search_type[1].value = "";
-    search[0].value = "";
     startTime.value = "";
     endTime.value = "";
     rendering();

@@ -182,6 +182,7 @@
     font-size: 12px;
     display: inline-block;
     border-radius: 3px;
+    margin-right: 5px;
 }
 .update{
     background-color: rgb(35 198 200);

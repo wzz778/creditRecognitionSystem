@@ -158,7 +158,7 @@ function render(id){
         // let datte = date.data.data;
         // preloadimages(datte);
         if(date.data.data.length == 0){
-            pic(640);
+            pic(650);
             carousel_item[0].innerHTML = `<div class="attchment-everyOne"><img src='public/img/no-content.png' class="attchment-imgs"><div class="no-content">暂无内容</div></div>`
         }else{
             pic(600);
