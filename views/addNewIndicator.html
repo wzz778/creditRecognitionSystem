@@ -87,9 +87,21 @@
             认证范围:<input type="text" placeholder="请输入认证范围" class='b_Indicator_name' autocomplete="off" />
             学分:<input type="text" placeholder="请输入学分大小" class="b_points_available" autocomplete="off" />
             <button class="addScopeCertification" onclick="addNewIndicator(this)">添加</button>
+            <div class="rules">
+            算分规则(选择后可在备注查看):<select class="creditRules" onchange="changeRules(this)">
+                    <option value="">请选择...</option>
+                    <option value="0">不是团队项目</option>
+                    <option value="1">规则1</option>
+                    <option value="2">规则2</option>
+                    <option value="3">规则3</option>
+                    <option value="4">规则4</option>
+                    <option value="5">规则5</option>
+                    <option value="6">规则6</option>
+                </select>
+            </div>
             <div class="remarksText">备注:
                 <div class="remarksBottom">
-                    <textarea class="b_remark"></textarea>
+                    <textarea class="b_remark" readonly></textarea>
                 </div>
             </div>
         </div>
@@ -116,10 +128,40 @@
         </div>
     </div> -->
 
+    <!-- 右边提示信息 -->
+<div class="flexedRule">
+    <h1>团队项目算分规则:</h1>
+    <div class="flexedRuleItem">
+        <span>规则1:</span>
+        <div class="rulesIllustrate">第一名计满分,第二名以下依次减少0.5分,减至0.5分后各名次均按0.5分计</div>
+    </div>
+    <div class="flexedRuleItem">
+        <span>规则2:</span>
+        <div class="rulesIllustrate">主持人计满分，其他成员均减一分计算</div>
+    </div>
+    <div class="flexedRuleItem">
+        <span>规则3:</span>
+        <div class="rulesIllustrate">团队项目负责人(第一名)计满分,其他成员按1/2计。评选不分获奖等级的,根据表彰重要性从按同级最高奖依次对应认定</div>
+    </div>
+    <div class="flexedRuleItem">
+        <span>规则4:</span>
+        <div class="rulesIllustrate">项目成员均计1分</div>
+    </div>
+    <div class="flexedRuleItem">
+        <span>规则5:</span>
+        <div class="rulesIllustrate">第一名计满分,其他成员均计0.5分</div>
+    </div>
+    <div class="flexedRuleItem">
+        <span>规则6:</span>
+        <div class="rulesIllustrate">第一名计满分,其他成员均计1分</div>
+    </div>
+</div>
+
 {{/block}}
 
 
 {{block 'bottom'}}
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="/public/js/creditSumRule.js"></script>
 <script src="/public/js/addNewIndicator.js"></script>
 {{/block}}

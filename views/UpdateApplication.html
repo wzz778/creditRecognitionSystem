@@ -2,7 +2,7 @@
 {{block 'title'}}发布申请{{/block}}
 {{block 'head'}}
 <link rel="stylesheet" href="public/layui/css/layui.css">
-<link rel="stylesheet" href="public/css/submitApplication.css">
+<link rel="stylesheet" href="public/css/UpdateApplication.css">
 <link rel="stylesheet" href="public/css/Applicationprogress.css">
 {{/block}}
 {{block 'body'}}
@@ -28,7 +28,7 @@
   </div>
 </div>
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 10px;">
-  <legend>申请表提交</legend>
+  <legend>申请表修改</legend>
 </fieldset>
 <form action="" id="form">
   <div class="layui-form-item">
@@ -91,9 +91,11 @@
       <textarea placeholder="请输入内容" id="subtextarea" class="layui-textarea" name="remarks"></textarea>
     </div>
   </div>
-  <!-- <div id="tocreditSummary">
+  <input type="text" name="approval_status" id="approval_status" value="0" style="display:none;">
+  <input type="text" name="id" id="aid" style="display:none;">
+  <div id="tocreditSummary">
     <a href="creditSummary" target="_blank" id="topdf">不知道申请多少学分？点击查看指标总览</a>
-  </div> -->
+  </div>
   <div class="layui-form-item">
     <div class="layui-input-block">
       <button type="button" class="layui-btn" lay-submit="" lay-filter="demo1" id="postbutton">立即提交</button>
@@ -103,5 +105,5 @@
 <script src="public/layui/layui.js"></script>
 {{/block}}
 {{block 'bottom'}}
-<script src="public/js/submitApplication.js"></script>
+<script src="public/js/UpdateApplication.js"></script>
 {{/block}}

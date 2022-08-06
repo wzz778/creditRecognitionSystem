@@ -128,16 +128,16 @@ function GetAllInfo(page, perpage, obj) {
             adminHistoryContentContent.innerHTML = ''
             all_Page = result.data.allPage
             allNumber.innerHTML = `共${result.data.allRecords}条`
-            allPages.innerHTML=`共${result.data.allPage}页`
+            allPages.innerHTML = `共${result.data.allPage}页`
             //删除的判断
             // 判断是否有值
-            checkDelAll.checked=''
+            checkDelAll.checked = ''
             adminHistoryContentContent.style.display = 'block'
             adminHistoryContentNo.style.display = 'none'
             if (result.data.msg.length == 0) {
                 judgeHas()
                 // 没有数据
-                if(now_page == 1){
+                if (now_page == 1) {
                     adminHistoryContentContent.style.display = 'none'
                     adminHistoryContentNo.style.display = 'block'
                 }
@@ -153,10 +153,15 @@ function GetAllInfo(page, perpage, obj) {
                 if (result.data.msg[i].application.approval_status == '-1') {
                     status = '审核未通过'
                 }
-                let pointS=result.data.msg[i].application.classify.b_points_available
+                let pointS = '该指标被删除'
+                let bName='该指标被删除'
+                if(result.data.msg[i].application.classify){
+                    pointS=result.data.msg[i].application.classify.b_points_available
+                    bName=result.data.msg[i].application.classify.b_Indicator_name
+                }
                 // console.log(result.data.msg[i].application.points)
-                if(result.data.msg[i].application.points){
-                    pointS=result.data.msg[i].application.points
+                if (result.data.msg[i].application.points) {
+                    pointS = result.data.msg[i].application.points
                 }
                 adminHistoryContentContent.innerHTML += `
                 <ul>
@@ -167,7 +172,7 @@ function GetAllInfo(page, perpage, obj) {
                     <li>${result.data.msg[i].application.user.name}</li>
                     <li>${result.data.msg[i].application.user.userName}</li>
                     <li>${result.data.msg[i].application.user.major_class}</li>
-                    <li>${result.data.msg[i].application.classify.b_Indicator_name}</li>
+                    <li>${bName}</li>
                     <li>${pointS}</li>
                     <li>${time}</li>
                     <li>${status}</li>
@@ -191,7 +196,7 @@ function GetAllInfo(page, perpage, obj) {
             if (window.localStorage.getItem("power") != '普通管理员') {
                 for (let i = 0; i < changeConment.length; i++) {
                     // console.log(i)
-                    changeConment[i].style.display='none'
+                    changeConment[i].style.display = 'none'
                 }
             }
             // swal('查询成功')
@@ -380,44 +385,44 @@ let ExportApplicationform = document.getElementById('ExportApplicationform')
 ExportApplicationform.onclick = function () {
     window.open('adminExportForm')
 }
-let bodyTop=document.getElementsByClassName('bodyTop')
-let selectStatus=document.getElementById('selectStatus')
-let applicationId=''
-function changeStatus(event){
-    applicationId=event.parentElement.firstElementChild.innerHTML
-    bodyTop[0].style.display='block'
-    selectStatus.value=event.parentElement.lastElementChild.innerHTML
+let bodyTop = document.getElementsByClassName('bodyTop')
+let selectStatus = document.getElementById('selectStatus')
+let applicationId = ''
+function changeStatus(event) {
+    applicationId = event.parentElement.firstElementChild.innerHTML
+    bodyTop[0].style.display = 'block'
+    selectStatus.value = event.parentElement.lastElementChild.innerHTML
 }
-let changeUserInfo=document.getElementById('changeUserInfo')
-changeUserInfo.onclick=function(){
-    bodyTop[0].style.display='none'
+let changeUserInfo = document.getElementById('changeUserInfo')
+changeUserInfo.onclick = function () {
+    bodyTop[0].style.display = 'none'
     axios({
-        method:'POST',
-        url:'/admin/auditingApplication',
-        data:{
-            id:Number(applicationId),
-            status:selectStatus.value
+        method: 'POST',
+        url: '/admin/auditingApplication',
+        data: {
+            id: Number(applicationId),
+            status: selectStatus.value
         }
     })
-    .then((result)=>{
-        // console.log(result.data)
-        if(result.data.err==-1){
-            swal('网络错误')
-            return
-        }
-        swal('修改成功')
-        GetAllInfo(now_page, per_Page, limitationFactor())
-    })
-    .catch((err)=>{
-        swal('修改失败')
-        // console.log(err)
-    })
+        .then((result) => {
+            // console.log(result.data)
+            if (result.data.err == -1) {
+                swal('网络错误')
+                return
+            }
+            swal('修改成功')
+            GetAllInfo(now_page, per_Page, limitationFactor())
+        })
+        .catch((err) => {
+            swal('修改失败')
+            // console.log(err)
+        })
 }
-let cancel=document.getElementById('cancel')
-cancel.onclick=function(){
-    bodyTop[0].style.display='none'
+let cancel = document.getElementById('cancel')
+cancel.onclick = function () {
+    bodyTop[0].style.display = 'none'
 }
 // 查看详情
-function watchInfo(event){
+function watchInfo(event) {
     window.location.href = 'particulars?id=' + event.parentElement.firstElementChild.innerHTML
 }

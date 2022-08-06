@@ -99,6 +99,7 @@ function watchChild(event) {
                     <button onclick='watchRemark(this)'>
                         <i class="layui-icon">&#xe60b;</i>
                     </button>
+                    <div class="" style="display: none;">${result.data.msg[i].rule}</div>
                 </span>
             </div>
                     `
@@ -132,6 +133,7 @@ function watchChild(event) {
                             <button onclick='watchRemark(this)'>
                                 <i class="layui-icon">&#xe60b;</i>
                             </button>
+                            <div class="" style="display: none;">${result.data.msg[i].child[j].rule}</div>
                         </span>
                     </div>
                             `
@@ -247,7 +249,7 @@ function watchRemark(event) {
     // 奖备注显示在弹窗中
     let str = '没有备注信息'
     if (event.parentElement.firstElementChild.innerHTML != 'null' && event.parentElement.firstElementChild.innerHTML != '') {
-        str = event.parentElement.firstElementChild.innerHTML
+        str = event.parentElement.firstElementChild.innerHTML.replace(/&lt;/g,'<').replace(/&gt;/g,'>')
     }
     swal(str)
 }
@@ -585,7 +587,7 @@ sureAdd.onclick = function () {
             let subValue = document.getElementsByClassName('subValue')
             for (let i = 0; i < subValue.length; i++) {
                 if (subValue[i].value != '') {
-                    resultData.push(subValue[i].value)
+                    resultData.push(subValue[i].value.replace(/</g,'&lt;').replace(/>/g,'&gt;'))
                 }
             }
         }
@@ -594,7 +596,7 @@ sureAdd.onclick = function () {
             method: 'POST',
             url: '/addCreditAll',
             data: {
-                AFirstLevel: enterComposition.value,
+                AFirstLevel: enterComposition.value.replace(/</g,'&lt;').replace(/>/g,'&gt;'),
                 resultData: resultData
             }
         })
@@ -655,7 +657,7 @@ function changeTwoDirFn(event) {
             // console.log(err)
             swal('网络错误')
         })
-    changeTwoDirEle.value = event.parentElement.firstElementChild.nextElementSibling.innerHTML
+    changeTwoDirEle.value = event.parentElement.firstElementChild.nextElementSibling.innerHTML.replace(/&lt;/g,'<').replace(/&gt;/g,'>')
     changeTwoDirId.innerHTML = event.parentElement.firstElementChild.innerHTML
 }
 
@@ -700,13 +702,12 @@ sureChange.onclick = function () {
         url: '/changeTwoDir',
         data: {
             b_id: Number(changeTwoDirId.innerHTML),
-            b_Indicator_name: changeTwoDirEle.value,
+            b_Indicator_name: changeTwoDirEle.value.replace(/</g,'&lt;').replace(/>/g,'&gt;'),
             b_superior_id: Number(changeTwoDirFather.value),
             b_first_level: Number(changeTwoDirFather.value)
         }
     })
         .then((result) => {
-            // console.log(result.data)
             if(result.data.err==-1){
                 swal('数据重复或错误，操作失败')
                 return
@@ -729,7 +730,7 @@ let CompositionId = document.getElementById('CompositionId')
 function CompositionChangeFn(event) {
     bodyTop[2].style.display = 'block'
     CompositionId.innerHTML = Number(event.parentElement.lastElementChild.innerHTML)
-    CompositionName.value = event.parentElement.firstElementChild.innerHTML
+    CompositionName.value = event.parentElement.firstElementChild.innerHTML.replace(/&lt;/g,'<').replace(/&gt;/g,'>')
 }
 CancelchangeComposition.onclick = function () {
     bodyTop[2].style.display = 'none'
@@ -751,7 +752,7 @@ SurechangeComposition.onclick = function () {
         method: 'POST',
         url: '/creditTypeOperate/updateCreditType',
         data: {
-            AFirstLevel: CompositionName.value,
+            AFirstLevel: CompositionName.value.replace(/</g,'&lt;').replace(/>/g,'&gt;'),
             AId: Number(CompositionId.innerHTML)
         }
     })

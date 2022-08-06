@@ -120,7 +120,7 @@ save.onclick = function () {
     var indexusSpecialized = usSpecialized.selectedIndex; // 选中索引
     var textusSpecialized = usSpecialized.options[indexusSpecialized].text;
     let obj = {
-        name: usName.value,
+        name: usName.value.replace(/\s+/g,""),
         userName: account.value,
         power: usPermission.value,
         sex: sex.value
@@ -142,6 +142,7 @@ save.onclick = function () {
             obj.power = '普通管理员'
         }
     }
+    // console.log(usName.value.replace(/\s+/g,""))
     // 发送数据
     axios({
         method: 'POST',
@@ -153,11 +154,6 @@ save.onclick = function () {
             if (result.data.err == -1) {
                 // 将错误信息显示出来
                 swal(result.data.msg)
-                // msgHint.innerHTML=result.data.msg
-                // popUps[2].style.display='block'
-                // setTimeout(()=>{
-                //     popUps[2].style.display='none'
-                // },2000)
             } else {
                 // popUps[0].style.display='block'
                 // setTimeout(()=>{

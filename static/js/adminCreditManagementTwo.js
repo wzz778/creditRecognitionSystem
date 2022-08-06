@@ -26,7 +26,7 @@ SureaddDir.onclick = function () {
     let resultData = []
     for (let i = 0; i < AddDirValue.length; i++) {
         if (AddDirValue[i].value != '') {
-            resultData.push({ b_Indicator_level: 2, b_Indicator_name: AddDirValue[i].value, b_first_level: Number(AddDirFatherId.innerHTML), b_superior_id: Number(AddDirFatherId.innerHTML) })
+            resultData.push({ b_Indicator_level: 2, b_Indicator_name: AddDirValue[i].value.replace(/</g, '&lt;').replace(/>/g, '&gt;'), b_first_level: Number(AddDirFatherId.innerHTML), b_superior_id: Number(AddDirFatherId.innerHTML) })
         }
     }
     if (resultData.length == 0) {
@@ -73,11 +73,17 @@ function IndicatorTwo(event) {
     selfId.innerHTML = ele.lastElementChild.innerHTML
     reviseCreComposition.value = event.parentElement.parentElement.parentElement.parentElement.firstElementChild.firstElementChild.lastElementChild.innerHTML
     getChild(Number(reviseCreComposition.value), false)
-    reviseRecognize.value = ele.nextElementSibling.nextElementSibling.firstElementChild.innerHTML
+    reviseRecognize.value = ele.nextElementSibling.nextElementSibling.firstElementChild.innerHTML.replace(/&lt;/g, '<').replace(/&gt;/g, '>')
     reviseCreditNumber.value = Number(ele.nextElementSibling.nextElementSibling.lastElementChild.innerHTML)
     let test = ''
     if (event.parentElement.firstElementChild.innerHTML != 'null') {
-        test = event.parentElement.firstElementChild.innerHTML
+        test = event.parentElement.firstElementChild.innerHTML.replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+    }
+    creditRules.value = event.parentElement.lastElementChild.innerHTML
+    if (creditRules.value == 0) {
+        reviseText.removeAttribute('readOnly')
+    } else {
+        reviseText.setAttribute('readOnly', 'true')
     }
     reviseText.value = test
 }
@@ -87,7 +93,14 @@ function IndicatorThree(event) {
     selfId.innerHTML = event.parentElement.parentElement.firstElementChild.lastElementChild.innerHTML
     let text = ''
     if (event.parentElement.firstElementChild.innerHTML != 'null') {
-        text = event.parentElement.firstElementChild.innerHTML
+        text = event.parentElement.firstElementChild.innerHTML.replace(/&lt;/g,'<').replace(/&gt;/g,'>')
+
+    }
+    creditRules.value = event.parentElement.lastElementChild.innerHTML
+    if (creditRules.value == 0) {
+        reviseText.removeAttribute('readOnly')
+    } else {
+        reviseText.setAttribute('readOnly', 'true')
     }
     reviseText.value = text
     let ele = event.parentElement.parentElement.parentElement
@@ -98,7 +111,7 @@ function IndicatorThree(event) {
     reviseCreComposition.value = fatherId
     // console.log(secondId)
     getChild(Number(reviseCreComposition.value), secondId)
-    reviseRecognize.value = event.parentElement.parentElement.firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.innerHTML
+    reviseRecognize.value = event.parentElement.parentElement.firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.innerHTML.replace(/&lt;/g,'<').replace(/&gt;/g,'>')
     reviseCreditNumber.value = event.parentElement.parentElement.firstElementChild.nextElementSibling.nextElementSibling.lastElementChild.innerHTML
 }
 
@@ -174,6 +187,7 @@ reviseCreComposition.onclick = function () {
 }
 
 let sureRevise = document.getElementById('sureRevise')
+let creditRules = document.getElementsByClassName('creditRules')[0]
 let reg = /^[+]{0,1}[1-9]\d*$|^[+]{0,1}(0\.\d*[1-9])$|^[+]{0,1}([1-9]\d*\.\d*[1-9])$/
 sureRevise.onclick = function () {
     // 判断值是否为空
@@ -182,17 +196,21 @@ sureRevise.onclick = function () {
         swal('请输入修改内容,不能为空格')
         return
     }
-    if(/^[0-9]*$/.test(reviseRecognize.value)){
+    if (/^[0-9]*$/.test(reviseRecognize.value)) {
         swal('指标名不能为纯数字')
         return
     }
-    if (reviseCreditNumber.value == '' || !reg.test(Number(reviseCreditNumber.value))) {
+    if (reviseCreditNumber.value == '' || !reg.test(Number(reviseCreditNumber.value)) || (Number(reviseCreditNumber.value) > 12)) {
         // reviseCreditNumber.parentElement.lastElementChild.style.display = 'block'
-        swal('请输入合法数字')
+        swal('请输入合法数字,且不能大于12')
+        return
+    }
+    if (creditRules.value == '') {
+        swal('请选择计分规则(具体内容在备注中看)')
         return
     }
     let sendArr = {}
-    sendArr.b_Indicator_name = reviseRecognize.value
+    sendArr.b_Indicator_name = reviseRecognize.value.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\s+/g, "")
     sendArr.b_id = Number(selfId.innerHTML)
     sendArr.b_first_level = Number(reviseCreComposition.value)
     let secondId = ''
@@ -207,11 +225,8 @@ sureRevise.onclick = function () {
     // console.log('二级目录的id', secondId)
     sendArr.b_superior_id = Number(secondId)
     sendArr.b_points_available = Number(reviseCreditNumber.value)
-    if (reviseText.value.replace(/(^\s*)|(\s*$)/g, "") != "") {
-        sendArr.b_remark = reviseText.value
-    } else {
-        sendArr.b_remark='无'
-    }
+    sendArr.b_remark = reviseText.value.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\s+/g, "")
+    sendArr.rule = creditRules.value
     // console.log('传的数据',sendArr)
     axios({
         method: 'POST',
@@ -228,7 +243,12 @@ sureRevise.onclick = function () {
                 return
             }
             swal('修改成功')
-            watchFather()
+            if(Indicator[0].style.display=='none'){
+                // console.log(123)
+                watchFather()
+            }else{
+                getSearch()
+            }
         })
         .catch((err) => {
             swal('网络错误')
@@ -280,6 +300,9 @@ let Indicator = document.getElementsByClassName('Indicator')
 let IndicatorSum = document.getElementById('IndicatorSum')
 let IndicatorCnotent = document.getElementsByClassName('IndicatorCnotent')
 sureSearch.onclick = function () {
+    getSearch()
+}
+function getSearch(){
     // 判断是否为空
     if (searchIterator.value == '' && CreditNumberMin.value == '' && CreditNumberMax.value == '') {
         swal('请输入要搜索内容')
@@ -349,6 +372,7 @@ sureSearch.onclick = function () {
             <li>
                 <!-- 存放备注 -->
                 <div style="display: none;">${result.data.msg[i].classfiy.b_remark}</div>
+                <div style="display: none;">${result.data.msg[i].classfiy.rule}</div>
                 <button onclick="delFnOne(this)">删除</button>
                 <button onclick='IndicatorRevise(this)'>修改</button>
                 <button onclick="watchRemark(this)">查看备注</button>
@@ -394,11 +418,34 @@ function IndicatorRevise(event) {
     }
     getChild(Number(reviseCreComposition.value), second)
     reviseChildDir.value = second
-    reviseRecognize.value = ele.nextElementSibling.innerHTML
+    reviseRecognize.value = ele.nextElementSibling.innerHTML.replace(/&lt;/g,'<').replace(/&gt;/g,'>')
     reviseCreditNumber.value = Number(ele.nextElementSibling.nextElementSibling.innerHTML)
     let test = ''
     if (event.parentElement.firstElementChild.innerHTML != 'null') {
-        test = event.parentElement.firstElementChild.innerHTML
+        test = event.parentElement.firstElementChild.innerHTML.replace(/&lt;/g,'<').replace(/&gt;/g,'>')
+    }
+    creditRules.value=event.parentElement.firstElementChild.nextElementSibling.innerHTML
+    if(creditRules.value==0){
+        // 允许编辑
+        reviseText.removeAttribute('readOnly')
+    }else{
+        reviseText.setAttribute('readOnly', 'true')
     }
     reviseText.value = test
+}
+
+function changeRules(event) {
+    // console.log(123)
+    if (event.value == '') {
+        event.parentElement.nextElementSibling.firstElementChild.firstElementChild.value = ''
+        return
+    }
+    if (event.value == 0) {
+        // console.log(123)
+        event.parentElement.nextElementSibling.firstElementChild.firstElementChild.value = ''
+        event.parentElement.nextElementSibling.firstElementChild.firstElementChild.removeAttribute('readOnly')
+        return
+    }
+    event.parentElement.nextElementSibling.firstElementChild.firstElementChild.setAttribute('readOnly', 'true')
+    event.parentElement.nextElementSibling.firstElementChild.firstElementChild.value = remaarkArr[event.value]
 }

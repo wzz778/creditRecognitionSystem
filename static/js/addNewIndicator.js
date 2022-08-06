@@ -1,16 +1,17 @@
+
 // 添加认证范围
-function addCertification(event) {
-    event.parentElement.parentElement.innerHTML += `
-    <div class="addDirectoryChildItem addDirectoryChildChange">
-        认证范围:<input type="text" placeholder="请输入认证范围" />
-        学分:<input type="text" placeholder="请输入学分大小" />
-        </select>
-        <button class="addScopeCertification" onclick="addCertification(this)">添加</button>
-        <!-- 第一个不能取消 -->
-        <button class="cancel" onclick="removeEle(this)">取消</button>
-    </div>
-    `
-}
+// function addCertification(event) {
+//     event.parentElement.parentElement.innerHTML += `
+//     <div class="addDirectoryChildItem addDirectoryChildChange">
+//         认证范围:<input type="text" placeholder="请输入认证范围" />
+//         学分:<input type="text" placeholder="请输入学分大小" />
+//         </select>
+//         <button class="addScopeCertification" onclick="addCertification(this)">添加</button>
+//         <!-- 第一个不能取消 -->
+//         <button class="cancel" onclick="removeEle(this)">取消</button>
+//     </div>
+//     `
+// }
 // 取消添加
 function removeEle(event) {
     // 移除元素
@@ -26,6 +27,19 @@ function addNewIndicator(event) {
             学分:<input type="text" placeholder="请输入学分大小" class='b_points_available' />
             <button class="addScopeCertification" onclick="addNewIndicator(this)">添加</button>
             <button class="cancel" onclick="removeEle(this)">取消</button>
+            <div class='rules'>
+                算分规则(选择后可在备注查看):
+                <select class="creditRules" onchange="changeRules(this)">
+                    <option value="">请选择...</option>
+                    <option value="0">不是团队项目</option>
+                    <option value="1">规则1</option>
+                    <option value="2">规则2</option>
+                    <option value="3">规则3</option>
+                    <option value="4">规则4</option>
+                    <option value="5">规则5</option>
+                    <option value="6">规则6</option>
+                </select>
+            </div>
             <div class="remarksText">备注:
                 <div class="remarksBottom">
                     <textarea class="b_remark"></textarea>
@@ -120,6 +134,7 @@ sureAdd.onclick = function () {
     let b_Indicator_name = document.getElementsByClassName('b_Indicator_name')
     let b_points_available = document.getElementsByClassName('b_points_available')
     let b_remark = document.getElementsByClassName('b_remark')
+    let creditRules = document.getElementsByClassName('creditRules')
     let arrSend = []
     for (let i = 0; i < b_Indicator_name.length; i++) {
         // 判断是否全部为空
@@ -129,7 +144,7 @@ sureAdd.onclick = function () {
                 return
             }
             if (/^[0-9]*$/.test(b_Indicator_name[i].value)) {
-                swal('指标名不能为纯数字')
+                swal('认证范围不能为纯数字')
                 return
             }
             // 学分名和备注不能是纯空值
@@ -137,17 +152,16 @@ sureAdd.onclick = function () {
                 swal('指标名不能是空格')
                 return
             }
-            if (b_remark[i].value == '') {
-                arrSend.push({ b_Indicator_name: b_Indicator_name[i].value, b_points_available: Number(b_points_available[i].value) })
-            } else {
-                if (b_remark[i].value.replace(/(^\s*)|(\s*$)/g, "") == "") {
-                    swal('备注不能是空格')
-                    return
-                }
-                arrSend.push({ b_Indicator_name: b_Indicator_name[i].value, b_points_available: Number(b_points_available[i].value), b_remark: b_remark[i].value })
+            if (creditRules[i].value == '') {
+                swal('请选择算分规则')
+                return
             }
+            let name = b_Indicator_name[i].value.replace(/</g, '&lt;').replace(/。/g, '&gt;').replace(/\s+/g, "")
+            let remark=b_remark[i].value.replace(/</g,'&lt;').replace(/>/g,'&gt;')
+            arrSend.push({ b_Indicator_name: name, b_points_available: Number(b_points_available[i].value), b_remark: remark, rule: creditRules[i].value })
         }
     }
+    // console.log(arrSend)
     if (arrSend.length == 0) {
         // 没有传入数据
         swal('请输入要添加的数据')
@@ -190,6 +204,19 @@ sureAdd.onclick = function () {
                         认证范围:<input type="text" placeholder="请输入认证范围" class='b_Indicator_name' />
                         学分:<input type="text" placeholder="请输入学分大小" class='b_points_available' />
                         <button class="addScopeCertification" onclick="addNewIndicator(this)">添加</button>
+                        <div class='rules'>
+                            算分规则(选择后可在备注查看):
+                            <select class="creditRules" onchange="changeRules(this)">
+                                <option value="">请选择...</option>
+                                <option value="0">不是团队项目</option>
+                                <option value="1">规则1</option>
+                                <option value="2">规则2</option>
+                                <option value="3">规则3</option>
+                                <option value="4">规则4</option>
+                                <option value="5">规则5</option>
+                                <option value="6">规则6</option>
+                            </select>
+                        </div>
                         <div class="remarksText">备注:
                             <div class="remarksBottom">
                                 <textarea class="b_remark"></textarea>
@@ -198,14 +225,15 @@ sureAdd.onclick = function () {
                 </div>
                 `
             } else {
-                if(result.data.msg.msg){
+                if (result.data.msg.msg) {
                     swal(result.data.msg.msg)
                     return
                 }
                 swal('添加失败，请重试')
             }
         })
-        .catch((err) => {changeUserInfoFn(this)
+        .catch((err) => {
+            changeUserInfoFn(this)
             swal('网络错误')
             // console.log(err)
         })
@@ -214,4 +242,19 @@ sureAdd.onclick = function () {
 let sureCancel = document.getElementById('sureCancel')
 sureCancel.onclick = function () {
     window.location.href = 'adminCreditManagement'
+}
+
+function changeRules(event) {
+    if (event.value == '') {
+        event.parentElement.parentElement.lastElementChild.firstElementChild.firstElementChild.value = ''
+        return
+    }
+    if (event.value == 0) {
+        // console.log(123)
+        event.parentElement.parentElement.lastElementChild.firstElementChild.firstElementChild.removeAttribute('readOnly')
+        event.parentElement.parentElement.lastElementChild.firstElementChild.firstElementChild.value = ''
+        return
+    }
+    event.parentElement.parentElement.lastElementChild.firstElementChild.firstElementChild.setAttribute('readOnly', 'true')
+    event.parentElement.parentElement.lastElementChild.firstElementChild.firstElementChild.value = remaarkArr[event.value]
 }

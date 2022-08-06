@@ -13,6 +13,7 @@ head_cord.onmouseout=function(){
     head_cord_fade.style.display = 'none'
 }
 // axios.defaults.baseURL = 'http://110.40.205.103:8080'
+// axios.defaults.baseURL = 'http://127.0.0.1'
 function outland(){
     swal({
         title: "你确定退出登录？",
@@ -75,7 +76,7 @@ if(sessionStorage.getItem('power')=='超级管理员'){
             <a class="columna" href="addNewIndicator"><i class="fa fa-plus" aria-hidden="true"></i>添加指标</a>
             <a class="columna" href="adminHistory"><i class="fa fa-history" aria-hidden="true"></i> 提交历史</a>
             <a class="columna" href="examineApplication"><i class="fa fa-search" aria-hidden="true"></i>审核申请表</a>
-            <a class="columna" href="adminWatchApplication"><i class="fa fa-file-excel-o" aria-hidden="true"></i>查看申请表</a>
+            <a class="columna" href="adminWatchApplication"><i class="fa fa-file-excel-o" aria-hidden="true"></i>通过的申请表</a>
         </div>
     </li>
     `

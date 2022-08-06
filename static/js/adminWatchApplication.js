@@ -46,6 +46,7 @@ function limitationFactor() {
 function GetAllInfo(page, perpage, obj) {
     obj.nodePage = page
     obj.pageSize = perpage
+    // console.log(obj)
     // 发送请求
     axios({
         method: 'POST',
@@ -71,6 +72,8 @@ function GetAllInfo(page, perpage, obj) {
                 return
             }
             for (let i = 0; i < result.data.msg.length; i++) {
+                let points=result.data.resultPoint['分数'+i]
+                // console.log(result.data.resultPoint['分数'+i])
                 WatchApplicationContentContent.innerHTML += `
                 <ul>
                     <li>${result.data.msg[i].user.name}</li>
@@ -80,7 +83,7 @@ function GetAllInfo(page, perpage, obj) {
                     <li>${result.data.msg[i].user.academy}</li>
                     <li>${result.data.msg[i].user.major_class}</li>
                     <li>${result.data.msg[i].creditType.afirstLevel}</li>
-                    <li>${result.data.msg[i].points}</li>
+                    <li>${points}</li>
                     <li>
                         <button class="watchDetails" onclick="downLoad(this)">下载</button>
                         <button class="watchDetails" onclick="watchInfo(this)">查看</button>

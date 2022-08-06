@@ -46,7 +46,7 @@ axios({
                         <ul>
                             <li>${result.msg[j].b_Indicator_name}</li>
                             <li>${result.msg[j].b_points_available}</li>
-                            <li>${result.msg[j].b_remark}</li>
+                            <li style='word-wrap: break-word'>${result.msg[j].b_remark}</li>
                         </ul>
                         `
                         } else if (result.msg[j].child == '下边没有指标了' && result.msg[j].b_points_available == 0) {
@@ -89,6 +89,17 @@ axios({
                         </ul>
                         `
                         } else {
+                            if (str3) {
+                                resultStr += `
+                        <div class="creditItem">
+                            ${str1}
+                        <!-- 右边 -->
+                        <div class="creditRight">
+                            ${str3}
+                        </div>
+                    </div>
+                    `
+                            }
                             // console.log('结果2',str2)
                             str3 = ''
                             // yn = 3

@@ -33,6 +33,30 @@ function isnull(val) {
         return false;
     }
   }
+  function htmllEscape(htmlstr){
+    return htmlstr.replace(/<|>"|&/g,(match)=>{
+        switch(match){
+            case '<':
+                return "&lt"
+            case '>':
+                return "&gt"
+            case '&':
+                return "&amp"
+        }
+    })
+ }
+ function openhtmllEscape(htmlstr){
+    return htmlstr.replace(/&lt|&gt"|&amp/g,(match)=>{
+        switch(match){
+            case '&lt':
+                return "<"
+            case '&gt':
+                return ">"
+            case '&amp':
+                return ""
+        }
+    })
+ }  
 function getgrade(){
     axios({
         method: 'get',
@@ -114,6 +138,15 @@ function getacademy(){
 // getacademy()
 function getmajor(){
     let option=academy.getElementsByTagName('option');
+    if(option.length==0){
+        body.innerHTML=`
+        <div class="emptymeaage" style="padding-top: 100px;width: 100%;height: 200px;text-align: center;font-size: 16px;">
+            <i class="fa fa-files-o" aria-hidden="true" style="padding-bottom: 10px;color: #68b0f3;font-size: 40px;"></i></br>
+            什么都没有呢 . . .
+        </div>
+            `
+            return
+    }
     for (let n of option) {
       if (n.selected) {
         axios({
@@ -160,6 +193,7 @@ function getmajor(){
                     `
                 }
             }).catch(function (error) {
+                swal('提交失败', '网络错误', 'error');
                 // console.log(error);
         });
         break;
@@ -168,7 +202,7 @@ function getmajor(){
 }
 function watchChild(event) {
     let faid=event.parentElement.parentElement.firstElementChild.innerHTML;
-    console.log(faid);
+    // console.log(faid);
     let son=event.parentElement.parentElement.parentElement.getElementsByClassName('InfoContentItemson')[0];
     axios({
         method: 'get',
@@ -201,6 +235,7 @@ function watchChild(event) {
                 `
             }
         }).catch(function (error) {
+            swal('提交失败', '网络错误', 'error');
             // console.log(error);
     });
     // 判断内容盒子是否显现
@@ -216,6 +251,13 @@ function addgrade(event){
     let input=event.parentNode.parentNode.getElementsByTagName('input')[0];
     if(isnull(input.value)){
         swal("请填写内容！");
+        return
+    }else if(isNaN(input.value)){
+        swal("请填写纯数字！")
+        return
+    }else if(2000>input.value||3000<input.value){
+        swal("请输入合理的年份！")
+        return
     }else{
         swal({
             title: "你确定添加该组织？",
@@ -229,7 +271,6 @@ function addgrade(event){
             closeOnCancel: false
           }, function (isConfirm) {
             if (isConfirm) {
-                  swal('提交成功', '您所填写的组织添加成功', 'success');
                   axios({
                       url:'/api/addorgin',
                       method:'post',
@@ -239,16 +280,22 @@ function addgrade(event){
                           'super_id':'0'
                       },  
                   }).then(response=>{
-                    //   console.log(response.data);
-                      getgrade();
-                      input.value=''
-                      bodyTop[2].style.display='none';
+                    if(response.data.msg=="插入重复数据"){
+                        swal('提交失败', '您所填写的组织已存在', 'error');
+                    }else{
+                        swal('提交成功', '您所填写的组织添加成功', 'success');
+                        console.log(response.data);
+                        getgrade();
+                        input.value=''
+                        bodyTop[2].style.display='none';
+                    }
                   }).catch(function (error) {
+                    swal('提交失败', '网络错误', 'error');
                     //   console.log(error);
                   });
 
             } else {
-              swal("您已经取消提交")
+                swal("您已经取消操作")
             }
           })
     }
@@ -286,10 +333,11 @@ function delgrade(event){
                   bodyTop[0].style.display='none';
               })
               .catch((err)=>{
+                swal('提交失败', '网络错误', 'error');
                 //   console.log(err)
               })
         } else {
-          swal("您已经取消提交")
+            swal("您已经取消操作")
         }
       })
 }
@@ -310,6 +358,12 @@ function regrade(event){
     if(isnull(input.value)){
         swal("请填写组织名称！");
         return
+    }else if(isNaN(input.value)){
+        swal("请填写纯数字！")
+        return
+    }else if(2000>input.value||3000<input.value){
+        swal("请输入合理的年份！")
+        return
     }
     swal({
         title: "你确定修改该组织？",
@@ -323,8 +377,7 @@ function regrade(event){
         closeOnCancel: false
       }, function (isConfirm) {
         if (isConfirm) {
-              swal('修改成功', '您所选的组织修改成功', 'success');
-              axios({
+            axios({
                 method: 'put',
                 url: '/api/uploador',
                 params:{
@@ -332,16 +385,23 @@ function regrade(event){
                     id: reid,
                     name:input.value
                 }
-                }).then(response=>{
-                    // console.log(response.data);
-                    getgrade();
-                    input.value=''
-                    bodyTop[1].style.display='none';
+            }).then(response=>{
+                    if(response.data.msg=="插入重复数据"){
+                        swal('提交失败', '您所填写的组织已存在', 'error');
+                    }else{
+                        swal('修改成功', '您所选的组织修改成功', 'success');
+
+                        // console.log(response.data);
+                        getgrade();
+                        input.value=''
+                        bodyTop[1].style.display='none';
+                    }
                 }).catch(function (error) {
+                    swal('提交失败', '网络错误', 'error');
                     // console.log(error);
             });
         } else {
-          swal("您已经取消提交")
+            swal("您已经取消操作")
         }
       })
 }
@@ -375,8 +435,7 @@ function addacamacy(event){
         closeOnCancel: false
       }, function (isConfirm) {
         if (isConfirm) {
-              swal('提交成功', '您所填写的组织添加成功', 'success');
-              axios({
+            axios({
                 url:'/api/addorgin',
                 method:'post',
                 data:{
@@ -385,16 +444,24 @@ function addacamacy(event){
                     'super_id':reid
                 },  
             }).then(response=>{
-                // console.log(response.data);
-                getgrade();
-                input.value=''
-                bodyTop[5].style.display='none';
+                if(response.data.msg=="插入重复数据"){
+                    swal('提交失败', '您所填写的组织已存在', 'error');
+                }else{
+                    swal('提交成功', '您所填写的组织添加成功', 'success');
+
+                    // console.log(response.data);
+                    getacademy()
+                        // getgrade();
+                    input.value=''
+                    bodyTop[5].style.display='none';
+                }
             }).catch(function (error) {
+                swal('提交失败', '网络错误', 'error');
                 // console.log(error);
             });
 
         } else {
-          swal("您已经取消提交")
+            swal("您已经取消操作")
         }
       })
 }
@@ -403,6 +470,10 @@ function delacademy(event){
     let ptag_ids = new Array();
     for (let n of option) {
         if (n.selected) {
+            if(n.value=="0"){
+                swal("请选择您要删除的学院！")
+                return 
+            }
             ptag_ids.push(n.value);
           break;
         }
@@ -427,13 +498,15 @@ function delacademy(event){
             })
             .then((result) => {
                 // console.log(result)
+                getacademy()
                 bodyTop[3].style.display='none';
             })
             .catch((err)=>{
+                swal('提交失败', '网络错误', 'error');
                 // console.log(err)
             })
         } else {
-          swal("您已经取消提交")
+            swal("您已经取消操作")
         }
       })
 }
@@ -456,6 +529,7 @@ function getacademy1(event){
                     `
                 }
             }).catch(function (error) {
+                swal('提交失败', '网络错误', 'error');
                 // console.log(error);
         });
         break;
@@ -492,8 +566,7 @@ function reacamacy(event){
         closeOnCancel: false
       }, function (isConfirm) {
         if (isConfirm) {
-              swal('修改成功', '您所选的组织修改成功', 'success');
-              axios({
+            axios({
                 method: 'put',
                 url: '/api/uploador',
                 params:{
@@ -502,14 +575,21 @@ function reacamacy(event){
                     name:input.value
                 }
                 }).then(response=>{
-                    // console.log(response.data);
-                    input.value=''
-                    bodyTop[4].style.display='none';
+                    if(response.data.msg=="插入重复数据"){
+                        swal('提交失败', '您所填写的组织已存在', 'error');
+                    }else{
+                        swal('修改成功', '您所选的组织修改成功', 'success');
+                        getacademy()
+                        console.log(response.data);
+                        input.value=''
+                        bodyTop[4].style.display='none';
+                    }
                 }).catch(function (error) {
+                    swal('提交失败', '网络错误', 'error');
                     // console.log(error);
             });
         } else {
-          swal("您已经取消提交")
+            swal("您已经取消操作")
         }
       })
 }
@@ -543,8 +623,7 @@ function addmajor(event){
         closeOnCancel: false
       }, function (isConfirm) {
         if (isConfirm) {
-              swal('添加成功', '您所填写的组织添加成功', 'success');
-              axios({
+            axios({
                 url:'/api/addorgin',
                 method:'post',
                 data:{
@@ -553,15 +632,22 @@ function addmajor(event){
                     'super_id':reid
                 },  
             }).then(response=>{
-                // console.log(response.data);
-                input.value=''
-                bodyTop[6].style.display='none';
+                if(response.data.msg=="插入重复数据"){
+                    swal('提交失败', '您所填写的组织已存在', 'error');
+                }else{
+                    getmajor();
+                    swal('添加成功', '您所填写的组织添加成功', 'success');
+                    // console.log(response.data);
+                    input.value=''
+                    bodyTop[6].style.display='none';
+                }
             }).catch(function (error) {
+                swal('提交失败', '网络错误', 'error');
                 // console.log(error);
             });
 
         } else {
-          swal("您已经取消提交")
+            swal("您已经取消操作")
         }
       })
 
@@ -594,10 +680,11 @@ function delmajor(event){
                   getmajor()
               })
               .catch((err)=>{
+                swal('提交失败', '网络错误', 'error');
                 //   console.log(err)
               })
         } else {
-          swal("您已经取消提交")
+            swal("您已经取消操作")
         }
       })
   
@@ -612,7 +699,7 @@ function toremajor(event){
 function remajor(event){
     let faid=newmagor.value
     let rename=event.parentElement.parentElement.getElementsByTagName('input')[0].value;
-    if(isnull(rename.value)){
+    if(isnull(rename)){
         swal("请填写完整内容！");
     }
     swal({
@@ -627,8 +714,7 @@ function remajor(event){
         closeOnCancel: false
       }, function (isConfirm) {
         if (isConfirm) {
-              swal('修改成功', '您所选的组织修改成功', 'success');
-              axios({
+            axios({
                 method: 'put',
                 url: '/api/uploador',
                 params:{
@@ -636,16 +722,22 @@ function remajor(event){
                     id:faid,
                     name:rename
                 }
-                }).then(response=>{
+            }).then(response=>{
+                if(response.data.msg=="插入重复数据"){
+                    swal('提交失败', '您所填写的组织已存在', 'error');
+                }else{
+                    swal('修改成功', '您所选的组织修改成功', 'success');
                     // console.log(response.data);
                     getmajor();
                     event.parentElement.parentElement.getElementsByTagName('input')[0].value=''
                     bodyTop[7].style.display='none';
+                }
                 }).catch(function (error) {
+                    swal('提交失败', '网络错误', 'error');
                     // console.log(error);
             });
         } else {
-          swal("您已经取消提交")
+          swal("您已经取消操作")
         }
       })
 }
@@ -676,8 +768,7 @@ function addclass(event){
         closeOnCancel: false
       }, function (isConfirm) {
         if (isConfirm) {
-              swal('添加成功', '您所填写的组织添加成功', 'success');
-              axios({
+            axios({
                 url:'/api/addorgin',
                 method:'post',
                 data:{
@@ -686,17 +777,24 @@ function addclass(event){
                     'super_id':newclassfa.value
                 },  
             }).then(response=>{
-                // console.log(response.data);
-                watchChild( previousevent)
-                previousevent.parentElement.parentElement.parentElement.lastElementChild.style.display = ''
-                previousevent.firstElementChild.style.display = 'none'
-                event.parentElement.parentElement.getElementsByTagName('input')[0].value=''
-                bodyTop[8].style.display='none';
+                if(response.data.msg=="插入重复数据"){
+                    swal('提交失败', '您所填写的组织已存在', 'error');
+                }else{
+                    
+                    swal('添加成功', '您所填写的组织添加成功', 'success');
+                    // console.log(response.data);
+                    watchChild( previousevent)
+                    previousevent.parentElement.parentElement.parentElement.lastElementChild.style.display = ''
+                    previousevent.firstElementChild.style.display = 'none'
+                    event.parentElement.parentElement.getElementsByTagName('input')[0].value=''
+                    bodyTop[8].style.display='none';
+                }
             }).catch(function (error) {
+                swal('提交失败', '网络错误', 'error');
                 // console.log(error);
             });
         } else {
-          swal("您已经取消提交")
+          swal("您已经取消操作")
         }
       })
 }
@@ -734,10 +832,11 @@ function delclass(event){
                 previousevent.firstElementChild.style.display = 'none'
             })
             .catch((err)=>{
+                swal('提交失败', '网络错误', 'error');
                 // console.log(err)
             })
         } else {
-          swal("您已经取消提交")
+          swal("您已经取消操作")
         }
       })
 
@@ -768,8 +867,7 @@ function reclass(event){
         closeOnCancel: false
       }, function (isConfirm) {
         if (isConfirm) {
-              swal('修改成功', '您所选的组织修改成功', 'success');
-              axios({
+            axios({
                 method: 'put',
                 url: '/api/uploador',
                 params:{
@@ -777,17 +875,25 @@ function reclass(event){
                     id:faid,
                     name:rename
                 }
-                }).then(response=>{
-                    // console.log(response.data);
-                    watchChild(sonevent)
-                    previousevent.parentElement.parentElement.parentElement.lastElementChild.style.display = ''
-                    previousevent.firstElementChild.style.display = 'none'
-                    bodyTop[9].style.display='none';
+            }).then(response=>{
+                if(response.data.msg=="插入重复数据"){
+                    swal('提交失败', '您所填写的组织已存在', 'error');
+                }else{
+                        swal('修改成功', '您所选的组织修改成功', 'success');
+
+                        // console.log(response.data);
+                        watchChild(sonevent)
+                        previousevent.parentElement.parentElement.parentElement.lastElementChild.style.display = ''
+                        previousevent.firstElementChild.style.display = 'none'
+                        bodyTop[9].style.display='none';
+                        event.parentElement.parentElement.getElementsByTagName('input')[0].value=''
+                    }
                 }).catch(function (error) {
+                    swal('提交失败', '网络错误', 'error');
                     // console.log(error);
             });
         } else {
-          swal("您已经取消提交")
+          swal("您已经取消操作")
         }
       })
 }
