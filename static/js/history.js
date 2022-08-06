@@ -135,8 +135,6 @@ function rendering(){
         let all = "";
         if(date.length != 0){
             for(let i=0;i<date.length;i++){
-                let scord = data.data.data.分数 + i;
-                console.log(scord)
                 if(date[i].application.approval_status == 0){
                     var approval_status = '审核中';
                 }else if(date[i].application.approval_status == 1){
@@ -152,7 +150,7 @@ function rendering(){
                         <li class="student-apply lis">${date[i].application.classify.b_Indicator_name}</li>
                         <li class="student-time lis">${date[i].application.application_time}</li>
                         <li class="student-state lis">${approval_status}</li>
-                        <li class="student-apply-credit lis">${data.data.data.分数0}</li>
+                        <li class="student-apply-credit lis">${data.data.data.points[i]}</li>
                         <li class="student-operator lis"><span class="check">查看</span><span class="update">修改</span></li>
                     </ul>`
                 }else{
@@ -163,7 +161,7 @@ function rendering(){
                         <li class="student-apply lis">指标已不存在</li>
                         <li class="student-time lis">${date[i].application.application_time}</li>
                         <li class="student-state lis">${approval_status}</li>
-                        <li class="student-apply-credit lis">${date[i].application.points}</li>
+                        <li class="student-apply-credit lis">${data.data.data.points[i]}</li>
                         <li class="student-operator lis"><span class="check">查看</span><span class="update">修改</span></li>
                     </ul>`
                 }
@@ -259,7 +257,7 @@ function render(numbers,size){
                         <li class="student-apply lis">${date[i].application.classify.b_Indicator_name}</li>
                         <li class="student-time lis">${date[i].application.application_time}</li>
                         <li class="student-state lis">${approval_status}</li>
-                        <li class="student-apply-credit lis">${data.data.data.分数i}</li>
+                        <li class="student-apply-credit lis">${data.data.data.points[i]}</li>
                         <li class="student-operator lis"><span class="check">查看</span><span class="update">修改</span></li>
                     </ul>`
                 }else{
@@ -270,7 +268,7 @@ function render(numbers,size){
                         <li class="student-apply lis">指标已不存在</li>
                         <li class="student-time lis">${date[i].application.application_time}</li>
                         <li class="student-state lis">${approval_status}</li>
-                        <li class="student-apply-credit lis">${date[i].application.points}</li>
+                        <li class="student-apply-credit lis">${data.data.data.points[i]}</li>
                         <li class="student-operator lis"><span class="check">查看</span><span class="update">修改</span></li>
                     </ul>`
                 }
