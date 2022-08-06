@@ -72,7 +72,7 @@ function GetAllInfo(page, perpage, obj) {
                 return
             }
             for (let i = 0; i < result.data.msg.length; i++) {
-                let points=result.data.resultPoint['分数'+i]
+                let points=result.data.resultPoint.points[i]
                 // console.log(result.data.resultPoint['分数'+i])
                 WatchApplicationContentContent.innerHTML += `
                 <ul>

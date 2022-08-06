@@ -702,7 +702,7 @@ sureChange.onclick = function () {
         url: '/changeTwoDir',
         data: {
             b_id: Number(changeTwoDirId.innerHTML),
-            b_Indicator_name: changeTwoDirEle.value.replace(/</g,'&lt;').replace(/>/g,'&gt;'),
+            b_Indicator_name: changeTwoDirEle.value.replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\s+/g,""),
             b_superior_id: Number(changeTwoDirFather.value),
             b_first_level: Number(changeTwoDirFather.value)
         }
@@ -752,7 +752,7 @@ SurechangeComposition.onclick = function () {
         method: 'POST',
         url: '/creditTypeOperate/updateCreditType',
         data: {
-            AFirstLevel: CompositionName.value.replace(/</g,'&lt;').replace(/>/g,'&gt;'),
+            AFirstLevel: CompositionName.value.replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\s+/g,""),
             AId: Number(CompositionId.innerHTML)
         }
     })
