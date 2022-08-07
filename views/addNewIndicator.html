@@ -88,7 +88,7 @@
             学分:<input type="text" placeholder="请输入学分大小" class="b_points_available" autocomplete="off" />
             <button class="addScopeCertification" onclick="addNewIndicator(this)">添加</button>
             <div class="rules">
-            算分规则(选择后可在备注查看):<select class="creditRules" onchange="changeRules(this)">
+                算分规则(选择后可在备注查看):<select class="creditRules" onchange="changeRules(this)">
                     <option value="">请选择...</option>
                     <option value="0">不是团队项目</option>
                     <option value="1">规则1</option>
@@ -112,7 +112,7 @@
     <button id="sureCancel">取消</button>
 </div>
 
- <!-- <div class="choiceHaveChild">
+<!-- <div class="choiceHaveChild">
         学分构成是否有子级目录:
         <div class="choice">
             <span>
@@ -128,8 +128,12 @@
         </div>
     </div> -->
 
-    <!-- 右边提示信息 -->
+<!-- 右边提示信息 -->
+<button style="display: none;" id="watchRules">查看规则</button>
 <div class="flexedRule">
+    <button class="floatRight" id="close">
+        <i class="layui-icon">&#x1006;</i>
+    </button>
     <h1>团队项目算分规则:</h1>
     <div class="flexedRuleItem">
         <span>规则1:</span>

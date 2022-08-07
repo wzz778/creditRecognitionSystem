@@ -147,7 +147,7 @@ select{
 .flexedRule{
     position: fixed;
     right: 50px;
-    top: 90px;
+    top: 100px;
     width: 300px;
 }
 
@@ -157,4 +157,10 @@ select{
 
 .rulesIllustrate{
     margin-left: 20px;
+}
+
+#watchRules{
+    position: fixed;
+    right: 50px;
+    top: 60px;
 }

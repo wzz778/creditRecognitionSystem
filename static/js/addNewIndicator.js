@@ -258,3 +258,14 @@ function changeRules(event) {
     event.parentElement.parentElement.lastElementChild.firstElementChild.firstElementChild.setAttribute('readOnly', 'true')
     event.parentElement.parentElement.lastElementChild.firstElementChild.firstElementChild.value = remaarkArr[event.value]
 }
+let close=document.getElementById('close')
+let flexedRule=document.getElementsByClassName('flexedRule')[0]
+let watchRules=document.getElementById('watchRules')
+close.onclick=function(){
+    flexedRule.style.display='none'
+    watchRules.style.display='inline'
+}
+watchRules.onclick=function(){
+    flexedRule.style.display='block'
+    watchRules.style.display='none'
+}
