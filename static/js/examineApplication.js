@@ -243,7 +243,7 @@ function changepage(page,set) {
             "approval_status":status
         },
     }).then(data => {
-        // console.log(data.data);
+        console.log(data.data);
         let redata=data.data.data;
     
         Tbody.innerHTML='';
@@ -276,7 +276,7 @@ function changepage(page,set) {
                 <span class="ms">${redata.pageInfo[n].creditType.afirstLevel}</span>
                 <span class="ml">${b_Indicator_name}
                 </span>
-                <span class="ms">${redata.pageInfo[n].points}</span>
+                <span class="ms">${redata.pageInfo[n].classify.b_points_available}</span>
                 <div class="opentextdiv">
                     <span class="opentext">${b_Indicator_name}</span>
                     <i class="fa fa-caret-down" aria-hidden="true"></i>
@@ -315,7 +315,7 @@ function changepage(page,set) {
                 <span class="ms">${redata.pageInfo[n].creditType.afirstLevel}</span>
                 <span class="ml">${b_Indicator_name}
                 </span>
-                <span class="ms">${redata.pageInfo[n].points}</span>
+                <span class="ms">${redata.pageInfo[n].classify.b_points_available}</span>
                 <div class="opentextdiv">
                     <span class="opentext">${b_Indicator_name}</span>
                     <i class="fa fa-caret-down" aria-hidden="true"></i>
