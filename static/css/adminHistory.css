@@ -183,8 +183,10 @@ select {
 
 .adminHistoryContentBottom>button{
     padding: 5px;
-    background-color: #638ED3;
-    color: white;
+    color: #333;
+    border: 1px solid #eee;
+    border-radius: 2px;
+
 }
 
 #selectPerpage{
@@ -197,7 +199,7 @@ select {
 }
 
 #nowPage{
-    background: #6DD9C3;
+    background: #009688;
     color: white;
     padding: 8px 10px;
 }
@@ -209,6 +211,7 @@ select {
 
 #jump{
     background-color: #F8AC59;
+    color: white;
 }
 
 #adminHistoryContentNo{
