@@ -160,8 +160,8 @@ function GetAllInfo(page, perpage, obj) {
                     bName=result.data.msg[i].application.classify.b_Indicator_name
                 }
                 // console.log(result.data.msg[i].application.points)
-                if (result.data.msg[i].application.points) {
-                    pointS = result.data.msg[i].application.points
+                if (result.data.points[i]) {
+                    pointS = result.data.points[i]
                 }
                 adminHistoryContentContent.innerHTML += `
                 <ul>
