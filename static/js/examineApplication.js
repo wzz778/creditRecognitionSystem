@@ -243,7 +243,7 @@ function changepage(page,set) {
             "approval_status":status
         },
     }).then(data => {
-        console.log(data.data);
+        // console.log(data.data);
         let redata=data.data.data;
     
         Tbody.innerHTML='';
@@ -262,7 +262,7 @@ function changepage(page,set) {
             return
         }
         if(status==0){
-            console.log(redata);
+            // console.log(redata);
             for (let n = 0; n < redata.pageInfo.length; n++) {
                 let b_Indicator_name=redata.pageInfo[n].classify!=undefined?redata.pageInfo[n].classify.b_Indicator_name:'指标不存在';
                 Tbody.innerHTML +=`
@@ -372,7 +372,7 @@ function setlayui(apage,records){
           elem: 'demo2'
           ,count: records
           ,limit: apage
-          ,theme: '#63a5f7'
+          ,theme: '#009688'
           ,jump:function(obj){
            document.getElementById("demo2").onclick=function(){
                 // pageinput.value=obj.curr;

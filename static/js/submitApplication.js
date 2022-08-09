@@ -266,7 +266,7 @@ function getson2(father) {
         params: {
           "id": father,
         }}).then(redate=>{
-          console.log(redate.data);
+          // console.log(redate.data);
           if(redate.data.data.classfiy.b_points_available==0){
             credittypesonson.style.display = 'block';
             // son2.innerHTML=`<option value="0">请选择</option>`;
