@@ -120,14 +120,14 @@ function rendering(){
     if(end == ''){
         delete  his.endDate
     }
-    console.log(his);
+    // console.log(his);
     axios({
         method:'get',
         url:'/users/records',
         params:his,
     }).then((data)=>{
-        console.log(data.data)
-        console.log(data.data.data);
+        // console.log(data.data)
+        // console.log(data.data.data);
         // console.log(data.data.data);
         let date = data.data.data.pageInfo;
         // console.log(date);
@@ -142,7 +142,7 @@ function rendering(){
                 }else{
                     var approval_status = '未通过';
                 }
-                if(date[i].application.classify.b_Indicator_name !=''){
+                if(date[i].application.classify !== null){
                     all +=`<ul class="header">
                         <li class="student-name lis">${date[i].application.user.name}</li>
                         <li class="student-major lis">${date[i].application.user.academy}</li>
@@ -158,11 +158,10 @@ function rendering(){
                         <li class="student-name lis">${date[i].application.user.name}</li>
                         <li class="student-major lis">${date[i].application.user.academy}</li>
                         <li class="student-class lis">${date[i].application.user.major_class}</li>
-                        <li class="student-apply lis">指标已不存在</li>
+                        <li class="student-apply lis">认证范围已不存在</li>
                         <li class="student-time lis">${date[i].application.application_time}</li>
                         <li class="student-state lis">${approval_status}</li>
-                        <li class="student-apply-credit lis">${data.data.data.points[i]}</li>
-                        <li class="student-operator lis"><span class="check">查看</span><span class="update">修改</span></li>
+                        <li class="student-apply-credit lis">认证范围已不存在 ss="check">查看</span><span class="update">修改</span></li>
                     </ul>`
                 }
             }
@@ -268,8 +267,7 @@ function render(numbers,size){
                         <li class="student-apply lis">认证范围已不存在</li>
                         <li class="student-time lis">${date[i].application.application_time}</li>
                         <li class="student-state lis">${approval_status}</li>
-                        <li class="student-apply-credit lis">认证范围已不存在</li>
-                        <li class="student-operator lis"><span class="check">查看</span><span class="update">修改</span></li>
+                        <li class="student-apply-credit lis">认证范围已不存在 ss="check">查看</span><span class="update">修改</span></li>
                     </ul>`
                 }
                 main_content[0].innerHTML = all;
