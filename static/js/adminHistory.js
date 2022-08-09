@@ -153,8 +153,8 @@ function GetAllInfo(page, perpage, obj) {
                 if (result.data.msg[i].application.approval_status == '-1') {
                     status = '审核未通过'
                 }
-                let pointS = '该指标被删除'
-                let bName='该指标被删除'
+                let pointS = '该认证范围被删除'
+                let bName='该认证范围被删除'
                 if(result.data.msg[i].application.classify){
                     pointS=result.data.msg[i].application.classify.b_points_available
                     bName=result.data.msg[i].application.classify.b_Indicator_name

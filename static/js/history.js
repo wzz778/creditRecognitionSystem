@@ -249,7 +249,7 @@ function render(numbers,size){
                 }else{
                     var approval_status = '未通过';
                 }
-                if(date[i].application.classify.b_Indicator_name !=''){
+                if(date[i].application.classify !== null){
                     all +=`<ul class="header">
                         <li class="student-name lis">${date[i].application.user.name}</li>
                         <li class="student-major lis">${date[i].application.user.academy}</li>
@@ -265,10 +265,10 @@ function render(numbers,size){
                         <li class="student-name lis">${date[i].application.user.name}</li>
                         <li class="student-major lis">${date[i].application.user.academy}</li>
                         <li class="student-class lis">${date[i].application.user.major_class}</li>
-                        <li class="student-apply lis">指标已不存在</li>
+                        <li class="student-apply lis">认证范围已不存在</li>
                         <li class="student-time lis">${date[i].application.application_time}</li>
                         <li class="student-state lis">${approval_status}</li>
-                        <li class="student-apply-credit lis">${data.data.data.points[i]}</li>
+                        <li class="student-apply-credit lis">认证范围已不存在</li>
                         <li class="student-operator lis"><span class="check">查看</span><span class="update">修改</span></li>
                     </ul>`
                 }

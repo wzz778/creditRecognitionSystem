@@ -149,8 +149,11 @@ input{
 
 .adminHistoryContentBottom>button {
     padding: 5px;
-    background-color: #638ED3;
-    color: white;
+    /* background-color: #638ED3; */
+    /* color: white; */
+    color: #333;
+    border-radius: 2px;
+    border: 1px solid #eee;
 }
 
 #selectPerpage {
@@ -163,7 +166,8 @@ input{
 }
 
 #nowPage {
-    background: #6DD9C3;
+    /* background: #6DD9C3; */
+    background-color: #009688;
     color: white;
     padding: 8px 10px;
 }
@@ -174,6 +178,7 @@ input{
 }
 
 #jump {
+    color: white;
     background-color: #F8AC59;
 }
 
