@@ -138,6 +138,12 @@ function look(event){
 function pass(event){
     let oneid=event.parentNode.parentNode.children[0].innerHTML;
     let thisname=event.parentNode.parentNode.children[2].innerHTML;
+    let sortname=event.parentNode.parentNode.children[7].innerText;
+    if(sortname=='指标不存在'){
+        swal('您要操作的指标不存在，不能进行该操作！');
+        return
+    }
+    console.log(sortname);
     let myname=sessionStorage.getItem('name');
     if(thisname==myname){
         swal("您暂无权限审核自己的申请表！");
