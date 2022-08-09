@@ -262,7 +262,7 @@ function changepage(page,set) {
             return
         }
         if(status==0){
-            console.log(redata.pageInfo);
+            console.log(redata);
             for (let n = 0; n < redata.pageInfo.length; n++) {
                 let b_Indicator_name=redata.pageInfo[n].classify!=undefined?redata.pageInfo[n].classify.b_Indicator_name:'指标不存在';
                 Tbody.innerHTML +=`
@@ -276,7 +276,7 @@ function changepage(page,set) {
                 <span class="ms">${redata.pageInfo[n].creditType.afirstLevel}</span>
                 <span class="ml">${b_Indicator_name}
                 </span>
-                <span class="ms">${redata.pageInfo[n].classify.b_points_available}</span>
+                <span class="ms">${redata.points[n]}</span>
                 <div class="opentextdiv">
                     <span class="opentext">${b_Indicator_name}</span>
                     <i class="fa fa-caret-down" aria-hidden="true"></i>
@@ -315,7 +315,7 @@ function changepage(page,set) {
                 <span class="ms">${redata.pageInfo[n].creditType.afirstLevel}</span>
                 <span class="ml">${b_Indicator_name}
                 </span>
-                <span class="ms">${redata.pageInfo[n].classify.b_points_available}</span>
+                <span class="ms">${redata.points[n]}</span>
                 <div class="opentextdiv">
                     <span class="opentext">${b_Indicator_name}</span>
                     <i class="fa fa-caret-down" aria-hidden="true"></i>

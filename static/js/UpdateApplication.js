@@ -110,6 +110,20 @@ axios({
       return 0;
     }
     if (data.data.data == '下边没有指标了') {
+      axios({
+        url: '/api/gefatherm',
+        method: 'get',
+        params: {
+          "id": father,
+        }}).then(redate=>{
+          console.log(redate.data);
+          if(redate.data.data.classfiy.b_points_available==0){
+            credittypesonson.style.display = 'block';
+            // son2.innerHTML=`<option value="0">请选择</option>`;
+            son2.innerHTML = `<option value="0">暂时无数据</option>`;
+            return
+          }
+        })
       credittypesonson.style.display = 'none';
       son2.innerHTML = ``;
     } else if (data.data.data.length > 0) {
@@ -252,6 +266,10 @@ $.fn.serializeObject = function () {
     } else if (credittypesonson.style.display == 'block') {
       // console.log(o.specific_information);
       o.specific_information = o.specific_information[1];
+      if(o.specific_information=='0'){
+        swal('下级指标不存在！');
+        return
+      }
       swal({
         title: "你确定提交该申请表？",
         text: "你将添提交该部分数据！",
@@ -305,7 +323,10 @@ $.fn.serializeObject = function () {
         }
       })
     } else {
-      // console.log(o);
+      if(o.specific_information=='0'){
+        swal('下级指标不存在！');
+        return
+      }
       swal({
         title: "你确定提交该申请表？",
         text: "你将添提交该部分数据！",
@@ -408,6 +429,11 @@ $.fn.serializeObject = function () {
         for (let n of data.data.data) {
           son2.innerHTML += `<option value="${n.b_id}">${n.b_Indicator_name}</option>`
         }
+      }else if (data.data.data.length ==0) {
+        credittypesonson.style.display = 'block';
+        // son2.innerHTML=`<option value="0">请选择</option>`;
+        son2.innerHTML = `<option value="0">暂时无数据</option>`;
+        // console.log(data.data.data.length);
       }
       // console.log(data.data.data);
     }).catch(function (error) {

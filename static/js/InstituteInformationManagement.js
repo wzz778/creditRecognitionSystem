@@ -755,6 +755,9 @@ function addclass(event){
     if(isnull(rename)){
         swal("请填写组织名称！");
         return
+    }else if(rename.length<2||7<rename.length){
+        swal("请输入合理的班级！")
+        return
     }
     swal({
         title: "你确定添加该组织？",
