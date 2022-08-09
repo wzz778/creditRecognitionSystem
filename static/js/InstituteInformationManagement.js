@@ -848,6 +848,8 @@ function toreclass(event){
     reclassdiv.style.display='';
     let id=event.parentElement.parentElement.firstElementChild.innerHTML;
     let name=event.parentElement.parentElement.getElementsByClassName('majorname')[0].innerHTML;
+    let faid=event.parentElement.parentElement.parentElement.parentElement.firstElementChild.firstElementChild.innerHTML;
+    newclassfa.value=faid;
     reclassop.value=id;
     reclassop.innerHTML=name;
     sonevent=event.parentElement.parentElement.parentElement.parentElement.getElementsByClassName('expandItem')[0];
@@ -856,7 +858,8 @@ function reclass(event){
     let faid=reclassop.value
     let rename=event.parentElement.parentElement.getElementsByTagName('input')[0].value;
     if(isnull(rename)){
-        swal("请填写完整内容！");
+        swal("请填写完整内容！")
+        return
     }
     swal({
         title: "你确定修改该组织？",
@@ -876,7 +879,8 @@ function reclass(event){
                 params:{
                     level:'4',
                     id:faid,
-                    name:rename
+                    name:rename,
+                    super_id:newclassfa.value
                 }
             }).then(response=>{
                 if(response.data.msg=="插入重复数据"){
