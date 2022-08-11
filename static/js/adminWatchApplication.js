@@ -54,7 +54,7 @@ function GetAllInfo(page, perpage, obj) {
         data: obj
     })
         .then((result) => {
-            // console.log(result.data)
+            console.log(result.data)
             // 将数据渲染
             WatchApplicationContentContent.innerHTML = ''
             // 判断是否有值
@@ -73,6 +73,10 @@ function GetAllInfo(page, perpage, obj) {
             }
             for (let i = 0; i < result.data.msg.length; i++) {
                 let points=result.data.resultPoint.points[i]
+                if(result.data.resultPoint.points[i]==null){
+                    // console.log(result.data.resultPoint.points[i])
+                    points=result.data.msg[i].points_available
+                }
                 // console.log(result.data.resultPoint['分数'+i])
                 WatchApplicationContentContent.innerHTML += `
                 <ul>
