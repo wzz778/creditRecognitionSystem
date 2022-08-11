@@ -124,7 +124,7 @@ function GetAllInfo(page, perpage, obj) {
         data: obj
     })
         .then((result) => {
-            console.log(result.data)
+            // console.log(result.data)
             adminHistoryContentContent.innerHTML = ''
             all_Page = result.data.allPage
             allNumber.innerHTML = `共${result.data.allRecords}条`

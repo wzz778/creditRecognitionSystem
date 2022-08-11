@@ -54,7 +54,7 @@ function GetAllInfo(page, perpage, obj) {
         data: obj
     })
         .then((result) => {
-            console.log(result.data)
+            // console.log(result.data)
             // 将数据渲染
             WatchApplicationContentContent.innerHTML = ''
             // 判断是否有值
