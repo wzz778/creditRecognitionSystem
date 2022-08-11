@@ -43,12 +43,77 @@ function render(id){
             id:id,
         }
     }).then((data)=>{
+        console.log(data.data)
         console.log(data.data.data);
         let date = data.data.data;
         // let html = template('details',data);
         let scords = '分';
         let all = '';
-        all += `
+        if (date.申请表.classify === null){
+            all += `
+                        
+                            <li class="contents">
+                                姓名：
+                                <span class="name">${date.申请表.user.name}</span>
+                            </li>
+                            <li class="contents">
+                                性别：
+                                <span class="sex">${date.申请表.user.sex}</span>
+                            </li>
+                            
+                            <li class="contents">
+                                所属学院：
+                                <span>${date.申请表.user.academy}</span>
+                            </li>
+                            
+                            <li class="contents">
+                                班级：
+                                <span>${date.申请表.user.major_class}</span>
+                            </li>
+                            <li class="contents">
+                                申请类型：
+                                <span>${date.申请表.creditType.afirstLevel}</span>
+                            </li>
+                            <li class="contents">
+                                申请时间：
+                                <span>${date.申请表.application_time}</span>
+                            </li>
+                            <li class="contents">
+                                获得奖项或参见的项目：
+                                <span>${date.申请表.indicator_name}</span>
+                            </li>
+                            <li class="contents">
+                                是否为集体项目：
+                                <span>${date.申请表.team}</span>
+                            </li>
+                            <li class="contents">
+                                个人申请的学分：
+                                <span>${date.申请表.points_available}${scords}</span>
+                            </li>
+                        `
+            application_message[0].innerHTML = all;
+            if(date.team == '是'){
+                application_message[0].innerHTML += `
+                            
+                            <li class="contents">
+                                个人排名：
+                                <span>第${date.申请表.orders}名</span>
+                            </li>
+                            <li class="contents">
+                                备注：
+                                <span>${date.申请表.rule0}</span>
+                            </li>
+                            `
+            }else{
+                application_message[0].innerHTML += `
+                            <li class="contents">
+                                备注：
+                                <span>${date.申请表.rule0}</span>
+                            </li>
+                            `
+            }
+        }else{
+            all += `
                         
                             <li class="contents">
                                 姓名：
@@ -93,9 +158,9 @@ function render(id){
                                 <span>${date.分数}${scords}</span>
                             </li>
                         `
-        application_message[0].innerHTML = all;
-        if(date.team == '是'){
-            application_message[0].innerHTML += `
+            application_message[0].innerHTML = all;
+            if(date.team == '是'){
+                application_message[0].innerHTML += `
                             
                             <li class="contents">
                                 个人排名：
@@ -106,13 +171,14 @@ function render(id){
                                 <span>${date.申请表.classify.b_remark}</span>
                             </li>
                             `
-        }else{
-            application_message[0].innerHTML += `
+            }else{
+                application_message[0].innerHTML += `
                             <li class="contents">
                                 备注：
                                 <span>${date.申请表.classify.b_remark}</span>
                             </li>
                             `
+            }
         }
         describe[0].innerHTML = `<div class="parctice-content">
                             <span>实践内容说明：</span>
