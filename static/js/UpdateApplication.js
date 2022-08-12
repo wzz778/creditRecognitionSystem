@@ -270,6 +270,22 @@ $.fn.serializeObject = function () {
         swal('下级指标不存在！');
         return
       }
+      axios({
+        url: '/api/gefatherm',
+        method: 'get',
+        params: {
+          "id": o.specific_information,
+        }
+      }).then(data => {
+        // console.log(data.data);
+        let thism=data.data.data.classfiy;
+        o.indicator_name=thism.b_Indicator_name;
+        o.rule0=thism.rule;
+        o.remark=thism.b_remark;
+        o.points_available=thism.b_points_available;
+      }).catch(function (error) {
+        
+      });
       swal({
         title: "你确定提交该申请表？",
         text: "你将添提交该部分数据！",
@@ -327,6 +343,22 @@ $.fn.serializeObject = function () {
         swal('下级指标不存在！');
         return
       }
+      axios({
+        url: '/api/gefatherm',
+        method: 'get',
+        params: {
+          "id": o.specific_information,
+        }
+      }).then(data => {
+        // console.log(data.data);
+        let thism=data.data.data.classfiy;
+        o.indicator_name=thism.b_Indicator_name;
+        o.rule0=thism.rule;
+        o.remark=thism.b_remark;
+        o.points_available=thism.b_points_available;
+      }).catch(function (error) {
+        
+      });
       swal({
         title: "你确定提交该申请表？",
         text: "你将添提交该部分数据！",
