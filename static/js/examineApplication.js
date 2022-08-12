@@ -143,7 +143,7 @@ function pass(event){
         swal('您要操作的指标不存在，不能进行该操作！');
         return
     }
-    console.log(sortname);
+    // console.log(sortname);
     let myname=sessionStorage.getItem('name');
     if(thisname==myname){
         swal("您暂无权限审核自己的申请表！");
@@ -268,10 +268,10 @@ function changepage(page,set) {
             return
         }
         if(status==0){
-            // console.log(redata);
+            console.log(redata);
             for (let n = 0; n < redata.pageInfo.length; n++) {
-                if(redata.pageInfo[n].classify!=null){
-                    // let b_Indicator_name=redata.pageInfo[n].classify!=undefined?redata.pageInfo[n].classify.b_Indicator_name:'指标不存在';
+                    console.log(redata.points[n]);
+                    let repoint=redata.points[n]!=null&&redata.points[n]!=0?redata.points[n]:redata.pageInfo[n].points_available;
                     Tbody.innerHTML +=`
                 <div  class="faopen tr">
                     <span class="ms" style='display:none'>${redata.pageInfo[n].id}</span>
@@ -281,11 +281,11 @@ function changepage(page,set) {
                     <span class="ms">${redata.pageInfo[n].user.academy}</span>
                     <span class="ms">${redata.pageInfo[n].user.major_class}</span>
                     <span class="ms">${redata.pageInfo[n].creditType.afirstLevel}</span>
-                    <span class="ml">${redata.pageInfo[n].classify.b_Indicator_name}
+                    <span class="ml">${redata.pageInfo[n].indicator_name}
                     </span>
-                    <span class="ms">${redata.points[n]}</span>
+                    <span class="ms">${repoint}</span>
                     <div class="opentextdiv">
-                        <span class="opentext">${redata.pageInfo[n].classify.b_Indicator_name}</span>
+                        <span class="opentext">${redata.pageInfo[n].indicator_name}</span>
                         <i class="fa fa-caret-down" aria-hidden="true"></i>
                     </div>
                     <span class="ml">
@@ -295,31 +295,31 @@ function changepage(page,set) {
                     </span>
                 </div>
                     `
-                }else{
-                    Tbody.innerHTML +=`
-                    <div  class="faopen tr">
-                        <span class="ms" style='display:none'>${redata.pageInfo[n].id}</span>
-                        <span class="ms chanceinput" style="display: none;"><input type="checkbox" name="team_a" value="a"></span>
-                        <span class="ms">${redata.pageInfo[n].user.name}</span>
-                        <span class="ms">${redata.pageInfo[n].user.userName}</span>
-                        <span class="ms">${redata.pageInfo[n].user.academy}</span>
-                        <span class="ms">${redata.pageInfo[n].user.major_class}</span>
-                        <span class="ms">${redata.pageInfo[n].creditType.afirstLevel}</span>
-                        <span class="ml">${redata.pageInfo[n].indicator_name}
-                        </span>
-                        <span class="ms">${redata.pageInfo[n].points_available}</span>
-                        <div class="opentextdiv">
-                            <span class="opentext">${redata.pageInfo[n].indicator_name}</span>
-                            <i class="fa fa-caret-down" aria-hidden="true"></i>
-                        </div>
-                        <span class="ml">
-                            <a class='mr' href='particulars?id=${redata.pageInfo[n].id}' onclick='look(this)'>查看详情</a>
-                            <a class='md' href='javascript:;' onclick='pass(this)'>通过</a>
-                            <a class='md' href='javascript:;' onclick='refuse(this)'>驳回</a>
-                        </span>
-                    </div>
-                        `
-                }
+                // }else{
+                    // Tbody.innerHTML +=`
+                    // <div  class="faopen tr">
+                    //     <span class="ms" style='display:none'>${redata.pageInfo[n].id}</span>
+                    //     <span class="ms chanceinput" style="display: none;"><input type="checkbox" name="team_a" value="a"></span>
+                    //     <span class="ms">${redata.pageInfo[n].user.name}</span>
+                    //     <span class="ms">${redata.pageInfo[n].user.userName}</span>
+                    //     <span class="ms">${redata.pageInfo[n].user.academy}</span>
+                    //     <span class="ms">${redata.pageInfo[n].user.major_class}</span>
+                    //     <span class="ms">${redata.pageInfo[n].creditType.afirstLevel}</span>
+                    //     <span class="ml">${redata.pageInfo[n].indicator_name}
+                    //     </span>
+                    //     <span class="ms">${redata.pageInfo[n].points_available}</span>
+                    //     <div class="opentextdiv">
+                    //         <span class="opentext">${redata.pageInfo[n].indicator_name}</span>
+                    //         <i class="fa fa-caret-down" aria-hidden="true"></i>
+                    //     </div>
+                    //     <span class="ml">
+                    //         <a class='mr' href='particulars?id=${redata.pageInfo[n].id}' onclick='look(this)'>查看详情</a>
+                    //         <a class='md' href='javascript:;' onclick='pass(this)'>通过</a>
+                    //         <a class='md' href='javascript:;' onclick='refuse(this)'>驳回</a>
+                    //     </span>
+                    // </div>
+                    //     `
+                // }
                 let ms = document.getElementsByClassName("ms");
                 let ml = document.getElementsByClassName("ml");
                 for (let i of ms) {
@@ -334,9 +334,11 @@ function changepage(page,set) {
                 }
             }
         }else{
+            // console.log(redata);
             for (let n = 0; n < redata.pageInfo.length; n++) {
-                if(redata.pageInfo[n].classify!=null){
+                // if(redata.pageInfo[n].classify!=null){
                     // let b_Indicator_name=redata.pageInfo[n].classify!=undefined?redata.pageInfo[n].classify.b_Indicator_name:'指标不存在';
+                    let repoint=redata.points[n]!=null&&redata.points[n]!=0?redata.points[n]:redata.pageInfo[n].points_available;
                     Tbody.innerHTML +=`
                 <div  class="faopen tr">
                     <span class="ms" style='display:none'>${redata.pageInfo[n].id}</span>
@@ -346,11 +348,11 @@ function changepage(page,set) {
                     <span class="ms">${redata.pageInfo[n].user.academy}</span>
                     <span class="ms">${redata.pageInfo[n].user.major_class}</span>
                     <span class="ms">${redata.pageInfo[n].creditType.afirstLevel}</span>
-                    <span class="ml">${redata.pageInfo[n].classify.b_Indicator_name}
+                    <span class="ml">${redata.pageInfo[n].indicator_name}
                     </span>
-                    <span class="ms">${redata.points[n]}</span>
+                    <span class="ms">${repoint}</span>
                     <div class="opentextdiv">
-                        <span class="opentext">${redata.pageInfo[n].classify.b_Indicator_name}</span>
+                        <span class="opentext">${redata.pageInfo[n].indicator_name}</span>
                         <i class="fa fa-caret-down" aria-hidden="true"></i>
                     </div>
                     <span class="ml">
@@ -358,29 +360,29 @@ function changepage(page,set) {
                     </span>
                 </div>
                     `
-                }else{
-                    Tbody.innerHTML +=`
-                    <div  class="faopen tr">
-                        <span class="ms" style='display:none'>${redata.pageInfo[n].id}</span>
-                        <span class="ms chanceinput" style="display: none;"><input type="checkbox" name="team_a" value="a"></span>
-                        <span class="ms">${redata.pageInfo[n].user.name}</span>
-                        <span class="ms">${redata.pageInfo[n].user.userName}</span>
-                        <span class="ms">${redata.pageInfo[n].user.academy}</span>
-                        <span class="ms">${redata.pageInfo[n].user.major_class}</span>
-                        <span class="ms">${redata.pageInfo[n].creditType.afirstLevel}</span>
-                        <span class="ml">${redata.pageInfo[n].indicator_name}
-                        </span>
-                        <span class="ms">${redata.pageInfo[n].points_available}</span>
-                        <div class="opentextdiv">
-                            <span class="opentext">${redata.pageInfo[n].indicator_name}</span>
-                            <i class="fa fa-caret-down" aria-hidden="true"></i>
-                        </div>
-                        <span class="ml">
-                            <a class='mr' href='particulars?id=${redata.pageInfo[n].id}' onclick='look(this)'>查看详情</a>
-                        </span>
-                    </div>
-                        `
-                }
+                // }else{
+                //     Tbody.innerHTML +=`
+                //     <div  class="faopen tr">
+                //         <span class="ms" style='display:none'>${redata.pageInfo[n].id}</span>
+                //         <span class="ms chanceinput" style="display: none;"><input type="checkbox" name="team_a" value="a"></span>
+                //         <span class="ms">${redata.pageInfo[n].user.name}</span>
+                //         <span class="ms">${redata.pageInfo[n].user.userName}</span>
+                //         <span class="ms">${redata.pageInfo[n].user.academy}</span>
+                //         <span class="ms">${redata.pageInfo[n].user.major_class}</span>
+                //         <span class="ms">${redata.pageInfo[n].creditType.afirstLevel}</span>
+                //         <span class="ml">${redata.pageInfo[n].indicator_name}
+                //         </span>
+                //         <span class="ms">${redata.pageInfo[n].points_available}</span>
+                //         <div class="opentextdiv">
+                //             <span class="opentext">${redata.pageInfo[n].indicator_name}</span>
+                //             <i class="fa fa-caret-down" aria-hidden="true"></i>
+                //         </div>
+                //         <span class="ml">
+                //             <a class='mr' href='particulars?id=${redata.pageInfo[n].id}' onclick='look(this)'>查看详情</a>
+                //         </span>
+                //     </div>
+                //         `
+                // }
                 let ms = document.getElementsByClassName("ms");
                 let ml = document.getElementsByClassName("ml");
                 for (let i of ms) {
