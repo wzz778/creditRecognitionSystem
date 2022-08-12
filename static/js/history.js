@@ -161,7 +161,7 @@ function rendering(){
                         <li class="student-apply lis">${date[i].application.indicator_name}</li>
                         <li class="student-time lis">${date[i].application.application_time}</li>
                         <li class="student-state lis">${approval_status}</li>
-                        <li class="student-apply-credit lis">${date[i].application.points_available}</li>
+                        <li class="student-apply-credit lis">${data.data.data.points[i]}</li>
                         <li class="student-operator lis"><span class="check">查看</span><span class="update">修改</span></li>
                     </ul>`
                 }

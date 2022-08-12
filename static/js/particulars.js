@@ -44,7 +44,7 @@ function render(id){
         }
     }).then((data)=>{
         // console.log(data.data)
-        // console.log(data.data.data);
+        console.log(data.data.data);
         let date = data.data.data;
         // let html = template('details',data);
         let scords = '分';
@@ -87,8 +87,12 @@ function render(id){
                                 <span>${date.申请表.team}</span>
                             </li>
                             <li class="contents">
-                                个人申请的学分：
+                                最高申请的学分：
                                 <span>${date.申请表.points_available}${scords}</span>
+                            </li>
+                            <li class="contents">
+                                个人申请的学分：
+                                <span>${date.分数}${scords}</span>
                             </li>
                         `
             application_message[0].innerHTML = all;
