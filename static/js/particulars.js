@@ -43,8 +43,8 @@ function render(id){
             id:id,
         }
     }).then((data)=>{
-        console.log(data.data)
-        console.log(data.data.data);
+        // console.log(data.data)
+        // console.log(data.data.data);
         let date = data.data.data;
         // let html = template('details',data);
         let scords = '分';
@@ -108,7 +108,7 @@ function render(id){
                 application_message[0].innerHTML += `
                             <li class="contents">
                                 备注：
-                                <span>${date.申请表.rule0}</span>
+                                <span>${date.申请表.remark}</span>
                             </li>
                             `
             }
@@ -219,7 +219,7 @@ function render(id){
             id:id,
         }
     }).then((date)=>{
-        console.log(date.data.data);
+        // console.log(date.data.data);
         let all = '';
         // let datte = date.data.data;
         // preloadimages(datte);
