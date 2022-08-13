@@ -209,6 +209,10 @@ sureRevise.onclick = function () {
         swal('请选择计分规则(具体内容在备注中看)')
         return
     }
+    if( creditRules.value==2&&Number(reviseCreditNumber.value)<=1){
+        swal('该规则分数不能小于等于1')
+        return
+    }
     let sendArr = {}
     sendArr.b_Indicator_name = reviseRecognize.value.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\s+/g, "")
     sendArr.b_id = Number(selfId.innerHTML)
