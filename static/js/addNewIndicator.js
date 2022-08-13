@@ -160,7 +160,7 @@ sureAdd.onclick = function () {
                 swal('该规则除主持人外，其他成员减一分，您输入的分数会造成申请学分为负数(请输入大于1的分数)')
                 return
             }
-            let name = b_Indicator_name[i].value.replace(/</g, '&lt;').replace(/。/g, '&gt;').replace(/\s+/g, "")
+            let name = b_Indicator_name[i].value.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\s+/g, "")
             let remark=b_remark[i].value.replace(/</g,'&lt;').replace(/>/g,'&gt;')
             arrSend.push({ b_Indicator_name: name, b_points_available: Number(b_points_available[i].value), b_remark: remark, rule: creditRules[i].value })
         }
