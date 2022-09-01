@@ -268,9 +268,9 @@ function changepage(page,set) {
             return
         }
         if(status==0){
-            console.log(redata);
+            // console.log(redata);
             for (let n = 0; n < redata.pageInfo.length; n++) {
-                    console.log(redata.points[n]);
+                    // console.log(redata.points[n]);
                     let repoint=redata.points[n]!=null&&redata.points[n]!=0?redata.points[n]:redata.pageInfo[n].points_available;
                     Tbody.innerHTML +=`
                 <div  class="faopen tr">
