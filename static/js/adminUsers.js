@@ -607,6 +607,7 @@ function render(numbers,size){
                     checkbox_all[0].userName = all[i].userName;
                     checkbox_all[0].grade = all[i].grade;
                     checkbox_all[0].academy = all[i].academy;
+                    checkbox_all[0].major = all[i].major;
                     checkbox_all[0].major_class = all[i].major_class;
                     checkbox_all[0].sex = all[i].sex;
                     // console.log(checkbox_all[0].numbers);
