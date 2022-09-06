@@ -1045,22 +1045,3 @@ changeUserPermission.onchange = function () {
     bodyTopClu[0].style.display = 'none'
     bodyTopOrganize.style.display = 'block'
 }
-
-
-// changeUserHas.onchange = function () {
-//     changeUserGrade.value = ''
-//     changeUseraCademy.innerHTML = ''
-//     changeUseraCademy.add(new Option('请选择...', ''))
-//     changeUseraCademy.value = ''
-//     major.innerHTML = ''
-//     major.add(new Option('请选择...', ''))
-//     major.value = ''
-//     changeUserClass.innerHTML = ''
-//     changeUserClass.add(new Option('请选择...', ''))
-//     changeUserClass.value = ''
-//     if (changeUserHas.value == '有') {
-//         bodyTopClu[0].style.display = 'block'
-//     } else {
-//         bodyTopClu[0].style.display = 'none'
-//     }
-// }
