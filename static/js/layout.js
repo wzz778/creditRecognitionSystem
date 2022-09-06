@@ -1,6 +1,8 @@
 let head_cord=document.getElementById('head-cord');
 let head_cord_fade=document.getElementById('head-cord-fade');
 sessionStorage.setItem("havasuccess", '0');
+let haveno=document.getElementsByClassName('haveno');
+let dropdown_item=document.getElementsByClassName('dropdown-item');
 function dropdown() {
     head_cord_fade.style.display = 'block'
 }
@@ -65,6 +67,10 @@ function opennav(event){
 
 }
 if(sessionStorage.getItem('power')=='超级管理员'){
+    haveno[0].style.display='none';
+    haveno[1].style.display='none';
+    dropdown_item[0].style.display='none';
+    dropdown_item[1].style.display='none';
     navul.innerHTML+=`
     <li class="renav-item renav-itemed"  style="transition: 0.3s all;">
         <a class="item_top" href="javascript:;" onclick="opennav(this)"><i class="fa fa-users iii" aria-hidden="true"></i>超级管理<i class="fa fa-chevron-up" aria-hidden="true"></i></a>
@@ -104,6 +110,10 @@ if(sessionStorage.getItem('power')=='超级管理员'){
         columna[9].style.background="#1271D5";
     }
 }else if(sessionStorage.getItem('power')=='普通管理员'){
+    haveno[0].style.display='none';
+    haveno[1].style.display='none';
+    dropdown_item[0].style.display='none';
+    dropdown_item[1].style.display='none';
     navul.innerHTML+=`
     <li class="renav-item renav-itemed"  style="transition: 0.3s all;">
         <a class="item_top" href="javascript:;" onclick="opennav(this)"><i class="fa fa-user iii" aria-hidden="true"></i>管理员<i class="fa fa-chevron-up" aria-hidden="true"></i></a>

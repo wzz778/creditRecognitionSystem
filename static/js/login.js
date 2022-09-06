@@ -29,6 +29,12 @@ function myFunction() {
                     // console.log(user);
                     sessionStorage.setItem('name', user.data.name);
                     sessionStorage.setItem('power', user.data.power);
+                    if(user.data.power!='普通用户'){
+                        setTimeout(function () {
+                            window.location.assign("/examineApplication");
+                        }, 1000)   
+                        return
+                    }
                     setTimeout(function () {
                         window.location.assign("/submitApplication");
                         // sessionStorage.setItem("tousers", '1');

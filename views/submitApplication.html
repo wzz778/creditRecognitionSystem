@@ -42,17 +42,20 @@
   <div class="layui-form-item" pane="">
     <label class="layui-form-label">是否为集体项目</label>
     <div id="teamdiv" class="layui-input-block">
-      <input type="radio" name="team" class="teamin" value="否" title="否" checked="">否
-      <input type="radio" name="team" class="teamin" value="是" title="是" >是
+      <div id="oredivs">
+        <input type="radio" name="team" class="teamin teamin1" value="否" title="否" checked="">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp否&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+        <input type="radio" name="team" class="teamin teamin2" value="是" title="是" >是
+      </div>
       <div id="ranking"></div>
-      <!-- <div id="creditdiv">
-        申请学分：
-        <input type="text" name="points" maxlength="4" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')" lay-verify="title" autocomplete="off" placeholder="分值" class="layui-input">分
-      </div>分 -->
       <div id="orediv">
         是否上传附件：
         <input type="radio" name="ore" class="ore ore1" value="是" title="是" checked="true">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp是&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
         <input type="radio" name="ore" class="ore ore2" value="否" title="否">否
+      </div>
+      <div id="creditdiv">
+        申请学分：
+        <span id="getcredit">3.5</span>
+         分
       </div>
     </div>
   </div>
@@ -91,9 +94,9 @@
       <textarea placeholder="请输入内容" id="subtextarea" class="layui-textarea" name="remarks"></textarea>
     </div>
   </div>
-  <!-- <div id="tocreditSummary">
+  <div id="tocreditSummary">
     <a href="creditSummary" target="_blank" id="topdf">不知道申请多少学分？点击查看指标总览</a>
-  </div> -->
+  </div>
   <div class="layui-form-item">
     <div class="layui-input-block">
       <button type="button" class="layui-btn" lay-submit="" lay-filter="demo1" id="postbutton">立即提交</button>

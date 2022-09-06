@@ -14,9 +14,27 @@ router.get('/layout',(req,res)=>{
         user:req.session.user
     })
 })
+
 //登录页面
 router.get('/login',(req,res)=>{
     res.render('login.html')
+})
+router.get('/',(req,res)=>{
+    axios.get('/creditTypeOperate/showCreditType',{
+        // params:req.query,
+        headers:{
+            token: req.session.token,
+        }
+    }).then(response=>{
+        req.session.credittype=response.data.data;
+        // console.log(req.session.user);
+        res.render('submitApplication.html',{
+            credittype: req.session.credittype,
+            user:req.session.user
+        })
+    }).catch(function (error) {
+        // res.send(error)
+    });
 })
 // 学分汇总表
 router.get('/creditSummary', (req, res) => {
@@ -140,7 +158,7 @@ router.get('/submitApplication',(req,res)=>{
         }
     }).then(response=>{
         req.session.credittype=response.data.data;
-        console.log(req.session.user);
+        // console.log(req.session.user);
         res.render('submitApplication.html',{
             credittype: req.session.credittype,
             user:req.session.user
@@ -157,7 +175,6 @@ router.get('/UpdateApplication',(req,res)=>{
         }
     }).then(response=>{
         req.session.credittype=response.data.data;
-        console.log(req.session.user);
         res.render('UpdateApplication.html',{
             credittype: req.session.credittype,
             user:req.session.user
@@ -178,7 +195,6 @@ router.post('/api/login', (req, res) => {
     }).then(response=>{
         req.session.token= response.data.data.token;
         req.session.password= req.body.password;
-        console.log(req.session.token);
         res.send(response.data);
         // return jwt.decode(req.session.token).username;
     }).catch(function (error) {
@@ -197,7 +213,6 @@ router.get('/api/getmymessage', (req, res) => {
         }
     }).then(user=>{
         req.session.user=user.data.data;
-        console.log(req.session.user);
         res.send(req.session.user)
     }).catch(function (error) {
         console.log(error);
@@ -223,7 +238,6 @@ router.get('/api/getcreditmessage', (req, res) => {
             token:req.session.token
         }},
     ).then(response=>{
-        console.log(response.data.data);
         req.session.credittype=response.data.data;
         res.send(response.data);
     }).catch(function (error) {
@@ -240,7 +254,7 @@ router.post('/api/getpost', (req, res) => {
             token:req.session.token
         },
     }).then(response=>{
-        console.log(response.data);
+        // console.log(response.data);
         res.send(response.data);
     }).catch(function (error) {
         console.log(error);
@@ -257,7 +271,6 @@ router.post('/api/updatapost', (req, res) => {
             token:req.session.token
         },
     }).then(response=>{
-        console.log(response.data);
         res.send(response.data);
     }).catch(function (error) {
         console.log(error);
@@ -271,7 +284,7 @@ router.get('/api/getcreditson', (req, res) => {
             token:req.session.token
         }},
     ).then(response=>{
-        console.log(response.data);
+        // console.log(response.data);
         res.send(response.data);
     }).catch(function (error) {
         res.send(error)
@@ -284,7 +297,7 @@ router.get('/api/getsonson', (req, res) => {
             token:req.session.token
         }},
     ).then(response=>{
-        console.log(response.data);
+        // console.log(response.data);
         res.send(response.data);
     }).catch(function (error) {
         res.send(error)
@@ -297,7 +310,7 @@ router.get('/api/gefatherm', (req, res) => {
             token:req.session.token
         }},
     ).then(response=>{
-        console.log(response.data);
+        // console.log(response.data);
         res.send(response.data);
     }).catch(function (error) {
         res.send(error)
@@ -311,7 +324,7 @@ router.get('/api/getpostmessage', (req, res) => {
             token:req.session.token
         }},
     ).then(response=>{
-        console.log(response.data);
+        // console.log(response.data);
         res.send(response.data);
     }).catch(function (error) {
         res.send(error)
@@ -339,7 +352,7 @@ router.post('/api/UploadAttachment', multipartMiddleware,(req, res) => {
         }
     })
         .then((result) => {
-            console.log(result.data)
+            // console.log(result.data)
             res.send({ err: 0, msg: result.data })
         })
         .catch((err) => {
@@ -357,7 +370,7 @@ router.post('/api/deletePhoto',(req, res) => {
     url: '/user/deletePhoto',
     params:{key:req.body.key}
     }).then(response=>{
-        console.log(response.data);
+        // console.log(response.data);
         res.send(response);
     }).catch(function (error) {
         console.log(error);
@@ -399,7 +412,7 @@ router.get('/api/allapplication', (req, res) => {
             token:req.session.token
         }},
     ).then(response=>{
-        console.log(response.data);
+        // console.log(response.data);
         res.send(response.data);
     }).catch(function (error) {
         res.send(error)
@@ -427,7 +440,7 @@ router.get('/api/getEnclosure', (req, res) => {
             token:req.session.token
         }},
     ).then(response=>{
-        console.log(response.data);
+        // console.log(response.data);
         res.send(response.data);
     }).catch(function (error) {
         res.send(error)
@@ -474,7 +487,7 @@ router.get('/api/getacademy', (req, res) => {
         },
         params:req.query,
     }).then(response=>{
-        console.log(response.data);
+        // console.log(response.data);
         res.send(response.data);
     }).catch(function (error) {
         res.send(error)
@@ -482,7 +495,6 @@ router.get('/api/getacademy', (req, res) => {
 })
 //删除组织
 router.post('/api/deleteorganization',(req, res) => {
-    console.log(req.body);
     // let allid=JSON.stringify(req.body);
     // console.log(allid);
     // let all=allid.replace(/{/g,"").replace(/}/g,"");
@@ -495,7 +507,7 @@ router.post('/api/deleteorganization',(req, res) => {
     url: '/admin/deleteOrganization',
     params:{ids:req.body.toString()}
     }).then(response=>{
-        console.log(response.data);
+        // console.log(response.data);
         res.send(response);
     }).catch(function (error) {
         console.log(error);
@@ -512,7 +524,7 @@ router.put('/api/uploador', (req, res) => {
     url: '/admin/updateOrganization',
     params:req.query
     }).then(response=>{
-        console.log(response.data);
+        // console.log(response.data);
         res.send(response.data);
     }).catch(function (error) {
         console.log(error);
@@ -531,7 +543,7 @@ router.post('/api/addorgin', (req, res) => {
             token:req.session.token
         },
     }).then(response=>{
-        console.log(response.data);
+        // console.log(response.data);
         res.send(response.data);
     }).catch(function (error) {
         console.log(error);
@@ -548,7 +560,7 @@ router.post('/api/setfeedback', (req, res) => {
         method:'post',
         params:req.body,
     }).then(response=>{
-        console.log(response.data);
+        // console.log(response.data);
         res.send(response.data);
         // return jwt.decode(req.session.token).username;
     }).catch(function (error) {

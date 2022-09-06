@@ -196,13 +196,14 @@ body{
   margin-right: 5px;
 }
 #head #head-cord #head-cord-fade .dropdown-item {
-  font-size: 13px;
+  font-size: 15px;
   display: block;
   color: black;
   padding: 4px 15px;
   border-bottom: none;
   line-height: normal;
   transition: all 0.3s ;
+  margin: 5px 0;
 }
 #head #head-cord #head-cord-fade .dropdown-item:hover {
   background-color: #79a1cd;
@@ -212,7 +213,9 @@ body{
   padding: 0 4px;
   color: #368AE2;
 }
-
+.fa-bars{
+  font-size: 16px;
+}
 #body {
   width: 100%;
   min-height: 100vh;
