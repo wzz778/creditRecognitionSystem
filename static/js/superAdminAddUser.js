@@ -10,18 +10,21 @@ let defaultYes = document.getElementById('defaultYes')
 let defaultNo = document.getElementById('defaultNo')
 // 定义一个变量用于判断是否选择填写学生信息,true是填写
 let yn = true
-choiceStuTea[0].onclick = function () {
-    defaultYes.style.display = 'inline-block'
-    yn = true
-    defaultNo.style.display = 'none'
-    studentInformation.style.display = 'block'
-}
-choiceStuTea[1].onclick = function () {
-    defaultNo.style.display = 'inline-block'
-    yn = false
-    defaultYes.style.display = 'none'
-    studentInformation.style.display = 'none'
-}
+// choiceStuTea[0].onclick = function () {
+//     yn = true
+//     defaultYes.style.display = 'inline-block'
+//     defaultNo.style.display = 'none'
+//     studentInformation.style.display = 'block'
+// }
+// choiceStuTea[1].onclick = function () {
+//     defaultNo.style.display = 'inline-block'
+//     yn = false
+//     defaultYes.style.display = 'none'
+//     studentInformation.style.display = 'none'
+// }
+
+
+
 // 点击input框或者选择框把提示文字隐藏
 let inputAll = document.getElementsByTagName('input')
 for (let i = 0; i < inputAll.length; i++) {
@@ -49,29 +52,19 @@ let usClass = document.getElementById('usClass')
 let Remarks = document.getElementById('Remarks')
 let save = document.getElementById('save')
 let cancel = document.getElementById('cancel')
-let sex = document.getElementById('sex')
 
 let organization = document.getElementById('organization')
-let position = document.getElementById('position')
+let positionAcademy = document.getElementById('positionAcademy')
 let OrganizationInformation = document.getElementById('OrganizationInformation')
 let addOrganization = document.getElementById('addOrganization')
 let cancelAddOrganization = document.getElementById('cancelAddOrganization')
-addOrganization.onclick = function () {
-    // console.log(1234)
-    OrganizationInformation.style.display = 'grid'
-    usPermission.value = '普通管理员'
-}
-cancelAddOrganization.onclick = function () {
-    OrganizationInformation.style.display = 'none'
-    usPermission.value = ''
-}
 
 // 限制账号,这里限制只能是数字
 let accountTest = /^[0-9]*$/
 save.onclick = function () {
     // console.log(yn)
     // 判断是否为空
-    if (usName.value == ''||usName.value.replace(/(^\s*)|(\s*$)/g, "") == "") {
+    if (usName.value == '' || usName.value.replace(/(^\s*)|(\s*$)/g, "") == "") {
         // 没填写用户名
         // usName.parentElement.lastElementChild.style.display = 'block'
         swal('请输入用户名,不能为空格')
@@ -86,11 +79,7 @@ save.onclick = function () {
         // usPermission.parentElement.lastElementChild.style.display = 'block'
         swal('请选择用户身份')
         return
-    } else if (sex.value == '') {
-        // sex.parentElement.lastElementChild.style.display = 'block'
-        swal('请选择性别')
-        return
-    }
+    } 
     if (yn) {
         // 看是否填写了年级，院系，专业等
         if (usGrade.value == '') {
@@ -120,26 +109,25 @@ save.onclick = function () {
     var indexusSpecialized = usSpecialized.selectedIndex; // 选中索引
     var textusSpecialized = usSpecialized.options[indexusSpecialized].text;
     let obj = {
-        name: usName.value.replace(/\s+/g,""),
+        name: usName.value.replace(/\s+/g, ""),
         userName: account.value,
         power: usPermission.value,
-        sex: sex.value
     }
     if (yn) {
         obj.grade = textGrade
         obj.academy = textusCollege
         obj.major_class = textusClass
-        obj.major=textusSpecialized
+        obj.major = textusSpecialized
     }
     if (OrganizationInformation.style.display == 'grid') {
         // 必须填组织信息
-        if (organization.value == '' || position.value == '') {
+        if (organization.value == '' ) {
             swal('请输入组织信息')
             return
         } else {
             obj.organization = organization.value
-            obj.position = position.value
-            obj.power = '普通管理员'
+            // 待定
+            obj.academy = positionAcademy.value
         }
     }
     // console.log(usName.value.replace(/\s+/g,""))
@@ -147,7 +135,9 @@ save.onclick = function () {
     axios({
         method: 'POST',
         url: '/admin/User',
-        data: obj
+        data: {
+            obj:obj
+        }
     })
         .then((result) => {
             // console.log(result.data)
@@ -155,15 +145,11 @@ save.onclick = function () {
                 // 将错误信息显示出来
                 swal(result.data.msg)
             } else {
-                // popUps[0].style.display='block'
-                // setTimeout(()=>{
-                //     popUps[0].style.display='none'
-                // },2000)
                 swal('添加成功')
                 // 清空数据
-                usCollege.innerHTML=``
-                usSpecialized.innerHTML=''
-                usClass.innerHTML=''
+                usCollege.innerHTML = ``
+                usSpecialized.innerHTML = ''
+                usClass.innerHTML = ''
                 usCollege.add(new Option('请选择...', ''))
                 usSpecialized.add(new Option('请选择...', ''))
                 usClass.add(new Option('请选择...', ''))
@@ -178,10 +164,6 @@ save.onclick = function () {
         .catch((err) => {
             console.log(err)
             // 提示错误
-            // popUps[1].style.display = 'block'
-            // setTimeout(() => {
-            //     popUps[1].style.display = 'none'
-            // }, 2000)
             swal('网络错误')
         })
 }
@@ -216,7 +198,6 @@ function GetOtherLevel(ele, id) {
         }
     })
         .then((result) => {
-            // console.log(result.data)
             // 将结果添加到ele上
             ele.innerHTML = ''
             ele.add(new Option('请选择...', ''))
@@ -231,13 +212,16 @@ function GetOtherLevel(ele, id) {
         })
 }
 usGrade.onchange = function () {
+    usCollege.innerHTML = ''
+    usCollege.add(new Option('请选择...', ''))
+    usCollege.value = ''
     // 显示学院
-    usSpecialized.innerHTML=''
+    usSpecialized.innerHTML = ''
     usSpecialized.add(new Option('请选择...', ''))
-    usSpecialized.value=''
-    usClass.innerHTML=''
+    usSpecialized.value = ''
+    usClass.innerHTML = ''
     usClass.add(new Option('请选择...', ''))
-    usClass.value=''
+    usClass.value = ''
     if (usGrade.value == '') {
         return
     }
@@ -245,63 +229,56 @@ usGrade.onchange = function () {
 }
 usCollege.onchange = function () {
     // 显示专业
-    usClass.innerHTML=''
+    usClass.innerHTML = ''
     usClass.add(new Option('请选择...', ''))
-    usClass.value=''
-    usSpecialized.value=''
+    usClass.value = ''
+    usSpecialized.innerHTML = ''
+    usSpecialized.add(new Option('请选择...', ''))
+    usSpecialized.value = ''
     if (usCollege.value == '') {
         return
     }
     GetOtherLevel(usSpecialized, usCollege.value)
 }
 usSpecialized.onchange = function () {
+    usClass.innerHTML = ''
+    usClass.add(new Option('请选择...', ''))
+    usClass.value = ''
     if (usSpecialized.value == '') {
         return
     }
     // 显示班级
     GetOtherLevel(usClass, usSpecialized.value)
 }
+cancel.onclick = function () {
+    window.location.href = '/adminManageUsers'
+}
 
-// 渲染三级联动数据
-// 1.创建三维数组
-// var provinces = [];
-// provinces["江苏省"] = ["南京市", "无锡市", "苏州市"]
-// provinces["浙江省"] = ["杭州市", "宁波市"]
-// provinces["安徽省"] = ["合肥市", "马鞍山市"]
-// var citys = []
-// citys["南京市"] = ["玄武区", "雨花台区", "鼓楼区", "秦淮区", "六合区"]
-// citys["无锡市"] = ["滨湖区", "惠山区", "梁溪区"]
-// citys["苏州市"] = ["姑苏区", "吴江区"]
-// citys["杭州市"] = ["西湖区", "临安区", "上城区"]
-// citys["宁波市"] = ["江北区", "江东区"]
-// citys["合肥市"] = ["蜀山区", "瑶海区"]
-// citys["马鞍山市"] = ["花山区", "雨山区"]
-// for (province in provinces) {
-//     usCollege.add(new Option(province, province))//省份下拉菜单
-// }
-// usCollege.onchange = function () {//省份下拉菜单内容改变时 执行的命令
-//     var selectvalue = usCollege.value;//获取省份下拉菜单的值
-//     usSpecialized.innerHTML = '<option value="">请选择专业......</option>'
-//     usClass.innerHTML = ' <option value="">请选择班级......</option>'
-//     for (provincename in provinces) {//遍历省份的名称z
-//         if (provincename == selectvalue) {
-//             for (cityname in provinces[provincename]) {//遍历城市名称
-//                 usSpecialized.add(new Option(provinces[provincename][cityname], provinces[provincename][cityname]))
-//             }
-//         }
-//     }
-// }
-// usSpecialized.onchange = function () {
-//     usClass.innerHTML = ' <option value="">请选择班级......</option>'
-//     var cityValue = usSpecialized.value
-//     for (i in citys) {//i是area数组的索引值（城市名称）
-//         if (i == cityValue) {
-//             for (j in citys[i]) {
-//                 usClass.add(new Option(citys[i][j], citys[i][j]));
-//             }
-//         }
-//     }
-// }
-cancel.onclick=function(){
-    window.location.href='/adminManageUsers'
+
+// 封装一个函数用于判断是否有学生信息
+function judgeStudentInfoShow(judegCondition) {
+    // 如果是true表示用显示
+    yn = judegCondition
+    if (judegCondition) {
+        // defaultYes.style.display = 'inline-block'
+        // defaultNo.style.display = 'none'
+        studentInformation.style.display = 'block'
+        return
+    }
+    // defaultNo.style.display = 'inline-block'
+    // defaultYes.style.display = 'none'
+    studentInformation.style.display = 'none'
+}
+
+// 为用户权限选择框绑定函数用于判断是否显示学生信息
+usPermission.onchange = function () {
+    let usOnchageCondition = true
+    if (this.value == '普通用户' || this.value == '') {
+        usOnchageCondition = true
+        OrganizationInformation.style.display = 'none'
+    } else {
+        usOnchageCondition = false
+        OrganizationInformation.style.display = 'grid'
+    }
+    judgeStudentInfoShow(usOnchageCondition)
 }

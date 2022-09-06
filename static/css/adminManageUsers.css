@@ -196,3 +196,7 @@ input{
     color: white;
     padding: 5px;
 }
+
+.adminUserSty>ul {
+    grid-template-columns: 35px repeat(7, 1fr);
+}

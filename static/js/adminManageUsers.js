@@ -48,7 +48,7 @@ let now_page = 1//当前请求页数
 
 // 搜索的条件
 let useriDentity = document.getElementById('useriDentity')
-let sex = document.getElementById('sex')
+// let sex = document.getElementById('sex')
 let Faculty = document.getElementById('Faculty')
 let specialized = document.getElementById('specialized')
 let major_class = document.getElementById('major_class')
@@ -70,6 +70,20 @@ function judgeHas() {
         nowPage.innerHTML = now_page
         GetAll(now_page, per_Page, assignFn())
         checkDelAll.checked = ''
+    }
+}
+// 普通用户和管理员显示信息不一样
+let generalUser = document.getElementsByClassName('generalUser')
+let adminUser = document.getElementsByClassName('adminUser')
+let infoTop = document.getElementById('infoTop')
+// 封装一个函数，用于判断用户权限是否显示，yn是true时是正常显示
+function userpowerShowInfo(ele, yn) {
+    let showSty = 'inline'
+    if (!yn) {
+        showSty = 'none'
+    }
+    for (let i = 0; i < ele.length; i++) {
+        ele[i].style.display = showSty
     }
 }
 
@@ -118,7 +132,13 @@ function GetAll(page, perPage, obj) {
                     // 超级管理员
                     str = `<button class="operatorBtnSty" onclick="swal('超级管理员无需授权')" >授权</button>`
                 }
-                adminManageUsersContentContent.innerHTML += `
+
+                if (result.data.msg[i].power == '普通用户') {
+                    userpowerShowInfo(generalUser, true)
+                    userpowerShowInfo(adminUser, false)
+                    infoTop.classList.remove('adminUserSty')
+                    adminManageUsersContentContent.classList.remove('adminUserSty')
+                    adminManageUsersContentContent.innerHTML += `
             <ul>
                 <li>
                     <div style='display:none'>${result.data.msg[i].uid}</div>
@@ -145,15 +165,44 @@ function GetAll(page, perPage, obj) {
                 </li>
             </ul>
                 `
+                } else {
+                    // 不是普通用户
+                    userpowerShowInfo(generalUser, false)
+                    userpowerShowInfo(adminUser, true)
+                    infoTop.classList.add('adminUserSty')
+                    adminManageUsersContentContent.classList.add('adminUserSty')
+                    adminManageUsersContentContent.innerHTML += `
+            <ul>
+                <li>
+                    <div style='display:none'>${result.data.msg[i].uid}</div>
+                    <input type="checkbox" class="checkDel" onclick="checkDelFn()">
+                    <div style='display:none'>${result.data.msg[i].academy}</div>
+                </li>
+                <li>${result.data.msg[i].name}</li>
+                <li>${result.data.msg[i].userName}</li>
+                <li>${result.data.msg[i].power}</li>
+                <li>${result.data.msg[i].academy}</li>
+                <li>${result.data.msg[i].organization}</li>
+                <li>
+                    <button class="operatorBtnSty" onclick='reviseFn(this)'>重置密码</button>
+                    <div style='display:none'>${result.data.msg[i].uid}</div>
+                </li>
+                <li>
+                    <div style='display:none'>${result.data.msg[i].uid}</div>
+                    <div style='display:none'>${result.data.msg[i].major}</div>
+                    <button onclick="removePopup(this)" class="operatorBtnSty">删除</button>
+                    <button onclick="changeAdminUserInfoFn(this)" class="operatorBtnSty">修改</button>
+                    ${str}
+                    <div style='display:none'>${result.data.msg[i].sex}</div>
+                </li>
+            </ul>
+                `
+                }
+
             }
-            // popUps[0].style.display = 'block'
-            // setTimeout(() => {
-            //     popUps[0].style.display = 'none'
-            // }, 2000)
-            // swal('查询成功')
         })
         .catch((err) => {
-            // console.log(err)
+            console.log(err)
             // popUps[1].style.display = 'block'
             // setTimeout(() => {
             //     popUps[1].style.display = 'none'
@@ -161,7 +210,8 @@ function GetAll(page, perPage, obj) {
             swal('网络错误')
         })
 }
-GetAll(1, 10, {})
+useriDentity.value = '普通用户'
+GetAll(1, 10, { power: useriDentity.value })
 
 // 赋值函数(并不判断是否又搜索值就全部加入)
 function assignFn() {
@@ -169,7 +219,7 @@ function assignFn() {
     obj.academy = Faculty.value
     obj.name = account.value
     obj.major_class = major_class.value
-    obj.sex = sex.value
+    // obj.sex = sex.value
     obj.power = useriDentity.value
     obj.userName = account.value
     var indexGrade = usGrade.selectedIndex; // 选中索引
@@ -409,7 +459,8 @@ reset.onclick = function () {
     Faculty.value = ''
     major_class.value = ''
     nowPage.innerHTML = now_page
-    GetAll(now_page, per_Page, assignFn())
+    useriDentity.value = '普通用户'
+    GetAll(now_page, per_Page, { power: useriDentity.value })
     swal('已重置')
 }
 
@@ -428,11 +479,16 @@ let changeUserSpecialized = document.getElementById('changeUserSpecialized')//�
 let changeUserClass = document.getElementById('changeUserClass')//班级
 let changeUserId = document.getElementById('changeUserId')//用户id
 let bodyTopClu = document.getElementsByClassName('bodyTopClu')
+let bodyTopOrganize = document.getElementById('bodyTopOrganize')
+let organizationCollage = document.getElementById('organizationCollage')
+let organizationInfo = document.getElementById('organizationInfo')
 cancel.onclick = function () {
     bodyTop[0].style.display = 'none'
 }
 let major = document.getElementById('major')
 function changeUserInfoFn(event) {
+    bodyTopClu[0].style.display = 'block'
+    bodyTopOrganize.style.display = 'none'
     changeUseraCademy.innerHTML = ''
     major.innerHTML = ''
     changeUserClass.innerHTML = ''
@@ -442,28 +498,39 @@ function changeUserInfoFn(event) {
     changeUserName.value = ele.nextElementSibling.innerHTML
     changeUserAccount.value = ele.nextElementSibling.nextElementSibling.innerHTML
     changeUserPermission.value = ele.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML
-    changeUserSex.value = event.parentElement.lastElementChild.innerHTML
+    // changeUserSex.value = event.parentElement.lastElementChild.innerHTML
     // console.log(ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML)
-    if (ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML == '未设置') {
-        changeUserHas.value = '无'
-        bodyTopClu[0].style.display = 'none'
-    } else {
-        changeUserHas.value = '有'
-        bodyTopClu[0].style.display = 'block'
-        changeUserGrade.value = ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML
-        BFn(changeUseraCademy, changeUserGrade.value, ele.lastElementChild.innerHTML)
-            .then((result) => {
-                // console.log(result)
-                return AFn(major, result, event.parentElement.firstElementChild.nextElementSibling.innerHTML)
-            })
-            .then((result) => {
-                // console.log(result)
-                AFn(changeUserClass, result, ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML)
-            })
-            .catch((err) => {
-                console.log(err)
-            })
-    }
+    bodyTopClu[0].style.display = 'block'
+    changeUserGrade.value = ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML
+    BFn(changeUseraCademy, changeUserGrade.value, ele.lastElementChild.innerHTML)
+        .then((result) => {
+            // console.log(result)
+            return AFn(major, result, event.parentElement.firstElementChild.nextElementSibling.innerHTML)
+        })
+        .then((result) => {
+            // console.log(result)
+            AFn(changeUserClass, result, ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}
+
+function changeAdminUserInfoFn(event) {
+    bodyTopClu[0].style.display = 'none'
+    bodyTopOrganize.style.display = 'block'
+    changeUseraCademy.innerHTML = ''
+    major.innerHTML = ''
+    changeUserClass.innerHTML = ''
+    bodyTop[0].style.display = 'block'
+    changeUserId.innerHTML = event.parentElement.firstElementChild.innerHTML
+    let ele = event.parentElement.parentElement.firstElementChild
+    changeUserName.value = ele.nextElementSibling.innerHTML
+    changeUserAccount.value = ele.nextElementSibling.nextElementSibling.innerHTML
+    changeUserPermission.value = ele.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML
+    // 将组织信息弄上
+    organizationInfo.value = ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML
+    organizationCollage.value = ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML
 }
 
 let reg = /^[0-9]*$/
@@ -477,29 +544,37 @@ changeUserInfo.onclick = function () {
         swal('请输入正确的格式的学号或教务账号')
         return
     }
-    if (changeUserGrade.value == '') {
-        swal('请输入年级')
-        return
-    }
-    if (changeUseraCademy.value == '') {
-        swal('请输入学院')
-        return
-    }
-    if (major.value == '') {
-        swal('请输入专业')
-        return
-    }
-    if (changeUserClass.value == '') {
-        swal('请输入班级')
-        return
+    if (changeUserPermission.value == '普通用户') {
+        if (changeUserGrade.value == '') {
+            swal('请输入年级')
+            return
+        }
+        if (changeUseraCademy.value == '') {
+            swal('请输入学院')
+            return
+        }
+        if (major.value == '') {
+            swal('请输入专业')
+            return
+        }
+        if (changeUserClass.value == '') {
+            swal('请输入班级')
+            return
+        }
+    } else {
+        // 判断是否填写了组织信息
+        if (organizationInfo.value == '') {
+            swal('请输入组织信息')
+            return
+        }
     }
     let obj = {}
     obj.uId = Number(changeUserId.innerHTML)
-    obj.name = changeUserName.value.replace(/\s+/g,"")
-    obj.sex = changeUserSex.value
+    obj.name = changeUserName.value.replace(/\s+/g, "")
+    // obj.sex = changeUserSex.value
     obj.userName = changeUserAccount.value
     obj.power = changeUserPermission.value
-    if (changeUserHas.value == '有') {
+    if (changeUserPermission.value == '普通用户') {
         var indexuschangeUseraCademy = changeUseraCademy.selectedIndex; // 选中索引
         var textuschangeUseraCademy = changeUseraCademy.options[indexuschangeUseraCademy].text;
         obj.academy = textuschangeUseraCademy
@@ -511,9 +586,9 @@ changeUserInfo.onclick = function () {
         var textusmajor_class = changeUserClass[indexusmajor_class].text;
         obj.major_class = textusmajor_class
     } else {
-        obj.academy = ''
-        obj.grade = ''
-        obj.major_class = ''
+        // 添加组织信息
+        obj.academy = organizationCollage.value
+        obj.organization = organizationInfo.value
     }
     // console.log(obj)
     axios({
@@ -525,7 +600,7 @@ changeUserInfo.onclick = function () {
     })
         .then((result) => {
             // console.log(obj)
-            // console.log(result.data)
+            console.log(result.data)
             bodyTop[0].style.display = 'none'
             if (result.data.err == 0) {
                 swal('修改成功')
@@ -584,23 +659,7 @@ function reviseFn(event) {
     })
 }
 
-changeUserHas.onchange = function () {
-    changeUserGrade.value = ''
-    changeUseraCademy.innerHTML = ''
-    changeUseraCademy.add(new Option('请选择...', ''))
-    changeUseraCademy.value = ''
-    major.innerHTML = ''
-    major.add(new Option('请选择...', ''))
-    major.value = ''
-    changeUserClass.innerHTML = ''
-    changeUserClass.add(new Option('请选择...', ''))
-    changeUserClass.value = ''
-    if (changeUserHas.value == '有') {
-        bodyTopClu[0].style.display = 'block'
-    } else {
-        bodyTopClu[0].style.display = 'none'
-    }
-}
+
 
 
 
@@ -915,7 +974,7 @@ function AFn(ele, id, show) {
 
 function BFn(ele, id, show) {
     return new Promise((resolve, resject) => {
-        if(!id){
+        if (!id) {
             swal('相关数据被删除')
             resject()
             return
@@ -963,3 +1022,45 @@ function BFn(ele, id, show) {
 function AddFn() {
     window.location.href = 'superAdminAdd'
 }
+
+// 为权限绑定
+changeUserPermission.onchange = function () {
+    if (this.value == '普通用户') {
+        bodyTopClu[0].style.display = 'block'
+        bodyTopOrganize.style.display = 'none'
+        changeUserGrade.value = ''
+        changeUseraCademy.innerHTML = ''
+        changeUseraCademy.add(new Option('请选择...', ''))
+        changeUseraCademy.value = ''
+        major.innerHTML = ''
+        major.add(new Option('请选择...', ''))
+        major.value = ''
+        changeUserClass.innerHTML = ''
+        changeUserClass.add(new Option('请选择...', ''))
+        changeUserClass.value = ''
+        return
+    }
+    organizationInfo.value=''
+    organizationCollage.value=''
+    bodyTopClu[0].style.display = 'none'
+    bodyTopOrganize.style.display = 'block'
+}
+
+
+// changeUserHas.onchange = function () {
+//     changeUserGrade.value = ''
+//     changeUseraCademy.innerHTML = ''
+//     changeUseraCademy.add(new Option('请选择...', ''))
+//     changeUseraCademy.value = ''
+//     major.innerHTML = ''
+//     major.add(new Option('请选择...', ''))
+//     major.value = ''
+//     changeUserClass.innerHTML = ''
+//     changeUserClass.add(new Option('请选择...', ''))
+//     changeUserClass.value = ''
+//     if (changeUserHas.value == '有') {
+//         bodyTopClu[0].style.display = 'block'
+//     } else {
+//         bodyTopClu[0].style.display = 'none'
+//     }
+// }

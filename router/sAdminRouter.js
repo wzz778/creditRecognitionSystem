@@ -147,29 +147,13 @@ router.post('/admin/application', (req, res) => {
 })
 // 添加用户
 router.post('/admin/User', (req, res) => {
-    let { name, userName, power, sex, grade, academy, major_class, organization, position, major } = req.body
-    if (!organization) {
-        organization = '无'
-    }
-    if (!position) {
-        position = '无'
-    }
+    let { obj } = req.body
+    console.log('添加的用户信息',obj)
     // 传数据
     axios({
         method: 'POST',
         url: '/admin/User',
-        params: {
-            name: name,
-            userName: userName,
-            power: power,
-            sex: sex,
-            grade: grade,
-            academy: academy,
-            major_class: major_class,
-            organization: organization,
-            position: position,
-            major: major
-        },
+        params: obj,
         headers: {
             token: req.session.token
         }

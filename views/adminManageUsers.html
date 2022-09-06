@@ -25,19 +25,19 @@
             </select>
         </div>
         <div class="bodyTopItem">
-            用户性别:
+            <!-- 用户性别:
             <select id="changeUserSex">
                 <option value="男">男</option>
                 <option value="女">女</option>
-            </select>
+            </select> -->
         </div>
-        <div class="bodyTopItem">
+        <!-- <div class="bodyTopItem">
             学生信息:
             <select id="changeUserHas">
                 <option value="无">无</option>
                 <option value="有">有</option>
             </select>
-        </div>
+        </div> -->
         <div class="bodyTopClu">
             <div class="bodyTopItem">
                 所在年级:
@@ -63,9 +63,20 @@
             <div class="bodyTopItem">
                 所在班级:
                 <!-- <input type="text" placeholder="班级,例如:计科214" id="changeUserClass" autocomplete="off"> -->
-                <select  id="changeUserClass">
+                <select id="changeUserClass">
                     <option value="">请选择...</option>
                 </select>
+            </div>
+            <!-- 组织信息 -->
+        </div>
+        <div class="" id="bodyTopOrganize">
+            <div class="bodyTopItem">
+                组织信息:
+                <input type="text" id="organizationInfo" placeholder="请输入组织信息" autocomplete="off">
+            </div>
+            <div class="bodyTopItem">
+                所属学院
+                <input type="text" id="organizationCollage" placeholder="请输入所属学院(选填)" autocomplete="off">
             </div>
         </div>
         <div class="bodyTopBottom">
@@ -102,20 +113,20 @@
     <div class="selectUser">
         <div class="">
             用户身份:<select id="useriDentity" class="searchValue">
-                <option value="">请选择...</option>
+                <!-- <option value="">请选择...</option> -->
                 <option value="普通用户">普通用户</option>
                 <option value="普通管理员">普通管理员</option>
                 <option value="超级管理员">超级管理员</option>
                 <!-- 是否管理超级管理员?暂不操作 -->
             </select>
         </div>
-        <div class="">
+        <!-- <div class="">
             用户性别:<select id="sex" class="searchValue">
                 <option value="">请选择...</option>
                 <option value="男">男</option>
                 <option value="女">女</option>
             </select>
-        </div>
+        </div> -->
         <div class="">
             用户年级:
             <select id="USGrade" class="searchValue">
@@ -146,12 +157,15 @@
             用户姓名:
             <input type="text" placeholder="请输入..." id="account" class="searchValue" autocomplete="off">
         </div>
+        <div class="">
+            <button id="sureSearch">查询</button>
+            <button id="reset">重置</button>
+            <button id="add" onclick="AddFn()">新增</button>
+        </div>
     </div>
-    <div class="floatRight" style="position: relative;top: -40px;">
-        <button id="sureSearch">查询</button>
-        <button id="reset">重置</button>
-        <button id="add" onclick="AddFn()">新增</button>
-    </div>
+    <!-- <div class="floatRight" style="position: relative;top: -40px;">
+
+    </div> -->
     <div class=""></div>
 </div>
 <div class="adminManageUsersContent">
@@ -159,7 +173,7 @@
         <button id="del">删除</button>
         <span class="floatRight" id="allNumber">共1条</span>
     </div>
-    <div class="adminManageUsersContentTop adminHistoryContentItem">
+    <div class="adminManageUsersContentTop adminHistoryContentItem" id="infoTop">
         <ul>
             <li>
                 <input type="checkbox" id="checkDelAll">
@@ -167,9 +181,13 @@
             <li>姓名</li>
             <li>学号</li>
             <li>用户权限</li>
-            <li>年级</li>
-            <li>学院</li>
-            <li>所在班级</li>
+            <!-- 普通用户 -->
+            <li class="generalUser">年级</li>
+            <li class="generalUser">学院</li>
+            <li class="generalUser">所在班级</li>
+            <!-- 管理员 -->
+            <li class="adminUser">所属学院</li>
+            <li class="adminUser">组织信息</li>
             <li>密码</li>
             <li>操作框</li>
         </ul>

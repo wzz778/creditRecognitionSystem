@@ -221,3 +221,8 @@ select {
     right: 4px;
     background-color: white;
 }
+
+.textSty {
+    display: grid;
+    align-items: center;
+}
