@@ -52,6 +52,10 @@ router.get('/adminExportForm', (req, res) => {
 router.get('/InstituteInformationManagement', (req, res) => {
     res.render('InstituteInformationManagement.html')
 })
+// 组织信息管理
+router.get('/organizationalInformationManagement', (req, res) => {
+    res.render('organizationalInformationManagement.html')
+})
 // 学分汇总表
 // router.get('/creditSummary', (req, res) => {
 //     res.render('creditSummary.html')
@@ -976,15 +980,10 @@ router.post('/admin/updatePower', (req, res) => {
 })
 
 // 获取所有的组织信息
-router.post('/superAdmin/organizations', (req, res) => {
-    let { nodePage, pageSize } = req.body
+router.post('/admin/showAdmin', (req, res) => {
     axios({
         method: 'GET',
-        url: '/superAdmin/organizations',
-        params: {
-            nodePage: nodePage,
-            pageSize: pageSize
-        },
+        url: '/admin/showAdmin',
         headers: {
             token: req.session.token
         }
@@ -1001,15 +1000,69 @@ router.post('/admin/selectCollege', (req, res) => {
     axios({
         method: 'GET',
         url: '/admin/selectCollege',
-        headers:{
-            token:req.session.token
+        headers: {
+            token: req.session.token
         }
     })
-        .then((result)=>{
-            res.send({err:0,msg:result.data})
+        .then((result) => {
+            res.send({ err: 0, msg: result.data })
         })
-        .catch((err)=>{
-            res.send({err:-1,msg:err})
+        .catch((err) => {
+            res.send({ err: -1, msg: err })
         })
+})
+// 修改组织信息
+router.post('/admin/updateOrganization', (req, res) => {
+    let { obj } = req.body
+    axios({
+        method: 'PUT',
+        url: '/admin/updateOrganization',
+        params: obj,
+        headers: {
+            token: req.session.token
+        }
+    })
+        .then((result) => {
+            res.send({ err: 0, msg: result.data })
+        })
+        .catch((err) => {
+            res.send({ err: -1, msg: err })
+        })
+})
+// 添加组织信息
+router.post('/admin/organization.add', (req, res) => {
+    let { obj } = req.body
+    // console.log(obj)
+    axios({
+        method: 'POST',
+        url: '/admin/organization.add',
+        params: obj,
+        headers: {
+            token: req.session.token
+        }
+    })
+        .then((result) => {
+            res.send({ err: 0, msg: result.data })
+        })
+        .catch((err) => {
+            res.send({ err: -1, msg: err })
+        })
+})
+// 删除组织
+router.post('/admin/deleteOrganization', (req, res) => {
+    let { ids } = req.body
+    let str = `http://110.40.205.103:8099/admin/deleteOrganization?ids=${ids}`
+    axios.delete(str, {
+        headers: {
+            token: req.session.token
+        }
+    })
+        .then((result) => {
+            res.send({ err: 0, msg: result.data })
+        })
+        .catch((err) => {
+            res.send({ err: -1, msg: err })
+        })
+
 })
 module.exports = router

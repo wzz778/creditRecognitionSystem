@@ -1,0 +1,70 @@
+{{extend './layout.html'}}
+{{block 'title'}}组织信息管理{{/block}}
+{{block 'head'}}
+<link rel="stylesheet" href="/public/css/LiUniversal.css">
+<link rel="stylesheet" href="/public/css/organizationalInformationManagement.css">
+{{/block}}
+
+{{block 'bodytop'}}
+<!-- 添加 -->
+<div class="bodyTop" style="display: none;">
+    <div class="">
+        <div class="bodyTopItem">
+            组织名:
+            <input type="text" id="addOrganizeName" placeholder="请输入组织名" autocomplete="off">
+        </div>
+        <div class="bodyTopBottom">
+            <button id="sureAdd">确定</button>
+            <button class="cancel" onclick="cancel(this)">取消</button>
+        </div>
+    </div>
+</div>
+<!-- 修改 -->
+<div class="bodyTop" style="display: none;">
+    <div class="">
+        <div class="bodyTopItem">
+            原组织名:
+            <span id="originalName"></span>
+        </div>
+        <div class="bodyTopItem">
+            修改为:
+            <input type="text" placeholder="请输入要修改的名" id="changeName" autocomplete="off">
+        </div>
+        <div class="bodyTopBottom">
+            <button id="sureChange">修改</button>
+            <button class="cancel" onclick="cancel(this)">取消</button>
+            <div class="" id="changeId"  style="display: none;"></div>
+        </div>
+    </div>
+</div>
+{{/block}}
+
+{{block 'body'}}
+<div class="top">
+    <button class="add" onclick="addBoxShow()">新增</button>
+</div>
+<div class="content">
+    <div class="contentTop contentItem">
+        <ul>
+            <li>组织名</li>
+            <li>排序</li>
+            <li>操作框</li>
+        </ul>
+    </div>
+    <div class="contentConten contentItem">
+        <ul>
+            <li>1</li>
+            <li>1</li>
+            <li>
+                <button onclick="changeBoxShow(this)">修改</button>
+                <button onclick="deleteFn(this)">删除</button>
+            </li>
+        </ul>
+    </div>
+</div>
+{{/block}}
+
+{{block 'bottom'}}
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="/public/js/organizationalInformationManagement.js"></script>
+{{/block}}

@@ -190,6 +190,7 @@ function GetAll(page, perPage, obj) {
                 <li>
                     <div style='display:none'>${result.data.msg[i].uid}</div>
                     <div style='display:none'>${result.data.msg[i].major}</div>
+                    <div style='display:none'>${result.data.msg[i].superPower}</div>
                     <button onclick="removePopup(this)" class="operatorBtnSty">删除</button>
                     <button onclick="changeAdminUserInfoFn(this)" class="operatorBtnSty">修改</button>
                     ${str}
@@ -482,6 +483,7 @@ let bodyTopClu = document.getElementsByClassName('bodyTopClu')
 let bodyTopOrganize = document.getElementById('bodyTopOrganize')
 let organizationCollage = document.getElementById('organizationCollage')
 let organizationInfo = document.getElementById('organizationInfo')
+let conmonAdminGivePower = document.getElementById('conmonAdminGivePower')//是否授权添加用户
 cancel.onclick = function () {
     bodyTop[0].style.display = 'none'
 }
@@ -528,11 +530,17 @@ function changeAdminUserInfoFn(event) {
     changeUserName.value = ele.nextElementSibling.innerHTML
     changeUserAccount.value = ele.nextElementSibling.nextElementSibling.innerHTML
     changeUserPermission.value = ele.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML
+    if (changeUserPermission.value != '超级管理员') {
+        conmonAdminGivePower.parentElement.style.display = 'block'
+        conmonAdminGivePower.value = event.parentElement.firstElementChild.nextElementSibling.nextElementSibling.innerHTML
+    } else {
+        conmonAdminGivePower.parentElement.style.display = 'none'
+    }
     // 将组织信息弄上
-    if(ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML=='无'){
+    if (ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML == '无') {
         organizationInfo.value = ''
-    }else {
-        organizationInfo.value=ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML
+    } else {
+        organizationInfo.value = ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML
     }
     organizationCollage.value = ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML
 }
@@ -571,6 +579,11 @@ changeUserInfo.onclick = function () {
             swal('请输入组织信息')
             return
         }
+        if (changeUserPermission.value == '普通管理员' && conmonAdminGivePower.value == '') {
+            // 判断是否授权选择没
+            swal('请选择是否授权添加用户')
+            return
+        }
     }
     let obj = {}
     obj.uId = Number(changeUserId.innerHTML)
@@ -593,7 +606,9 @@ changeUserInfo.onclick = function () {
         // 添加组织信息
         obj.academy = organizationCollage.value
         obj.organization = organizationInfo.value
+        obj.superPower = conmonAdminGivePower.value
     }
+
     // console.log(obj)
     axios({
         method: 'POST',
@@ -830,6 +845,11 @@ major.onchange = function () {
 }
 // 普通管理员的授权
 function authorizeSuper(event) {
+    // 判断是否授权过
+    if (event.parentElement.firstElementChild.nextElementSibling.nextElementSibling.innerHTML == '是') {
+        swal('已授权')
+        return
+    }
     swal({
         title: "你确定？",
         text: "要授权",
@@ -892,7 +912,7 @@ GetFirstLevel(usGrade)
 function authorizeCom(event) {
     bodyTop[1].style.display = 'block'
     changeUserNameOrganization.innerHTML = event.parentElement.parentElement.firstElementChild.nextElementSibling.nextElementSibling.innerHTML
-    changeUserNameCollage.innerHTML=event.parentElement.parentElement.firstElementChild.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML
+    changeUserNameCollage.innerHTML = event.parentElement.parentElement.firstElementChild.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML
 }
 // 授权普通用户
 let cancelOrganization = document.getElementById('cancelOrganization')
@@ -901,7 +921,7 @@ cancelOrganization.onclick = function () {
 }
 let OrganizationSure = document.getElementById('OrganizationSure')
 let changeUserNameOrganization = document.getElementById('changeUserNameOrganization')
-let changeUserNameCollage=document.getElementById('changeUserNameCollage')
+let changeUserNameCollage = document.getElementById('changeUserNameCollage')
 let OrganizationName = document.getElementById('OrganizationName')
 // 普通用户授权
 OrganizationSure.onclick = function () {
@@ -917,7 +937,7 @@ OrganizationSure.onclick = function () {
             organization: OrganizationName.value,
             academy: changeUserNameCollage.innerHTML,
             usernames: changeUserNameOrganization.innerHTML,
-            superPowers:authorizeAddUser.value
+            superPowers: authorizeAddUser.value
         }
     })
         .then((result) => {
@@ -1042,33 +1062,29 @@ changeUserPermission.onchange = function () {
         changeUserClass.value = ''
         return
     }
-    organizationInfo.value=''
-    organizationCollage.value=''
+    organizationInfo.value = ''
+    organizationCollage.value = ''
     bodyTopClu[0].style.display = 'none'
     bodyTopOrganize.style.display = 'block'
 }
 
-function getAllOrganize(ele){
-    ele.innerHTML=''
+function getAllOrganize(ele) {
+    ele.innerHTML = ''
     axios({
-        method:'POST',
-        url:'/superAdmin/organizations',
-        data:{
-            nodePage:1,
-            pageSize:1000000
-        }
+        method: 'POST',
+        url: '/admin/showAdmin',
     })
-    .then((result)=>{
-        // console.log(result.data.msg.data.pageInfo)
-        ele.add(new Option('请选择...', ''))
-        for(let i=0;i<result.data.msg.data.pageInfo.length;i++){
-            ele.add(new Option(result.data.msg.data.pageInfo[i].organization, result.data.msg.data.pageInfo[i].organization))
-        }
-        ele.value=''
-    })
-    .catch((err)=>{
-        console.log(err)
-    })
+        .then((result) => {
+            // console.log(result.data)
+            ele.add(new Option('请选择...', ''))
+            for (let i = 0; i < result.data.msg.data.length; i++) {
+                ele.add(new Option(result.data.msg.data[i].name, result.data.msg.data[i].name))
+            }
+            ele.value = ''
+        })
+        .catch((err) => {
+            console.log(err)
+        })
 }
 getAllOrganize(organizationInfo)
 getAllOrganize(OrganizationName)
@@ -1083,12 +1099,12 @@ function getAllCollage(ele) {
         .then((result) => {
             // console.log(result.data.msg.data)
             ele.add(new Option('请选择...', ''))
-            for(let i=0;i<result.data.msg.data.length;i++){
+            for (let i = 0; i < result.data.msg.data.length; i++) {
                 ele.add(new Option(result.data.msg.data[i], result.data.msg.data[i]))
             }
-            ele.value=''
+            ele.value = ''
         })
-        .catch((err)=>{
+        .catch((err) => {
             console.log(err)
         })
 }

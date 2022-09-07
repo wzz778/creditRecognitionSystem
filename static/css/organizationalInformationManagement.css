@@ -1,0 +1,75 @@
+.bodyTop{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .4);
+    position: fixed;
+    z-index: 999;
+}
+
+.bodyTop>div{
+    padding: 30px;
+    margin: 100px auto;
+    width: 350px;
+    min-height: 150px;
+    max-height: 500px;
+    background-color: white;
+}
+
+.bodyTopItem{
+    margin-bottom: 20px;
+}
+
+.bodyTopBottom {
+    display: flex;
+    /* align-items: center; */
+    justify-content: center;
+}
+
+#sureChange {
+    background-color: #1AB394;
+    color: white;
+    margin-right: 20px;
+}
+
+.cancel {
+    background-color: #ED5565;
+    color: white;
+}
+
+#sureAdd {
+    background-color: #1AB394;
+    color: white;
+    margin-right: 20px;
+}
+
+.add {
+    margin-top: 15px;
+    background-color: #1AB394;
+    color: white;
+}
+
+.contentItem>ul {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    text-align: center;
+    border-bottom: 1px solid #F5F5F5;
+    padding: 5px 0px;
+    color: #806A84;
+}
+
+.contentTop {
+    margin-top: 20px;
+}
+
+.contentTop>ul {
+    background-color: #EFF3F8;
+}
+
+.contentItem>ul>li>button {
+    padding: 0px;
+    color: #806A84;
+}
+
+.contentItem>ul>li>button:hover {
+    color: red;
+}
