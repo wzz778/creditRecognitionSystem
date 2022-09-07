@@ -226,3 +226,7 @@ select {
     display: grid;
     align-items: center;
 }
+
+#OrganizationInformation>div:last-child {
+    margin-top: 10px;
+}

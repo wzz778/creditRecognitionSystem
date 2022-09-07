@@ -24,23 +24,6 @@ let yn = true
 // }
 
 
-
-// 点击input框或者选择框把提示文字隐藏
-let inputAll = document.getElementsByTagName('input')
-for (let i = 0; i < inputAll.length; i++) {
-    inputAll[i].onclick = function () {
-        inputAll[i].parentElement.lastElementChild.style.display = 'none'
-    }
-}
-let selectAll = document.getElementsByTagName('select')
-for (let i = 0; i < selectAll.length; i++) {
-    selectAll[i].onclick = function () {
-        selectAll[i].parentElement.lastElementChild.style.display = 'none'
-    }
-}
-
-
-
 // 点击保存
 let usName = document.getElementById('usName')
 let account = document.getElementById('account')
@@ -49,6 +32,7 @@ let usGrade = document.getElementById('usGrade')
 let usCollege = document.getElementById('usCollege')
 let usSpecialized = document.getElementById('usSpecialized')
 let usClass = document.getElementById('usClass')
+let usSex = document.getElementById('usSex')
 let Remarks = document.getElementById('Remarks')
 let save = document.getElementById('save')
 let cancel = document.getElementById('cancel')
@@ -58,6 +42,7 @@ let positionAcademy = document.getElementById('positionAcademy')
 let OrganizationInformation = document.getElementById('OrganizationInformation')
 let addOrganization = document.getElementById('addOrganization')
 let cancelAddOrganization = document.getElementById('cancelAddOrganization')
+let authorizeAddUser = document.getElementById('authorizeAddUser')
 
 // 限制账号,这里限制只能是数字
 let accountTest = /^[0-9]*$/
@@ -79,9 +64,13 @@ save.onclick = function () {
         // usPermission.parentElement.lastElementChild.style.display = 'block'
         swal('请选择用户身份')
         return
-    } 
+    }
     if (yn) {
         // 看是否填写了年级，院系，专业等
+        if (usSex.value == '') {
+            swal('请选择性别')
+            return
+        }
         if (usGrade.value == '') {
             // usGrade.parentElement.lastElementChild.style.display = 'block'
             swal('请选择年级')
@@ -118,25 +107,28 @@ save.onclick = function () {
         obj.academy = textusCollege
         obj.major_class = textusClass
         obj.major = textusSpecialized
+        obj.sex = usSex.value
     }
     if (OrganizationInformation.style.display == 'grid') {
         // 必须填组织信息
-        if (organization.value == '' ) {
+        if (organization.value == '') {
             swal('请输入组织信息')
             return
         } else {
             obj.organization = organization.value
+            obj.superPower = authorizeAddUser.value
             // 待定
             obj.academy = positionAcademy.value
         }
     }
+    // console.log(obj)
     // console.log(usName.value.replace(/\s+/g,""))
     // 发送数据
     axios({
         method: 'POST',
         url: '/admin/User',
         data: {
-            obj:obj
+            obj: obj
         }
     })
         .then((result) => {
@@ -282,3 +274,50 @@ usPermission.onchange = function () {
     }
     judgeStudentInfoShow(usOnchageCondition)
 }
+
+
+// 获取所有的组织信息
+function getAllOrganize(ele) {
+    ele.innerHTML = ''
+    axios({
+        method: 'POST',
+        url: '/superAdmin/organizations',
+        data: {
+            nodePage: 1,
+            pageSize: 1000000
+        }
+    })
+        .then((result) => {
+            // console.log(result.data.msg.data.pageInfo)
+            ele.add(new Option('请选择...', ''))
+            for (let i = 0; i < result.data.msg.data.pageInfo.length; i++) {
+                ele.add(new Option(result.data.msg.data.pageInfo[i].organization, result.data.msg.data.pageInfo[i].organization))
+            }
+            ele.value = ''
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}
+getAllOrganize(organization)
+
+// 获取所有学院信息
+function getAllCollage(ele) {
+    ele.innerHTML = ''
+    axios({
+        method: 'POST',
+        url: '/admin/selectCollege',
+    })
+        .then((result) => {
+            // console.log(result.data.msg.data)
+            ele.add(new Option('请选择...', ''))
+            for(let i=0;i<result.data.msg.data.length;i++){
+                ele.add(new Option(result.data.msg.data[i], result.data.msg.data[i]))
+            }
+            ele.value=''
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
+}
+getAllCollage(positionAcademy)
