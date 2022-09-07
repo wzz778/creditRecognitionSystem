@@ -200,3 +200,7 @@ input{
 .adminUserSty>ul {
     grid-template-columns: 35px repeat(7, 1fr);
 }
+
+#conmonAdminGivePower {
+    width: 62%;
+}

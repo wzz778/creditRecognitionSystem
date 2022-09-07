@@ -230,3 +230,7 @@ select {
 #OrganizationInformation>div:last-child {
     margin-top: 10px;
 }
+
+#authorizeAddUser {
+    width: 168px;
+}

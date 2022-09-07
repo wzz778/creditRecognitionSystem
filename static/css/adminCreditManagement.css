@@ -1,13 +1,14 @@
-input{
+input {
     padding-top: 5px;
     padding-bottom: 5px;
     color: #999999;
 }
 
-button{
+button {
     color: #806A84;
 }
-.bodyTop{
+
+.bodyTop {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, .4);
@@ -15,7 +16,7 @@ button{
     z-index: 999;
 }
 
-.bodyTop>div{
+.bodyTop>div {
     padding: 30px;
     margin: 100px auto;
     width: 550px;
@@ -24,69 +25,69 @@ button{
     background-color: white;
 }
 
-.bodyTopItem{
+.bodyTopItem {
     margin-bottom: 20px;
 }
 
-.addChildDri{
+.addChildDri {
     background-color: #F8AC59;
     color: white;
 }
 
-.cancel{
+.cancel {
     background-color: #F59DA6;
     color: white;
 }
 
-.bodyTopItem{
+.bodyTopItem {
     min-height: 10px;
 }
 
-.dirItemI{
+.dirItemI {
     margin-bottom: 10px;
 }
 
-#sureAdd{
+#sureAdd {
     background-color: #1AB394;
     color: white;
 }
 
-#sureChange{
+#sureChange {
     background-color: #1AB394;
     color: white;
 }
 
-#SurechangeComposition{
+#SurechangeComposition {
     background-color: #1AB394;
     color: white;
 }
 
-#SureaddDir{
+#SureaddDir {
     background-color: #1AB394;
     color: white;
 }
 
-#CancelAddDir{
+#CancelAddDir {
     background-color: #ED5565;
     color: white;
 }
 
-#cancelAdd{
+#cancelAdd {
     background-color: #ED5565;
     color: white;
 }
 
-#CancelchangeComposition{
+#CancelchangeComposition {
     background-color: #ED5565;
     color: white;
 }
 
-#cancelChange{
+#cancelChange {
     background-color: #ED5565;
     color: white;
 }
 
-.dirItem{
+.dirItem {
     max-height: 300px;
     overflow-y: auto;
 }
@@ -116,18 +117,18 @@ button{
     color: white;
 }
 
-#add{
+#add {
     background-color: #1A7BB9;
     color: white;
 }
 
-#del{
+#del {
     background-color: #ED5565;
     color: white;
     margin-top: 10px;
 }
 
-.adminCreditManagementContent{
+.adminCreditManagementContent {
     min-height: 200px;
 }
 
@@ -200,37 +201,37 @@ button{
     margin-top: 15px;
 }
 
-.adminCredManagementBottom>button{
+.adminCredManagementBottom>button {
     padding: 5px;
     background-color: #638ED3;
     color: white;
 }
 
-#selectPerpage{
+#selectPerpage {
     width: 60px;
 }
 
-#lastPage{
+#lastPage {
     margin-left: 40px;
 }
 
-#nowPage{
+#nowPage {
     background: #6DD9C3;
     color: white;
     padding: 8px 10px;
 }
 
-#jumpPage{
+#jumpPage {
     width: 40px;
     padding-left: 5px;
 }
 
-#jump{
+#jump {
     color: white;
     background-color: #F8AC59;
 }
 
-.adminHistoryContentNo{
+.adminHistoryContentNo {
     color: red;
     font-size: 35px;
     height: 400px;
@@ -238,7 +239,7 @@ button{
     text-align: center;
 }
 
-.constituteSty{
+.constituteSty {
     display: grid;
     grid-template-columns: 30px 200px;
     text-align: center;
@@ -250,27 +251,27 @@ button{
     left: -45px; 
 } */
 
-.hintText{
+.hintText {
     color: red;
 }
 
-#revise{
+#revise {
     width: 430px;
 }
 
-#revise>div>input{
+#revise>div>input {
     width: 70%;
 }
 
-#revise>div>select{
+#revise>div>select {
     width: 70%;
 }
 
-.operator{
+.operator {
     margin-left: 150px;
 }
 
-#reviseText{
+#reviseText {
     display: inline-block;
     resize: none;
     outline: none;
@@ -282,56 +283,56 @@ button{
     overflow-y: auto;
 }
 
-#sureRevise{
+#sureRevise {
     background-color: #1AB394;
     color: white;
 }
 
-#cancelRevise{
+#cancelRevise {
     background-color: #ED5565;
     color: white;
 }
 
-.new{
+.new {
     border-bottom: 1px solid red;
     /* background-color: #F5F5F5; */
     position: relative;
 }
 
-.IndicatorItem>ul{
+.IndicatorItem>ul {
     padding: 5px;
     display: grid;
-    grid-template-columns: 35px repeat(3,1fr);
+    grid-template-columns: 35px repeat(3, 1fr);
     text-align: center;
     align-items: center;
 }
 
-.IndicatorItem>ul>li>button{
+.IndicatorItem>ul>li>button {
     padding: 0px;
 }
 
-.IndicatorTop>ul{
+.IndicatorTop>ul {
     background-color: #EFF3F8;
 }
 
-.Table{
+.Table {
     margin-left: 40px;
 }
 
-.CreditIndicator{
+.CreditIndicator {
     margin-left: 60px;
 }
 
-.CreditDir{
+.CreditDir {
     margin-left: 28px;
 }
 
-#allSum{
+#allSum {
     background-color: #F8AC59;
     color: white;
 }
 
-#jumpUrl{
+#jumpUrl {
     background-color: #1AB394;
     color: white;
 }

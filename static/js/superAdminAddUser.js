@@ -281,17 +281,13 @@ function getAllOrganize(ele) {
     ele.innerHTML = ''
     axios({
         method: 'POST',
-        url: '/superAdmin/organizations',
-        data: {
-            nodePage: 1,
-            pageSize: 1000000
-        }
+        url: '/admin/showAdmin',
     })
         .then((result) => {
-            // console.log(result.data.msg.data.pageInfo)
+            // console.log(result.data)
             ele.add(new Option('请选择...', ''))
-            for (let i = 0; i < result.data.msg.data.pageInfo.length; i++) {
-                ele.add(new Option(result.data.msg.data.pageInfo[i].organization, result.data.msg.data.pageInfo[i].organization))
+            for (let i = 0; i < result.data.msg.data.length; i++) {
+                ele.add(new Option(result.data.msg.data[i].name, result.data.msg.data[i].name))
             }
             ele.value = ''
         })
