@@ -529,7 +529,11 @@ function changeAdminUserInfoFn(event) {
     changeUserAccount.value = ele.nextElementSibling.nextElementSibling.innerHTML
     changeUserPermission.value = ele.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML
     // 将组织信息弄上
-    organizationInfo.value = ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML
+    if(ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML=='无'){
+        organizationInfo.value = ''
+    }else {
+        organizationInfo.value=ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML
+    }
     organizationCollage.value = ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML
 }
 
@@ -888,6 +892,7 @@ GetFirstLevel(usGrade)
 function authorizeCom(event) {
     bodyTop[1].style.display = 'block'
     changeUserNameOrganization.innerHTML = event.parentElement.parentElement.firstElementChild.nextElementSibling.nextElementSibling.innerHTML
+    changeUserNameCollage.innerHTML=event.parentElement.parentElement.firstElementChild.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML
 }
 // 授权普通用户
 let cancelOrganization = document.getElementById('cancelOrganization')
@@ -896,17 +901,13 @@ cancelOrganization.onclick = function () {
 }
 let OrganizationSure = document.getElementById('OrganizationSure')
 let changeUserNameOrganization = document.getElementById('changeUserNameOrganization')
-let OrganizationPosition = document.getElementById('OrganizationPosition')
+let changeUserNameCollage=document.getElementById('changeUserNameCollage')
 let OrganizationName = document.getElementById('OrganizationName')
 // 普通用户授权
 OrganizationSure.onclick = function () {
     // 判断是否为空
-    if (OrganizationName.value == '' || OrganizationName.replace(/(^\s*)|(\s*$)/g, "") == "") {
-        swal('请输入组织名,不能为纯空格')
-        return
-    }
-    if (OrganizationPosition.value == '' || OrganizationName.replace(/(^\s*)|(\s*$)/g, "") == "") {
-        swal('请输入职位,不能为纯空格')
+    if (OrganizationName.value == '') {
+        swal('请选择组织名')
         return
     }
     axios({
@@ -914,8 +915,9 @@ OrganizationSure.onclick = function () {
         url: '/admin/updatePower',
         data: {
             organization: OrganizationName.value,
-            positions: OrganizationPosition.value,
-            usernames: changeUserNameOrganization.innerHTML
+            academy: changeUserNameCollage.innerHTML,
+            usernames: changeUserNameOrganization.innerHTML,
+            superPowers:authorizeAddUser.value
         }
     })
         .then((result) => {
@@ -1045,3 +1047,49 @@ changeUserPermission.onchange = function () {
     bodyTopClu[0].style.display = 'none'
     bodyTopOrganize.style.display = 'block'
 }
+
+function getAllOrganize(ele){
+    ele.innerHTML=''
+    axios({
+        method:'POST',
+        url:'/superAdmin/organizations',
+        data:{
+            nodePage:1,
+            pageSize:1000000
+        }
+    })
+    .then((result)=>{
+        // console.log(result.data.msg.data.pageInfo)
+        ele.add(new Option('请选择...', ''))
+        for(let i=0;i<result.data.msg.data.pageInfo.length;i++){
+            ele.add(new Option(result.data.msg.data.pageInfo[i].organization, result.data.msg.data.pageInfo[i].organization))
+        }
+        ele.value=''
+    })
+    .catch((err)=>{
+        console.log(err)
+    })
+}
+getAllOrganize(organizationInfo)
+getAllOrganize(OrganizationName)
+
+// 获取所有学院信息
+function getAllCollage(ele) {
+    ele.innerHTML = ''
+    axios({
+        method: 'POST',
+        url: '/admin/selectCollege',
+    })
+        .then((result) => {
+            // console.log(result.data.msg.data)
+            ele.add(new Option('请选择...', ''))
+            for(let i=0;i<result.data.msg.data.length;i++){
+                ele.add(new Option(result.data.msg.data[i], result.data.msg.data[i]))
+            }
+            ele.value=''
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
+}
+getAllCollage(organizationCollage)

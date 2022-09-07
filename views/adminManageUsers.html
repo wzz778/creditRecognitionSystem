@@ -72,11 +72,13 @@
         <div class="" id="bodyTopOrganize">
             <div class="bodyTopItem">
                 组织信息:
-                <input type="text" id="organizationInfo" placeholder="请输入组织信息" autocomplete="off">
+                <!-- <input type="text" id="organizationInfo" placeholder="请输入组织信息" autocomplete="off"> -->
+                <select id="organizationInfo"></select>
             </div>
             <div class="bodyTopItem">
                 所属学院
-                <input type="text" id="organizationCollage" placeholder="请输入所属学院(选填)" autocomplete="off">
+                <!-- <input type="text" id="organizationCollage" placeholder="请输入所属学院(选填)" autocomplete="off"> -->
+                <select id="organizationCollage"></select>
             </div>
         </div>
         <div class="bodyTopBottom">
@@ -91,13 +93,18 @@
     <div class="" style="min-height: 0px;margin-top: 140px;">
         <div class="bodyTopItem">
             组织信息:
-            <input type="text" id="OrganizationName" autocomplete="off" placeholder="请输入组织信息">
+            <!-- <input type="text" id="OrganizationName" autocomplete="off" placeholder="请输入组织信息"> -->
+            <select  id="OrganizationName"></select>
         </div>
         <div class="bodyTopItem">
-            组织职位:
-            <input type="text" id="OrganizationPosition" autocomplete="off" placeholder="请输入职位">
+            授权添加用户:
+            <select id="authorizeAddUser">
+                <option value="否">否</option>
+                <option value="是">是</option>
+            </select>
         </div>
         <div class="bodyTopBottom">
+            <div id="changeUserNameCollage" style="display: none;"></div>
             <button id="OrganizationSure">授权</button>
             <button id="cancelOrganization">取消</button>
             <div id="changeUserNameOrganization" style="display: none;"></div>
