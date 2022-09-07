@@ -196,7 +196,17 @@ router.post('/api/login', (req, res) => {
         req.session.token= response.data.data.token;
         req.session.password= req.body.password;
         res.send(response.data);
-        // return jwt.decode(req.session.token).username;
+        return     axios({
+            url:'user/userInfo',
+            method:'get',
+            params:{username:jwt.decode(req.session.token).username},
+            headers:{
+                token:req.session.token
+            }
+        })
+    }).then(user=>{
+        req.session.user=user.data.data;
+        // res.send(req.session.user)
     }).catch(function (error) {
         res.send(error)
     });
@@ -390,6 +400,7 @@ router.get('/api/getCreditById', (req, res) => {
         res.send(error)
     });
 })
+
 router.put('/api/uppassword', (req, res) => {
     if (!jwt.decode(req.session.token)) {
         res.send({ err: -1, msg: '用户身份非法' })
@@ -419,6 +430,9 @@ router.put('/api/uppassword', (req, res) => {
     }
 })
 router.get('/api/allapplication', (req, res) => {
+    if(req.session.user.organization=='院级'){
+        req.query.academy=req.session.user.academy;
+    }
     axios.get('/admin/application',{
         params:req.query,
         headers:{

@@ -285,7 +285,7 @@ function getnowcredit(){
         "order": 1
       },
     }).then(data => {
-      console.log(data);
+      // console.log(data);
       getcredit.innerText=data.data.data
     }).catch(function (error) {
       console.log(error);
@@ -311,7 +311,7 @@ function getnowcredit(){
         "order": o.orders
       }
     }).then(data => {
-      console.log(data)
+      // console.log(data)
       getcredit.innerText=data.data.data
     }).catch(function (error) {
       console.log(error);
@@ -405,7 +405,7 @@ function getson2(father) {
       "level": "2"
     },
   }).then(data => {
-    console.log(data.data);
+    // console.log(data.data);
     if (data.data.data == '下边没有指标了') {
       axios({
         url: '/api/gefatherm',

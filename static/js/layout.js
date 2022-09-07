@@ -3,6 +3,10 @@ let head_cord_fade=document.getElementById('head-cord-fade');
 sessionStorage.setItem("havasuccess", '0');
 let haveno=document.getElementsByClassName('haveno');
 let dropdown_item=document.getElementsByClassName('dropdown-item');
+let Busermessage=document.getElementsByClassName('Busermessage');
+Busermessage[0].innerHTML=sessionStorage.getItem('name');
+Busermessage[1].innerHTML=sessionStorage.getItem('userName');
+Busermessage[2].innerHTML=sessionStorage.getItem('power');
 function dropdown() {
     head_cord_fade.style.display = 'block'
 }

@@ -26,10 +26,9 @@ function myFunction() {
             return  axios({
                 url: '/api/getmymessage',method: 'get',})
         }).then((user)=>{
-                    // console.log(user);
                     sessionStorage.setItem('name', user.data.name);
-                    sessionStorage.setItem('name', user.data.name);
-                    sessionStorage.setItem('organization', user.data.organization);
+                    sessionStorage.setItem('power', user.data.power);
+                    sessionStorage.setItem('userName', user.data.userName);
                     if(user.data.power!='普通用户'){
                         setTimeout(function () {
                             window.location.assign("/examineApplication");

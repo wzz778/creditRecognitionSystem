@@ -29,7 +29,7 @@ axios({
     method: 'get',
     params: {id:aid},
   }).then(response=> {
-      console.log(response.data);   
+      // console.log(response.data);   
       let data=response.data.data;
     if(response.data.msg!='OK'){
         swal('获取失败！');
@@ -53,7 +53,6 @@ axios({
           document.getElementById('rankinput').value=data.申请表.orders;
         }
         let num=data.申请表.remarks.length;
-        console.log(num);
         document.getElementById('word').innerText=num;
         setfather(data.申请表.creditType.aid);
         // if(data.申请表.classify.b_Indicator_level==2){
