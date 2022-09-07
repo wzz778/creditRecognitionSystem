@@ -85,7 +85,7 @@ router.post('/admin/records', (req, res) => {
         }
     })
         .then((result) => {
-            console.log('获取历史记录', result.data)
+            // console.log('获取历史记录', result.data)
             if (result.data.msg == 'OK') {
                 res.send({ err: 0, msg: result.data.data.pageInfo, allPage: result.data.data.allPages, allRecords: result.data.data.allRecords, points: result.data.data.points })
             } else {
@@ -134,7 +134,7 @@ router.post('/admin/application', (req, res) => {
         }
     })
         .then((result) => {
-            console.log('请求的数据', result.data)
+            // console.log('请求的数据', result.data)
             if (result.data.msg == 'OK') {
                 res.send({ err: 0, msg: result.data.data.pageInfo, AllPages: result.data.data.allPage, allRecords: result.data.data.allRecords, resultPoint: result.data.data })
             } else {
@@ -148,7 +148,7 @@ router.post('/admin/application', (req, res) => {
 // 添加用户
 router.post('/admin/User', (req, res) => {
     let { obj } = req.body
-    console.log('添加的用户信息', obj)
+    // console.log('添加的用户信息', obj)
     // 传数据
     axios({
         method: 'POST',
@@ -953,7 +953,7 @@ router.post('/superAdmin/givePower', (req, res) => {
 })
 // 给普通用户授权
 router.post('/admin/updatePower', (req, res) => {
-    console.log(req.body)
+    // console.log(req.body)
     axios({
         method: 'PUT',
         url: '/admin/updatePower',
