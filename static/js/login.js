@@ -28,7 +28,8 @@ function myFunction() {
         }).then((user)=>{
                     // console.log(user);
                     sessionStorage.setItem('name', user.data.name);
-                    sessionStorage.setItem('power', user.data.power);
+                    sessionStorage.setItem('name', user.data.name);
+                    sessionStorage.setItem('organization', user.data.organization);
                     if(user.data.power!='普通用户'){
                         setTimeout(function () {
                             window.location.assign("/examineApplication");

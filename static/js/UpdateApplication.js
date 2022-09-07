@@ -15,28 +15,37 @@ let son2 = document.getElementById('son2');
 let usermessage = document.getElementsByClassName('usermessage');
 let credittypesonson = document.getElementById('credittypesonson');
 let ranking= document.getElementById('ranking');
+let getcredit= document.getElementById('getcredit');
 var sqb;
+function myFunction(event) {        
+  if (isNaN(event.value) ||event.value<= 0 || event.value >= 101 || !(/^\d+$/.test(event.value))) {
+      {    
+      event.value = "";
+      }
+  }
+}
 axios({
     url: '/api/getpostmessage',
     method: 'get',
     params: {id:aid},
   }).then(response=> {
-      // console.log(response.data);   
+      console.log(response.data);   
       let data=response.data.data;
     if(response.data.msg!='OK'){
         swal('获取失败！');
         window.replace('404.html');
     }else{
         document.getElementById('aid').value=aid;
+        getcredit.innerText=data.分数;
         subtextarea.value=data.申请表.remarks;
         if(data.申请表.team=="是"){
           ranking.innerHTML='';
           ranking.innerHTML=`
           项目人数：&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-          <input maxlength="2" id='teamnumber' autocomplete="off" placeholder="人数"  class="layui-input" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}">
+          <input name='allnumber' id='teamnumber' autocomplete="off" placeholder="人数" class="layui-input"  maxlength='3' onkeyup="myFunction(this)">
           人&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-          项目排名：&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-          <input id="rankinput" name="orders" maxlength="2" autocomplete="off" placeholder="排名"  class="layui-input" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}">
+          项目排名：&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+          <input name="orders" id='rankinput'  maxlength='3' onkeyup="myFunction(this)" autocomplete="off" placeholder="排名"  class="layui-input">
           名
           `;
           teamin[0].checked=false;
@@ -44,6 +53,7 @@ axios({
           document.getElementById('rankinput').value=data.申请表.orders;
         }
         let num=data.申请表.remarks.length;
+        console.log(num);
         document.getElementById('word').innerText=num;
         setfather(data.申请表.creditType.aid);
         // if(data.申请表.classify.b_Indicator_level==2){
@@ -146,6 +156,59 @@ axios({
     // swal('获取内容失败！');
     // console.log(error);
 });
+function getnowcredit(){
+  var o = $('#form').serializeObject();
+  o.remarks=htmllEscape(o.remarks);
+  console.log(o);
+  if (o.specific_information == '0') {
+    swal('请选择指标！')
+    return
+  } else if (credittypesonson.style.display == 'block') {
+    // console.log(o.specific_information);
+    o.specific_information = o.specific_information[1];
+  }
+  if(o.team=='否'){
+    return   axios({
+      url: '/api/getCreditById',
+      method: 'get',
+      params: {
+        "id": o.specific_information,
+        "order": 1
+      },
+    }).then(data => {
+      console.log(data);
+      getcredit.innerText=data.data.data
+    }).catch(function (error) {
+      console.log(error);
+    });
+  }else{
+    if(isnull(o.orders)){
+      swal("请填写您的团队排名！");
+      return
+    }
+    if(isnull(o.allnumber)){
+      swal("请填写您的团队人数！");
+      return
+    }
+    if(o.orders<=0||parseInt(o.orders)>parseInt(o.allnumber)){
+      swal("请填写合理的团队排名！");
+      return  
+    }
+    return   axios({
+      url: '/api/getCreditById',
+      method: 'get',
+      params: {
+        "id": o.specific_information,
+        "order": o.orders
+      }
+    }).then(data => {
+      console.log(data)
+      getcredit.innerText=data.data.data
+    }).catch(function (error) {
+      console.log(error);
+    });
+  }
+}
 function setfather(id){
   let option = credittype.getElementsByTagName('option');
   for (let n of option) {
@@ -258,9 +321,13 @@ $.fn.serializeObject = function () {
         swal("请填写您的团队排名！");
         return
       }
-      if(o.orders<=0){
-        swal("请填写合理的团队排名！");
+      if(isnull(o.allnumber)){
+        swal("请填写您的团队人数！");
         return
+      }
+      if(o.orders<=0||parseInt(o.orders)>parseInt(o.allnumber)){
+        swal("请填写合理的团队排名！");
+        return  
       }
     }
     if (o.specific_information == '0') {

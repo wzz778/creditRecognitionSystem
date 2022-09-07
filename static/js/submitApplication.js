@@ -36,6 +36,13 @@ if(sessionStorage.getItem('Applicationid')){
     location.replace('/UploadAttachment');
   }, 500)
 }
+function myFunction(event) {        
+  if (isNaN(event.value) ||event.value<= 0 || event.value >= 101 || !(/^\d+$/.test(event.value))) {
+      {    
+      event.value = "";
+      }
+  }
+}
 function isnull(val) {
  
   var str = val.replace(/(^\s*)|(\s*$)/g, '');//去除空格;
@@ -89,9 +96,13 @@ $('#postbutton').on('click', function () {
       swal("请填写您的团队排名！");
       return
     }
-    if(o.orders<=0){
-      swal("请填写合理的团队排名！");
+    if(isnull(o.allnumber)){
+      swal("请填写您的团队人数！");
       return
+    }
+    if(o.orders<=0||parseInt(o.orders)>parseInt(o.allnumber)){
+      swal("请填写合理的团队排名！");
+      return  
     }
   }
   if (o.specific_information == '0') {
@@ -226,8 +237,6 @@ $('#postbutton').on('click', function () {
           let date=data.data;
           // console.log(data.data);
           let aid=date.data;
-          // console.log(aid);
-          // console.log(aid);
           sessionStorage.setItem('Applicationid',aid);
           if(o.ore=="是"){
             setTimeout(function () {
@@ -255,6 +264,115 @@ $('#postbutton').on('click', function () {
   }
   // console.log(JSON.stringify(o));
 });
+//获取学分
+function getnowcredit(){
+  var o = $('#form').serializeObject();
+  o.remarks=htmllEscape(o.remarks);
+  console.log(o);
+  if (o.specific_information == '0') {
+    swal('请选择指标！')
+    return
+  } else if (credittypesonson.style.display == 'block') {
+    // console.log(o.specific_information);
+    o.specific_information = o.specific_information[1];
+  }
+  if(o.team=='否'){
+    return   axios({
+      url: '/api/getCreditById',
+      method: 'get',
+      params: {
+        "id": o.specific_information,
+        "order": 1
+      },
+    }).then(data => {
+      console.log(data);
+      getcredit.innerText=data.data.data
+    }).catch(function (error) {
+      console.log(error);
+    });
+  }else{
+    if(isnull(o.orders)){
+      swal("请填写您的团队排名！");
+      return
+    }
+    if(isnull(o.allnumber)){
+      swal("请填写您的团队人数！");
+      return
+    }
+    if(o.orders<=0||parseInt(o.orders)>parseInt(o.allnumber)){
+      swal("请填写合理的团队排名！");
+      return  
+    }
+    return   axios({
+      url: '/api/getCreditById',
+      method: 'get',
+      params: {
+        "id": o.specific_information,
+        "order": o.orders
+      }
+    }).then(data => {
+      console.log(data)
+      getcredit.innerText=data.data.data
+    }).catch(function (error) {
+      console.log(error);
+    });
+  }
+}
+// function setcredit(id){
+//   var o = $('#form').serializeObject();
+//   console.log(o);
+//   if(o.team=='否'){
+//     return   axios({
+//       url: '/api/getCreditById',
+//       method: 'get',
+//       params: {
+//         "id": id,
+//         "order": o.orders
+//       },
+//     }).then(data => {
+//       console.log(data);
+//       getcredit.innerText=data.data.data
+//     }).catch(function (error) {
+//       console.log(error);
+//     });
+//   }else{
+//     if(isnull(o.orders)){
+//       swal("请填写您的团队排名！");
+//       return
+//     }
+//     if(isnull(o.allnumber)){
+//       swal("请填写您的团队人数！");
+//       return
+//     }
+//     if(o.orders<=0||o.orders>o.allnumber){
+//       swal("请填写合理的团队排名！");
+//       return
+//     }
+//     return   axios({
+//       url: '/api/getCreditById',
+//       method: 'get',
+//       params: {
+//         "id": id,
+//         "order": o.orders
+//       }
+//     }).then(data => {
+//       console.log(data)
+//       getcredit.innerText=data.data.data
+//     }).catch(function (error) {
+//       console.log(error);
+//     });
+//   }
+// }
+// function getsoncredit(){
+//   let ops=son2.getElementsByTagName('option');
+//   let id=0;
+//   for(let i of ops){
+//     if(i.selected){
+//       id=i.value;
+//     }
+//   }
+//   setcredit(id);
+// }
 function getson1(father) {
   axios({
     url: '/api/getsonson',
@@ -263,11 +381,6 @@ function getson1(father) {
       "id": father,
       "level": "1"
     },
-    // url: '/api/getcreditson',
-    // method: 'get',
-    // params: {
-    //   "indicator": father,
-    // },
   }).then(data => {
     // console.log(data.data);
     son.innerHTML = `<option value="0">请选择</option>`;
@@ -305,11 +418,12 @@ function getson2(father) {
             credittypesonson.style.display = 'block';
             // son2.innerHTML=`<option value="0">请选择</option>`;
             son2.innerHTML = `<option value="0">暂时无数据</option>`;
-            return
+            return 
           }
         })
       credittypesonson.style.display = 'none';
       son2.innerHTML = ``;
+      // return setcredit(father);
     } else if (data.data.data.length > 0) {
       credittypesonson.style.display = 'block';
       // son2.innerHTML=`<option value="0">请选择</option>`;
@@ -318,6 +432,7 @@ function getson2(father) {
       for (let n of data.data.data) {
         son2.innerHTML += `<option value="${n.b_id}">${n.b_Indicator_name}</option>`
       }
+      // getsoncredit();
     }else if (data.data.data.length ==0) {
       credittypesonson.style.display = 'block';
       // son2.innerHTML=`<option value="0">请选择</option>`;
@@ -325,7 +440,12 @@ function getson2(father) {
       // console.log(data.data.data.length);
     }
     // console.log(data.data.data);
-  }).catch(function (error) {
+  })
+  // .then(function(data2){
+  //   console.log(data2);
+  // })
+  
+  .catch(function (error) {
     // console.log(error);
   });
 }
@@ -428,10 +548,10 @@ teamin[1].onclick=function(){
   ranking.innerHTML='';
   ranking.innerHTML=`
   项目人数：&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-  <input maxlength="2" id='teamnumber' autocomplete="off" placeholder="人数"  class="layui-input" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}">
+  <input id='teamnumber' name='allnumber' autocomplete="off" placeholder="人数" class="layui-input"  maxlength='3' onkeyup="myFunction(this)">
   人&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
   项目排名：&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-  <input name="orders" maxlength="2" autocomplete="off" placeholder="排名"  class="layui-input" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}">
+  <input name="orders"  maxlength='3' onkeyup="myFunction(this)" autocomplete="off" placeholder="排名"  class="layui-input">
   名
   `;
 }

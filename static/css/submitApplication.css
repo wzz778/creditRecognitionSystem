@@ -7,6 +7,11 @@
   text-align: right;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
 #tocreditSummary {
   width: 100%;
   text-align: end;
@@ -69,7 +74,7 @@
 
 #teamdiv #creditdiv {
   height: 50px;
-  margin-left: 60px;
+  margin-left: 30px;
   min-width: 120px;
   position: relative;
 }

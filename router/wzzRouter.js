@@ -317,7 +317,7 @@ router.get('/api/gefatherm', (req, res) => {
     });
 })
 router.get('/api/getpostmessage', (req, res) => {
-    console.log(req.query);
+    // console.log(req.query);
     axios.get('/user/oneApplication/{id}',{
         params:req.query,
         headers:{
@@ -361,7 +361,6 @@ router.post('/api/UploadAttachment', multipartMiddleware,(req, res) => {
         })
 })  
 router.post('/api/deletePhoto',(req, res) => {
-    console.log(req.body.key);
     axios({
     headers: {
         token:req.session.token
@@ -374,6 +373,20 @@ router.post('/api/deletePhoto',(req, res) => {
         res.send(response);
     }).catch(function (error) {
         console.log(error);
+        res.send(error)
+    });
+})
+router.get('/api/getCreditById', (req, res) => {
+    console.log(req.query);
+    axios.get('/IndicatorOperate/searchInfoID',{
+        params:req.query,
+        headers:{
+            token:req.session.token
+        }},
+    ).then(response=>{
+        // console.log(response.data);
+        res.send(response.data);
+    }).catch(function (error) {
         res.send(error)
     });
 })
