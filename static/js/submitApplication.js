@@ -21,7 +21,6 @@ $.fn.serializeObject = function () {
   });
   return obj;
 };
-// const hasClass = (el, className) => el.classList.contains(className)
 // let show;
 let credittype = document.getElementsByName('application_credit_type')[0];
 let son = document.getElementsByName('specific_information')[0];
@@ -29,6 +28,7 @@ let son2 = document.getElementById('son2');
 let usermessage = document.getElementsByClassName('usermessage');
 let credittypesonson = document.getElementById('credittypesonson');
 let ranking= document.getElementById('ranking');
+let getcredit= document.getElementById('getcredit');
 if(sessionStorage.getItem('Applicationid')){
   swal("您还有申请表未上传完整！");
   setTimeout(function () {
@@ -143,6 +143,7 @@ $('#postbutton').on('click', function () {
              //如果写成contentType会报错
           }
         }).then(data => {
+          console.log(data.data);
           if (data.data.msg == 'OK') {
             swal('提交成功', '您所填写的申请表提交成功', 'success');
             if(o.ore=="是"){
@@ -426,7 +427,10 @@ function setsonson() {
 teamin[1].onclick=function(){
   ranking.innerHTML='';
   ranking.innerHTML=`
-  项目排名：&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+  项目人数：&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+  <input maxlength="2" id='teamnumber' autocomplete="off" placeholder="人数"  class="layui-input" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}">
+  人&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+  项目排名：&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
   <input name="orders" maxlength="2" autocomplete="off" placeholder="排名"  class="layui-input" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}">
   名
   `;

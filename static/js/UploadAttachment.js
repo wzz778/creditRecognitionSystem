@@ -318,7 +318,7 @@ function poste(name){
         data: formData,
     })
         .then((result) => {
-            // console.log(result.data)
+            console.log(result.data);
             if(result.data.msg.msg=="OK"){
                 swal("上传成功！","您的文件上传成功！","success")
                 let static=document.getElementsByClassName("datastatus");
@@ -343,7 +343,7 @@ function poste(name){
                     swal("上传失败！","您提交的文件上传失败！","error")
                 }
             }else if(result.data.msg.msg=="文件格式错误"){
-                swal("您提交的文件格式错误！","只能上传图片或pdf形式的文件！","error")
+                swal("您提交的文件格式错误！","只能上传图片,pdf,excel或word形式的文件！","error")
             }else{
                 swal("上传失败！","您提交的文件上传失败！","error")
             }
