@@ -187,7 +187,7 @@ axios.defaults.baseURL='http://110.40.205.103:8099/';
 
 //登录
 router.post('/api/login', (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
     axios({
         url:'/login',
         method:'post',
@@ -206,6 +206,7 @@ router.post('/api/login', (req, res) => {
         })
     }).then(user=>{
         req.session.user=user.data.data;
+        console.log(req.session.user)
         // res.send(req.session.user)
     }).catch(function (error) {
         res.send(error)
