@@ -391,12 +391,17 @@ function getson1(father) {
       son.innerHTML += `<option value="${n.b_id}">${n.b_Indicator_name}</option>`
     }
   }).catch(function (error) {
-    console.log(error);
+    // console.log(error);
   });
   credittypesonson.style.display = 'none';
   son2.innerHTML = ``;
 }
 function getson2(father) {
+  if(father==0){
+    credittypesonson.style.display = 'none';
+    son2.innerHTML = ``;
+    return
+  }
   axios({
     url: '/api/getsonson',
     method: 'get',

@@ -511,6 +511,11 @@ $.fn.serializeObject = function () {
     son2.innerHTML = ``;
   }
   function getson2(father) {
+    if(father==0){
+      credittypesonson.style.display = 'none';
+      son2.innerHTML = ``;
+      return
+    }
     axios({
       url: '/api/getsonson',
       method: 'get',
