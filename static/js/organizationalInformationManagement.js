@@ -48,7 +48,7 @@ function deleteFn(event) {
                         getAllOrganize()
                         return
                     }
-                    swal('删除失败请重试')
+                    swal(result.data.msg.msg)
                 })
                 .catch((err) => {
                     console.log(err)
