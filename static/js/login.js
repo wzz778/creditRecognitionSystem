@@ -29,6 +29,7 @@ function myFunction() {
                     sessionStorage.setItem('name', user.data.name);
                     sessionStorage.setItem('power', user.data.power);
                     sessionStorage.setItem('userName', user.data.userName);
+                    sessionStorage.setItem('academy', user.data.academy);
                     if(user.data.power!='普通用户'){
                         setTimeout(function () {
                             window.location.assign("/examineApplication");

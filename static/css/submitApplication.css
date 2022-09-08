@@ -195,3 +195,8 @@ input::-webkit-inner-spin-button {
   padding: 5px 10px;
   background-color: rgba(0, 0, 0, 0.3);
 }
+
+#postbutton {
+  position: relative;
+  top: -20px;
+}

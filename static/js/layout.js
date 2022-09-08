@@ -7,6 +7,7 @@ let Busermessage=document.getElementsByClassName('Busermessage');
 Busermessage[0].innerHTML=sessionStorage.getItem('name');
 Busermessage[1].innerHTML=sessionStorage.getItem('userName');
 Busermessage[2].innerHTML=sessionStorage.getItem('power');
+Busermessage[3].innerHTML=sessionStorage.getItem('academy');
 function dropdown() {
     head_cord_fade.style.display = 'block'
 }
@@ -80,6 +81,7 @@ if(sessionStorage.getItem('power')=='超级管理员'){
         <a class="item_top" href="javascript:;" onclick="opennav(this)"><i class="fa fa-users iii" aria-hidden="true"></i>超级管理<i class="fa fa-chevron-up" aria-hidden="true"></i></a>
         <div class="child">
             <a class="columna" href="InstituteInformationManagement"><i class="fa fa-users" aria-hidden="true"></i>组织管理</a>
+            <a class="columna" href="organizationalInformationManagement"><i class="fa fa-users" aria-hidden="true"></i>学院信息管理</a>
             <a class="columna" href="adminManageUsers"><i class="fa fa-user-circle-o" aria-hidden="true"></i>用户管理</a>
             <a class="columna" href="superAdminAdd"><i class="fa fa-user-plus" aria-hidden="true"></i>添加用户</a>
             <a class="columna" href="adminCreditManagement"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>学分构成管理</a>
@@ -99,19 +101,21 @@ if(sessionStorage.getItem('power')=='超级管理员'){
     }else if(pagename=='/InstituteInformationManagement') {
         columna[2].style.background="#1271D5";
     }else if(pagename=='/adminManageUsers') {
-        columna[3].style.background="#1271D5";
-    }else if(pagename=='/superAdminAdd') {
         columna[4].style.background="#1271D5";
-    }else if(pagename=='/adminCreditManagement') {
+    }else if(pagename=='/superAdminAdd') {
         columna[5].style.background="#1271D5";
-    }else if(pagename=='/addNewIndicator') {
+    }else if(pagename=='/adminCreditManagement') {
         columna[6].style.background="#1271D5";
-    }else if(pagename=='/adminHistory') {
+    }else if(pagename=='/addNewIndicator') {
         columna[7].style.background="#1271D5";
-    }else if(pagename=='/examineApplication') {
+    }else if(pagename=='/adminHistory') {
         columna[8].style.background="#1271D5";
-    }else if(pagename=='/adminWatchApplication') {
+    }else if(pagename=='/examineApplication') {
         columna[9].style.background="#1271D5";
+    }else if(pagename=='/adminWatchApplication') {
+        columna[10].style.background="#1271D5";
+    }else if(pagename=='/organizationalInformationManagement'){
+        columna[3].style.background="#1271D5";
     }
 }else if(sessionStorage.getItem('power')=='普通管理员'){
     haveno[0].style.display='none';
