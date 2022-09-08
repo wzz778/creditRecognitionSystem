@@ -22,6 +22,11 @@
   color: red;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
 .layui-form-label {
   padding: 9px 12px;
   text-align: left;
@@ -69,7 +74,7 @@
 
 #teamdiv #creditdiv {
   height: 50px;
-  margin-left: 60px;
+  margin-left: 30px;
   min-width: 120px;
   position: relative;
 }

@@ -16,6 +16,7 @@ body{
   min-width: 180px;
   max-width: 180px;
   margin-top: 55px;
+  /* margin-bottom: 55px; */
   padding-top: 20px;
 }
 
@@ -43,6 +44,13 @@ body{
   font-size: 14px;
   font-weight: 500;
   border-radius: 5px;
+}
+#renav-bottom{
+  position: absolute;
+  bottom: 40px;
+  width: 100%;
+  background-color: white;
+  height: 47px;
 }
 .renav-item{
   margin-top: 5px;
@@ -199,7 +207,7 @@ body{
   font-size: 15px;
   display: block;
   color: black;
-  padding: 4px 15px;
+  padding: 6px 15px;
   border-bottom: none;
   line-height: normal;
   transition: all 0.3s ;
@@ -223,6 +231,7 @@ body{
   transition: all 0.3s;
   min-width:800px;
   padding: 58px 10px 10px 190px;
+  padding-bottom: 40px;
 }
 
 #body #begin-main {
@@ -232,4 +241,21 @@ body{
 }
 .columned{
   background-color: #1271d5;
+}
+#layout-bottom{
+  height: 30px;
+  line-height: 30px;
+  width: 100%;
+  z-index: 100;
+  background-color: #368AE2;
+  position: fixed;
+  padding-left: 30px;
+  bottom: 0;
+  color: white;
+  transition: all 0.3s;
+  overflow: hidden;
+  border-bottom:white 2px solid;
+}
+#layout-bottom span{
+  margin-right: 25px;
 }

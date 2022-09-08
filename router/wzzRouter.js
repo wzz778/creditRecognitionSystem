@@ -196,7 +196,17 @@ router.post('/api/login', (req, res) => {
         req.session.token= response.data.data.token;
         req.session.password= req.body.password;
         res.send(response.data);
-        // return jwt.decode(req.session.token).username;
+        return     axios({
+            url:'user/userInfo',
+            method:'get',
+            params:{username:jwt.decode(req.session.token).username},
+            headers:{
+                token:req.session.token
+            }
+        })
+    }).then(user=>{
+        req.session.user=user.data.data;
+        // res.send(req.session.user)
     }).catch(function (error) {
         res.send(error)
     });
@@ -317,7 +327,7 @@ router.get('/api/gefatherm', (req, res) => {
     });
 })
 router.get('/api/getpostmessage', (req, res) => {
-    console.log(req.query);
+    // console.log(req.query);
     axios.get('/user/oneApplication/{id}',{
         params:req.query,
         headers:{
@@ -361,7 +371,6 @@ router.post('/api/UploadAttachment', multipartMiddleware,(req, res) => {
         })
 })  
 router.post('/api/deletePhoto',(req, res) => {
-    console.log(req.body.key);
     axios({
     headers: {
         token:req.session.token
@@ -377,6 +386,21 @@ router.post('/api/deletePhoto',(req, res) => {
         res.send(error)
     });
 })
+router.get('/api/getCreditById', (req, res) => {
+    console.log(req.query);
+    axios.get('/IndicatorOperate/searchInfoID',{
+        params:req.query,
+        headers:{
+            token:req.session.token
+        }},
+    ).then(response=>{
+        // console.log(response.data);
+        res.send(response.data);
+    }).catch(function (error) {
+        res.send(error)
+    });
+})
+
 router.put('/api/uppassword', (req, res) => {
     if (!jwt.decode(req.session.token)) {
         res.send({ err: -1, msg: '用户身份非法' })
@@ -406,6 +430,9 @@ router.put('/api/uppassword', (req, res) => {
     }
 })
 router.get('/api/allapplication', (req, res) => {
+    if(req.session.user.organization=='院级'){
+        req.query.academy=req.session.user.academy;
+    }
     axios.get('/admin/application',{
         params:req.query,
         headers:{
