@@ -27,7 +27,7 @@ router.get('/',(req,res)=>{
         }
     }).then(response=>{
         req.session.credittype=response.data.data;
-        // console.log(req.session.user);
+        console.log(req.session.user);
         res.render('submitApplication.html',{
             credittype: req.session.credittype,
             user:req.session.user

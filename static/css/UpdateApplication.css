@@ -92,7 +92,7 @@ input::-webkit-inner-spin-button {
 
 #teamdiv #orediv {
   height: 50px;
-  margin-left: 60px;
+  margin-left: 20px;
   min-width: 200px;
   position: relative;
 }
@@ -140,7 +140,7 @@ input::-webkit-inner-spin-button {
 
 #teamdiv #ranking {
   height: 50px;
-  margin-left: 60px;
+  margin-left: 30px;
   min-width: 320px;
   position: relative;
 }
@@ -194,4 +194,9 @@ input::-webkit-inner-spin-button {
   color: white;
   padding: 5px 10px;
   background-color: rgba(0, 0, 0, 0.3);
+}
+
+#postbutton {
+  position: relative;
+  top: -20px;
 }

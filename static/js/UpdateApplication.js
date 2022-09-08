@@ -646,8 +646,11 @@ $.fn.serializeObject = function () {
   teamin[1].onclick=function(){
     ranking.innerHTML='';
     ranking.innerHTML=`
-    项目排名：&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-    <input name="orders" maxlength="2" autocomplete="off" placeholder="排名"  class="layui-input" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}" onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}">
+    项目人数：&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+    <input id='teamnumber' name='allnumber' autocomplete="off" placeholder="人数" class="layui-input"  maxlength='3' onkeyup="myFunction(this)">
+    人&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+    项目排名：&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+    <input name="orders"  maxlength='3' onkeyup="myFunction(this)" autocomplete="off" placeholder="排名"  class="layui-input">
     名
     `;
   }
