@@ -96,6 +96,7 @@ router.get('/admin/commonUserPage',(req,res)=>{
             token:req.session.token,
         },
     }).then((date)=>{
+        console.log(req.session.user)
         console.log(date.data);
         res.send(date.data);
     }).catch((err)=>{
@@ -364,6 +365,21 @@ router.get('/judgeUser',(req,res)=>{
         res.send({err:-1,msg:'没有权限'});
     }
 })
+
+
+// 判断管理员是否为院级
+router.get('/judgeOrganization',(req,res)=>{
+    let organization = req.session.user.organization;
+    let academy = req.session.user.academy
+    if(organization == '院级'){
+        res.send({err:0,msg:'被授权',data:[academy]});
+    }else{
+        res.send({err:-1,msg:'没有权限'});
+    }
+})
+
+
+
 
 //显示所有指标
 router.get('/IndicatorOperates/showAllIndicator',(req,res)=>{

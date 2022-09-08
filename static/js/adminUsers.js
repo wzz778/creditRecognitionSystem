@@ -38,6 +38,7 @@ let header_academy = document.getElementsByClassName('header_academy');
 let header_class = document.getElementsByClassName('header_class');
 let identity = document.getElementsByClassName('identity');
 let search_text = document.getElementsByClassName('search-text');
+let search_change = document.getElementsByClassName('search-change');
 checkbox_all[0].numbers = 0;
 checkbox_all[0].changes = -1;
 
@@ -81,6 +82,32 @@ function page(numbers,size){
     })
 }
 
+// //判断是否为院级管理员
+function judgeOrganization(){
+    axios({
+        method:'get',
+        url:'/judgeOrganization',
+    }).then((date)=>{
+        console.log(date.data);
+        if(date.data.err == 0){
+            search_type[0].organization = 0;
+            console.log(date.data.data[0]);
+            search_type[0].acadmys = date.data.data[0];
+            search_change[0].innerHTML = `<div class="search-title">
+                                                专业：
+                                                <input type="text" class="search-another">
+                                            </div>
+                                            <div class="search-title">
+                                                班级：
+                                                <input type="text" class="search-another">
+                                            </div>
+        `
+        }else{
+            search_type[0].organization = 1;
+        }
+    })
+}
+judgeOrganization();
 
 // 弹出层中的下来选择框 获取下一级的信息
 function selectOrganization(id,className,numbers){
@@ -140,12 +167,14 @@ selectYear()
 search_type[0].onchange = function (){
     // console.log(this.value);
     // console.log(header_grade.length);
-    for(let j=0;j<header_grade.length;j++){
-        if(header_grade[j].value == this.value){
-            // console.log(header_grade[j].id);
-            headerOrganization(header_grade[j].id,"header_academy",1);
-        }
+    if(search_type[0].organization == 1){
+        for(let j=0;j<header_grade.length;j++){
+            if(header_grade[j].value == this.value){
+                // console.log(header_grade[j].id);
+                headerOrganization(header_grade[j].id,"header_academy",1);
+            }
             // console.log(this.id)
+        }
     }
 }
 
@@ -204,25 +233,59 @@ function headerOrganization(id,className,numbers){
 
 // 初始化页面
 function rendering() {
+    // console.log(search_type[0].acadmys)
+    let she = '';
     axios({
         method:'get',
-        url:'/admin/commonUserPage',
-        params:{
-            nodePage:1,
-            pageSize: 10,
-        },
+        url:'/judgeOrganization',
     }).then((date)=>{
-        // console.log(date.data);
-        let all = date.data.data.pageInfo;
-        // console.log(all);
-        checkbox_all[0].pagees = date.data.data.allPages;
-        checkbox_all[0].total = date.data.data.allRecords;
-        // checkbox_all[0].size = date.data.data.size;
-        checkbox_all[0].count = all.length;
-        let html = "";
-        if(all.length != 0){
-            for(let i=0;i<all.length;i++){
-                html +=`<ul class="header">
+        console.log(date.data);
+        if(date.data.err == 0){
+            search_type[0].organization = 0;
+            console.log(date.data.data[0]);
+            search_type[0].acadmys = date.data.data[0];
+            search_change[0].innerHTML = `<div class="search-title">
+                                                专业：
+                                                <input type="text" class="search-another">
+                                            </div>
+                                            <div class="search-title">
+                                                班级：
+                                                <input type="text" class="search-another">
+                                            </div>
+        `
+        }else{
+            search_type[0].organization = 1;
+        }
+        if(search_type[0].organization == 0){
+            she = {
+                nodePage:1,
+                pageSize: 10,
+                academy:search_type[0].acadmys
+            }
+        }else{
+            she = {
+                nodePage:1,
+                pageSize: 10,
+            }
+        }
+
+        console.log(she);
+        axios({
+            method:'get',
+            url:'/admin/commonUserPage',
+            params:she,
+        }).then((date)=>{
+            // console.log(date.data);
+            let all = date.data.data.pageInfo;
+            // console.log(all);
+            checkbox_all[0].pagees = date.data.data.allPages;
+            checkbox_all[0].total = date.data.data.allRecords;
+            // checkbox_all[0].size = date.data.data.size;
+            checkbox_all[0].count = all.length;
+            let html = "";
+            if(all.length != 0){
+                for(let i=0;i<all.length;i++){
+                    html +=`<ul class="header">
                         <li class="checkbox lis">
                             <div class="inner">
                                 <input type="checkbox" class="checkbox-list" >
@@ -240,184 +303,185 @@ function rendering() {
                             <span class="opertor-list deletes">删除</span>
                         </li>
                     </ul>`
-            }
-        }else{
-            html +=`<ul class="header">
+                }
+            }else{
+                html +=`<ul class="header">
                         <li class="search-nothing">没有找到匹配的记录</li>
                     </ul>`
-        }
-        main_content[0].innerHTML = html;
-        let sum = date.data.data.allPages;
-        let allPages = date.data.data.allRecords;
-        // console.log(sum);
-        btn_new[0].allLength = sum * 10;
-        page(allPages,10);
-        // console.log(btn_primay[0].pageSize)
-        // console.log(checkbox_list.length)
-        for(let i=0;i<checkbox_list.length;i++){
-            checkbox_list[i].ids = all[i].uid;
-            checkbox_list[i].numbers = i;
-            let index4 = 0;
-            checkbox_list[i].onclick = function (){
+            }
+            main_content[0].innerHTML = html;
+            let sum = date.data.data.allPages;
+            let allPages = date.data.data.allRecords;
+            // console.log(sum);
+            btn_new[0].allLength = sum * 10;
+            page(allPages,10);
+            // console.log(btn_primay[0].pageSize)
+            // console.log(checkbox_list.length)
+            for(let i=0;i<checkbox_list.length;i++){
+                checkbox_list[i].ids = all[i].uid;
+                checkbox_list[i].numbers = i;
+                let index4 = 0;
+                checkbox_list[i].onclick = function (){
 
-                if(this.checked){
-                    layer_submit[0].ids = this.numbers;
-                    checkbox_all[0].numbers +=1;
-                    checkbox_all[0].name = all[i].name;
-                    checkbox_all[0].userName = all[i].userName;
-                    checkbox_all[0].grade = all[i].grade;
-                    checkbox_all[0].academy = all[i].academy;
-                    checkbox_all[0].major = all[i].major;
-                    checkbox_all[0].major_class = all[i].major_class;
-                    checkbox_all[0].sex = all[i].sex;
-                    // console.log(checkbox_all[0].numbers);
-                    index4 = this.numbers;
-                    checkbox_all[0].ids.push(checkbox_list[index4].ids);
-                    // console.log(checkbox_all[0].ids);
-                }else {
-                    checkbox_all[0].numbers -= 1;
-                    // console.log(checkbox_all[0].numbers);
-                    index4 = this.numbers;
-                    for(let j=0;j<checkbox_all[0].ids.length;j++){
-                        if(checkbox_all[0].ids[j] == checkbox_list[index4].ids){
-                            checkbox_all[0].ids.splice(j,1);
-                            // console.log(checkbox_all[0].ids);
+                    if(this.checked){
+                        layer_submit[0].ids = this.numbers;
+                        checkbox_all[0].numbers +=1;
+                        checkbox_all[0].name = all[i].name;
+                        checkbox_all[0].userName = all[i].userName;
+                        checkbox_all[0].grade = all[i].grade;
+                        checkbox_all[0].academy = all[i].academy;
+                        checkbox_all[0].major = all[i].major;
+                        checkbox_all[0].major_class = all[i].major_class;
+                        checkbox_all[0].sex = all[i].sex;
+                        // console.log(checkbox_all[0].numbers);
+                        index4 = this.numbers;
+                        checkbox_all[0].ids.push(checkbox_list[index4].ids);
+                        // console.log(checkbox_all[0].ids);
+                    }else {
+                        checkbox_all[0].numbers -= 1;
+                        // console.log(checkbox_all[0].numbers);
+                        index4 = this.numbers;
+                        for(let j=0;j<checkbox_all[0].ids.length;j++){
+                            if(checkbox_all[0].ids[j] == checkbox_list[index4].ids){
+                                checkbox_all[0].ids.splice(j,1);
+                                // console.log(checkbox_all[0].ids);
+                            }
                         }
                     }
-                }
-                if(checkbox_all[0].numbers == 1 ){
-                    // btn_update[0].style.pointerEvents = 'auto';
-                    btn_update[0].style.cursor = 'pointer'
-                }else{
-                    // btn_update[0].style.pointerEvents = 'none';
-                    btn_update[0].style.cursor = 'not-allowed'
+                    if(checkbox_all[0].numbers == 1 ){
+                        // btn_update[0].style.pointerEvents = 'auto';
+                        btn_update[0].style.cursor = 'pointer'
+                    }else{
+                        // btn_update[0].style.pointerEvents = 'none';
+                        btn_update[0].style.cursor = 'not-allowed'
+                    }
+
+                    if(checkbox_all[0].numbers != 0 ){
+                        // btn_update[0].style.pointerEvents = 'auto';
+                        btn_del[0].style.cursor = 'pointer'
+                    }else{
+                        // btn_update[0].style.pointerEvents = 'none';
+                        btn_del[0].style.cursor = 'not-allowed'
+                    }
                 }
 
-                if(checkbox_all[0].numbers != 0 ){
-                    // btn_update[0].style.pointerEvents = 'auto';
-                    btn_del[0].style.cursor = 'pointer'
-                }else{
-                    // btn_update[0].style.pointerEvents = 'none';
-                    btn_del[0].style.cursor = 'not-allowed'
-                }
-            }
-            
-            
-            check[i].onclick = function (){
-                cover_layer[0].style.display = 'block'
-                layer_submit[0].numbers = 1;
-                layer_submit[0].ids = i;
-                layer_btn_primary[1].sums = 0;
-                checkbox_list[i].ids = all[i].uid;
-                checkbox_all[0].ids.push(all[i].uid);
-                layer_input[0].value = all[i].name;
-                layer_input[1].value = all[i].userName;
-                layer_input[2].value = all[i].grade;
-                layer_input[3].value = all[i].academy;
-                layer_input[5].value = all[i].major_class;
-                layer_input[4].value = all[i].major;
-                let sex = all[i].sex;
-                for(let j=0;j<radios.length;j++){
-                    if(radios[j].value == all[i].sex){
-                        let style = 'layer-form-radioed'
-                        // layer_form_radio[j]
-                        switchover(layer_form_radio,j,style);
-                    }
-                }
-                fn(all[i].grade).then(function (value) {
-                    // console.log(value)
-                    // console.log(1)
-                    return bns(value,academy,'academy',layer_input[3].value,1);
-                }).then((value) => {
-                    return bns(value,major,'major',layer_input[4].value,2);
-                }).then((value) => {
-                    return bns(value,grade,'grade',layer_input[5].value,3);
-                })
-            }
-            reset[i].onclick = function (){
-                axios({
-                    method:'put',
-                    url:'/admin/resetUserPass',
-                    params:{
-                        id:checkbox_list[i].ids,
-                    }
-                }).then((date)=>{
-                    // console.log(date.data);
-                    if(date.data.msg == 'OK'){
-                        swal('重置密码成功', "密码是123456", "success");
-                    }
-                }).catch((err)=>{
-                    console.log(err)
-                })
-            }
-            deletes[i].onclick =function () {
-                swal({
-                    title: "你确定？",
-                    text: "该用户会被删除！",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "删除！",
-                    cancelButtonText: "取消",
-                    closeOnConfirm: false,
-                    closeOnCancel: false
-                }, function(isConfirm) {
-                    if (isConfirm) {
-                        axios({
-                            method:'delete',
-                            url:'/admin/delete.doUserInfo',
-                            params:{
-                                user:checkbox_list[i].ids,
-                            }
-                        }).then((date)=>{
-                            // console.log(date.data);
-                            // console.log(btn_primay[0].pageSize);
-                            if(date.data.msg == 'OK'){
-                                if(checkbox_all[0].ids != 0){
-                                    for(let j=0;j<checkbox_all[0].ids.length;j++){
-                                        if(checkbox_all[0].ids[j] == checkbox_list[i].ids){
-                                            checkbox_all[0].ids.splice(j,1);
-                                            checkbox_all[0].numbers -= 1;
-                                            if(checkbox_all[0].numbers == 1 ){
-                                                // btn_update[0].style.pointerEvents = 'auto';
-                                                btn_update[0].style.cursor = 'pointer'
-                                            }else{
-                                                // btn_update[0].style.pointerEvents = 'none';
-                                                btn_update[0].style.cursor = 'not-allowed'
-                                            }
 
-                                            if(checkbox_all[0].numbers != 0 ){
-                                                // btn_update[0].style.pointerEvents = 'auto';
-                                                btn_del[0].style.cursor = 'pointer'
-                                            }else{
-                                                // btn_update[0].style.pointerEvents = 'none';
-                                                btn_del[0].style.cursor = 'not-allowed'
+                check[i].onclick = function (){
+                    cover_layer[0].style.display = 'block'
+                    layer_submit[0].numbers = 1;
+                    layer_submit[0].ids = i;
+                    layer_btn_primary[1].sums = 0;
+                    checkbox_list[i].ids = all[i].uid;
+                    checkbox_all[0].ids.push(all[i].uid);
+                    layer_input[0].value = all[i].name;
+                    layer_input[1].value = all[i].userName;
+                    layer_input[2].value = all[i].grade;
+                    layer_input[3].value = all[i].academy;
+                    layer_input[5].value = all[i].major_class;
+                    layer_input[4].value = all[i].major;
+                    let sex = all[i].sex;
+                    for(let j=0;j<radios.length;j++){
+                        if(radios[j].value == all[i].sex){
+                            let style = 'layer-form-radioed'
+                            // layer_form_radio[j]
+                            switchover(layer_form_radio,j,style);
+                        }
+                    }
+                    fn(all[i].grade).then(function (value) {
+                        // console.log(value)
+                        // console.log(1)
+                        return bns(value,academy,'academy',layer_input[3].value,1);
+                    }).then((value) => {
+                        return bns(value,major,'major',layer_input[4].value,2);
+                    }).then((value) => {
+                        return bns(value,grade,'grade',layer_input[5].value,3);
+                    })
+                }
+                reset[i].onclick = function (){
+                    axios({
+                        method:'put',
+                        url:'/admin/resetUserPass',
+                        params:{
+                            id:checkbox_list[i].ids,
+                        }
+                    }).then((date)=>{
+                        // console.log(date.data);
+                        if(date.data.msg == 'OK'){
+                            swal('重置密码成功', "密码是123456", "success");
+                        }
+                    }).catch((err)=>{
+                        console.log(err)
+                    })
+                }
+                deletes[i].onclick =function () {
+                    swal({
+                        title: "你确定？",
+                        text: "该用户会被删除！",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "删除！",
+                        cancelButtonText: "取消",
+                        closeOnConfirm: false,
+                        closeOnCancel: false
+                    }, function(isConfirm) {
+                        if (isConfirm) {
+                            axios({
+                                method:'delete',
+                                url:'/admin/delete.doUserInfo',
+                                params:{
+                                    user:checkbox_list[i].ids,
+                                }
+                            }).then((date)=>{
+                                // console.log(date.data);
+                                // console.log(btn_primay[0].pageSize);
+                                if(date.data.msg == 'OK'){
+                                    if(checkbox_all[0].ids != 0){
+                                        for(let j=0;j<checkbox_all[0].ids.length;j++){
+                                            if(checkbox_all[0].ids[j] == checkbox_list[i].ids){
+                                                checkbox_all[0].ids.splice(j,1);
+                                                checkbox_all[0].numbers -= 1;
+                                                if(checkbox_all[0].numbers == 1 ){
+                                                    // btn_update[0].style.pointerEvents = 'auto';
+                                                    btn_update[0].style.cursor = 'pointer'
+                                                }else{
+                                                    // btn_update[0].style.pointerEvents = 'none';
+                                                    btn_update[0].style.cursor = 'not-allowed'
+                                                }
+
+                                                if(checkbox_all[0].numbers != 0 ){
+                                                    // btn_update[0].style.pointerEvents = 'auto';
+                                                    btn_del[0].style.cursor = 'pointer'
+                                                }else{
+                                                    // btn_update[0].style.pointerEvents = 'none';
+                                                    btn_del[0].style.cursor = 'not-allowed'
+                                                }
                                             }
                                         }
                                     }
-                                }
-                                swal('删除成功', "删除成功", "success");
-                                if((checkbox_all[0].pagees * checkbox_all[0].size + checkbox_all[0].ids.length - checkbox_all[0].size) == checkbox_all[0].total){
-                                    page((checkbox_all[0].total - 1),checkbox_all[0].sizees);
-                                    render((checkbox_all[0].pages -1),checkbox_all[0].sizees);
+                                    swal('删除成功', "删除成功", "success");
+                                    if((checkbox_all[0].pagees * checkbox_all[0].size + checkbox_all[0].ids.length - checkbox_all[0].size) == checkbox_all[0].total){
+                                        page((checkbox_all[0].total - 1),checkbox_all[0].sizees);
+                                        render((checkbox_all[0].pages -1),checkbox_all[0].sizees);
 
-                                }else{
-                                    render(checkbox_all[0].pages,checkbox_all[0].sizees);
+                                    }else{
+                                        render(checkbox_all[0].pages,checkbox_all[0].sizees);
+                                    }
                                 }
-                            }
-                        }).catch((err)=>{
-                            console.log(err)
-                        })
-                        // swal("删除!", "该用户已被删除！", "success")
-                    } else{
-                        swal("取消!", "用户没有被删除！", "error")
-                    }
-                })
+                            }).catch((err)=>{
+                                console.log(err)
+                            })
+                            // swal("删除!", "该用户已被删除！", "success")
+                        } else{
+                            swal("取消!", "用户没有被删除！", "error")
+                        }
+                    })
+                }
             }
-        }
 
-    }).catch((err)=>{
-        console.log(err);
+        }).catch((err)=>{
+            console.log(err);
+        })
     })
 }
 rendering();
@@ -529,32 +593,47 @@ function render(numbers,size){
     if(checkbox_all[0].checked){
         checkbox_all[0].click();
     }
-    let index = search_type[0].selectedIndex;
-    let index_one = search_type[1].selectedIndex;
-    let index_two = search_type[2].selectedIndex;
-    let index_three = search_type[3].selectedIndex;
-    let his = {
-        beginIndex:numbers,
-        size:size,
-        grade:search_type[0].options[index].value,
-        academy:search_type[1].options[index_one].value,
-        major:search_type[2].options[index_two].value,
-        major_class:search_type[3].options[index_three].value,
-        power:'普通用户'
+    let his = '';
+    if(search_type[0].organization == 1){
+        let index = search_type[0].selectedIndex;
+        let index_one = search_type[1].selectedIndex;
+        let index_two = search_type[2].selectedIndex;
+        let index_three = search_type[3].selectedIndex;
+        his = {
+            beginIndex:numbers,
+            size:size,
+            grade:search_type[0].options[index].value,
+            academy:search_type[1].options[index_one].value,
+            major:search_type[2].options[index_two].value,
+            major_class:search_type[3].options[index_three].value,
+            power:'普通用户'
+        }
+        if(search_type[0].options[index].value == ''){
+            delete his.grade
+        }
+        if(search_type[1].options[index_one].value == ''){
+            delete  his.academy
+        }
+        if(search_type[2].options[index_two].value == ''){
+            delete  his.major
+        }
+        if(search_type[3].options[index_three].value == ''){
+            delete  his.major_class
+        }
+    }else{
+        let search_another = document.getElementsByClassName('search-another');
+        let index = search_type[0].selectedIndex;
+        his = {
+            beginIndex:numbers,
+            size:size,
+            grade:search_type[0].options[index].value,
+            academy:search_type[0].acadmys,
+            major:search_another[0].value,
+            major_class:search_another[1].value,
+            power:'普通用户'
+        }
     }
-    if(search_type[0].options[index].value == ''){
-        delete his.grade
-    }
-    if(search_type[1].options[index_one].value == ''){
-        delete  his.academy
-    }
-    if(search_type[2].options[index_two].value == ''){
-        delete  his.major
-    }
-    if(search_type[3].options[index_three].value == ''){
-        delete  his.major_class
-    }
-    // console.log(his);
+    console.log(his);
     axios({
         method:'get',
         url:'/admin/getUserByClass',
@@ -1028,30 +1107,61 @@ layer_submit[0].onclick = function (){
         }else{
             warn[0].innerHTML = '';
             if(layer_input[0].value != '' && layer_input[2].value != '' && layer_input[3].value != '' && layer_input[4].value != ''){
-                axios({
-                    method:'post',
-                    url:'/admin/Users',
-                    data:users,
-                }).then((date)=>{
-                    // console.log(date.data);
+                if(search_type[0].organization == 0){
+                    if(search_type[0].acadmys == layer_input[3].value){
+                        axios({
+                            method:'post',
+                            url:'/admin/Users',
+                            data:users,
+                        }).then((date)=>{
+                            // console.log(date.data);
 
-                    cover_layer[0].style.display = 'none';
-                    let cla = 'layer-form-radioed';
-                    switchover(layer_form_radio,1,cla);
-                    if(date.data.err == -1){
-                        swal(date.data.msg,'信息有误','error');
+                            cover_layer[0].style.display = 'none';
+                            let cla = 'layer-form-radioed';
+                            switchover(layer_form_radio,1,cla);
+                            if(date.data.err == -1){
+                                swal(date.data.msg,'信息有误','error');
+                            }else{
+                                swal('添加成功','成功添加','success');
+
+                            }
+
+                            if((checkbox_all[0].total + 1) > (checkbox_all[0].pagees * checkbox_all[0].sizees)){
+                                page((checkbox_all[0].total + 1),checkbox_all[0].sizees);
+                            }
+                            render(checkbox_all[0].pages,checkbox_all[0].sizees);
+                        }).catch((err)=>{
+                            console.log(err);
+                        })
                     }else{
-                        swal('添加成功','成功添加','success');
-
+                        swal('权限不足','只能添加本学院','error');
                     }
+                }else{
+                    axios({
+                        method:'post',
+                        url:'/admin/Users',
+                        data:users,
+                    }).then((date)=>{
+                        // console.log(date.data);
 
-                    if((checkbox_all[0].total + 1) > (checkbox_all[0].pagees * checkbox_all[0].sizees)){
-                        page((checkbox_all[0].total + 1),checkbox_all[0].sizees);
-                    }
-                    render(checkbox_all[0].pages,checkbox_all[0].sizees);
-                }).catch((err)=>{
-                    console.log(err);
-                })
+                        cover_layer[0].style.display = 'none';
+                        let cla = 'layer-form-radioed';
+                        switchover(layer_form_radio,1,cla);
+                        if(date.data.err == -1){
+                            swal(date.data.msg,'信息有误','error');
+                        }else{
+                            swal('添加成功','成功添加','success');
+
+                        }
+
+                        if((checkbox_all[0].total + 1) > (checkbox_all[0].pagees * checkbox_all[0].sizees)){
+                            page((checkbox_all[0].total + 1),checkbox_all[0].sizees);
+                        }
+                        render(checkbox_all[0].pages,checkbox_all[0].sizees);
+                    }).catch((err)=>{
+                        console.log(err);
+                    })
+                }
             }else{
                 swal('请把信息填写完整','','error');
             }
@@ -1077,26 +1187,53 @@ layer_submit[0].onclick = function (){
             }else{
                 warn[0].innerHTML = '';
                 if(layer_input[0].value != '' && layer_input[2].value != '' && layer_input[3].value != '' && layer_input[4].value != ''){
-                    axios({
-                        method:'put',
-                        url:'/admin/update.do.userInfo',
-                        params:users,
-                    }).then((date)=>{
-                        // console.log(date.data);
-                        let cla = 'layer-form-radioed';
-                        switchover(layer_form_radio,1,cla);
-                        cover_layer[0].style.display = 'none';
-                        swal('修改成功','成功修改','success');
-                        if(layer_submit[0].numbers == 2){
-                            checkbox_list[layer_submit[0].ids].click()
-                        }else{
-                            checkbox_all[0].ids.splice(0);
-                        }
-                        render(checkbox_all[0].pages,checkbox_all[0].sizees);
+                    if(search_type[0].organization == 0){
+                        if(layer_input[3].value == search_type[0].acadmys){
+                            axios({
+                                method:'put',
+                                url:'/admin/update.do.userInfo',
+                                params:users,
+                            }).then((date)=>{
+                                // console.log(date.data);
+                                let cla = 'layer-form-radioed';
+                                switchover(layer_form_radio,1,cla);
+                                cover_layer[0].style.display = 'none';
+                                swal('修改成功','成功修改','success');
+                                if(layer_submit[0].numbers == 2){
+                                    checkbox_list[layer_submit[0].ids].click()
+                                }else{
+                                    checkbox_all[0].ids.splice(0);
+                                }
+                                render(checkbox_all[0].pages,checkbox_all[0].sizees);
 
-                    }).catch((err)=>{
-                        console.log(err);
-                    })
+                            }).catch((err)=>{
+                                console.log(err);
+                            })
+                        }else{
+                            swal('无法添加其他学院的','权限不足','error');
+                        }
+                    }else{
+                        axios({
+                            method:'put',
+                            url:'/admin/update.do.userInfo',
+                            params:users,
+                        }).then((date)=>{
+                            // console.log(date.data);
+                            let cla = 'layer-form-radioed';
+                            switchover(layer_form_radio,1,cla);
+                            cover_layer[0].style.display = 'none';
+                            swal('修改成功','成功修改','success');
+                            if(layer_submit[0].numbers == 2){
+                                checkbox_list[layer_submit[0].ids].click()
+                            }else{
+                                checkbox_all[0].ids.splice(0);
+                            }
+                            render(checkbox_all[0].pages,checkbox_all[0].sizees);
+
+                        }).catch((err)=>{
+                            console.log(err);
+                        })
+                    }
                 }else{
                     swal('请把信息填写完整','','error');
                 }
@@ -1160,13 +1297,17 @@ btn_primay[0].onclick = function (){
 
 // 重置搜索
 btn_warning[0].onclick = function (){
-    search_type[0].value = "";
-    search_type[1].value = "";
-    search_type[2].value = "";
-    search_type[3].value = "";
-    search_type[1].innerHTML = `<option value="">请选择...</option>`;
-    search_type[2].innerHTML = `<option value="">请选择...</option>`;
-    search_type[3].innerHTML = `<option value="">请选择...</option>`;
+    if(search_type[0].organization == 1){
+        search_type[0].value = "";
+        search_type[1].value = "";
+        search_type[2].value = "";
+        search_type[3].value = "";
+        search_type[1].innerHTML = `<option value="">请选择...</option>`;
+        search_type[2].innerHTML = `<option value="">请选择...</option>`;
+        search_type[3].innerHTML = `<option value="">请选择...</option>`;
+    }else{
+        search_type[0].value = "";
+    }
     // search_text[0].value = "";
     render(1,10);
 }
