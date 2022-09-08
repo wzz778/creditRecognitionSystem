@@ -166,10 +166,12 @@ function GetAll(page, perPage, obj) {
             </ul>
                 `
                 } else {
+                    let academy = result.data.msg[i].academy || '无'
                     // 不是普通用户
                     userpowerShowInfo(generalUser, false)
                     userpowerShowInfo(adminUser, true)
                     infoTop.classList.add('adminUserSty')
+                    // console.log(result.data)
                     adminManageUsersContentContent.classList.add('adminUserSty')
                     adminManageUsersContentContent.innerHTML += `
             <ul>
@@ -181,7 +183,7 @@ function GetAll(page, perPage, obj) {
                 <li>${result.data.msg[i].name}</li>
                 <li>${result.data.msg[i].userName}</li>
                 <li>${result.data.msg[i].power}</li>
-                <li>${result.data.msg[i].academy}</li>
+                <li>${academy}</li>
                 <li>${result.data.msg[i].organization}</li>
                 <li>
                     <button class="operatorBtnSty" onclick='reviseFn(this)'>重置密码</button>
@@ -543,6 +545,23 @@ function changeAdminUserInfoFn(event) {
         organizationInfo.value = ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML
     }
     organizationCollage.value = ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML
+    if(ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML == '无'){
+        organizationCollage.value = ''
+    }
+    if (organizationInfo.value == '' && organizationCollage.value == ''&& ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML != '无') {
+        swal('该组织信息和所属学院被删除')
+        organizationInfo.value = ''
+        organizationCollage.value == ''
+        return
+    }
+    if (organizationCollage.value == '' && ele.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerHTML != '无') {
+        swal('所属学院被删除')
+        organizationCollage.value == ''
+    }
+    if (organizationInfo.value == '') {
+        organizationInfo.value = ''
+        swal('组织信息被删除')
+    }
 }
 
 let reg = /^[0-9]*$/
@@ -619,7 +638,7 @@ changeUserInfo.onclick = function () {
     })
         .then((result) => {
             // console.log(obj)
-            console.log(result.data)
+            // console.log(result.data)
             bodyTop[0].style.display = 'none'
             if (result.data.err == 0) {
                 swal('修改成功')

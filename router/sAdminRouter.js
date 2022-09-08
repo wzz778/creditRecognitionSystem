@@ -22,7 +22,6 @@ router.get('*', (req, res, next) => {
 // 请求页面
 // 添加用户 !
 router.get('/superAdminAdd', (req, res) => {
-    console.log(req.session)
     res.render('superAdminAddUser.html')
 })
 // 提交历史记录 !
