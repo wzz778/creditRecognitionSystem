@@ -213,7 +213,7 @@ router.post('/api/login', (req, res) => {
 })
 //获取个人信息
 router.get('/api/getmymessage', (req, res) => {
-    console.log(jwt.decode(req.session.token));
+    // console.log(jwt.decode(req.session.token));
     axios({
         url:'user/userInfo',
         method:'get',
@@ -255,7 +255,7 @@ router.get('/api/getcreditmessage', (req, res) => {
     });
 })
 router.post('/api/getpost', (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
     axios({
         url:'user/application',
         method:'post',
@@ -272,7 +272,7 @@ router.post('/api/getpost', (req, res) => {
     });
 })
 router.post('/api/updatapost', (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
     axios({
         url:'/user/updateApplication',
         method:'put',
@@ -387,7 +387,7 @@ router.post('/api/deletePhoto',(req, res) => {
     });
 })
 router.get('/api/getCreditById', (req, res) => {
-    console.log(req.query);
+    // console.log(req.query);
     axios.get('/IndicatorOperate/searchInfoID',{
         params:req.query,
         headers:{
@@ -560,8 +560,6 @@ router.put('/api/uploador', (req, res) => {
 })
 //添加组织
 router.post('/api/addorgin', (req, res) => {
-    console.log(req.body);
-    console.log(req.body.level);
     axios({
         url:'/admin/organization.add',
         method:'POST',
@@ -578,7 +576,6 @@ router.post('/api/addorgin', (req, res) => {
     });
 })
 router.post('/api/setfeedback', (req, res) => {
-    console.log(req.body);
     axios({
         headers:{
             token: req.session.token,

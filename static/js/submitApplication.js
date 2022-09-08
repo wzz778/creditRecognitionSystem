@@ -154,7 +154,7 @@ $('#postbutton').on('click', function () {
              //如果写成contentType会报错
           }
         }).then(data => {
-          console.log(data.data);
+          // console.log(data.data);
           if (data.data.msg == 'OK') {
             swal('提交成功', '您所填写的申请表提交成功', 'success');
             if(o.ore=="是"){

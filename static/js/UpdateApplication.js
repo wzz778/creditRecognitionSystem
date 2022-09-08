@@ -128,7 +128,7 @@ axios({
         params: {
           "id": father,
         }}).then(redate=>{
-          console.log(redate.data);
+          // console.log(redate.data);
           if(redate.data.data.classfiy.b_points_available==0){
             credittypesonson.style.display = 'block';
             // son2.innerHTML=`<option value="0">请选择</option>`;
@@ -158,7 +158,7 @@ axios({
 function getnowcredit(){
   var o = $('#form').serializeObject();
   o.remarks=htmllEscape(o.remarks);
-  console.log(o);
+  // console.log(o);
   if (o.specific_information == '0') {
     swal('请选择指标！')
     return
@@ -201,7 +201,7 @@ function getnowcredit(){
         "order": o.orders
       }
     }).then(data => {
-      console.log(data)
+      // console.log(data)
       getcredit.innerText=data.data.data
     }).catch(function (error) {
       console.log(error);
