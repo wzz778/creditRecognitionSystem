@@ -175,10 +175,10 @@ function getnowcredit(){
         "order": 1
       },
     }).then(data => {
-      console.log(data);
+      // console.log(data);
       getcredit.innerText=data.data.data
     }).catch(function (error) {
-      console.log(error);
+      // console.log(error);
     });
   }else{
     if(isnull(o.orders)){
@@ -204,7 +204,7 @@ function getnowcredit(){
       // console.log(data)
       getcredit.innerText=data.data.data
     }).catch(function (error) {
-      console.log(error);
+      // console.log(error);
     });
   }
 }
