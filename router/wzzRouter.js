@@ -194,6 +194,7 @@ router.post('/api/login', (req, res) => {
         params:req.body,
     }).then(response=>{
         req.session.token= response.data.data.token;
+        // console.log(req.session.token);
         req.session.password= req.body.password;
         res.send(response.data);
         return     axios({
