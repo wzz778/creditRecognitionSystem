@@ -238,12 +238,18 @@ function render(id){
                 if(arr[arr.length -1] == 'pdf'){
                     all += `<iframe src="${date.data.data[i].address}" class="attchment-imgs attchments"></iframe>`
                     // all += `<object data="${date.data.data[i].address}" type="application/pdf" class="attchment-imgs attchments"></object>`
+                }else if(arr[arr.length -1] == 'xlsx' || arr[arr.length -1] == 'docx' || arr[arr.length -1] == 'xls' || arr[arr.length -1] == 'doc'){
+                    pic(650);
+                    all += `<div class="attchment-everyOne"><img src='public/img/no-content.png' class="attchment-imgs attchments" ><div class="no-content">无法显示该格式内容</div></div>`
                 }else{
                     all +=`<div class="attchment-everyOne"><img src='${date.data.data[i].address}' class="attchment-imgs attchments" ></div>`
                 }
             }
             carousel_item[0].innerHTML = all;
             attchment_header[0].innerHTML = '附件名称：' + date.data.data[0].enclosure_name;
+            for(let j=0;j<attchment_imgs.length;j++){
+                attchment_imgs[j].srcs = date.data.data[j].address;
+            }
         }
 
     })
@@ -257,12 +263,19 @@ download[0].onclick = function (){
         swal('下载失败','暂无内容','error');
     }else{
         for(let i=0;i<attchment_imgs.length;i++){
-            console.log(attchment_imgs[i].src)
-            let all = attchment_imgs[i].src.split('.');
+            // console.log(attchment_imgs[i].srcs)
+            let all = attchment_imgs[i].srcs.split('.');
             if(all[all.length - 1] == 'pdf'){
-                downloadIamge(attchment_imgs[i].src);
+                downloadIamge(attchment_imgs[i].srcs);
+            }else if(all[all.length -1] == 'xlsx' || all[all.length -1] == 'docx' || all[all.length -1] == 'xls' || all[all.length -1] == 'doc'){
+                // console.log(2);
+                // console.log(attchment_imgs[i].srcs);
+                // let time = new Date();
+                // console.log(time.getTime());
+                // downloadFile(attchment_imgs[i].srcs,Date.now());
+                downloadIamge(attchment_imgs[i].srcs);
             }else{
-                downloadImages(attchment_imgs[i].src)
+                downloadImages(attchment_imgs[i].srcs)
             }
             if(i == attchment_imgs.length -1){
                 let timer = setTimeout(function (){
@@ -322,4 +335,23 @@ function downloadImages(imgsrc) {//下载图片地址和图片名
 
 returns[0].onclick = function (){
     window.history.go(-1);
+}
+
+
+
+function downloadFile(downloadUrl, fileName) {
+    // 创建表单
+    const formObj = document.createElement('form');
+    formObj.action = downloadUrl;
+    formObj.method = 'get';
+    formObj.style.display = 'none';
+    // 创建input，主要是起传参作用
+    const formItem = document.createElement('input');
+    formItem.value = fileName; // 传参的值
+    formItem.name = fileName; // 传参的字段名
+    // 插入到网页中
+    formObj.appendChild(formItem);
+    document.body.appendChild(formObj);
+    formObj.submit(); // 发送请求
+    document.body.removeChild(formObj); // 发送完清除掉
 }

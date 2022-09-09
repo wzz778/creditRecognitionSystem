@@ -382,7 +382,7 @@ router.get('/judgeOrganization',(req,res)=>{
 
 
 //显示所有指标
-router.get('/IndicatorOperates/showAllIndicator',(req,res)=>{
+router.post('/IndicatorOperates/showAllIndicator',(req,res)=>{
     axios({
         method:'get',
         url:'/IndicatorOperate/showAllIndicator',

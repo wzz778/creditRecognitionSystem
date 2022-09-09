@@ -65,7 +65,7 @@ function pading(sum,size){
 //获取学分类型
 function applicationType() {
     axios({
-        method:'get',
+        method:'post',
         url:'/IndicatorOperates/showAllIndicator',
     }).then((data)=>{
         // console.log(data.data);
