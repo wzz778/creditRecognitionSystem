@@ -1,6 +1,5 @@
 {{extend './layout.html'}}
 {{block 'title'}}学分构成管理{{/block}}
-
 {{block 'head'}}
 <link rel="stylesheet" href="/public/css/LiUniversal.css">
 <link rel="stylesheet" href="/public/css/adminCreditManagement.css">
@@ -140,62 +139,7 @@
     </div>
 </div>
 {{/block}}
-
 {{block 'body'}}
-<div class="popUps" style="display: none;">
-    <span>
-        <i class="iconfont">对号</i>
-    </span>
-    查询成功
-</div>
-<div class="popUps wrong" style="display: none;">
-    <span>
-        <i class="iconfont">叉号</i>
-    </span>
-    网络错误
-</div>
-<div class="popUps wrong" style="display: none;">
-    <span>
-        <i class="iconfont">叉号</i>
-    </span>
-    请选择查询内容
-</div>
-<div class="popUps wrong" style="display: none;">
-    <span>
-        <i class="iconfont">叉号</i>
-    </span>
-    请选择删除内容
-</div>
-<div class="popUps" style="display: none;">
-    <span>
-        <i class="iconfont">对号</i>
-    </span>
-    删除成功
-</div>
-<div class="popUps wrong" style="display: none;">
-    <span>
-        <i class="iconfont">叉号</i>
-    </span>
-    请输入合法数字
-</div>
-<div class="popUps wrong" style="display: none;">
-    <span>
-        <i class="iconfont">叉号</i>
-    </span>
-    超过最大限制
-</div>
-<div class="popUps wrong" style="display: none;">
-    <span>
-        <i class="iconfont">叉号</i>
-    </span>
-    当前是最后一页
-</div>
-<div class="popUps wrong" style="display: none;">
-    <span>
-        <i class="iconfont">叉号</i>
-    </span>
-    当前是第一页
-</div>
 <div class="adminCreditManagementTop">
     <div class="topText">
         学分构成管理
@@ -226,13 +170,7 @@
         <button id="del" onclick="delFnAll()">删除</button>
         <button id="jumpUrl">添加指标</button>
     </div>
-    <!-- 存放学分构成的父盒子  二级目录 -->
-    <div class="Table">
-        <!-- 学分构成 -->
-
-
-    </div>
-
+    <div class="Table"></div>
 </div>
 <div class="Indicator clearFloat" style="display: none;">
     <div class="operation">
@@ -251,43 +189,9 @@
         </ul>
     </div>
     <div class="IndicatorCnotent IndicatorItem">
-        <!-- <ul>
-            <li> -->
-        <!-- 点击搜索时要把之前选中的清空 -->
-        <!-- <input type="checkbox" class="IndicatorCheckBoxSon commonDel" onclick="IndicatorCheckBoxSonFn(this)"
-                    autocomplete="off"> -->
-        <!-- 存放id -->
-        <!-- <div style="display: none;"></div>
-            </li>
-            <li>测试</li>
-            <li>6</li>
-            <li> -->
-        <!-- 存放备注 -->
-        <!-- <div style="display: none;"></div>
-                <button onclick="delFnOne(this)">删除</button>
-                <button>修改</button>
-                <button onclick="watchRemark(this)">查看备注</button>
-            </li>
-        </ul>
-        <ul>
-            <li>
-                <input type="checkbox" class="IndicatorCheckBoxSon commonDel" onclick="IndicatorCheckBoxSonFn(this)"
-                    autocomplete="off">
-            </li>
-            <li>测试</li>
-            <li>6</li>
-            <li>
-                <button>删除</button>
-                <button>修改</button>
-                <button>查看备注</button>
-            </li>
-        </ul> -->
     </div>
 </div>
-
-<!-- 存放学分构成 -->
 {{/block}}
-
 {{block 'bottom'}}
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="/public/js/creditSumRule.js"></script>

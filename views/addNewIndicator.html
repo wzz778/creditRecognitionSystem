@@ -1,66 +1,10 @@
 {{extend './layout.html'}}
 {{block 'title'}}添加学分指标{{/block}}
-
 {{block 'head'}}
 <link rel="stylesheet" href="/public/css/LiUniversal.css">
 <link rel="stylesheet" href="/public/css/addNewIndicator.css">
 {{/block}}
-
 {{block 'body'}}
-<div class="popUps" style="display: none;">
-    <span>
-        <i class="iconfont">对号</i>
-    </span>
-    查询成功
-</div>
-<div class="popUps wrong" style="display: none;">
-    <span>
-        <i class="iconfont">叉号</i>
-    </span>
-    网络错误
-</div>
-<div class="popUps wrong" style="display: none;">
-    <span>
-        <i class="iconfont">叉号</i>
-    </span>
-    请选择查询内容
-</div>
-<div class="popUps wrong" style="display: none;">
-    <span>
-        <i class="iconfont">叉号</i>
-    </span>
-    请选择删除内容
-</div>
-<div class="popUps" style="display: none;">
-    <span>
-        <i class="iconfont">对号</i>
-    </span>
-    删除成功
-</div>
-<div class="popUps wrong" style="display: none;">
-    <span>
-        <i class="iconfont">叉号</i>
-    </span>
-    请输入合法数字
-</div>
-<div class="popUps wrong" style="display: none;">
-    <span>
-        <i class="iconfont">叉号</i>
-    </span>
-    超过最大限制
-</div>
-<div class="popUps wrong" style="display: none;">
-    <span>
-        <i class="iconfont">叉号</i>
-    </span>
-    当前是最后一页
-</div>
-<div class="popUps wrong" style="display: none;">
-    <span>
-        <i class="iconfont">叉号</i>
-    </span>
-    当前是第一页
-</div>
 <div class="addNewIndicatorTop">
     <div class="topText">添加学分指标</div>
 </div>
@@ -70,14 +14,6 @@
         <!-- 遍历出来学分构成 -->
         <select id="CreditsComposition"></select>
     </div>
-    <!-- <div class="addNewIndicatorContentItem">
-        是否为团队:
-        <select id="team">
-            <option value="">请选择...</option>
-            <option value="是">是</option>
-            <option value="否">否</option>
-        </select>
-    </div> -->
     <div class="addNewIndicatorContentItem">
         请选择学分构成的子级目录:
         <select id="childDir"></select>
@@ -111,24 +47,6 @@
     <button id="sureAdd">确定</button>
     <button id="sureCancel">取消</button>
 </div>
-
-<!-- <div class="choiceHaveChild">
-        学分构成是否有子级目录:
-        <div class="choice">
-            <span>
-                <span style="display: none;" class="ChoiceSty"></span>
-            </span>
-            是
-        </div>
-        <div class="choice">
-            <span>
-                <span class="ChoiceSty"></span>
-            </span>
-            否
-        </div>
-    </div> -->
-
-<!-- 右边提示信息 -->
 <button style="display: none;" id="watchRules">查看规则</button>
 <div class="flexedRule">
     <button class="floatRight" id="close">
@@ -160,10 +78,7 @@
         <div class="rulesIllustrate">第一名计满分,其他成员均计1分</div>
     </div>
 </div>
-
 {{/block}}
-
-
 {{block 'bottom'}}
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="/public/js/creditSumRule.js"></script>
